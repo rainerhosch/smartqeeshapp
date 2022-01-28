@@ -1,0 +1,24 @@
+/* halaman login */
+.login-page{
+    background: rgb(116,121,121);
+background: linear-gradient(0deg, rgba(116,121,121,0.64) 13%, rgba(255,176,0,0.35058823529411764) 100%);
+}
+.login-box img{
+    max-height:120px;
+}
+.login-box h6{
+    font-size:15px;
+    font-weight:500;
+    margin-top:5px
+}
+.login-box .card-body{
+    background: #fdd591;
+}
+.login-page .bg-header1{
+    background:#fca954;
+    height:35px;
+}
+.login-page .bg-header2{
+    background:#3e92d1;
+    height:10px;
+}
