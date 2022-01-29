@@ -37,24 +37,33 @@ class Auth extends CI_Controller
         if ($this->input->is_ajax_request()) {
             $email_or_username = $this->input->post('email_or_username');
             $password = $this->input->post('password');
-            $field = 'users.user_id,users.username, users.password, user_detail.*';
+            $field = 'users.user_id,users.username, users.password, users.is_active, user_detail.*';
             $contition = "users.username='" . $email_or_username . "' OR user_detail.email='" . $email_or_username . "'";
             $data_user = $this->user->get_user($field, $contition)->row_array();
             if ($data_user != null) {
                 // cek password
-                if ($data_user['password'] != md5($password)) {
+                if ($data_user['password'] = md5($password)) {
+                    if ($data_user['is_active'] > 0) {
+                        $data = [
+                            'code' => 200,
+                            'status' => true,
+                            'msg' => 'Berhasil login.',
+                            'data' => $data_user
+                        ];
+                    } else {
+                        $data = [
+                            'code' => 403,
+                            'status' => false,
+                            'msg' => 'Akun Belum Aktif.',
+                            'data' => null
+                        ];
+                    }
+                } else {
                     $data = [
                         'code' => 403,
                         'status' => false,
                         'msg' => 'Password salah.',
-                        'data' => $data_user
-                    ];
-                } else {
-                    $data = [
-                        'code' => 200,
-                        'status' => true,
-                        'msg' => 'Berhasil login.',
-                        'data' => $data_user
+                        'data' => null
                     ];
                 }
             } else {
