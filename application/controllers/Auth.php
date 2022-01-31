@@ -42,8 +42,13 @@ class Auth extends CI_Controller
             $data_user = $this->user->get_user($field, $contition)->row_array();
             if ($data_user != null) {
                 // cek password
-                if ($data_user['password'] = md5($password)) {
+                if ($data_user['password'] === md5($password)) {
                     if ($data_user['is_active'] > 0) {
+                        $session_login = [
+                            'user_id' => $data_user['user_id']
+                        ];
+                        $this->session->set_userdata($session_login);
+                        $data_user = $session_login;
                         $data = [
                             'code' => 200,
                             'status' => true,
@@ -52,7 +57,7 @@ class Auth extends CI_Controller
                         ];
                     } else {
                         $data = [
-                            'code' => 403,
+                            'code' => 402,
                             'status' => false,
                             'msg' => 'Akun Belum Aktif.',
                             'data' => null
@@ -158,5 +163,12 @@ class Auth extends CI_Controller
             ];
         }
         echo json_encode($data);
+    }
+
+    public function logout()
+    {
+        $this->session->unset_userdata('user_id');
+        $this->session->set_flashdata('message', '<div class="alert alert-info" role="alert">Berhasil Logout!</div>');
+        redirect('Auth');
     }
 }

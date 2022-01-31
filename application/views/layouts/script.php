@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/plugins/summernote/summernote-bs4.min.css">
 <?php endif; ?>
 <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/css/adminlte.min.css">
-<link rel="stylesheet" href="<?= base_url('assets/templates') ?>/css/main.css">
 
 
 <!-- jQuery -->

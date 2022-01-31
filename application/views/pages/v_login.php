@@ -18,13 +18,27 @@
     </div>
     <div class="card">
       <div class="card-body login-card-body">
-        <form action="javascript:void(0)" method="post" id="form_login">
-          <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Email or Username" name="email_or_username">
+        <div class="row" id="alert_msg">
+          <div class="col-12">
+            <?= $this->session->flashdata('message'); ?>
           </div>
-          <div class="input-group mb-3">
-            <input type="password" class="form-control" placeholder="Password" name="password" id="password">
-            <span class=" input-group-text"><i class="far fa-eye-slash text-white" id="eye_toggle" style="cursor: pointer"></i></span>
+        </div>
+        <form action="javascript:void(0)" method="post" id="form_login">
+          <div class="row mb-3">
+            <div class="col-12 input-group">
+              <input type="text" class="form-control" placeholder="Email or Username" name="email_or_username">
+            </div>
+            <div class="col-12 notif_username">
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-12 input-group">
+              <input type="password" class="form-control" placeholder="Password" name="password" id="password">
+              <span class=" input-group-text"><i class="far fa-eye-slash text-white" id="eye_toggle" style="cursor: pointer"></i></span>
+            </div>
+            <div class="col-12 notif_password">
+            </div>
           </div>
           <div class="row">
             <div class="col-8">
@@ -34,10 +48,8 @@
                   Remember Me
                 </label>
               </div>
-              <!-- <a class="btn btn-info btn-block btn-registration" href="javascript:void(0)">REGISTRATION</a> -->
             </div>
             <div class="col-4">
-              <!-- <a class="btn btn-danger btn-block btn-login" href="<?php echo base_url('home'); ?>">LOGIN</a> -->
               <a class="btn btn-primary btn-block btn-login" href="javascript:void(0)">LOGIN</a>
             </div>
           </div>
@@ -89,49 +101,71 @@
     </div>
   </div>
   <script>
-    $('#eye_toggle').on('click', function() {
-      let pass_filed = document.querySelector('#password');
-      if (pass_filed.type === "password") {
-        pass_filed.type = "text";
-        $(this).removeClass("fa-eye-slash");
-        $(this).addClass("fa-eye");
-      } else {
-        pass_filed.type = "password";
-        $(this).removeClass("fa-eye");
-        $(this).addClass("fa-eye-slash");
-      }
-    });
-    $('.btn-login').on('click', function() {
-      let frm = $('#form_login');
-      $.ajax({
-        type: "POST",
-        url: "<?= base_url() ?>auth/process_login",
-        data: frm.serialize(),
-        dataType: "json",
-        success: function(response) {
-          console.log(response)
+    $(document).ready(function() {
+      setTimeout(function() {
+        $("#alert_msg").html("");
+      }, 2000);
+      $('#eye_toggle').on('click', function() {
+        let pass_filed = document.querySelector('#password');
+        if (pass_filed.type === "password") {
+          pass_filed.type = "text";
+          $(this).removeClass("fa-eye-slash");
+          $(this).addClass("fa-eye");
+        } else {
+          pass_filed.type = "password";
+          $(this).removeClass("fa-eye");
+          $(this).addClass("fa-eye-slash");
         }
       });
-    });
-    $('.btn-registration').on('click', function() {
-      let url = $(this).data('target');
-      window.location = url;
-    });
-    $('.btn-forget-pass').on('click', function() {
-      alert('Menu not active!')
-      // $('#forgot_pass_modal').modal('show');
-    });
-    $('.btn_request_new_pass').on('click', function() {
-      Swal.fire({
-        icon: 'success',
-        title: 'Success',
-        text: 'Link to reset password has been send to your mail, check your mailbox!',
-        showConfirmButton: false,
-        timer: 2500
+      $('.btn-login').on('click', function() {
+        let frm = $('#form_login');
+        $.ajax({
+          type: "POST",
+          url: "<?= base_url() ?>auth/process_login",
+          data: frm.serialize(),
+          dataType: "json",
+          success: function(response) {
+            console.log(response)
+            if (response.code != 200) {
+              if (response.code === 403) {
+                $('.notif_password').html(`<p class="text-warning"><small>${response.msg}</small></p>`);
+                setTimeout(function() {
+                  $('.notif_password').html(``);
+                }, 2000);
+              } else {
+                // 404 & 402
+                $('.notif_username').html(`<p class="text-warning"><small>${response.msg}</small></p>`);
+                setTimeout(function() {
+                  $('.notif_username').html(``);
+                }, 2000);
+              }
+            } else {
+              // 200
+              window.location = `<?= base_url('Home') ?>`
+            }
+          }
+        });
       });
-    });
-    $('.link-user-manual').on('click', function() {
-      alert('menu "SMART QEESH MANUAL belum" dapat digunakan')
+      $('.btn-registration').on('click', function() {
+        let url = $(this).data('target');
+        window.location = url;
+      });
+      $('.btn-forget-pass').on('click', function() {
+        alert('Menu not active!')
+        // $('#forgot_pass_modal').modal('show');
+      });
+      $('.btn_request_new_pass').on('click', function() {
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Link to reset password has been send to your mail, check your mailbox!',
+          showConfirmButton: false,
+          timer: 2500
+        });
+      });
+      $('.link-user-manual').on('click', function() {
+        alert('menu "SMART QEESH MANUAL belum" dapat digunakan')
+      });
     });
   </script>
 </body>

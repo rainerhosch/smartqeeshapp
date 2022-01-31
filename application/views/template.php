@@ -10,6 +10,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <title><?= $title; ?></title>
     <link rel="shortcut icon" href="<?= base_url(); ?>assets/templates/img/favicon/smart_qeesh.png">
     <?php $this->load->view('layouts/script'); ?>
+    <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/css/main-bg-photo.css">
+    <!-- <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/css/main.css"> -->
 </head>
 <?php if ($page != 'Auth') : ?>
 
