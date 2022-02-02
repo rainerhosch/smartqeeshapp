@@ -7,20 +7,20 @@
             <div class="text-center mt-4">
                 <img src="<?= base_url('assets/templates') ?>/img/AdminLTELogo.png" alt="AdminLTE Logo" class="" style="opacity: .8;height: 80px !important;">
             </div>
-            <h5 class="text-center mt-3 text-white"><span style="font-size: 16px;">RICHO MAULAND</span><br>
-                <span style="font-size: 14px;"><?= $user_divisi; ?></span>
+            <h5 class="text-center mt-3 text-white"><span style="font-size: 16px;"><?= $user['nama']; ?></span><br>
+                <span style="font-size: 14px;"><?= $user['divisi']; ?></span>
         </a>
-        <?php if ($user_divisi = 'CT-HSE') : ?>
+        <?php if ($user['divisi'] = 'Divisi IT') : ?>
             <nav class="mt-4">
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                    <li class="nav-item" style="background-color: #2B7B70;">
-                        <a href="<?= base_url('') ?>index.php/home/input_risk_register" class="nav-link" style="text-align: center;">
+                <ul class="nav nav-pills nav-sidebar flex-column sidebar_menu" data-widget="treeview" role="menu" data-accordion="false">
+                    <!-- <li class="nav-item" style="background-color: #2B7B70;">
+                        <a href="" class="nav-link" style="text-align: center;">
                             <p>
                                 INPUT NEW RISK REGISTER
                             </p>
                         </a>
-                    </li><br />
-                    <li class="nav-item" style="background-color: #4D7090;">
+                    </li><br /> -->
+                    <!-- <li class="nav-item" style="background-color: #4D7090;">
                         <a href="#" class="nav-link" style="text-align: center;">
                             <p>
                                 PROGRAM MANAGEMENT PLANNING
@@ -33,7 +33,7 @@
                                 RISK MANAGEMENT PERFORMANCE
                             </p>
                         </a>
-                    </li>
+                    </li> -->
                 </ul>
             </nav>
         <?php else : ?>
@@ -41,3 +41,26 @@
     </div>
     <!-- /.sidebar -->
 </aside>
+<script>
+    $(document).ready(function() {
+        $.ajax({
+            type: "POST",
+            url: "<?= base_url() ?>menu/get_user_access_menu",
+            dataType: "json",
+            success: function(response) {
+                if (response.status === true) {
+                    if (response.data != 0) {
+                        $.each(response.data, function(i, value) {
+                            // html += ``;
+                            $(".sidebar_menu").html(`<li class="nav-item" style="background-color: #${value.color};">
+                            <a href="<?= base_url() ?>${value.link_menu}" class="nav-link" style="text-align: center;">
+                            <p>${value.nama_menu}</p>
+                            </a>
+                            </li><br />`);
+                        });
+                    }
+                }
+            }
+        });
+    });
+</script>

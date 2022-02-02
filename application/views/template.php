@@ -9,7 +9,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= $title; ?></title>
     <link rel="shortcut icon" href="<?= base_url(); ?>assets/templates/img/favicon/smart_qeesh.png">
-    <?php $this->load->view('layouts/script'); ?>
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/plugins/fontawesome-free/css/all.min.css">
+    <?php if ($page != 'Auth') : ?>
+        <!-- <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> -->
+        <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+        <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+        <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/plugins/jqvmap/jqvmap.min.css">
+        <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+        <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/plugins/daterangepicker/daterangepicker.css">
+        <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/plugins/summernote/summernote-bs4.min.css">
+    <?php endif; ?>
+    <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/css/adminlte.min.css">
     <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/css/main-bg-photo.css">
     <!-- <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/css/main.css"> -->
 </head>
@@ -18,13 +30,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <body class="hold-transition sidebar-mini layout-fixed">
         <div class="wrapper">
 
+            <?php $this->load->view('layouts/script'); ?>
             <?php $this->load->view('layouts/header'); ?>
             <?php $this->load->view('layouts/sidebar'); ?>
             <?php $this->load->view($content); ?>
             <?php $this->load->view('layouts/footer'); ?>
+
+
+
         </div>
     </body>
 <?php else : ?>
+    <?php $this->load->view('layouts/script'); ?>
     <?php $this->load->view($content); ?>
 <?php endif; ?>
 

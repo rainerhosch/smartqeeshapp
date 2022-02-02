@@ -24,10 +24,10 @@ class Home extends CI_Controller
         } else {
             $data['title'] = 'Smart Qeesh App';
             $data['page'] = 'RISK MANAGEMENT';
-            // $contition = ['users.user_id' => $this->session->userdata('user_id')];
-            // $field = 'users.user_id, user_detail.*';
-            // $data['data_user'] = $this->user->get_user($field, $contition)->row_array();
-            $data['user_divisi'] = 'CT-HSE';
+            $contition = ['users.user_id' => $this->session->userdata('user_id')];
+            $field = 'users.user_id, user_detail.*';
+            $data['user'] = $this->user->get_user($field, $contition)->row_array();
+            // $data['user_divisi'] = 'CT-HSE';
             $data['content'] = 'pages/risk_management/dashboard';
             $this->load->view('template', $data);
         }
