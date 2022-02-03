@@ -39,6 +39,9 @@ class Menu extends CI_Controller
                 'mn.is_active' => 1
             ];
             $datamenu = $this->menu->get_user_access_menu($condition_menu)->result_array();
+            foreach ($datamenu as $i => $mn) {
+                $datamenu[$i]['submenu'] = $this->menu->get_all_submenu(['m.id_menu' => $mn['id_menu'], 'sm.is_active' => 1])->result_array();
+            }
             $data = [
                 'code' => 200,
                 'status' => true,

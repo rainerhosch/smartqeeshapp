@@ -23,7 +23,8 @@ class Home extends CI_Controller
             redirect('Auth');
         } else {
             $data['title'] = 'Smart Qeesh App';
-            $data['page'] = 'RISK MANAGEMENT';
+            $data['page'] = 'Home';
+            $data['subpage'] = 'Blank Page';
             $contition = ['users.user_id' => $this->session->userdata('user_id')];
             $field = 'users.user_id, user_detail.*';
             $data['user'] = $this->user->get_user($field, $contition)->row_array();

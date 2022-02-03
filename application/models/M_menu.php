@@ -22,6 +22,18 @@ class M_menu extends CI_Model
         return $this->db->get();
     }
 
+    public function get_all_submenu($where = null)
+    {
+        $this->db->select('sm.*');
+        $this->db->from('submenu sm');
+        $this->db->join('menu m', 'm.id_menu=sm.id_menu');
+        if ($where != null) {
+            $this->db->where($where);
+        }
+        return $this->db->get();
+    }
+
+
     public function get_user_access_menu($where = null)
     {
         // 'SELECT mn.* FROM menu mn JOIN user_access_menu uam ON uam.id_menu=mn.id_menu JOIN user_role ur ON ur.role_id=uam.role_id WHERE ur.role_id=1 AND mn.is_active=1';
