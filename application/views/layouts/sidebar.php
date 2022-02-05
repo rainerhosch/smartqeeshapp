@@ -9,9 +9,8 @@
             <div class="image">
                 <img src="<?= base_url('assets/templates') ?>/img/user1-128x128.jpg" class="img-circle elevation-2" alt="User Image">
             </div>
-            <div class="info">
-                <a href="#" class="d-block"><?= $user['nama']; ?></a>
-                <small class="text-light text-center"><?= $user['jabatan']; ?> - <?= $user['divisi']; ?></small>
+            <div class="info user_profile">
+                <!-- user profile from jquery -->
             </div>
             <div class="exit text-white">
                 <a href="<?= base_url('auth/logout') ?>"><i class="nav-icon fas fa-sign-out-alt"></i></a>
@@ -29,27 +28,44 @@
     $(document).ready(function() {
         $.ajax({
             type: "POST",
+            url: "<?= base_url() ?>user/get_user",
+            dataType: "json",
+            success: function(response) {
+                // console.log(response)
+                let htmlx = ``;
+                if (response.status === true) {
+                    let user = response.data;
+                    htmlx += `<a href="#" class="d-block text-sm">${user.nama}</a>`;
+                    htmlx += `<small class="text-light text-center">${user.jabatan} - ${user.divisi}</small>`;
+                }
+                $(".user_profile").html(htmlx);
+            }
+        });
+
+
+
+        $.ajax({
+            type: "POST",
             url: "<?= base_url() ?>menu/get_user_access_menu",
             dataType: "json",
             success: function(response) {
-                console.log(response.data)
                 if (response.status === true) {
                     if (response.data != 0) {
-                        let url = $(location).attr('href').split("/").splice(0, 5).join("/");
+                        let url = $(location).attr('href').split("/").splice(0, 10).join("/");
                         let segments = url.split('/');
-                        console.log(segments[4]);
+                        let numb = segments.length - 1;
                         let html = ``;
                         let class_active = ``;
                         $.each(response.data, function(i, menu) {
                             html += `<li class="nav-header">${menu.nama_menu}</li>`;
                             if (menu.submenu != 0) {
                                 $.each(menu.submenu, function(i, sm) {
+                                    let nm_submenu = sm.nama_submenu;
                                     html += `<li class="nav-item">`;
-                                    if (sm.nama_submenu === segments[4]) {
+                                    if (nm_submenu.toLowerCase() === segments[numb].toLowerCase()) {
                                         html += `<a href="<?= base_url() ?>${sm.url}" class="nav-link active">`;
                                     } else {
                                         html += `<a href="<?= base_url() ?>${sm.url}" class="nav-link ">`;
-
                                     }
                                     html += `${sm.icon} `;
                                     html += `<p class="ml-3">${sm.nama_submenu}</p>`;

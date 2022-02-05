@@ -13,6 +13,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/plugins/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/css/adminlte.min.css">
+    <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/css/templates.css">
     <?php if ($page != 'Auth') : ?>
         <!-- <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> -->
         <!-- <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
@@ -24,34 +25,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <?php endif; ?>
     <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/css/main-bg-photo.css">
     <!-- <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/css/main.css"> -->
-    <style>
-        .user-panel .exit {
-            display: inline-block;
-            padding: 5px 5px 5px 40px;
-        }
-
-        .layout-navbar-fixed .wrapper .bg-new-dark .brand-link:not([class*=navbar]) {
-            background-color: #cd7e00;
-        }
-
-        .sidebar a {
-            color: #ffffff;
-        }
-
-        .bg-new-soft {
-            background-color: #bf8c3c;
-        }
-
-        .nav-pills .nav-link {
-            color: #ffffff;
-        }
-
-        .nav-pills .nav-link.active,
-        .nav-pills .show>.nav-link {
-            color: #423a3a;
-            background-color: #ffd966;
-        }
-    </style>
 </head>
 <?php if ($page != 'Auth') : ?>
 

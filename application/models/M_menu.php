@@ -14,7 +14,7 @@ class M_menu extends CI_Model
 {
     public function get_all_menu($where = null)
     {
-        $this->db->select('id_menu, nama_menu, link_menu, type, icon, is_active, editable');
+        $this->db->select('id_menu, nama_menu, link_menu, type, icon, is_active, editable, color');
         $this->db->from('menu');
         if ($where != null) {
             $this->db->where($where);
@@ -45,5 +45,17 @@ class M_menu extends CI_Model
             $this->db->where($where);
         }
         return $this->db->get();
+    }
+
+    // Update Menu
+    public function updateMenu($tbl, $id_menu, $data)
+    {
+        $this->db->where('id_menu', $id_menu);
+        $this->db->update($tbl, $data);
+        if ($this->db->affected_rows() > 0) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
     }
 }
