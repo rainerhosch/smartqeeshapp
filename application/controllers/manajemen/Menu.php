@@ -90,7 +90,7 @@ class Menu extends CI_Controller
     public function ubah_status_aktif()
     {
         if ($this->input->is_ajax_request()) {
-            $id_menu = $this->input->post('id_menu');
+            $id = $this->input->post('id');
             $is_active = $this->input->post('status');
             $tbl = $this->input->post('table');
             if ($is_active != '1') {
@@ -101,7 +101,7 @@ class Menu extends CI_Controller
             $dataUpdate = [
                 'is_active' => $is_active
             ];
-            $data = $this->menu->updateMenu($tbl, $id_menu, $dataUpdate);
+            $data = $this->menu->updateMenu($tbl, $id, $dataUpdate);
             $data = [
                 'code' => 200,
                 'status' => true,

@@ -24,7 +24,7 @@ class M_menu extends CI_Model
 
     public function get_all_submenu($where = null)
     {
-        $this->db->select('sm.*');
+        $this->db->select('sm.*, m.nama_menu');
         $this->db->from('submenu sm');
         $this->db->join('menu m', 'm.id_menu=sm.id_menu');
         if ($where != null) {
@@ -48,9 +48,10 @@ class M_menu extends CI_Model
     }
 
     // Update Menu
-    public function updateMenu($tbl, $id_menu, $data)
+    public function updateMenu($tbl, $id, $data)
     {
-        $this->db->where('id_menu', $id_menu);
+        $field = 'id_' . $tbl;
+        $this->db->where($field, $id);
         $this->db->update($tbl, $data);
         if ($this->db->affected_rows() > 0) {
             return TRUE;
