@@ -35,16 +35,17 @@
                             </div>
                         </div>
                         <div class="card-body">
+                            <a class="btn btn-sm btn-primary btn_submenu_add mb-2">Add Submenu</a>
                             <table class="table table-sm">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
-                                        <th>NAMA</th>
-                                        <th>URL</th>
-                                        <th>PARENT MENU</th>
-                                        <th>ICON</th>
-                                        <th>AKTIF</th>
-                                        <th>TOOL</th>
+                                        <th class="text-center">#</th>
+                                        <th class="text-center">NAMA</th>
+                                        <th class="text-center">URL</th>
+                                        <th class="text-center">PARENT MENU</th>
+                                        <th class="text-center">ICON</th>
+                                        <th class="text-center">AKTIF</th>
+                                        <th class="text-center">TOOL</th>
                                     </tr>
                                 </thead>
                                 <tbody id="menu_tbody">
@@ -81,12 +82,12 @@
                     $.each(response.data, function(i, submenu) {
                         no = i + 1;
                         html_mn += `<tr>`;
-                        html_mn += `<td>${no}</td>`;
-                        html_mn += `<td>${submenu.nama_submenu}</td>`;
-                        html_mn += `<td>${submenu.url}</td>`;
-                        html_mn += `<td>${submenu.nama_menu}</td>`;
-                        html_mn += `<td>${submenu.icon}</td>`;
-                        html_mn += `<td>`;
+                        html_mn += `<td class="text-center">${no}</td>`;
+                        html_mn += `<td class="text-center">${submenu.nama_submenu}</td>`;
+                        html_mn += `<td class="text-center">${submenu.url}</td>`;
+                        html_mn += `<td class="text-center">${submenu.nama_menu}</td>`;
+                        html_mn += `<td class="text-center">${submenu.icon}</td>`;
+                        html_mn += `<td class="text-center">`;
                         html_mn += `<label class="switch switch-primary">`;
                         if (submenu.is_active === '1') {
                             checkbox_check = `checked`;
@@ -96,7 +97,7 @@
                         html_mn += `<input type="checkbox" class="btn_submenu_active" value="${submenu.is_active}" data-submenu="${submenu.id_submenu}" ${checkbox_check}><span></span>`;
                         html_mn += `</label>`;
                         html_mn += `</td>`;
-                        html_mn += `<td><a class="btn btn-xs btn-warning btn_menu_edit">Edit</a> | <a class="btn btn-xs btn-danger btn_menu_delete">Delete</a></td>`;
+                        html_mn += `<td class="text-center"><a class="btn btn-xs btn-warning btn_menu_edit"><i class="fas fa-pen"></i></a> | <a class="btn btn-xs btn-danger btn_menu_delete"><i class="fas fa-trash-alt"></i></a></td>`;
                         html_mn += `</tr>`;
                     });
                 } else {

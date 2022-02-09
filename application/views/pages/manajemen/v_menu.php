@@ -35,16 +35,17 @@
                             </div>
                         </div>
                         <div class="card-body">
+                            <a class="btn btn-sm btn-primary btn_menu_add mb-2" data-toggle="modal" data-target="#modalAddMenu">Add Menu</a>
                             <table class="table table-sm">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
-                                        <th>NAMA</th>
-                                        <th>URL</th>
-                                        <th>TIPE</th>
-                                        <th>ICON</th>
-                                        <th>AKTIF</th>
-                                        <th>TOOL</th>
+                                        <th class="text-center">#</th>
+                                        <th class="text-center">NAMA</th>
+                                        <th class="text-center">URL</th>
+                                        <th class="text-center">TIPE</th>
+                                        <th class="text-center">ICON</th>
+                                        <th class="text-center">AKTIF</th>
+                                        <th class="text-center">TOOL</th>
                                     </tr>
                                 </thead>
                                 <tbody id="menu_tbody">
@@ -66,6 +67,28 @@
         </div>
     </section>
 </div>
+<!-- modal add menu -->
+<!-- Modal -->
+<div class="modal fade" id="modalAddMenu" tabindex="-1" role="dialog" aria-labelledby="modalAddMenuTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Tambah Menu Baru</h5>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button> -->
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- modal edit menu -->
 <script>
     $(document).ready(function() {
         $.ajax({
@@ -81,12 +104,12 @@
                     $.each(response.data, function(i, menu) {
                         no = i + 1;
                         html_mn += `<tr>`;
-                        html_mn += `<td>${no}</td>`;
-                        html_mn += `<td>${menu.nama_menu}</td>`;
-                        html_mn += `<td>${menu.link_menu}</td>`;
-                        html_mn += `<td>${menu.type}</td>`;
-                        html_mn += `<td>${menu.icon}</td>`;
-                        html_mn += `<td>`;
+                        html_mn += `<td class="text-center">${no}</td>`;
+                        html_mn += `<td class="text-center">${menu.nama_menu}</td>`;
+                        html_mn += `<td class="text-center">${menu.link_menu}</td>`;
+                        html_mn += `<td class="text-center">${menu.type}</td>`;
+                        html_mn += `<td class="text-center">${menu.icon}</td>`;
+                        html_mn += `<td class="text-center">`;
                         html_mn += `<label class="switch switch-primary">`;
                         if (menu.is_active === '1') {
                             checkbox_check = `checked`;
@@ -96,7 +119,7 @@
                         html_mn += `<input type="checkbox" ${checkbox_check} class="btn_menu_active" value="${menu.is_active}" data-menu="${menu.id_menu}"><span></span>`;
                         html_mn += `</label>`;
                         html_mn += `</td>`;
-                        html_mn += `<td><a class="btn btn-xs btn-warning btn_menu_edit">Edit</a> | <a class="btn btn-xs btn-danger btn_menu_delete">Delete</a></td>`;
+                        html_mn += `<td class="text-center"><a class="btn btn-xs btn-warning btn_menu_edit"><i class="fas fa-pen"></i></a> | <a class="btn btn-xs btn-danger btn_menu_delete"><i class="fas fa-trash-alt"></i></a></td>`;
                         html_mn += `</tr>`;
                     });
                 } else {
