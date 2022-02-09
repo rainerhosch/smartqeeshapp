@@ -33,10 +33,34 @@ class Menu extends CI_Controller
     {
         // code here...
         if ($this->input->is_ajax_request()) {
-            $datamenu = $this->menu->get_all_menu()->result_array();
+            $input = $this->input->post('id_menu');
+            $datamenu = [];
+            $code = '';
+            $status = '';
+            if ($input != null) {
+                // $condition = ['id_menu' => $input];
+                $datamenu = $this->menu->get_all_menu(['id_menu' => $input])->row_array();
+                if (!$datamenu) {
+                    $code = 404;
+                    $status = false;
+                } else {
+                    $code = 200;
+                    $status = true;
+                }
+            } else {
+                // $condition = null;
+                $datamenu = $this->menu->get_all_menu()->result_array();
+                if (!$datamenu) {
+                    $code = 404;
+                    $status = false;
+                } else {
+                    $code = 200;
+                    $status = true;
+                }
+            }
             $data = [
-                'code' => 200,
-                'status' => true,
+                'code' => $code,
+                'status' => $status,
                 'msg' => 'Data Menu.',
                 'data' => $datamenu
             ];
@@ -108,6 +132,112 @@ class Menu extends CI_Controller
                 'msg' => 'Success',
                 'data' => $dataUpdate
             ];
+        } else {
+            $data = [
+                'code' => 500,
+                'status' => false,
+                'msg' => 'Invalid request.',
+                'data' => null
+            ];
+        }
+        echo json_encode($data);
+    }
+
+    public function simpan_menu()
+    {
+        if ($this->input->is_ajax_request()) {
+            $data_post = $this->input->post();
+            $table = 'menu';
+            $data = [];
+            if (isset($data_post['id_menu_edit']) != null) {
+                $data_input = [
+                    'nama_menu'     => $data_post['nama_menu_edit'],
+                    'link_menu'     => $data_post['url_menu_edit'],
+                    'type'          => 'statis',
+                    'color'         => 'FFF',
+                    'icon'          => $data_post['icon_menu_edit'],
+                    'is_active'     => 1,
+                    'editable'      => 'YES'
+                ];
+                $save_data =  $this->menu->updateMenu($table, $data_post['id_menu_edit'], $data_input);
+                if ($save_data) {
+                    $data = [
+                        'code' => 200,
+                        'status' => true,
+                        'msg' => 'Menu berhasi di update.',
+                        'data' => $save_data
+                    ];
+                } else {
+                    $data = [
+                        'code' => 500,
+                        'status' => false,
+                        'msg' => 'Menu gagal di edit.',
+                        'data' => $save_data
+                    ];
+                }
+            } else {
+                $data_input = [
+                    'nama_menu'     => $data_post['nama_menu'],
+                    'link_menu'     => $data_post['url_menu'],
+                    'type'          => 'statis',
+                    'color'         => 'FFF',
+                    'icon'          => $data_post['icon_menu'],
+                    'is_active'     => 1,
+                    'editable'      => 'YES'
+                ];
+                $save_data =  $this->menu->addData($table, $data_input);
+                if ($save_data) {
+                    $data = [
+                        'code' => 200,
+                        'status' => true,
+                        'msg' => 'Menu berhasil di tambahkan.',
+                        'data' => null
+                    ];
+                } else {
+                    $data = [
+                        'code' => 500,
+                        'status' => false,
+                        'msg' => 'Gagal menambahkan menu.',
+                        'data' => null
+                    ];
+                }
+            }
+        } else {
+            $data = [
+                'code' => 500,
+                'status' => false,
+                'msg' => 'Invalid request.',
+                'data' => null
+            ];
+        }
+        echo json_encode($data);
+    }
+
+    public function hapus_menu()
+    {
+        if ($this->input->is_ajax_request()) {
+            $id = $this->input->post('id');
+            $table = $this->input->post('table');
+            $field = 'id_' . $table;
+            $where = [
+                '' . $field . '' => $id
+            ];
+            $deleted = $this->menu->delete_data($table, $where);
+            if (!$deleted) {
+                $data = [
+                    'code' => 300,
+                    'status' => false,
+                    'msg' => 'Gagal hapus menu.',
+                    'data' => $deleted
+                ];
+            } else {
+                $data = [
+                    'code' => 200,
+                    'status' => true,
+                    'msg' => 'Berhasil hapus menu.',
+                    'data' => $deleted
+                ];
+            }
         } else {
             $data = [
                 'code' => 500,

@@ -37,6 +37,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <?php $this->load->view($content); ?>
             <?php $this->load->view('layouts/footer'); ?>
         </div>
+        <script>
+            setTimeout(function() {
+                $(".alert_content").html("");
+            }, 2000);
+        </script>
     </body>
 <?php else : ?>
     <?php $this->load->view('layouts/script'); ?>

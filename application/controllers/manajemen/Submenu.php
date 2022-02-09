@@ -35,13 +35,47 @@ class Submenu extends CI_Controller
     {
         // code here...
         if ($this->input->is_ajax_request()) {
-            $datamenu = $this->menu->get_all_submenu()->result_array();
+            $input = $this->input->post('id_submenu');
+            $datamenu = [];
+            $code = '';
+            $status = '';
+
+            if ($input != null) {
+                // $condition = ['id_menu' => $input];
+                $datamenu = $this->menu->get_all_submenu_editable(['id_submenu' => $input])->row_array();
+                if (!$datamenu) {
+                    $code = 404;
+                    $status = false;
+                } else {
+                    $code = 200;
+                    $status = true;
+                }
+            } else {
+                // $condition = null;
+                $datamenu = $this->menu->get_all_submenu_editable()->result_array();
+                if (!$datamenu) {
+                    $code = 404;
+                    $status = false;
+                } else {
+                    $code = 200;
+                    $status = true;
+                }
+            }
             $data = [
-                'code' => 200,
-                'status' => true,
-                'msg' => 'Data Submenu.',
+                'code' => $code,
+                'status' => $status,
+                'msg' => 'Data Menu.',
                 'data' => $datamenu
             ];
+
+
+            // $datamenu = $this->menu->get_all_submenu_editable()->result_array();
+            // $data = [
+            //     'code' => 200,
+            //     'status' => true,
+            //     'msg' => 'Data Submenu.',
+            //     'data' => $datamenu
+            // ];
         } else {
             $data = [
                 'code' => 500,

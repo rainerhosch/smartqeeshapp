@@ -48,6 +48,7 @@
             url: "<?= base_url() ?>menu/get_user_access_menu",
             dataType: "json",
             success: function(response) {
+                // console.log(response)
                 if (response.status === true) {
                     if (response.data != 0) {
                         let url = $(location).attr('href').split("/").splice(0, 10).join("/");

@@ -74,21 +74,83 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">Tambah Menu Baru</h5>
-                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
-                </button> -->
+                </button>
             </div>
             <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save</button>
+                <form id="form_add_menu" enctype="multipart/form-data">
+                    <div class="form-group row">
+                        <label for="nama_menu" class="col-sm-2 col-form-label">Nama</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="nama_menu" name="nama_menu" placeholder="Nama menu" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="url_menu" class="col-sm-2 col-form-label">Url</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="url_menu" name="url_menu" placeholder="Link/Url" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="icon_menu" class="col-sm-2 col-form-label">Icon</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="icon_menu" name="icon_menu" placeholder="Icon Menu" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-10"></div>
+                        <div class="col-sm-2 float-right">
+                            <button type="submit" class="btn btn-sm btn-primary btn_save">Submit</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
 <!-- modal edit menu -->
+<div class="modal fade" id="modalEditMenu" tabindex="-1" role="dialog" aria-labelledby="modalEditMenuTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Edit Menu</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="form_edit_menu" enctype="multipart/form-data">
+                    <div class="form-group row">
+                        <label for="nama_menu" class="col-sm-2 col-form-label">Nama</label>
+                        <div class="col-sm-10">
+                            <input type="hidden" class="form-control" id="id_menu_edit" name="id_menu_edit">
+                            <input type="text" class="form-control" id="nama_menu_edit" name="nama_menu_edit">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="url_menu" class="col-sm-2 col-form-label">Url</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="url_menu_edit" name="url_menu_edit">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="icon_menu" class="col-sm-2 col-form-label">Icon</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="icon_menu_edit" name="icon_menu_edit">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-10"></div>
+                        <div class="col-sm-2 float-right">
+                            <button type="submit" class="btn btn-sm btn-primary btn_save">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
     $(document).ready(function() {
         $.ajax({
@@ -119,7 +181,7 @@
                         html_mn += `<input type="checkbox" ${checkbox_check} class="btn_menu_active" value="${menu.is_active}" data-menu="${menu.id_menu}"><span></span>`;
                         html_mn += `</label>`;
                         html_mn += `</td>`;
-                        html_mn += `<td class="text-center"><a class="btn btn-xs btn-warning btn_menu_edit"><i class="fas fa-pen"></i></a> | <a class="btn btn-xs btn-danger btn_menu_delete"><i class="fas fa-trash-alt"></i></a></td>`;
+                        html_mn += `<td class="text-center"><a class="btn btn-xs btn-warning btn_menu_edit" data-menu="${menu.id_menu}"><i class="fas fa-pen"></i></a> | <a class="btn btn-xs btn-danger btn_menu_delete" nama-menu="${menu.nama_menu}" data-menu="${menu.id_menu}"><i class="fas fa-trash-alt"></i></a></td>`;
                         html_mn += `</tr>`;
                     });
                 } else {
@@ -149,11 +211,158 @@
                         },
                         dataType: "json",
                         success: function(response) {
-                            // console.log(response)
-                            location.reload();
+                            let status = response.data.is_active;
+                            // console.log(status)
+                            if (status === '1') {
+                                status = 'Berhasil mengaktifkan menu.'
+                            } else {
+                                status = 'Menu telah dinonaktifkan.'
+                            }
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: status,
+                                showConfirmButton: false,
+                                timer: 2500
+                            }).then(function(isConfirm) {
+                                location.reload()
+                            });
                         }
                     })
-                })
+                });
+                $("#form_add_menu").submit(function(e) {
+                    e.preventDefault();
+                    let form = $(this);
+                    $.ajax({
+                        type: "POST",
+                        url: "menu/simpan_menu",
+                        data: form.serializeArray(),
+                        dataType: "json",
+                        success: function(response) {
+                            // console.log(response);
+                            let icon = ``;
+                            let title = ``;
+                            let text = ``;
+                            if (response.code === 200) {
+                                icon = `success`;
+                                title = `Success`;
+                            } else {
+                                icon = `error`;
+                                title = `Error`;
+                            }
+                            Swal.fire({
+                                icon: icon,
+                                title: title,
+                                text: response.msg,
+                                showConfirmButton: false,
+                                timer: 2500
+                            }).then(function(isConfirm) {
+                                location.reload()
+                            });
+                        }
+                    });
+                });
+                $('.btn_menu_edit').on('click', function() {
+                    let id_menu = $(this).attr("data-menu");
+                    if (id_menu == "") {
+                        alert("Error in id user");
+                    } else {
+                        $.ajax({
+                            type: "POST",
+                            url: "menu/get_menu",
+                            data: {
+                                id_menu: id_menu,
+                            },
+                            dataType: "json",
+                            success: function(response) {
+                                // console.log(response)
+                                $('#modalEditMenu').modal("show");
+                                $("#id_menu_edit").val(response.data.id_menu);
+                                $("#nama_menu_edit").val(response.data.nama_menu);
+                                $("#url_menu_edit").val(response.data.link_menu);
+                                $("#icon_menu_edit").val(response.data.icon);
+                            }
+                        })
+                    }
+                });
+                $("#form_edit_menu").submit(function(e) {
+                    e.preventDefault();
+                    let form = $(this);
+                    $.ajax({
+                        type: "POST",
+                        url: "menu/simpan_menu", // where you wanna post
+                        data: form.serialize(), // serializes form input,
+                        dataType: "json",
+                        success: function(response) {
+                            // console.log(response);
+                            let icon = ``;
+                            let title = ``;
+                            let text = ``;
+                            if (response.code === 200) {
+                                icon = `success`;
+                                title = `Success`;
+                            } else {
+                                icon = `error`;
+                                title = `Error`;
+                            }
+                            Swal.fire({
+                                icon: icon,
+                                title: title,
+                                text: response.msg,
+                                showConfirmButton: false,
+                                timer: 2500
+                            }).then(function(isConfirm) {
+                                location.reload()
+                            });
+                        }
+                    });
+                });
+
+                $('.btn_menu_delete').on('click', function() {
+                    let id_menu = $(this).attr("data-menu");
+                    let nama_menu = $(this).attr("nama-menu");
+                    let table = `menu`;
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: `The ${nama_menu} menu, will delete!`,
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                type: "POST",
+                                url: "menu/hapus_menu", // where you wanna post
+                                data: {
+                                    id: id_menu,
+                                    table: table
+                                },
+                                dataType: "json",
+                                success: function(response) {
+                                    // console.log(response)
+                                    let title = ``;
+                                    let msg = ``;
+                                    let icon = ``;
+                                    if (response.code === 200) {
+                                        title = `Deleted`;
+                                        icon = `success`;
+                                    } else {
+                                        title = `Error!`;
+                                        icon = `error`;
+                                    }
+                                    Swal.fire(
+                                        title,
+                                        response.msg,
+                                        icon
+                                    )
+                                    location.reload();
+                                }
+                            })
+                        }
+                    })
+                });
             }
         });
     });
