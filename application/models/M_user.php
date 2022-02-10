@@ -14,9 +14,9 @@ class M_user extends CI_Model
     public function get_user($field, $where = null)
     {
         $this->db->select($field);
-        $this->db->from('users');
-        $this->db->join('user_detail', 'user_detail.user_detail_id=users.user_detail_id');
-        $this->db->join('user_role', 'user_role.role_id=users.role_id');
+        $this->db->from('user');
+        $this->db->join('user_detail', 'user_detail.user_detail_id=user.user_detail_id');
+        $this->db->join('user_role', 'user_role.role_id=user.role_id');
 
         if ($where != null) {
             $this->db->where($where);
@@ -37,15 +37,27 @@ class M_user extends CI_Model
     }
 
     // update data
-    public function update_data($table, $parameter, $data)
+    public function update_data($table, $id, $data)
     {
-        $this->db->where($parameter);
+        $field = $table . '_id';
+        $this->db->where($field, $id);
         $this->db->update($table, $data);
         $updated_status = $this->db->affected_rows();
         if ($updated_status) {
             return true;
         } else {
             return false;
+        }
+    }
+
+    public function delete_data($tbl, $where)
+    {
+        $this->db->where($where);
+        $this->db->delete($tbl);
+        if ($this->db->affected_rows() > 0) {
+            return TRUE;
+        } else {
+            return FALSE;
         }
     }
 }

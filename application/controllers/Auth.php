@@ -37,8 +37,8 @@ class Auth extends CI_Controller
         if ($this->input->is_ajax_request()) {
             $email_or_username = $this->input->post('email_or_username');
             $password = $this->input->post('password');
-            $field = 'users.user_id,users.username, users.password, users.is_active, user_detail.*';
-            $contition = "users.username='" . $email_or_username . "' OR user_detail.email='" . $email_or_username . "'";
+            $field = 'user.user_id,user.username, user.password, user.is_active, user_detail.*';
+            $contition = "user.username='" . $email_or_username . "' OR user_detail.email='" . $email_or_username . "'";
             $data_user = $this->user->get_user($field, $contition)->row_array();
             if ($data_user != null) {
                 // cek password
@@ -128,12 +128,12 @@ class Auth extends CI_Controller
                     'data' => null
                 ];
             } else {
-                $tbl = 'users';
+                $tbl = 'user';
                 $data_user_regist = [
                     'username'          => $post_regist['username'],
                     'password'          => md5($post_regist['password']),
                     'date_created'      => strtotime($date),
-                    'role_id'           => 1,
+                    'role_id'           => 2,
                     'user_detail_id'    => $id_detail_user,
                     'is_active'         => 0
                 ];

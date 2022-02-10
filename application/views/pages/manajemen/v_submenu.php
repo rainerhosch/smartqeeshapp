@@ -84,7 +84,7 @@
                         <div class="col-sm-10">
                             <select class="custom-select" id="menu_parent" name="menu_parent">
                                 <option value="x">- Pilih Menu -</option>
-                                <?php $menu = $this->menu->get_all_menu()->result_array();
+                                <?php $menu = $this->menu->get_all_menu(['is_active' => 1])->result_array();
                                 foreach ($menu as $mn) : ?><option class="<?= $mn['id_menu'] ?>" value="<?= $mn['id_menu'] ?>"><?= $mn['nama_menu'] ?></option>
                                 <?php endforeach; ?>
                             </select>
@@ -134,7 +134,7 @@
                     <div class="form-group row">
                         <label for="menu_parent_edit" class="col-sm-2 col-form-label">Menu Parent</label>
                         <div class="col-sm-10">
-                            <select class="custom-select" id="menu_parent_edit" name="menu_parent_edit">
+                            <select class="custom-select" id="menu_parent_edit" name="menu_parent_edit" disabled>
                                 <option value="x">- Pilih Menu -</option>
                                 <?php $menu = $this->menu->get_all_menu()->result_array();
                                 foreach ($menu as $mn) : ?><option class="<?= $mn['id_menu'] ?>" value="<?= $mn['id_menu'] ?>"><?= $mn['nama_menu'] ?></option>
@@ -237,6 +237,40 @@
                     })
                 });
 
+
+                $("#form_add_submenu").submit(function(e) {
+                    e.preventDefault();
+                    let form = $(this);
+                    $.ajax({
+                        type: "POST",
+                        url: "submenu/simpan_submenu",
+                        data: form.serializeArray(),
+                        dataType: "json",
+                        success: function(response) {
+                            console.log(response);
+                            let icon = ``;
+                            let title = ``;
+                            let text = ``;
+                            if (response.code === 200) {
+                                icon = `success`;
+                                title = `Success`;
+                            } else {
+                                icon = `error`;
+                                title = `Error`;
+                            }
+                            Swal.fire({
+                                icon: icon,
+                                title: title,
+                                text: response.msg,
+                                showConfirmButton: false,
+                                timer: 2500
+                            }).then(function(isConfirm) {
+                                location.reload()
+                            });
+                        }
+                    });
+                });
+
                 $('.btn_submenu_edit').on('click', function() {
                     let id_submenu = $(this).attr("data-submenu");
                     if (id_submenu == "") {
@@ -250,16 +284,94 @@
                             },
                             dataType: "json",
                             success: function(response) {
-                                console.log(response)
+                                // console.log(response)
                                 $('#modalEditSubmenu').modal("show");
-                                $("#id_submenu_edit").val(response.data.id_menu);
                                 $("#menu_parent_edit").val(response.data.id_menu);
+                                $("#id_submenu_edit").val(response.data.id_submenu);
                                 $("#nama_submenu_edit").val(response.data.nama_submenu);
                                 $("#url_submenu_edit").val(response.data.url);
                                 $("#icon_submenu_edit").val(response.data.icon);
                             }
                         })
                     }
+                });
+
+                $("#form_edit_submenu").submit(function(e) {
+                    e.preventDefault();
+                    let form = $(this);
+                    $.ajax({
+                        type: "POST",
+                        url: "submenu/simpan_submenu",
+                        data: form.serializeArray(),
+                        dataType: "json",
+                        success: function(response) {
+                            let icon = ``;
+                            let title = ``;
+                            let text = ``;
+                            if (response.code === 200) {
+                                icon = `success`;
+                                title = `Success`;
+                            } else {
+                                icon = `error`;
+                                title = `Error`;
+                            }
+                            Swal.fire({
+                                icon: icon,
+                                title: title,
+                                text: response.msg,
+                                showConfirmButton: false,
+                                timer: 2500
+                            }).then(function(isConfirm) {
+                                location.reload()
+                            });
+                        }
+                    });
+                });
+
+                $('.btn_submenu_delete').on('click', function() {
+                    let id_submenu = $(this).attr("data-submenu");
+                    let nama_submenu = $(this).attr("nama-submenu");
+                    let table = `submenu`;
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: `The ${nama_submenu} submenu, will delete!`,
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                type: "POST",
+                                url: "submenu/hapus_submenu", // where you wanna post
+                                data: {
+                                    id: id_submenu,
+                                    table: table
+                                },
+                                dataType: "json",
+                                success: function(response) {
+                                    // console.log(response)
+                                    let title = ``;
+                                    let msg = ``;
+                                    let icon = ``;
+                                    if (response.code === 200) {
+                                        title = `Deleted`;
+                                        icon = `success`;
+                                    } else {
+                                        title = `Error!`;
+                                        icon = `error`;
+                                    }
+                                    Swal.fire(
+                                        title,
+                                        response.msg,
+                                        icon
+                                    )
+                                    location.reload();
+                                }
+                            })
+                        }
+                    })
                 });
             }
         });

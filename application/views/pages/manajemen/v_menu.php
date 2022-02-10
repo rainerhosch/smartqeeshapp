@@ -290,8 +290,8 @@
                     let form = $(this);
                     $.ajax({
                         type: "POST",
-                        url: "menu/simpan_menu", // where you wanna post
-                        data: form.serialize(), // serializes form input,
+                        url: "menu/simpan_menu",
+                        data: form.serialize(),
                         dataType: "json",
                         success: function(response) {
                             // console.log(response);

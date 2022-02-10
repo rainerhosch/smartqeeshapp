@@ -80,9 +80,9 @@ class Menu extends CI_Controller
         // code here...
         if ($this->input->is_ajax_request()) {
             $id_user = $this->session->userdata('user_id');
-            $field = 'users.role_id';
+            $field = 'user.role_id';
             $condition = [
-                'users.user_id' => $id_user
+                'user.user_id' => $id_user
             ];
             $data_user = $this->user->get_user($field, $condition)->row_array();
 
