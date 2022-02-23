@@ -48,7 +48,6 @@
             url: "<?= base_url() ?>menu/get_user_access_menu",
             dataType: "json",
             success: function(response) {
-                // console.log(response)
                 if (response.status === true) {
                     if (response.data != 0) {
                         let url = $(location).attr('href').split("/").splice(0, 10).join("/");
@@ -57,7 +56,7 @@
                         let html = ``;
                         let class_active = ``;
                         $.each(response.data, function(i, menu) {
-                            html += `<li class="nav-header">${menu.nama_menu}</li>`;
+                            html += `<li class="nav-header"><strong>${menu.nama_menu}</strong></li>`;
                             if (menu.submenu != 0) {
                                 $.each(menu.submenu, function(i, sm) {
                                     let nm_submenu = sm.nama_submenu;
