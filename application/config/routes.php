@@ -54,5 +54,7 @@ $route['submenu/(:any)'] = 'manajemen/submenu/$1';
 $route['menu/(:any)'] = 'manajemen/menu/$1';
 $route['user/(:any)'] = 'manajemen/user/$1';
 $route['roleuser/(:any)'] = 'manajemen/roleuser/$1';
+$route['risk_management/(:any)'] = 'risk_management/$1';
+$route['legal_compliance/(:any)'] = 'legal_compliance/$1';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

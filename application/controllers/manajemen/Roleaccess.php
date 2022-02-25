@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 /**
- *  File Name             : RoleUser.php
+ *  File Name             : Roleaccess.php
  *  File Type             : Controller
  *  File Package          : CI_Controller
  ** * * * * * * * * * * * * * * * * * **
@@ -9,7 +9,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
  *  Date Created          : 24/02/2022
  *  Quots of the code     : 'rapihkan lah code mu, seperti halnya kau menata kehidupan'
  */
-class RoleUser extends CI_Controller
+class Roleaccess extends CI_Controller
 {
     public function __construct()
     {
@@ -24,7 +24,7 @@ class RoleUser extends CI_Controller
         // code here...
         $data['title'] = 'Smart Qeesh App';
         $data['page'] = 'Manajemen';
-        $data['subpage'] = 'Role User';
+        $data['subpage'] = 'Role Access';
         $data['content'] = 'pages/manajemen/v_user_role';
         $this->load->view('template', $data);
     }

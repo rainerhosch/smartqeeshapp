@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 /**
- *  File Name             : risk_manj_performance.php
+ *  File Name             : Legal_compliance_home.php
  *  File Type             : Controller
  *  File Package          : CI_Controller
  ** * * * * * * * * * * * * * * * * * **
@@ -9,7 +9,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
  *  Date Created          : 29/01/2022
  *  Quots of the code     : 'rapihkan lah code mu, seperti halnya kau menata kehidupan'
  */
-class Legal_compliance extends CI_Controller
+class Legal_compliance_home extends CI_Controller
 {
     public function __construct()
     {
