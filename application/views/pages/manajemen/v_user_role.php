@@ -145,7 +145,7 @@
     $(document).ready(function() {
         $.ajax({
             type: "POST",
-            url: "<?= base_url() ?>roleaccess/get_data_role",
+            url: "<?= base_url() ?>role_access/get_data_role",
             dataType: "json",
             success: function(response) {
                 // console.log(response);
@@ -213,7 +213,7 @@
                     let role_id = $(this).attr('value');
                     $.ajax({
                         type: "POST",
-                        url: "roleaccess/get_menu_access",
+                        url: "role_access/get_menu_access",
                         data: {
                             role_id: role_id,
                         },
@@ -251,7 +251,7 @@
                     let form = $(this);
                     $.ajax({
                         type: "POST",
-                        url: "roleaccess/simpan_menu_access",
+                        url: "role_access/simpan_menu_access",
                         data: form.serializeArray(),
                         dataType: "json",
                         success: function(response) {
@@ -284,7 +284,7 @@
                     let form = $(this);
                     $.ajax({
                         type: "POST",
-                        url: "roleaccess/simpan_role_baru",
+                        url: "role_access/simpan_role_baru",
                         data: form.serializeArray(),
                         dataType: "json",
                         success: function(response) {
@@ -328,7 +328,7 @@
                         if (result.isConfirmed) {
                             $.ajax({
                                 type: "POST",
-                                url: "roleaccess/delete_role_user", // where you wanna post
+                                url: "role_access/delete_role_user", // where you wanna post
                                 data: {
                                     id: id
                                 },
@@ -377,7 +377,7 @@
                         if (result.isConfirmed) {
                             $.ajax({
                                 type: "POST",
-                                url: "roleaccess/delete_role_access_menu", // where you wanna post
+                                url: "role_access/delete_role_access_menu", // where you wanna post
                                 data: {
                                     id: id
                                 },

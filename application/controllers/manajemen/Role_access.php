@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 /**
- *  File Name             : Roleaccess.php
+ *  File Name             : Role_access.php
  *  File Type             : Controller
  *  File Package          : CI_Controller
  ** * * * * * * * * * * * * * * * * * **
@@ -9,7 +9,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
  *  Date Created          : 24/02/2022
  *  Quots of the code     : 'rapihkan lah code mu, seperti halnya kau menata kehidupan'
  */
-class Roleaccess extends CI_Controller
+class Role_access extends CI_Controller
 {
     public function __construct()
     {

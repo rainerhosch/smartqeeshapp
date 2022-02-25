@@ -141,7 +141,7 @@
               }
             } else {
               // 200
-              window.location = `<?= base_url('dashboard/home') ?>`
+              window.location = `<?= base_url('risk_management/home') ?>`
             }
           }
         });

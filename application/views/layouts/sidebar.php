@@ -60,7 +60,7 @@
                             if (menu.submenu != 0) {
                                 $.each(menu.submenu, function(i, sm) {
                                     let nm_submenu = sm.nama_submenu;
-                                    nm_submenu = nm_submenu.replace(/ /g, "");
+                                    nm_submenu = nm_submenu.replace(/ /g, "_");
                                     html += `<li class="nav-item">`;
                                     if (nm_submenu.toLowerCase() === segments[numb].toLowerCase()) {
                                         html += `<a href="<?= base_url() ?>${sm.url}" class="nav-link active">`;

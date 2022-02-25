@@ -176,7 +176,7 @@
     $(document).ready(function() {
         $.ajax({
             type: "POST",
-            url: "<?= base_url() ?>submenu/get_submenu",
+            url: "<?= base_url() ?>sub_menu/get_submenu",
             dataType: "json",
             success: function(response) {
                 // console.log(response)
@@ -243,7 +243,7 @@
                     let form = $(this);
                     $.ajax({
                         type: "POST",
-                        url: "submenu/simpan_submenu",
+                        url: "sub_menu/simpan_submenu",
                         data: form.serializeArray(),
                         dataType: "json",
                         success: function(response) {
@@ -278,7 +278,7 @@
                     } else {
                         $.ajax({
                             type: "POST",
-                            url: "submenu/get_submenu",
+                            url: "sub_menu/get_submenu",
                             data: {
                                 id_submenu: id_submenu,
                             },
@@ -301,7 +301,7 @@
                     let form = $(this);
                     $.ajax({
                         type: "POST",
-                        url: "submenu/simpan_submenu",
+                        url: "sub_menu/simpan_submenu",
                         data: form.serializeArray(),
                         dataType: "json",
                         success: function(response) {
@@ -344,7 +344,7 @@
                         if (result.isConfirmed) {
                             $.ajax({
                                 type: "POST",
-                                url: "submenu/hapus_submenu", // where you wanna post
+                                url: "sub_menu/hapus_submenu", // where you wanna post
                                 data: {
                                     id: id_submenu,
                                     table: table
