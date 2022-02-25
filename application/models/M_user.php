@@ -24,6 +24,16 @@ class M_user extends CI_Model
         return $this->db->get();
     }
 
+    public function get_role_user($where = null)
+    {
+        $this->db->select('role_id, role_type, description');
+        $this->db->from('user_role');
+        if ($where != null) {
+            $this->db->where($where);
+        }
+        return $this->db->get();
+    }
+
     // insert data
     public function insert_data($table, $data)
     {
