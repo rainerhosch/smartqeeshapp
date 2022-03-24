@@ -40,6 +40,13 @@ class Dokumen extends CI_Controller
 			"txtInsertedBy" 	=> $this->session->userdata('user_id'),
 			"dtmInsertedDate" 	=> $this->dateNow
 		];
-		
+		$this->dokumen->simpan ($data);
+		$response = [
+						'code' => 200,
+						'status' => true,
+						'msg' => 'Berhasil disimpan.',
+						'data' => "-"
+					];
+		echo json_encode($response);
 	}
 }
