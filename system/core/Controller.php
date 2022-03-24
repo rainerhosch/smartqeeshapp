@@ -58,6 +58,8 @@ class CI_Controller {
 	 */
 	private static $instance;
 
+	public $dateNow = date("yyyy-mm-dd");
+
 	/**
 	 * CI_Loader
 	 *
