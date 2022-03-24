@@ -24,7 +24,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/plugins/summernote/summernote-bs4.min.css"> -->
     <?php endif; ?>
     <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/css/main-bg-photo.css">
-    <!-- <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/css/main.css"> -->
+    <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/css/main.css">
 </head>
 <?php if ($page != 'Auth') : ?>
 

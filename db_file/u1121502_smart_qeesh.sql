@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Waktu pembuatan: 24 Mar 2022 pada 19.59
+-- Waktu pembuatan: 24 Mar 2022 pada 20.47
 -- Versi server: 10.5.13-MariaDB-cll-lve
 -- Versi PHP: 7.3.33
 
