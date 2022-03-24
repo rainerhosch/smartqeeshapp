@@ -58,8 +58,6 @@ class CI_Controller {
 	 */
 	private static $instance;
 
-	public $dateNow = date("yyyy-mm-dd");
-
 	/**
 	 * CI_Loader
 	 *
@@ -85,7 +83,7 @@ class CI_Controller {
 		}
 
 		$this->load =& load_class('Loader', 'core');
-		$this->load->initialize();
+		$this->load->initialize();		
 		log_message('info', 'Controller Class Initialized');
 	}
 

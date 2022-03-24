@@ -35,10 +35,11 @@ class Dokumen extends CI_Controller
 
 	public function simpan()
 	{
+		$dateNow = date("yyyy-mm-dd");
 		$data = [
 			"txtDocNumber" 		=> $this->input->post('txtDocNumber'),
 			"txtInsertedBy" 	=> $this->session->userdata('user_id'),
-			"dtmInsertedDate" 	=> $this->dateNow
+			"dtmInsertedDate" 	=> $dateNow
 		];
 		$this->dokumen->simpan ($data);
 		$response = [
