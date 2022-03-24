@@ -1,0 +1,136 @@
+/* halaman login */
+/**
+* perbaikan code login page
+* untuk mengganti ke tampilan awal tinggal unkomen code yang di coment
+*/
+.card {
+	background-color: #fff0;
+}
+.bg-login-page {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	justify-content: center;
+	/* background: rgb(116, 121, 121);
+	background: linear-gradient(
+		0deg,
+		rgba(116, 121, 121, 0.64) 13%,
+		rgba(255, 176, 0, 0.35058823529411764) 100%
+	); */
+
+	/* comment this code of use default theme and uncoment uper code*/
+	background-image: url("../img/background.jpg");
+	background-repeat: no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	/* comment this code of use default theme */
+}
+
+/* #### Mobile Phones Portrait #### */
+@media screen and (max-device-width: 357px) and (orientation: portrait) {
+	/* some CSS here */
+	.bg-login-page {
+		height: 100vh;
+	}
+	.bg-login-page .login-box img {
+		margin-top: 40px;
+		height: 80px;
+	}
+}
+@media screen and (max-device-width: 480px) and (orientation: portrait) {
+	/* some CSS here */
+	.bg-login-page {
+		height: 100vh;
+	}
+	.bg-login-page .login-box img {
+		/* margin-top: 40px; */
+		height: 90px;
+	}
+}
+
+/* #### Mobile Phones Landscape #### */
+@media screen and (max-device-width: 667px) and (orientation: landscape) {
+	/* some CSS here */
+	.bg-login-page {
+		height: 100vh;
+	}
+}
+/* #### iPhone 5 Portrait or Landscape #### */
+@media (device-height: 568px) and (device-width: 320px) and (-webkit-min-device-pixel-ratio: 2) {
+	/* some CSS here */
+	.bg-login-page {
+		height: 90vh;
+	}
+	.bg-login-page .login-box img {
+		margin-top: 40px;
+		height: 80px;
+	}
+}
+
+/* #### iPhone 6 and 6 plus Portrait or Landscape #### */
+@media (min-device-height: 667px) and (min-device-width: 375px) and (-webkit-min-device-pixel-ratio: 3) {
+	/* some CSS here */
+	.bg-login-page {
+		height: 90vh;
+	}
+	.bg-login-page .login-box img {
+		margin-top: 40px;
+		height: 120px;
+	}
+}
+
+/* #### Tablets Portrait or Landscape #### */
+@media screen and (min-device-width: 768px) and (max-device-width: 1023px) {
+	/* some CSS here */
+	.bg-login-page {
+		height: 90vh;
+	}
+	.bg-login-page .login-box img {
+		margin-top: 40px;
+		height: 120px;
+	}
+}
+
+/* #### Desktops #### */
+@media screen and (min-width: 1024px) {
+	/* some CSS here */
+	.bg-login-page {
+		height: 75vh;
+	}
+	.bg-login-page .login-box img {
+		height: 120px;
+	}
+}
+
+.bg-login-page .login-box h6 {
+	font-size: 15px;
+	/* font-weight: 500; */
+	margin-top: 5px;
+}
+.login-box .card-body {
+	border-radius: 1%;
+	/* background: #fdd591; */
+	background: #44545494;
+}
+.bg-login-page .bg-header1 {
+	background: #fca954;
+	height: 35px;
+}
+.bg-login-page .bg-header2 {
+	background: #3e92d1;
+	height: 10px;
+}
+.card-footer-login {
+	/* padding: 0.75rem 1.25rem;
+	background-color: rgb(253 213 145 / 61%);
+	border-top: 0 solid rgba(0, 0, 0, 0.125); */
+
+	/* comment this code of use default theme and uncoment uper code*/
+	padding: 0.75rem 1.25rem;
+	background-color: rgb(48 47 43 / 93%);
+	border-top: 0 solid rgba(0, 0, 0, 0.125);
+	/* comment this code of use default theme */
+}
