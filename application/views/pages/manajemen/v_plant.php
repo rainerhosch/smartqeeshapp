@@ -40,7 +40,14 @@
 								</div>
 								<div class="col-lg-12">
 									<div class="d-flex justify-content-end">
-										<button class="btn btn-info" id="tombol_simpan">Simpan</button>
+										<div class="row">
+											<div class="col-xs-12 div col-lg-6">
+												<button class="btn btn-warning" onclick="window.location.reload()">Reset</button>
+											</div>
+											<div class="col-xs-12 div col-lg-6">
+												<button class="btn btn-info" id="tombol_simpan">Simpan</button>
+											</div>
+										</div>																				
 									</div>
 								</div>
 							</div>

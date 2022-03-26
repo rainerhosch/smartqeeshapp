@@ -1,5 +1,5 @@
 <!-- Content Wrapper. Contains page content -->
-<input type="hidden" id="txtHiddenMDepartment">
+<input type="hidden" id="txtHiddenObject">
 <div class="content-wrapper">
      <section class="content-header">
           <div class="container-fluid">
@@ -35,7 +35,7 @@
                                    </div>
                               </div>
                               <div class="card-body">
-                                   <a class="btn btn-sm btn-primary btn_menu_add mb-2" data-toggle="modal" data-target="#modalAdd">Add Department</a>
+                                   <button type="button" class="btn btn-sm btn-primary mb-2" id="btnAddDepartment">Add Department</button>
                                    <table class="table table-sm">
                                         <thead>
                                              <tr>
@@ -67,17 +67,21 @@
 </div>
 <!-- modal add menu -->
 <!-- Modal -->
-<div class="modal fade" id="modalAdd" tabindex="-1" role="dialog" aria-labelledby="modalAddTitle" aria-hidden="true">
+<div class="modal fade" id="modalDepartment" tabindex="-1" role="dialog" aria-labelledby="modalDepartmentTitle" aria-hidden="true">
      <div class="modal-dialog" role="document">
           <div class="modal-content">
                <div class="modal-header">
-                    <h5 class="modal-title">Modal Tambah Department</h5>
+                    <h5 class="modal-title" id="modalTitle"></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                          <span aria-hidden="true">&times;</span>
                     </button>
                </div>
-               <form id="formModalAdd">
+               <form id="formModalDepartment">
                     <div class="modal-body">
+                         <div class="form-group">
+                              <label for="txtIdPlant">Plant<small class="text-danger">* (Wajib di isi)</small></label>
+                              <select class="form-control" id="txtIdPlant" name="txtIdPlant"></select>
+                         </div>
                          <div class="form-group">
                               <label for="txtNamaDepartement">Nama<small class="text-danger">* (Wajib di isi)</small></label>
                               <input type="text" class="form-control" id="txtNamaDepartement" name="txtNamaDepartement" placeholder="Nama Department" required>

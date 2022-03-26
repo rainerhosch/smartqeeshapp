@@ -96,8 +96,8 @@ class M_plant extends CI_Model
 		return $this->db->get_where($this->table, ['intIdPlant' => $id])->row();
 		
 	}
-
-	public function simpan ($data)
+	
+	public function simpan($data)
 	{
 		$this->db->insert($this->table, $data);
 	}
@@ -110,6 +110,10 @@ class M_plant extends CI_Model
 		// } catch (\Exception $e) {
 		// 	var_dump($e->getMessage());exit;
 		// }	
-		
+	}
+	
+	public function getsPlantActive()
+	{
+		return $this->db->get_where($this->table, ["bitActive" => 1])->result_array();
 	}
 }
