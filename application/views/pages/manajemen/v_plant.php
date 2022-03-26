@@ -19,7 +19,7 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="card">
-						<div class="card-header">
+						<div class="card-header bg-blue">
                             <h3 class="card-title">Form Input</h3>                            
                         </div>
 						<div class="card-body">
@@ -46,10 +46,12 @@
 							</div>
 						</div>
 					</div>
-				</div>
+				</div>				
+			</div>
+			<div class="row">
 				<div class="col-lg-12">
 					<div class="card">
-						<div class="card-header">
+						<div class="card-header bg-green">
                             <h3 class="card-title">Data</h3>                            
                         </div>
 						<div class="card-body">
