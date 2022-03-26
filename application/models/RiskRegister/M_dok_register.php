@@ -83,6 +83,7 @@ class M_dok_register extends CI_Model
 	function count_filtered()
 	{
 		$this->_get_datatables_query();
+		$this->db->join('user_detail', 'trDokRiskRegister.intInsertedBy=user_detail.user_detail_id');
 		$query = $this->db->get();
 		return $query->num_rows();
 	}
@@ -90,6 +91,7 @@ class M_dok_register extends CI_Model
 	public function count_all()
 	{
 		$this->db->from($this->table);
+		$this->db->join('user_detail', 'trDokRiskRegister.intInsertedBy=user_detail.user_detail_id');
 		return $this->db->count_all_results();
 	}
 
