@@ -90,8 +90,13 @@ class M_plant extends CI_Model
 		return $this->db->count_all_results();
 	}
 
-	public function simpan ($data)
+	public function simpan($data)
 	{
 		$this->db->insert($this->table, $data);
+	}
+
+	public function getsPlantActive()
+	{
+		return $this->db->get_where($this->table, ["bitActive" => 1])->result_array();
 	}
 }

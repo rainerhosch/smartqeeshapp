@@ -19,10 +19,10 @@ class Department extends CI_Controller
 
      public function index()
      {
-          $data['title'] = 'Smart Qeesh App';
-          $data['page'] = 'Manajemen';
-          $data['subpage'] = 'Manajemen Department';
-          $data['content'] = 'pages/manajemen/v_department';
+          $data['title']      = 'Smart Qeesh App';
+          $data['page']       = 'Manajemen';
+          $data['subpage']    = 'Manajemen Department';
+          $data['content']    = 'pages/manajemen/v_department';
           $this->load->view('template', $data);
      }
 
@@ -30,14 +30,14 @@ class Department extends CI_Controller
      {
           try {
                $data = [
-                    "intIdDepartment" => 0,
-                    "intIdPlant" => 0,
+                    "intIdDepartment"   => 0,
+                    "intIdPlant"        => 0,
                     "txtNamaDepartment" => "",
-                    "bitActive" => true,
-                    "intInsertedBy" => 0,
-                    "dtmInsertedDate" => date("Y-m-d"),
-                    "intUpdatedBy" => 0,
-                    "dtmUpdatedDate" => date("Y-m-d")
+                    "bitActive"         => true,
+                    "intInsertedBy"     => 0,
+                    "dtmInsertedDate"   => "",
+                    "intUpdatedBy"      => 0,
+                    "dtmUpdatedDate"    => ""
                ];
 
                echo json_encode($data);

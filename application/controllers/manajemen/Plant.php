@@ -12,21 +12,32 @@ defined('BASEPATH') or exit('No direct script access allowed');
  */
 class Plant extends CI_Controller
 {
-    public function __construct()
-    {
-        parent::__construct();
-        login_check();
-        $this->load->model('/Manajemen/M_plant', 'plant');
-    }
+	public function __construct()
+	{
+		parent::__construct();
+		login_check();
+		$this->load->model('/Manajemen/M_plant', 'plant');
+	}
 
-    public function index()
-    {
-        $data['title'] 		= 'Smart Qeesh App';
-        $data['page'] 		= 'Manajemen Plant';
-        $data['subpage'] 	= 'Blank Page';        
-        $data['content'] 	= 'pages/manajemen/v_plant';
-        $this->load->view('template', $data);
-    }
+	public function getsPlant()
+	{
+		try {
+			$allData = $this->plant->getsPlantActive();
+
+			echo json_encode($allData);
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
+	}
+
+	public function index()
+	{
+		$data['title'] 	= 'Smart Qeesh App';
+		$data['page'] 		= 'Manajemen Plant';
+		$data['subpage'] 	= 'Blank Page';
+		$data['content'] 	= 'pages/manajemen/v_plant';
+		$this->load->view('template', $data);
+	}
 
 	public function getDataTable()
 	{
@@ -37,18 +48,18 @@ class Plant extends CI_Controller
 	{
 		$dateNow = date("Y-m-d");
 		$data = [
-			"txtNamaPlant" 		=> $this->input->post('txtNamaPlant'),
+			"txtNamaPlant" 	=> $this->input->post('txtNamaPlant'),
 			"bitActive" 		=> $this->input->post('bitActive'),
 			"intInsertedBy" 	=> $this->session->userdata('user_id'),
 			"dtmInsertedDate" 	=> $dateNow
 		];
-		$this->plant->simpan ($data);
+		$this->plant->simpan($data);
 		$response = [
-						'code' => 200,
-						'status' => true,
-						'msg' => 'Berhasil disimpan.',
-						'data' => "-"
-					];
+			'code' => 200,
+			'status' => true,
+			'msg' => 'Berhasil disimpan.',
+			'data' => "-"
+		];
 		echo json_encode($response);
 	}
 }
