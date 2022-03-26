@@ -40,13 +40,30 @@
                                         <thead>
                                              <tr>
                                                   <th class="text-center">#</th>
-                                                  <th class="text-center">NAMA</th>
+                                                  <th class="text-center">NAMA PLANT</th>
+                                                  <th class="text-center">NAMA DEPARTMENT</th>
                                                   <th class="text-center">AKTIF</th>
                                                   <th class="text-center">TOOL</th>
                                              </tr>
                                         </thead>
                                         <tbody id="menu_tbody">
-
+                                             <?php foreach ($departments as $department) : ?>
+                                                  <tr>
+                                                       <td class="text-center"><?= $department["intIdDepartement"] ?></td>
+                                                       <td><?= $department["txtNamaPlant"] ?></td>
+                                                       <td><?= $department["txtNamaDepartement"] ?></td>
+                                                       <td class="text-center">
+                                                            <?php if ($department["bitActive"]) : ?>
+                                                                 <i class="fas fa-check text-success"></i>
+                                                            <?php else : ?>
+                                                                 <i class="fas fa-times text-danger"></i>
+                                                            <?php endif; ?>
+                                                       </td>
+                                                       <td class="text-center">
+                                                            <button class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Edit</button>
+                                                       </td>
+                                                  </tr>
+                                             <?php endforeach; ?>
                                         </tbody>
                                    </table>
                               </div>

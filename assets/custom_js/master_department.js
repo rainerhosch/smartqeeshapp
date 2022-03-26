@@ -52,7 +52,11 @@ function saveData(){
           dataType: "json",
           type: "post",
           success: function(response){
-               console.log(response);
+               if(response.status == true){
+                    $.successMessage("Berhasil", response.msg);
+               }else{
+                    $.errorMessage("Gagal", response.msg);
+               }
           }, error: function(e){
                console.log(e);
           }

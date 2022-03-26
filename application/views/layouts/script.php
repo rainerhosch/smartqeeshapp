@@ -9,3 +9,4 @@
     <script src="<?= base_url('assets/templates') ?>/plugins/moment/moment.min.js"></script>
     <script src="<?= base_url('assets/templates') ?>/plugins/daterangepicker/daterangepicker.js"></script>
 <?php endif; ?>
+<script src="<?= base_url("assets/custom_js/clsGlobal.js") ?>"></script>

@@ -21,7 +21,14 @@ class M_department extends CI_Model
      }
 
      //ACTION
-     public function getsDepartment()
+     public function getsDepartmentPlant()
+     {
+          $this->db->select("intIdDepartement, mDepartemen.intIdPlant, mPlant.txtNamaPlant, txtNamaDepartement, mDepartemen.bitActive");
+          $this->db->join("mPlant", "mDepartemen.intIdPlant = mPlant.intIdPlant");
+          return $this->db->get($this->table)->result_array();
+     }
+
+     public function getsDepartmentActive()
      {
           return $this->db->get_where($this->table, ["bitActive" => true])->result_array();
      }
@@ -29,5 +36,6 @@ class M_department extends CI_Model
      public function insertData($data)
      {
           $this->db->insert($this->table, $data);
+          return $this->db->insert_id();
      }
 }

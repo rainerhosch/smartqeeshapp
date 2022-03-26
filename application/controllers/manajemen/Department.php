@@ -20,10 +20,12 @@ class Department extends CI_Controller
 
      public function index()
      {
-          $data['title']      = 'Smart Qeesh App';
-          $data['page']       = 'Manajemen';
-          $data['subpage']    = 'Manajemen Department';
-          $data['content']    = 'pages/manajemen/v_department';
+          $data['title']           = 'Smart Qeesh App';
+          $data['page']            = 'Manajemen';
+          $data['subpage']         = 'Manajemen Department';
+          $data['content']         = 'pages/manajemen/v_department';
+
+          $data["departments"]     = $this->department->getsDepartmentPlant();
           $this->load->view('template', $data);
      }
 
@@ -64,17 +66,27 @@ class Department extends CI_Controller
                     $parseData["intUpdatedBy"]    = $this->session->userdata('user_id');
                     $parseData["dtmUpdatedDate"]  = date("Y-m-d");
 
-                    $this->department->insertData($parseData);
+                    $id = $this->department->insertData($parseData);
+                    $parseData["intIdDepartement"] = $id;
+
+                    $validasi["pesan"] = "Berhasil simpan";
                } else {
                     //UPDATE
                     $parseData["intUpdatedBy"]    = $this->session->userdata('user_id');
                     $parseData["dtmUpdatedDate"]  = date("Y-m-d");
-               }
 
-               echo json_encode($parseData);
-          } else {
-               echo json_encode($validasi);
+                    $validasi["pesan"] = "Berhasil simpan perubahan";
+               }
           }
+
+          $response = [
+               'code'    => $validasi["code"],
+               'status'  => $validasi["status"],
+               'msg'     => $validasi["pesan"],
+               'data'    => $parseData
+          ];
+
+          echo json_encode($response);
      }
 
      private function validasiSaveData($data)
@@ -102,13 +114,16 @@ class Department extends CI_Controller
 
           if ($pesan == "") {
                $status = true;
+               $code = 200;
           } else {
                $status = false;
+               $code = 400;
           }
 
           $returnData = [
                "status"  => $status,
-               "pesan"   => $pesan
+               "pesan"   => $pesan,
+               "code"    => $code
           ];
 
           return $returnData;

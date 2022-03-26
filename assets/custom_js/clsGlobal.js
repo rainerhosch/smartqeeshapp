@@ -41,7 +41,7 @@
              Swal.fire({
                  title: title,
                  text: message,
-                 type: 'success',
+                 icon: 'success',
                  timer: 1500,
                  showConfirmButton: false,
              });
