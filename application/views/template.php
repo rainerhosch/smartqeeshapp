@@ -25,6 +25,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <?php endif; ?>
     <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/css/main-bg-photo.css">
     <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/css/main.css">
+    <script>
+        var url = "<?= base_url(); ?>";
+    </script>
 </head>
 <?php if ($page != 'Auth') : ?>
 
