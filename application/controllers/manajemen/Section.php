@@ -2,7 +2,7 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 /**
- *  File Name             : Plant.php
+ *  File Name             : Section.php
  *  File Type             : Controller
  *  File Package          : CI_Controller
  ** * * * * * * * * * * * * * * * * * **
@@ -10,20 +10,20 @@ defined('BASEPATH') or exit('No direct script access allowed');
  *  Date Created          : 26/03/2022
  *  Quots of the code     : Kadang susah kalo udah nyaman sama framework sebelah :D
  */
-class Plant extends CI_Controller
+class Section extends CI_Controller
 {
 	public function __construct()
 	{
 		parent::__construct();
 		login_check();
-		$this->load->model('/Manajemen/M_plant', 'plant');
+		$this->load->model('/Manajemen/M_section', 'section');
+		$this->load->model('/Manajemen/M_department', 'departement');
 	}
 
-	public function getsPlant()
+	public function getsSection()
 	{
 		try {
-			$allData = $this->plant->getsPlantActive();
-
+			$allData = $this->section->getsPlantActive();
 			echo json_encode($allData);
 		} catch (\Exception $e) {
 			die($e->getMessage());
@@ -31,23 +31,24 @@ class Plant extends CI_Controller
 	}
 
 	public function index()
-	{
-		$data['title'] 	= 'Smart Qeesh App';
-		$data['page'] 		= 'Manajemen Plant';
+	{		
+		$data['title'] 		= 'Smart Qeesh App';
+		$data['page'] 		= 'Manajemen Section';
 		$data['subpage'] 	= 'Blank Page';
-		$data['content'] 	= 'pages/manajemen/v_plant';
+		$data['content'] 	= 'pages/manajemen/v_section';
+		$data["departemen"]	= $this->departement->getsDepartmentActive();
 		$this->load->view('template', $data);
 	}
 
 	public function getDataTable()
 	{
-		echo json_encode($this->plant->get_datatables());
+		echo json_encode($this->section->get_datatables());
 	}
 
 	public function getById ()
 	{
-		$id 	= $this->input->get('intIdPlant');
-		$data 	= $this->plant->getById($id);		
+		$id 	= $this->input->get('intIdSection');
+		$data 	= $this->section->getById($id);		
 		if ($data != null) {
 			echo json_encode ([
 				'code' 		=> 200,
@@ -70,12 +71,14 @@ class Plant extends CI_Controller
 	{
 		$dateNow = date("Y-m-d");
 		$data = [
-			"txtNamaPlant" 		=> strtoupper($this->input->post('txtNamaPlant')),
+			"txtNamaSection" 	=> strtoupper($this->input->post('txtNamaSection')),
 			"bitActive" 		=> $this->input->post('bitActive'),
-			"intInsertedBy" 	=> $this->session->userdata('user_id'),
+			"intIdDepartemen" 	=> $this->input->post('intIdDepartement'),
+			"intInsertBy" 		=> $this->session->userdata('user_id'),
 			"dtmInsertedDate" 	=> $dateNow
 		];
-		$this->plant->simpan($data);
+		// var_dump($data);exit;	
+		$this->section->simpan($data);	
 		$response = [
 						'code' 		=> 200,
 						'status' 	=> true,
@@ -87,15 +90,16 @@ class Plant extends CI_Controller
 
 	public function update ()
 	{
-		$dateNow 	= date("Y-m-d");
-		$intIdPlant = $this->input->post('intIdPlant');		 
+		$dateNow 		= date("Y-m-d");
+		$intIdSection 	= $this->input->post('intIdSection');		 
 		$data = [
-			"txtNamaPlant" 		=> strtoupper($this->input->post('txtNamaPlant')),
+			"txtNamaSection" 	=> strtoupper($this->input->post('txtNamaSection')),
 			"bitActive" 		=> $this->input->post('bitActive'),
+			"intIdDepartemen" 	=> $this->input->post('intIdDepartement'),
 			"intUpdatedBy" 		=> $this->session->userdata('user_id'),
 			"dtmUpdatedDate" 	=> $dateNow
 		];
-		$this->plant->update($data, $intIdPlant);
+		$this->section->update($data, $intIdSection);
 		$response = [
 						'code' 		=> 200,
 						'status' 	=> true,

@@ -13,15 +13,20 @@ function p_InitiateDataList() {
 		"serverSide": true,
 		searching: true,
 		"ajax": {
-			"url": `${url}manajemen/Plant/getDataTable`,
+			"url": `${url}manajemen/Section/getDataTable`,
 			"method": "POST",
 			"data": function (d) {
 				// d.__RequestVerificationToken = $('#frmIndex input[name=__RequestVerificationToken]').val()                
 			}
 		},
 		columns: [{
-				"data": "txtNamaPlant",
-				"name": "txtNamaPlant",
+				"data": "txtNamaSection",
+				"name": "txtNamaSection",
+				className: 'text-center'
+			},
+			{
+				"data": "txtNamaDepartemen",
+				"name": "txtNamaDepartemen",
 				className: 'text-center'
 			},			
 			{				
@@ -38,7 +43,7 @@ function p_InitiateDataList() {
 			{				
 				"name": "option",
 				render: function (data, type, full, meta) {					
-					return `<button class="btn btn-primary" id="tombol_edit" data-id="${full.intIdPlant}"><i class="fa fa-edit"></i></button>`
+					return `<button class="btn btn-primary" id="tombol_edit" data-id="${full.intIdSection}"><i class="fa fa-edit"></i></button>`
                 },
 				className: 'text-center'
 			},
@@ -51,17 +56,18 @@ $(document).on('click', '#tombol_edit', function (e) {
 	let id = $(this).data('id');
 	$.ajax({
 		type: "get",
-		url: `${url}manajemen/Plant/getById`,
+		url: `${url}manajemen/Section/getById`,
 		data: {
-			intIdPlant: id
+			intIdSection: id
 		},
 		dataType: "json",
 		success: function (response) {
 			console.log(response);
 			if (response.data != null) {
 				let data = response.data
-				$("#intIdPlant").val(data.intIdPlant);
-				$("#txtNamaPlant").val(data.txtNamaPlant);
+				$("#intIdSection").val(data.intIdSection);
+				$("#txtNamaSection").val(data.txtNamaSection);
+				$("#intIdDepartement").val(data.intIdDepartemen);
 				$("#bitActive").val(data.bitActive);
 			}
 		}
@@ -70,16 +76,17 @@ $(document).on('click', '#tombol_edit', function (e) {
 
 $("#tombol_simpan").on('click', function (e) {
 	e.preventDefault();
-	let id = $("#intIdPlant").val()
+	let id = $("#intIdSection").val()
 	let data = {
-		txtNamaPlant: $("#txtNamaPlant").val(),
+		txtNamaSection: $("#txtNamaSection").val(),
+		intIdDepartement: $("#intIdDepartement").val(),
 		bitActive: $("#bitActive").val(),
-		intIdPlant: id
+		intIdSection: id
 	}
 	if (id == "") {
 		$.ajax({
 			type: "post",
-			url: `${url}manajemen/Plant/simpan`,
+			url: `${url}manajemen/Section/simpan`,
 			data: data,
 			dataType: "json",
 			success: function (response) {
@@ -92,7 +99,7 @@ $("#tombol_simpan").on('click', function (e) {
 	} else {
 		$.ajax({
 			type: "post",
-			url: `${url}manajemen/Plant/update`,
+			url: `${url}manajemen/Section/update`,
 			data: data,
 			dataType: "json",
 			success: function (response) {

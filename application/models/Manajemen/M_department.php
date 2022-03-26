@@ -30,7 +30,7 @@ class M_department extends CI_Model
 
      public function getsDepartmentActive()
      {
-          return $this->db->get_where($this->table, ["bitActive" => true])->result_array();
+          return $this->db->get_where($this->table, ["bitActive" => true])->result();
      }
 
      public function insertData($data)
