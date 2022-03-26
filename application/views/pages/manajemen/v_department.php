@@ -79,12 +79,20 @@
                <form id="formModalDepartment">
                     <div class="modal-body">
                          <div class="form-group">
-                              <label for="txtIdPlant">Plant<small class="text-danger">* (Wajib di isi)</small></label>
-                              <select class="form-control" id="txtIdPlant" name="txtIdPlant"></select>
+                              <label for="intIdDepartement">ID Department</label>
+                              <input type="text" class="form-control" name="intIdDepartement" id="intIdDepartement" readonly>
+                         </div>
+                         <div class="form-group">
+                              <label for="intIdPlant">Plant<small class="text-danger">* (Wajib di isi)</small></label>
+                              <select class="form-control" id="intIdPlant" name="intIdPlant"></select>
                          </div>
                          <div class="form-group">
                               <label for="txtNamaDepartement">Nama<small class="text-danger">* (Wajib di isi)</small></label>
                               <input type="text" class="form-control" id="txtNamaDepartement" name="txtNamaDepartement" placeholder="Nama Department" required>
+                         </div>
+                         <div class="form-group">
+                              <label for="bitActive">Aktif</label>
+                              <input type="checkbox" class="form-control" id="bitActive" name="bitActive">
                          </div>
                     </div>
                     <div class="modal-footer justify-content-between">
@@ -92,48 +100,6 @@
                          <button type="submit" class="btn btn-sm btn-primary">Submit</button>
                     </div>
                </form>
-          </div>
-     </div>
-</div>
-<!-- modal edit menu -->
-<div class="modal fade" id="modalEditMenu" tabindex="-1" role="dialog" aria-labelledby="modalEditMenuTitle" aria-hidden="true">
-     <div class="modal-dialog" role="document">
-          <div class="modal-content">
-               <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Edit Menu</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                         <span aria-hidden="true">&times;</span>
-                    </button>
-               </div>
-               <div class="modal-body">
-                    <form id="form_edit_menu" enctype="multipart/form-data">
-                         <div class="form-group row">
-                              <label for="nama_menu" class="col-sm-2 col-form-label">Nama</label>
-                              <div class="col-sm-10">
-                                   <input type="hidden" class="form-control" id="id_menu_edit" name="id_menu_edit">
-                                   <input type="text" class="form-control" id="nama_menu_edit" name="nama_menu_edit">
-                              </div>
-                         </div>
-                         <div class="form-group row">
-                              <label for="url_menu" class="col-sm-2 col-form-label">Url</label>
-                              <div class="col-sm-10">
-                                   <input type="text" class="form-control" id="url_menu_edit" name="url_menu_edit">
-                              </div>
-                         </div>
-                         <div class="form-group row">
-                              <label for="icon_menu" class="col-sm-2 col-form-label">Icon</label>
-                              <div class="col-sm-10">
-                                   <input type="text" class="form-control" id="icon_menu_edit" name="icon_menu_edit">
-                              </div>
-                         </div>
-                         <div class="row">
-                              <div class="col-sm-10"></div>
-                              <div class="col-sm-2 float-right">
-                                   <button type="submit" class="btn btn-sm btn-primary btn_save">Submit</button>
-                              </div>
-                         </div>
-                    </form>
-               </div>
           </div>
      </div>
 </div>
