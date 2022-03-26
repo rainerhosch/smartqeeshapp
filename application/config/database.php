@@ -6,10 +6,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => '',
-	'database' => 'db_smart_qeesh',
+	'hostname' => '45.130.230.220',
+	'username' => 'u1121502_smarqeesh_dev',
+	'password' => 'smarqeesh',
+	'database' => 'u1121502_smart_qeesh_testing',
 	// 'username' => 'u1121502_smarqeesh_dev',
 	// 'password' => 'smarqeesh',
 	// 'database' => 'u1121502_smart_qeesh',
