@@ -1,3 +1,139 @@
+var clsGlobalClass = function () {
+    // Properties Global.
+}
+
+// PARSING
+
+clsGlobalClass.prototype.parseToString = function (txtValue) {
+    try {
+        if (txtValue == undefined) {
+            return "";
+        }
+        else {
+            return txtValue.toString();
+        }
+    } catch (ex) {
+        return "";
+    }
+}
+
+clsGlobalClass.prototype.parseToInteger = function (txtValue) {
+    try {
+        if (txtValue == undefined) {
+            return 0;
+        }
+        else {
+            if (txtValue == "") {
+                return 0;
+            } else {
+                return parseInt(txtValue) || 0;
+            }
+        }
+    } catch (ex) {
+        return 0;
+    }
+}
+
+clsGlobalClass.prototype.parseToDecimal = function (txtValue) {
+    try {
+        //debugger;
+        if (txtValue == undefined) {
+            return 0;
+        }
+        else {
+            if (txtValue == "") {
+                return 0;
+            } else {
+                if (!isNaN(txtValue)) {
+                    return parseFloat(txtValue);
+                } else {
+                    return parseFloat(txtValue.replace(/,/g, '')) || 0;
+                }
+            }
+        }
+    } catch (ex) {
+        return 0;
+    }
+}
+
+clsGlobalClass.prototype.parseToBoolean = function (txtValue) {
+    try {
+        if (txtValue == undefined) {
+            return false;
+        }
+        else {
+            if (txtValue == "") {
+                return false;
+            } else {
+                if (txtValue == "on") {
+                    return true;
+                } else {
+                    if (txtValue == "1") {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            }
+        }
+    } catch (ex) {
+        return false;
+    }
+}
+
+clsGlobalClass.prototype.parseToRupiah = function (txtValue) {
+    try {
+        if (txtValue == undefined) {
+            return 0;
+        }
+        else {
+            if (txtValue == "") {
+                return 0;
+            } else {
+                var rupiah = '';
+                var angkarev = txtValue.toString().split('').reverse().join('');
+                for (var i = 0; i < angkarev.length; i++) if (i % 3 == 0) rupiah += angkarev.substr(i, 3) + ',';
+                return rupiah.split('', rupiah.length - 1).reverse().join('');
+            }
+        }
+    } catch (ex) {
+        return 0;
+    }
+};
+
+clsGlobalClass.prototype.parseToAngka = function (txtValue) {
+    try {
+        if (txtValue == undefined) {
+            return 0;
+        }
+        else {
+            if (txtValue == "") {
+                return 0;
+            } else {
+                return parseInt(txtValue.replace(/[^0-9]/g, ''), 10);
+            }
+        }
+    } catch (ex) {
+        return 0;
+    }
+};
+
+clsGlobalClass.prototype.parseJSONdate = function ConvertJsonDateString(jsonDate) {
+    var shortDate = null;
+    if (jsonDate) {
+        var regex = /-?\d+/;
+        var matches = regex.exec(jsonDate);
+        var dt = new Date(parseInt(matches[0]));
+        var month = dt.getMonth() + 1;
+        var monthString = month > 9 ? month : '0' + month;
+        var day = dt.getDate();
+        var dayString = day > 9 ? day : '0' + day;
+        var year = dt.getFullYear();
+        shortDate = monthString + '/' + dayString + '/' + year;
+    }
+    return shortDate;
+};
+
 (function ($) {
      $.extend({
          selectResult: function (x, callback) {
