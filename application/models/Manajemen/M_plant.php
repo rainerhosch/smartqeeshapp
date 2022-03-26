@@ -90,11 +90,28 @@ class M_plant extends CI_Model
 		return $this->db->count_all_results();
 	}
 
+	public function getById ($id)
+	{
+		
+		return $this->db->get_where($this->table, ['intIdPlant' => $id])->row();
+		
+	}
+	
 	public function simpan($data)
 	{
 		$this->db->insert($this->table, $data);
 	}
 
+	public function update($data, $id)
+	{		
+		$this->db->update($this->table, $data, ['intIdPlant' => $id]);
+		// try {
+			
+		// } catch (\Exception $e) {
+		// 	var_dump($e->getMessage());exit;
+		// }	
+	}
+	
 	public function getsPlantActive()
 	{
 		return $this->db->get_where($this->table, ["bitActive" => 1])->result_array();

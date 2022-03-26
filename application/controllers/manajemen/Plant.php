@@ -44,6 +44,28 @@ class Plant extends CI_Controller
 		echo json_encode($this->plant->get_datatables());
 	}
 
+	public function getById ()
+	{
+		$id 	= $this->input->get('intIdPlant');
+		$data 	= $this->plant->getById($id);		
+		if ($data != null) {
+			echo json_encode ([
+				'code' 		=> 200,
+				'status' 	=> true,
+				'msg' 		=> 'Berhasil',
+				'data' 		=> $data
+			]);
+		} else {
+			echo json_encode ([
+				'code' 		=> 404,
+				'status' 	=> true,
+				'msg' 		=> 'Data Tidak Ditemukan !',
+				'data' 		=> null
+			]);
+		} 
+		
+	}
+
 	public function simpan()
 	{
 		$dateNow = date("Y-m-d");
@@ -55,11 +77,31 @@ class Plant extends CI_Controller
 		];
 		$this->plant->simpan($data);
 		$response = [
-			'code' => 200,
-			'status' => true,
-			'msg' => 'Berhasil disimpan.',
-			'data' => "-"
+						'code' 		=> 200,
+						'status' 	=> true,
+						'msg' 		=> 'Berhasil disimpan.',
+						'data' 		=> "-"
+					];
+		echo json_encode($response);
+	}
+
+	public function update ()
+	{
+		$dateNow 	= date("Y-m-d");
+		$intIdPlant = $this->input->post('intIdPlant');		 
+		$data = [
+			"txtNamaPlant" 		=> $this->input->post('txtNamaPlant'),
+			"bitActive" 		=> $this->input->post('bitActive'),
+			"intUpdatedBy" 		=> $this->session->userdata('user_id'),
+			"dtmUpdatedDate" 	=> $dateNow
 		];
+		$this->plant->update($data, $intIdPlant);
+		$response = [
+						'code' 		=> 200,
+						'status' 	=> true,
+						'msg' 		=> 'Berhasil disimpan.',
+						'data' 		=> "-"
+					];
 		echo json_encode($response);
 	}
 }

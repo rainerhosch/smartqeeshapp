@@ -46,6 +46,28 @@ function p_InitiateDataList() {
 	});
 }
 
+$(document).on('click', '#tombol_edit', function (e) {
+	e.preventDefault()
+	let id = $(this).data('id');
+	$.ajax({
+		type: "get",
+		url: `${url}manajemen/Plant/getById`,
+		data: {
+			intIdPlant: id
+		},
+		dataType: "json",
+		success: function (response) {
+			console.log(response);
+			if (response.data != null) {
+				let data = response.data
+				$("#intIdPlant").val(data.intIdPlant);
+				$("#txtNamaPlant").val(data.txtNamaPlant);
+				$("#bitActive").val(data.bitActive);
+			}
+		}
+	});
+});
+
 $("#tombol_simpan").on('click', function (e) {
 	e.preventDefault();
 	let id = $("#intIdPlant").val()
@@ -63,12 +85,23 @@ $("#tombol_simpan").on('click', function (e) {
 			success: function (response) {
 				// let otable = $('#dtList').dataTable();
 				// otable.fnDraw(false);
-				window.location.href
+				window.location.reload()
 
 			}
 		});
 	} else {
-		
+		$.ajax({
+			type: "post",
+			url: `${url}manajemen/Plant/update`,
+			data: data,
+			dataType: "json",
+			success: function (response) {
+				// let otable = $('#dtList').dataTable();
+				// otable.fnDraw(false);
+				window.location.reload()
+
+			}
+		});
 	}
 	
 });
