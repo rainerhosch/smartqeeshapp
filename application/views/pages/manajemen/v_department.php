@@ -60,7 +60,7 @@
                                                             <?php endif; ?>
                                                        </td>
                                                        <td class="text-center">
-                                                            <button class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Edit</button>
+                                                            <button class="btn btn-warning btn-sm btnEditDepartment" data-id="<?= $department["intIdDepartement"]; ?>"><i class="fas fa-edit"></i> Edit</button>
                                                        </td>
                                                   </tr>
                                              <?php endforeach; ?>

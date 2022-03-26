@@ -38,4 +38,14 @@ class M_department extends CI_Model
           $this->db->insert($this->table, $data);
           return $this->db->insert_id();
      }
+
+     public function getDepartment($id)
+     {
+          return $this->db->get_where($this->table, ["intIdDepartement" => $id])->row_array();
+     }
+
+     public function updateData($data, $id)
+     {
+          $this->db->update($this->table, $data, ["intIdDepartement" => $id]);
+     }
 }

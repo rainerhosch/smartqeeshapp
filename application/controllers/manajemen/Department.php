@@ -76,6 +76,8 @@ class Department extends CI_Controller
                     $parseData["dtmUpdatedDate"]  = date("Y-m-d");
 
                     $validasi["pesan"] = "Berhasil simpan perubahan";
+
+                    $this->department->updateData($parseData, $parseData["intIdDepartement"]);
                }
           }
 
@@ -87,6 +89,19 @@ class Department extends CI_Controller
           ];
 
           echo json_encode($response);
+     }
+
+     public function getData()
+     {
+          try {
+               $id = $this->input->post("id");
+
+               $data = $this->department->getDepartment($id);
+
+               echo json_encode($data);
+          } catch (\Exception $e) {
+               die($e->getMessage());
+          }
      }
 
      private function validasiSaveData($data)
@@ -106,10 +121,27 @@ class Department extends CI_Controller
                $validasiIdPlantNamaDepartment = $this->department->validatePlantNamaDepartment($data["intIdPlant"], $data["txtNamaDepartement"]);
 
                if ($validasiIdPlantNamaDepartment != null) {
-                    $pesan = "Nama Department sudah tersedia, silahkan gunakan nama lain";
+                    $pesan = "Nama Department sudah tersedia di plant tersebut, silahkan gunakan nama lain";
                }
           } else {
                //UPDATE
+               $dataDB = $this->department->getDepartment($data["intIdDepartement"]);
+               if ($dataDB["intIdPlant"] == $data["intIdPlant"]) {
+                    //JIKA PLANT TIDAK BERUBAH
+                    if ($dataDB["txtNamaDepartement"] != $data["txtNamaDepartement"]) {
+                         $validasiIdPlantNamaDepartment = $this->department->validatePlantNamaDepartment($data["intIdPlant"], $data["txtNamaDepartement"]);
+
+                         if ($validasiIdPlantNamaDepartment != null) {
+                              $pesan = "Nama Department sudah tersedia di plant tersebut, silahkan gunakan nama lain";
+                         }
+                    }
+               } else {
+                    $validasiIdPlantNamaDepartment = $this->department->validatePlantNamaDepartment($data["intIdPlant"], $data["txtNamaDepartement"]);
+
+                    if ($validasiIdPlantNamaDepartment != null) {
+                         $pesan = "Nama Department sudah tersedia di plant tersebut, silahkan gunakan nama lain";
+                    }
+               }
           }
 
           if ($pesan == "") {
