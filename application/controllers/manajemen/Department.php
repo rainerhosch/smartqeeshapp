@@ -72,6 +72,10 @@ class Department extends CI_Controller
                     $validasi["pesan"] = "Berhasil simpan";
                } else {
                     //UPDATE
+                    $dataDB = $this->department->getDepartment($parseData["intIdDepartement"]);
+
+                    $parseData["intInsertedBy"]   = $dataDB["intInsertedBy"];
+                    $parseData["dtmInsertedDate"] = $dataDB["dtmInsertedDate"];
                     $parseData["intUpdatedBy"]    = $this->session->userdata('user_id');
                     $parseData["dtmUpdatedDate"]  = date("Y-m-d");
 

@@ -120,4 +120,4 @@
           </div>
      </div>
 </div>
-<script src="<?= base_url("assets/custom_js/master_department.js"); ?>"></script>
+<script src="<?= base_url("assets/custom_js/master/department.js"); ?>"></script>
