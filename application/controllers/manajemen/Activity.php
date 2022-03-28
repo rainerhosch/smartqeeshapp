@@ -52,6 +52,19 @@ class Activity extends CI_Controller
           }
      }
 
+     public function getData()
+     {
+          try {
+               $id = $this->input->post("id");
+
+               $data = $this->activity->getActivity($id);
+
+               echo json_encode($data);
+          } catch (\Exception $e) {
+               die($e->getMessage());
+          }
+     }
+
      public function saveData()
      {
           $data = $this->input->post("data");

@@ -21,6 +21,25 @@ function p_InitiateData(){
      });
 }
 
+function getData(){
+     let id = $("#intIdActivity").val();
+     let data = {
+          "id" : id
+     };
+     $.ajax({
+          url: `${url}manajemen/activity/getData`,
+          type: "POST",
+          data: data,
+          dataType: "json",
+          success: function(response){
+               p_DataToUI(response);
+          },
+          error: function(e){
+               console.log(e);
+          }
+     });
+}
+
 function saveData(){
      p_UIToData(); 
      let data = {
@@ -67,4 +86,10 @@ function p_UIToData(){
 $("#frmActivity").submit(function(e){
      e.preventDefault();
      saveData();
+});
+
+$(".btnEditActivity").click(function(){
+     let id = $(this).data('id');
+     $("#intIdActivity").val(id);
+     getData();
 });
