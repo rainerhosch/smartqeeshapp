@@ -125,4 +125,9 @@ class M_section extends CI_Model
 	{
 		return $this->db->get_where($this->table, ["bitActive" => 1])->result_array();
 	}
+
+	public function getDataByIdDepartement ($id)
+	{
+		return $this->db->get_where($this->table, ["intIdDepartemen" => $id, "bitActive" => true])->result_array();
+	}
 }

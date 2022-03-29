@@ -110,12 +110,13 @@ class Auth extends CI_Controller
             // data insert user detail
             $tbl = 'user_detail';
             $data_detail_user = [
-                'nama'      => $post_regist['nama_user'],
-                'email'     => $post_regist['email_user'],
-                'divisi'    => $post_regist['divisi_user'],
-                'jabatan'   => $post_regist['jabatan_user'],
-                'tlp'       => 62,
-                'img'       => 'default.jpg'
+                'nama'      	=> $post_regist['nama_user'],
+                'email'     	=> $post_regist['email_user'],
+                'divisi'    	=> "-",
+                'jabatan'   	=> $post_regist['jabatan_user'],
+                'id_section'   	=> $post_regist['id_section'],
+                'tlp'       	=> 62,
+                'img'       	=> 'default.jpg'
             ];
 
             $id_detail_user = $this->user->insert_data($tbl, $data_detail_user);

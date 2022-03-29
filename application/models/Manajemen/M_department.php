@@ -48,4 +48,9 @@ class M_department extends CI_Model
      {
           $this->db->update($this->table, $data, ["intIdDepartement" => $id]);
      }
+
+	public function getDepartemenByIdPlant ($id)
+	{
+		return $this->db->get_where($this->table, ["intIdPlant" => $id, "bitActive" => true])->result_array();
+	}
 }
