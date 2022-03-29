@@ -166,4 +166,25 @@ class Activity extends CI_Controller
 
           return $returnData;
      }
+
+	public function getActivityBySection()
+	{
+		$id 			= $this->input->get('id');
+		$data_dept 	= $this->activity->getActivityBySection($id);
+		$opt 		= '<option value ="">Silahkan Pilih Activity</option>';		
+		if (!empty($data_dept)) {
+			foreach ($data_dept as $item) {
+				$opt .= '<option value="' . $item["intIdActivity"] . '"> ' . $item["txtNamaActivity"] . '</option>';
+			}
+		}
+		$response = [
+			'code'    => 200,
+			'status'  => "OK",
+			'msg'     => "OK",
+			'data'    => $opt
+		];
+
+		echo json_encode($response);
+		
+	}
 }

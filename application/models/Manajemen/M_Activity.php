@@ -51,4 +51,10 @@ class M_activity extends CI_Model
      {
           $this->db->update($this->table, $data, ["intIdActivity" => $id]);
      }
+
+	public function getActivityBySection($id)
+     {
+          return $this->db->get_where($this->table, ['intIdSection' => $id, "bitActive" => 1])->result_array();
+		
+     }
 }
