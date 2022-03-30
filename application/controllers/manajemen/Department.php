@@ -7,7 +7,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
  ** * * * * * * * * * * * * * * * * * **
  *  Author                : Reki Maulid
  *  Date Created          : 26/03/2022
- *  Quots of the code     : sukses itu ketika running code pertama dan tidak ada error :D
+ *  Quots of the code     : sukses itu ketika running code pertama dan tidak ada error :D (tong tinggi teuing ngakhayal na lord wkwkwk)
  */
 class Department extends CI_Controller
 {
@@ -192,4 +192,25 @@ class Department extends CI_Controller
 
           return $returnData;
      }
+
+	public function getDataByIdPlant ()
+	{
+		$id 			= $this->input->get('id');
+		$data_dept 	= $this->department->getDepartemenByIdPlant($id);
+		$opt 		= '<option value ="">Silahkan Pilih Departemen</option>';		
+		if (!empty($data_dept))
+		{			
+			foreach ($data_dept as $item) {
+				$opt .= '<option value="'.$item["intIdDepartement"].'"> '.$item["txtNamaDepartement"].'</option>';
+			}
+		}
+		$response = [
+               'code'    => 200,
+               'status'  => "OK",
+               'msg'     => "OK",
+               'data'    => $opt
+          ];
+
+          echo json_encode($response);
+	}
 }

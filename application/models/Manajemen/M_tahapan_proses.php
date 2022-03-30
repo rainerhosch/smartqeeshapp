@@ -9,22 +9,20 @@ defined('BASEPATH') or exit('No direct script access allowed');
  *  Date Created          : 23/03/2022
  *  Quots of the code     : PKadang susah kalo udah nyaman sama framework sebelah :D
  */
-class M_section extends CI_Model
+class M_tahapan_proses extends CI_Model
 {
-	var $table 			= 'mSection'; //nama tabel dari database
-	var $column_order 	= array(null); //field yang ada di table user
-	var $column_search 	= array('mSection.txtNamaSection'); //field yang diizin untuk pencarian 
-	var $order 			= array('mSection.dtmInsertedBy' => 'desc'); // default order
-	var $columnData 	= "mDepartemen.txtNamaDepartement, mSection.txtNamaSection, mSection.intIdSection, mSection.bitActive";
+	var $table = 'mTahapanProses'; //nama tabel dari database
+	var $column_order = array(null); //field yang ada di table user
+	var $column_search = array('mTahapanProses.txtNamaTahapan'); //field yang diizin untuk pencarian 
+	var $order = array('dtmInsertedDate' => 'desc'); // default order 
 
 	private function _get_datatables_query()
 	{
+		$this->db->select('mSection.txtNamaSection, mActivity.txtNamaActivity, mTahapanProses.txtNamaTahapan, mTahapanProses.bitActive,mTahapanProses.intIdTahapanProses');		
+		$this->db->from($this->table);
+		$this->db->join('mActivity', 'mTahapanProses.intIdActivty = mActivity.intIdActivity');
+		$this->db->join('mSection', 'mActivity.intIdSection = mSection.intIdSection');		
 		
-		$this->db->select($this->columnData);		
-		$this->db->from($this->table);		
-		$this->db->join("mDepartemen", 'mDepartemen.intIdDepartement = mSection.intIdDepartemen');		
-		// var_dump($q);exit;
-
 		$i = 0;
 
 		foreach ($this->column_search as $item) // looping awal
@@ -58,9 +56,7 @@ class M_section extends CI_Model
 	{
 		$this->_get_datatables_query();
 		if ($_POST['length'] != -1)
-		{
 			$this->db->limit($_POST['length'], $_POST['start']);
-		}
 		$query = $this->db->get();
 		$list = $query->result();
 		$data = array();
@@ -68,11 +64,12 @@ class M_section extends CI_Model
 		foreach ($list as $field) {
 			$no++;
 			$row = array();
-			$row["txtNamaSection"] 		= $field->txtNamaSection;
-			$row["txtNamaDepartemen"] 	= $field->txtNamaDepartement;
-			$row["bitActive"] 			= $field->bitActive;
-			$row["intIdSection"] 		= $field->intIdSection;
-			$data[] = $row;
+			$row["txtNamaSection"] 			= $field->txtNamaSection;
+			$row["txtNamaActivity"] 		= $field->txtNamaActivity;
+			$row["txtNamaTahapan"] 			= $field->txtNamaTahapan;
+			$row["bitActive"] 				= $field->bitActive;
+			$row["intIdTahapanProses"] 		= $field->intIdTahapanProses;
+			$data[] 						= $row;
 		}
 
 		$output = array(
@@ -93,50 +90,33 @@ class M_section extends CI_Model
 
 	public function count_all()
 	{
-		$this->db->select($this->columnData);
 		$this->db->from($this->table);
-		$this->db->join("mDepartemen", 'mSection.intIdDepartemen = mDepartemen.intIdDepartement');
+		$this->db->join('mActivity', 'mTahapanProses.intIdActivty = mActivity.intIdActivity');
+		$this->db->join('mSection', 'mActivity.intIdSection = mSection.intIdSection');	
 		return $this->db->count_all_results();
 	}
 
 	public function getById ($id)
 	{
 		
-		return $this->db->get_where($this->table, ['intIdSection' => $id])->row();
+		return $this->db->get_where($this->table, ['intIdTahapanProses' => $id])->row();
 		
 	}
 	
 	public function simpan($data)
-	{
-		$this->db->insert($this->table, $data);
+	{		
+		$data = $this->db->insert($this->table, $data);		
 	}
 
 	public function update($data, $id)
 	{		
-		$this->db->update($this->table, $data, ['intIdSection' => $id]);
+		$this->db->update($this->table, $data, ['intIdTahapanProses' => $id]);
 		// try {
 			
 		// } catch (\Exception $e) {
 		// 	var_dump($e->getMessage());exit;
 		// }	
 	}
+
 	
-	public function getSectionActive()
-	{
-		return $this->db->get_where($this->table, ["bitActive" => 1])->result_array();
-	}
-
-	public function getSectionActiveWithDept()
-	{
-		$this->db->select('mSection.intIdSection, mSection.txtNamaSection, mSection.bitActive, mDepartemen.txtNamaDepartement');
-		$this->db->from('mDepartemen');
-		$this->db->join('mSection', 'mDepartemen.intIdDepartement = mSection.intIdDepartemen');
-		$this->db->where('mSection.bitActive', 1);		
-		return $this->db->get()->result();
-	}
-
-	public function getDataByIdDepartement ($id)
-	{
-		return $this->db->get_where($this->table, ["intIdDepartemen" => $id, "bitActive" => true])->result_array();
-	}
 }
