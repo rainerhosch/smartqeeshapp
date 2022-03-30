@@ -14,6 +14,20 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/plugins/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/css/adminlte.min.css">
     <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/css/templates.css">
+    <style>
+        /* HIDDEN ARROW IN INPUT NUMBER */
+        /* Chrome, Safari, Edge, Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Firefox */
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+    </style>
     <?php if ($page != 'Auth') : ?>
         <!-- <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> -->
         <!-- <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">

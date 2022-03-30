@@ -36,6 +36,7 @@ class Department extends CI_Controller
                     "intIdDepartement"       => 0,
                     "intIdPlant"             => 0,
                     "txtNamaDepartement"     => "",
+                    "txtSingkatan"           => "",
                     "bitActive"              => true,
                     "intInsertedBy"          => 0,
                     "dtmInsertedDate"        => "",
@@ -57,7 +58,8 @@ class Department extends CI_Controller
           $validasi = $this->validasiSaveData($parseData);
 
           if ($validasi["status"]) {
-               $parseData["txtNamaDepartement"] = strtoupper($parseData["txtNamaDepartement"]);
+               $parseData["txtNamaDepartement"]   = strtoupper($parseData["txtNamaDepartement"]);
+               $parseData["txtSingkatan"]         = strtoupper($parseData["txtSingkatan"]);
                $departmentID = $parseData["intIdDepartement"];
                if ($departmentID == 0) {
                     //CREATE
@@ -116,6 +118,8 @@ class Department extends CI_Controller
                $pesan = "Plant tidak boleh kosong";
           } elseif ($data["txtNamaDepartement"] == null) {
                $pesan = "Nama Department tidak boleh kosong";
+          } elseif ($data["txtSingkatan"] == null) {
+               $pesan = "Kode Department tidak boleh kosong";
           } else {
                $pesan = "";
           }
@@ -126,6 +130,12 @@ class Department extends CI_Controller
 
                if ($validasiIdPlantNamaDepartment != null) {
                     $pesan = "Nama Department sudah tersedia di plant tersebut, silahkan gunakan nama lain";
+               } else {
+                    $validasiIdPlantKodeDepartment = $this->department->validatePlantKodeDepartment($data["intIdPlant"], $data["txtSingkatan"]);
+
+                    if ($validasiIdPlantKodeDepartment != null) {
+                         $pesan = "Kode Department sudah tersedia di plant tersebut, silahkan gunakan nama lain";
+                    }
                }
           } else {
                //UPDATE
@@ -137,6 +147,18 @@ class Department extends CI_Controller
 
                          if ($validasiIdPlantNamaDepartment != null) {
                               $pesan = "Nama Department sudah tersedia di plant tersebut, silahkan gunakan nama lain";
+                         } else {
+                              $validasiIdPlantKodeDepartment = $this->department->validatePlantKodeDepartment($data["intIdPlant"], $data["txtSingkatan"]);
+
+                              if ($validasiIdPlantKodeDepartment != null) {
+                                   $pesan = "Kode Department sudah tersedia di plant tersebut, silahkan gunakan nama lain";
+                              }
+                         }
+                    } else {
+                         $validasiIdPlantKodeDepartment = $this->department->validatePlantKodeDepartment($data["intIdPlant"], $data["txtSingkatan"]);
+
+                         if ($validasiIdPlantKodeDepartment != null) {
+                              $pesan = "Kode Department sudah tersedia di plant tersebut, silahkan gunakan nama lain";
                          }
                     }
                } else {
@@ -144,6 +166,12 @@ class Department extends CI_Controller
 
                     if ($validasiIdPlantNamaDepartment != null) {
                          $pesan = "Nama Department sudah tersedia di plant tersebut, silahkan gunakan nama lain";
+                    } else {
+                         $validasiIdPlantKodeDepartment = $this->department->validatePlantKodeDepartment($data["intIdPlant"], $data["txtSingkatan"]);
+
+                         if ($validasiIdPlantKodeDepartment != null) {
+                              $pesan = "Kode Department sudah tersedia di plant tersebut, silahkan gunakan nama lain";
+                         }
                     }
                }
           }
