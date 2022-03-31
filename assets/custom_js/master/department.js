@@ -90,6 +90,7 @@ function p_DataToUI(objData){
      $("#intIdDepartement").val(objData.intIdDepartement);
      $("#intIdPlant").val(objData.intIdPlant);
      $("#txtNamaDepartement").val(objData.txtNamaDepartement);
+     $("#txtSingkatan").val(objData.txtSingkatan);
      $("#bitActive").prop("checked", clsGlobal.parseToBoolean(objData.bitActive));
 }
 
@@ -99,7 +100,8 @@ function p_UIToData(){
 
      jsonData.intIdDepartement     = $("#intIdDepartement").val();
      jsonData.intIdPlant           = $("#intIdPlant").val();
-     jsonData.txtNamaDepartement   = $("#txtNamaDepartement").val();   
+     jsonData.txtNamaDepartement   = $("#txtNamaDepartement").val(); 
+     jsonData.txtSingkatan         = $("#txtSingkatan").val();
      jsonData.bitActive            = $("#bitActive").prop("checked");
 
      $("#txtHiddenObject").val(JSON.stringify(jsonData));

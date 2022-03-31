@@ -42,6 +42,7 @@
                                                   <th class="text-center">#</th>
                                                   <th class="text-center">NAMA PLANT</th>
                                                   <th class="text-center">NAMA DEPARTMENT</th>
+                                                  <th class="text-center">KODE DEPARTMENT</th>
                                                   <th class="text-center">AKTIF</th>
                                                   <th class="text-center">TOOL</th>
                                              </tr>
@@ -52,6 +53,7 @@
                                                        <td class="text-center"><?= $department["intIdDepartement"] ?></td>
                                                        <td><?= $department["txtNamaPlant"] ?></td>
                                                        <td><?= $department["txtNamaDepartement"] ?></td>
+                                                       <td><?= $department["txtSingkatan"] ?></td>
                                                        <td class="text-center">
                                                             <?php if ($department["bitActive"]) : ?>
                                                                  <i class="fas fa-check text-success"></i>
@@ -106,6 +108,10 @@
                          <div class="form-group">
                               <label for="txtNamaDepartement">Nama<small class="text-danger">* (Wajib di isi)</small></label>
                               <input type="text" class="form-control" id="txtNamaDepartement" name="txtNamaDepartement" placeholder="Nama Department" required>
+                         </div>
+                         <div class="form-group">
+                              <label for="txtSingkatan">Code<small class="text-danger">* (Wajib di isi)</small></label>
+                              <input type="text" class="form-control" id="txtSingkatan" name="txtSingkatan" placeholder="Kode Department" required>
                          </div>
                          <div class="form-group">
                               <label for="bitActive">Aktif</label>

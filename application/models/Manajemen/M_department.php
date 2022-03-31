@@ -20,10 +20,17 @@ class M_department extends CI_Model
           return $this->db->get($this->table)->row_array();
      }
 
+     public function validatePlantKodeDepartment($id_plant, $kode_department)
+     {
+          $this->db->where("intIdPlant", $id_plant);
+          $this->db->where("txtSingkatan", $kode_department);
+          return $this->db->get($this->table)->row_array();
+     }
+
      //ACTION
      public function getsDepartmentPlant()
      {
-          $this->db->select("intIdDepartement, mDepartemen.intIdPlant, mPlant.txtNamaPlant, txtNamaDepartement, mDepartemen.bitActive");
+          $this->db->select("intIdDepartement, mDepartemen.intIdPlant, mPlant.txtNamaPlant, txtNamaDepartement, mDepartemen.bitActive, mDepartemen.txtSingkatan");
           $this->db->join("mPlant", "mDepartemen.intIdPlant = mPlant.intIdPlant");
           return $this->db->get($this->table)->result_array();
      }
