@@ -17,6 +17,8 @@ class Activity extends CI_Controller
         parent::__construct();
         login_check();
         $this->load->model('/RiskRegister/M_dok_register', 'dokumen');
+        $this->load->model('/RiskRegister/M_activity_risk_register', 'activity');
+        $this->load->model('/Manajemen/M_Activity', 'activity_master');
         $this->load->model('M_user', 'user');
     }
 
@@ -30,12 +32,13 @@ class Activity extends CI_Controller
 		$data["user"]				= $this->user->getDataUserDept($this->session->userdata('user_id'));		
 		$data["dok"]				= $this->dokumen->getByID($data["intIdDokRegister"]);
 		$data["createBy"]			= $this->user->getDataUserDept($data["dok"]->intInsertedBy);				
+		$data["activity"]			= $this->activity_master->getActivityBySection($this->session->userdata('id_section'));				
         $this->load->view('template', $data);
     }
 
 	public function getDataTable()
 	{
-		echo json_encode($this->dokumen->get_datatables());
+		echo json_encode($this->activity->get_datatables());
 	}
 
 	public function simpan()

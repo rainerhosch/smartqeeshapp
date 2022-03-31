@@ -12,6 +12,9 @@
 					<label for="">Activity</label>
 					<select name="" id="" class="form-control" id="intIdActivityModalAdd">
 						<option value="">Silahkan Pilih Activity</option>
+						<?php foreach($activity as $data): ?>
+							<option value="<?= $data["intIdActivity"] ?>"><?= $data["txtNamaActivity"] ?></option>
+						<?php endforeach; ?>
 					</select>
 				</div>
 			</div>
