@@ -23,7 +23,12 @@ function p_InitiateDataList() {
 				"data": "txtNamaPlant",
 				"name": "txtNamaPlant",
 				className: 'text-center'
-			},			
+			},
+			{
+				"data": "txtSingkatan",
+				"name": "txtSingkatan",
+				className: 'text-center'
+			},				
 			{				
 				"name": "bitActive",
 				render: function (data, type, full, meta) {
@@ -44,6 +49,8 @@ function p_InitiateDataList() {
 			},
 		]
 	});
+	$("#dtList_filter").parent().addClass("d-flex justify-content-end");
+	$("#dtList_paginate").parent().addClass("d-flex justify-content-end");
 }
 
 $(document).on('click', '#tombol_edit', function (e) {
@@ -62,6 +69,7 @@ $(document).on('click', '#tombol_edit', function (e) {
 				let data = response.data
 				$("#intIdPlant").val(data.intIdPlant);
 				$("#txtNamaPlant").val(data.txtNamaPlant);
+				$("#txtSingkatan").val(data.txtSingkatan);
 				$("#bitActive").val(data.bitActive);
 			}
 		}

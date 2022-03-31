@@ -184,7 +184,6 @@ class Activity extends CI_Controller
 			'data'    => $opt
 		];
 
-		echo json_encode($response);
-		
+		echo json_encode($response);		
 	}
 }

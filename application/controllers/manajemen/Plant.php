@@ -71,6 +71,7 @@ class Plant extends CI_Controller
 		$dateNow = date("Y-m-d");
 		$data = [
 			"txtNamaPlant" 		=> strtoupper($this->input->post('txtNamaPlant')),
+			"txtSingkatan" 		=> strtoupper($this->input->post('txtSingkatan')),
 			"bitActive" 		=> $this->input->post('bitActive'),
 			"intInsertedBy" 	=> $this->session->userdata('user_id'),
 			"dtmInsertedDate" 	=> $dateNow
@@ -91,6 +92,7 @@ class Plant extends CI_Controller
 		$intIdPlant = $this->input->post('intIdPlant');		 
 		$data = [
 			"txtNamaPlant" 		=> strtoupper($this->input->post('txtNamaPlant')),
+			"txtSingkatan" 		=> strtoupper($this->input->post('txtSingkatan')),
 			"bitActive" 		=> $this->input->post('bitActive'),
 			"intUpdatedBy" 		=> $this->session->userdata('user_id'),
 			"dtmUpdatedDate" 	=> $dateNow

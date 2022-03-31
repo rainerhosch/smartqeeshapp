@@ -31,6 +31,10 @@
 										<input type="text" name="txtNamaPlant" id="txtNamaPlant" class="form-control">
 									</div>
 									<div class="form-group">
+										<label for="">Code Plant</label>
+										<input type="text" name="txtSingkatan" id="txtSingkatan" class="form-control">
+									</div>
+									<div class="form-group">
 										<label for="">Aktif</label>
 										<select name="bitcative" id="bitActive" class="form-control">
 											<option value="1">Aktif</option>
@@ -69,6 +73,7 @@
 											<thead>
 												<tr>
 													<th class="text-center">Nama</th>
+													<th class="text-center">Code</th>
 													<th class="text-center">Status</th>
 													<th class="text-center">Option</th>
 												</tr>

@@ -28,7 +28,11 @@
 							<div class="col-lg-12">
 								<div class="form-group">
 									<label for="">No Dokumen</label>
-									<input type="text" name="" id="txtNoDocNumber" class="form-control">
+									<?php if ($user != null) { ?>
+									<input type="text" name="" id="txtNoDocNumber" class="form-control" value="APF-1.1-RM-<?= $user->txtCodePlant ?>- <?= $user->txtCodeDept ?>.001">
+									<?php } else { ?>
+									<input type="text" name="" id="txtNoDocNumber" class="form-control" value="">
+									<?php } ?>
 								</div>
 							</div>
 						</div>
@@ -55,11 +59,11 @@
 										<thead>
 											<tr>
 												<th class="text-center">No</th>
-												<th class="text-center"></th>
-												<th class="text-center"></th>
-												<th class="text-center"></th>
-												<th class="text-center"></th>
-												<th class="text-center"></th>
+												<th class="text-center">Doc No</th>
+												<th class="text-center">Create By</th>
+												<th class="text-center">Create Date</th>
+												<th class="text-center">Status</th>
+												<th class="text-center">Option</th>
 											</tr>
 										</thead>
 									</table>
@@ -77,4 +81,4 @@
 <script>
 	var url = `<?= base_url() ?>`;
 </script>
-<script src="<?= base_url('assets/custom_js') ?>/dokumen_risk.js"></script>
+<script src="<?= base_url('assets/custom_js') ?>/risk_management/dokumen_risk.js"></script>

@@ -18,9 +18,11 @@ class M_dok_register extends CI_Model
 
 	private function _get_datatables_query()
 	{
-
+		$this->db->select('trDokRiskRegister.txtDocNumber, trDokRiskRegister.txtStatus, user_detail.nama, trDokRiskRegister.dtmInsertedBy, trDokRiskRegister.intIdDokRiskRegister');		
 		$this->db->from($this->table);
-		$this->db->join('user_detail', 'trDokRiskRegister.intInsertedBy=user_detail.user_detail_id');
+		$this->db->join('user', 'trDokRiskRegister.intInsertedBy=user.user_detail_id');
+		$this->db->join('user_detail', 'user.user_detail_id=user_detail.user_detail_id');
+		
 
 		$i = 0;
 
@@ -64,17 +66,18 @@ class M_dok_register extends CI_Model
 			$no++;
 			$row = array();
 			$row["no"] = $no;
-			$row["user_nama"] = $field->user_nama;
-			$row[""] = $field->user_email;
-			$row[] = $field->user_alamat;
-
+			$row["txtDocNumber"] = $field->txtDocNumber;
+			$row["txtStatus"] = $field->txtStatus;
+			$row["intIdDokRiskRegister"] = $field->intIdDokRiskRegister;
+			$row["nama"] = $field->nama;
+			$row["dtmInsertedBy"] = date('d-m-Y', strtotime($field->dtmInsertedBy));
 			$data[] = $row;
 		}
 
 		$output = array(
 			"draw" => $_POST['draw'],
-			"recordsTotal" => $this->User_model->count_all(),
-			"recordsFiltered" => $this->User_model->count_filtered(),
+			"recordsTotal" => $this->count_all(),
+			"recordsFiltered" => $this->count_filtered(),
 			"data" => $data,
 		);
 		return $output;
@@ -83,7 +86,6 @@ class M_dok_register extends CI_Model
 	function count_filtered()
 	{
 		$this->_get_datatables_query();
-		$this->db->join('user_detail', 'trDokRiskRegister.intInsertedBy=user_detail.user_detail_id');
 		$query = $this->db->get();
 		return $query->num_rows();
 	}
@@ -91,12 +93,13 @@ class M_dok_register extends CI_Model
 	public function count_all()
 	{
 		$this->db->from($this->table);
-		$this->db->join('user_detail', 'trDokRiskRegister.intInsertedBy=user_detail.user_detail_id');
+		$this->db->join('user', 'trDokRiskRegister.intInsertedBy=user.user_detail_id');
+		$this->db->join('user_detail', 'user.user_detail_id=user_detail.user_detail_id');
 		return $this->db->count_all_results();
 	}
 
 	public function simpan ($data)
 	{
-		$this->db->insert($data);
+		$this->db->insert($this->table, $data);	
 	}
 }

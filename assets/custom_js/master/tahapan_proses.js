@@ -54,6 +54,8 @@ function p_InitiateDataList() {
 			},
 		]
 	});
+	$("#dtList_filter").parent().addClass("d-flex justify-content-end");
+	$("#dtList_paginate").parent().addClass("d-flex justify-content-end");
 }
 
 $("#intIdSection").on("change", function () {
