@@ -22,11 +22,14 @@ class Activity extends CI_Controller
 
     public function index()
     {
-        $data['title'] 		= 'Smart Qeesh App';
-        $data['page'] 		= 'Risk Register';
-        $data['subpage'] 	= 'Blank Page';        
-        $data['content'] 	= 'pages/risk_management/risk_register/dokumen';
-		$data["user"]		= $this->user->getDataUserDept($this->session->userdata('user_id'));		
+        $data['title'] 				= 'Smart Qeesh App';
+        $data['page'] 				= 'Risk Register';
+        $data['subpage'] 			= 'Blank Page';        
+        $data['content'] 			= 'pages/risk_management/risk_register/activity';
+		$data["intIdDokRegister"] 	= $this->input->get('id');		
+		$data["user"]				= $this->user->getDataUserDept($this->session->userdata('user_id'));		
+		$data["dok"]				= $this->dokumen->getByID($data["intIdDokRegister"]);
+		$data["createBy"]			= $this->user->getDataUserDept($data["dok"]->intInsertedBy);				
         $this->load->view('template', $data);
     }
 

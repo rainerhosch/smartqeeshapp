@@ -64,6 +64,7 @@ class M_plant extends CI_Model
 			$row = array();
 			$row["txtNamaPlant"] = $field->txtNamaPlant;
 			$row["bitActive"] = $field->bitActive;
+			$row["txtSingkatan"] = $field->txtSingkatan;
 			$row["intIdPlant"] = $field->intIdPlant;
 			$data[] = $row;
 		}

@@ -53,6 +53,8 @@ function p_InitiateDataList() {
 		]
 	});
 	$("#dtList").css("width", "100%");
+	$("#dtList_filter").parent().addClass("d-flex justify-content-end");
+	$("#dtList_paginate").parent().addClass("d-flex justify-content-end");
 }
 
 $("#tombol_simpan_dokumen").on('click', function (e) {
