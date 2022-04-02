@@ -20,7 +20,8 @@ class M_activity_risk_register extends CI_Model
 	{
 		$this->db->select('trActivityRiskRegister.intIdActivityRisk, mActivity.txtNamaActivity');		
 		$this->db->from($this->table);
-		$this->db->join('mActivity', 'trActivityRiskRegister.intIdActivity=mActivity.intIdActivity');				
+		$this->db->join('mActivity', 'trActivityRiskRegister.intIdActivity=mActivity.intIdActivity');
+		$this->db->order_by('trActivityRiskRegister.intIdActivityRisk', 'desc');
 
 		$i = 0;
 
@@ -94,7 +95,28 @@ class M_activity_risk_register extends CI_Model
 
 	public function simpan ($data)
 	{
-		$this->db->insert($this->table, $data);	
+		$this->db->insert($this->table, $data);
+		$data_activity = $this->db->get_where($this->table, $data)->row();
+		if ($data_activity != null) {
+			$data_tahapan = $this->db->get_where('mTahapanProses', ['intIdActivty' => $data["intIdActivity"]])->result();			
+			if (!empty($data_tahapan)) {
+				foreach ($data_tahapan as $item) {
+					$data_tahapan_ins = [
+						"intIdActivityRisk" 	=> $data_activity->intIdActivityRisk,
+						"intIdTahapanProses" 	=> $item->intIdTahapanProses,
+						"intInsertedBy" 		=> $data["intInsertedBy"],
+						"dtmInsertedDate" 		=> $data["dtmInsertedDate"],
+					];
+					$this->db->insert('trTahapanProsesRisk', $data_tahapan_ins);					
+				}
+				return true;
+			} else {
+				// $this->db->delete($this->table, $data);
+				return null;				
+			}
+		} else {
+			return null;
+		}
 	}
 
 	public function getByID ($id) {		

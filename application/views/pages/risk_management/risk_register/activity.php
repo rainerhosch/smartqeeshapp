@@ -1,4 +1,7 @@
 <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/plugins/datatables-bs4/css/dataTables.bootstrap4.min">
+<input type="hidden" name="intIdDokRiskRegister" id="intIdDokRiskRegister" value="<?= $intIdDokRegister ?>">
+<input type="hidden" name="intIdActivityRisk" id="intIdActivityRisk">
+<input type="hidden" name="intIdTahapanProsesRisk" id="intIdTahapanProsesRisk">
 <div class="content-wrapper" style="z-index: -999 !important;">
 	<section class="content-header">
 		<div class="container-fluid">
@@ -65,6 +68,17 @@
 								</div>
 							</div>
 						</div>
+						<div id="show_activity_current">
+							<div class="row">
+								<div class="col-lg-4 col-xs-4">
+									<div class="form-group">
+										<label for="">Activity</label>
+										<input type="text" name="" id="txtNamaActivityShow" class="form-control" value="" disabled>
+									</div>
+								</div>								
+							</div>
+						</div>
+
 						<div class="row">
 							<div class="col-lg-12">
 								<div class="d-flex justify-content-end">
@@ -75,8 +89,8 @@
 						</div>
 					</div>
 				</div>
-			</div>			
-			<div class="col-lg-12" id="data_dok">
+			</div>
+			<div class="col-lg-12" id="data_act">
 				<div class="card card-primary">
 					<div class="card-header">
 						<h3 class="card-title">Data Activity</h3>
@@ -86,7 +100,7 @@
 							<div class="col-lg-12 d-flex justify-content-end">
 								<button class="btn btn-info" data-toggle="modal" data-target="#modal-default" id="tombol_add_activity">Add Activity</button>
 							</div>
-						</div>			
+						</div>
 						<div class="row mt-4">
 							<div class="col-lg-12">
 								<div class="table-responsive">
@@ -106,6 +120,7 @@
 				</div>
 			</div>
 		</div>
+		<?php $this->load->view('pages/risk_management/risk_register/tahapan_proses'); ?>
 	</section>
 </div>
 <?php $this->load->view('pages/risk_management/risk_register/modal/modal_add_activity'); ?>
@@ -113,5 +128,12 @@
 <script src="<?= base_url('assets/templates') ?>/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
 <script>
 	var url = `<?= base_url() ?>`;
+	$("#show_activity_current").css({
+		'display': 'none'
+	});
+	$("#data_tahapan").css({
+		'display': 'none'
+	});
 </script>
 <script src="<?= base_url('assets/custom_js') ?>/risk_management/activity_risk.js"></script>
+<script src="<?= base_url('assets/custom_js') ?>/risk_management/tahapan_proses.js"></script>

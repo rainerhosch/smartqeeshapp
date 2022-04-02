@@ -24,15 +24,16 @@ class Activity extends CI_Controller
 
     public function index()
     {
+		$id 						= $this->input->get('id');
         $data['title'] 				= 'Smart Qeesh App';
         $data['page'] 				= 'Risk Register';
         $data['subpage'] 			= 'Blank Page';        
         $data['content'] 			= 'pages/risk_management/risk_register/activity';
-		$data["intIdDokRegister"] 	= $this->input->get('id');		
+		$data["intIdDokRegister"] 	= $id;		
 		$data["user"]				= $this->user->getDataUserDept($this->session->userdata('user_id'));		
-		$data["dok"]				= $this->dokumen->getByID($data["intIdDokRegister"]);
+		$data["dok"]				= $this->dokumen->getByID($id);		
 		$data["createBy"]			= $this->user->getDataUserDept($data["dok"]->intInsertedBy);				
-		$data["activity"]			= $this->activity_master->getActivityBySection($this->session->userdata('id_section'));				
+		$data["activity"]			= $this->activity_master->getActivityBySection($this->session->userdata('id_section'));		
         $this->load->view('template', $data);
     }
 
@@ -45,13 +46,12 @@ class Activity extends CI_Controller
 	{
 		$dateNow = date("Y-m-d");
 		$data = [
-			"txtDocNumber" 		=> $this->input->post('txtDocNumber'),
-			"intInsertedBy" 	=> $this->session->userdata('user_id'),
-			"txtStatus"			=> "ON PROGRESS",
-			"dtmInsertedBy" 	=> $dateNow
+			"intIdActivity" 			=> $this->input->post('intIdActivity'),
+			"intIdDokRiskRegister" 		=> $this->input->post('intIdDokRiskRegister'),
+			"intInsertedBy" 			=> $this->session->userdata('user_id'),
+			"dtmInsertedDate" 			=> $dateNow
 		];
-		var_Dump($data);
-		$this->dokumen->simpan ($data);
+		$this->activity->simpan($data);
 		$response = [
 						'code' => 200,
 						'status' => true,

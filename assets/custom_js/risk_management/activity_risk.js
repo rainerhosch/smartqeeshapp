@@ -31,7 +31,7 @@ function p_InitiateDataList() {
 			},			
 			{				
 				render: function (data, type, full, meta) {					
-					return `<a class="btn btn-primary" data-id="${full.intIdActivityRisk}" id="tombol_detail_activity"><i class="fa fa-eye"></i></a>`
+					return `<a class="btn btn-primary" data-id="${full.intIdActivityRisk}" data-nama="${full.txtNamaActivity}" id="tombol_detail_activity"><i class="fa fa-eye"></i></a>`
                 },
 				className: 'text-center'
 			},
@@ -42,20 +42,49 @@ function p_InitiateDataList() {
 	$("#dtList_paginate").parent().addClass("d-flex justify-content-end");
 }
 
-$("#tombol_simpan_activity").on('click', function (e) {
+$("#tombol_simpan_add_activity").on('click', function (e) {
 	e.preventDefault();
 	let data = {
-		intIdActivity: $("#intIdActivity").val()
+		intIdDokRiskRegister: $("#intIdDokRiskRegister").val(),
+		intIdActivity: $("#intIdActivityModalAdd").val(),
 	}
 	$.ajax({
 		type: "post",
-		url: `${url}risk_register/Dokumen/simpan`,
+		url: `${url}risk_register/Activity/simpan`,
 		data: data,
 		dataType: "json",
 		success: function (response) {
 			let otable = $('#dtList').dataTable();
 			otable.fnDraw(false);
-
+			$("#button_close_activity").click();
 		}
 	});
 });
+
+$(document).on('click', "#tombol_detail_activity", function (e) {
+	e.preventDefault()
+	let id = $(this).data('id');
+	$("#intIdActivityRisk").val(id);
+	$("#txtNamaActivityShow").val($(this).data('nama'));	
+	showDetailActivity()
+	let otableTah = $('#dtListTahapan').dataTable();
+	otableTah.fnDraw(false);
+});
+
+$("#close_tahapan").on("click", function () {
+	showActivity()
+});
+
+function showActivity() {
+	$("#show_activity_current").css({'display': 'none'});
+	$("#data_tahapan").css({'display': 'none'});
+	$("#data_act").css({'display': 'inline'});
+	window.scrollTo(0, 0);
+}
+
+function showDetailActivity() {
+	$("#show_activity_current").css({'display': 'inline'});
+	$("#data_tahapan").css({'display': 'inline'});
+	$("#data_act").css({'display': 'none'});
+	window.scrollTo(0, 0);
+}

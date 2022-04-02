@@ -3,14 +3,14 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title">Tambah Activity</h4>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="button_close_activity">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<div class="modal-body">
 				<div class="form-group">
 					<label for="">Activity</label>
-					<select name="" id="" class="form-control" id="intIdActivityModalAdd">
+					<select name="" class="form-control" id="intIdActivityModalAdd">
 						<option value="">Silahkan Pilih Activity</option>
 						<?php foreach($activity as $data): ?>
 							<option value="<?= $data["intIdActivity"] ?>"><?= $data["txtNamaActivity"] ?></option>
