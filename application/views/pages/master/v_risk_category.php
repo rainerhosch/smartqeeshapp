@@ -35,7 +35,7 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <a class="btn btn-sm btn-primary btnAdd mb-2" data-toggle="modal">Add Risk Type</a>
+                            <a class="btn btn-sm btn-primary btnAdd mb-2" data-toggle="modal">Add Risk Category</a>
                             <table class="table table-sm">
                                 <thead>
                                     <tr>
@@ -81,7 +81,7 @@
                     <div class="form-group row">
                         <label for="name" class="col-sm-2 col-form-label">Nama</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Nama Risk Type" required>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Nama Risk Category" required>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -105,7 +105,7 @@
     $(document).ready(function() {
         $.ajax({
             type: "POST",
-            url: "<?= base_url() ?>master/risk_type/get_json",
+            url: "<?= base_url() ?>master/risk_category/get_json",
             dataType: "json",
             success: function(response) {
                 var html_mn = ``;
@@ -123,7 +123,7 @@
 
                 // event Klik tombol add
                 $('.btnAdd').on('click', function(){
-                    $('.modal-title').text('Add Risk Type');
+                    $('.modal-title').text('Add Risk Category');
                     $('#myModal').modal('show');
                 })
 
@@ -131,7 +131,7 @@
                     var id = $(this).data('id');
                     var name = $(this).data('name');
                     var description = $(this).data('description');
-                    $('.modal-title').text('Edit Risk Type');
+                    $('.modal-title').text('Edit Risk Category');
                     $('#id').val(id);
                     $('#name').val(name);
                     $('#description').val(description);
@@ -144,7 +144,7 @@
                     var form = $('#myForm');
                     $.ajax({
                         type: "POST",
-                        url: "<?= base_url() ?>master/risk_type/store",
+                        url: "<?= base_url() ?>master/risk_category/store",
                         data: form.serializeArray(),
                         dataType: "json",
                         success: function(response){
@@ -188,7 +188,7 @@
                             console.log(id);
                             $.ajax({
                                 type: "POST",
-                                url: "<?= base_url() ?>master/risk_type/destroy",
+                                url: "<?= base_url() ?>master/risk_category/destroy",
                                 data: {
                                     id: id
                                 },
@@ -223,7 +223,7 @@
                     var keyword = $(this).val();
                     $.ajax({
                         type: "POST",
-                        url: "<?= base_url() ?>master/risk_type/search",
+                        url: "<?= base_url() ?>master/risk_category/search",
                         dataType: "json",
                         data: {
                             keyword:keyword
