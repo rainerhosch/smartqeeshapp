@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 /**
- *  File Name             : Risk_Condition.php
+ *  File Name             : Risk_category.php
  *  File Type             : Controller
  *  File Package          : CI_Controller
  ** * * * * * * * * * * * * * * * * * **
@@ -9,22 +9,22 @@ defined('BASEPATH') or exit('No direct script access allowed');
  *  Date Created          : 02/04/2022
  *  Quots of the code     : 'sabar ya'
  */
-class Risk_condition extends CI_Controller{
+class Risk_category extends CI_Controller{
 
     public function __construct()
     {
         parent::__construct();
         login_check();
-        $this->load->model('M_risk_condition', 'risk_condition');
+        $this->load->model('M_risk_category', 'risk_category');
     }
 
     public function index()
     {
 
         $data['title'] = 'Smart Qeesh App';
-        $data['page'] = 'Master';
+        $data['page'] = 'Manajemen';
         $data['subpage'] = 'Risk Condition';
-        $data['content'] = 'pages/master/v_risk_condition';
+        $data['content'] = 'pages/manajemen/v_risk_category';
         $this->load->view('template', $data);
     }
 
@@ -36,7 +36,7 @@ class Risk_condition extends CI_Controller{
                 'code' => 200,
                 'status' => true,
                 'msg' => 'Success',
-                'data' => $this->risk_condition->get()->result_array()
+                'data' => $this->risk_category->get()->result_array()
             ];
         }
         echo json_encode($data);
@@ -51,20 +51,20 @@ class Risk_condition extends CI_Controller{
             {
                 $id = $input['id'];
                 // proses update
-                $status =  $this->risk_condition->update($id,$input);
+                $status =  $this->risk_category->update($id,$input);
                 $data = [
                     'code' => 200,
                     'status' => 'OK',
-                    'msg' => 'Risk Condition berhasil diupdate',
+                    'msg' => 'Risk Category berhasil diupdate',
                     'data' => NULL
                 ];
             }else{
                 // proses insert
-                $status =  $this->risk_condition->create($input);
+                $status =  $this->risk_category->create($input);
                 $data = [
                     'code' => 200,
                     'status' => $status,
-                    'msg' => 'Risk Condition berhasil ditambahkan',
+                    'msg' => 'Risk Category berhasil ditambahkan',
                     'data' => NULL
                 ];
             }
@@ -80,11 +80,11 @@ class Risk_condition extends CI_Controller{
             $id = $this->input->post('id');
             if($id)
             {
-                $this->risk_condition->destroy($id);
+                $this->risk_category->destroy($id);
                 $data = [
                     'code' => 200,
                     'status' => true,
-                    'msg' => 'Risk Condition berhasil dihapus',
+                    'msg' => 'Risk Category berhasil dihapus',
                     'data' => NULL
                 ];
             }else{
@@ -92,7 +92,7 @@ class Risk_condition extends CI_Controller{
                 $data = [
                     'code' => 400,
                     'status' => false,
-                    'msg' => 'Risk Condition tidak ditemukan',
+                    'msg' => 'Risk Category tidak ditemukan',
                     'data' => NULL
                 ];
             }
@@ -106,7 +106,7 @@ class Risk_condition extends CI_Controller{
         if($this->input->is_ajax_request())
         {
             $keyword = $this->input->post('keyword');
-            $result  = $this->risk_condition->search($keyword);
+            $result  = $this->risk_category->search($keyword);
             $data = [
                 'code' => 200,
                 'status' => true,

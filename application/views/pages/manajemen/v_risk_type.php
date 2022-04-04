@@ -105,7 +105,7 @@
     $(document).ready(function() {
         $.ajax({
             type: "POST",
-            url: "<?= base_url() ?>master/risk_type/get_json",
+            url: "<?= base_url() ?>manajemen/risk_type/get_json",
             dataType: "json",
             success: function(response) {
                 var html_mn = ``;
@@ -123,7 +123,7 @@
 
                 // event Klik tombol add
                 $('.btnAdd').on('click', function(){
-                    $('.modal-title').text('Add Risk Type');
+                    $('.modal-title').text('Tambah Risk Type');
                     $('#myModal').modal('show');
                 })
 
@@ -144,7 +144,7 @@
                     var form = $('#myForm');
                     $.ajax({
                         type: "POST",
-                        url: "<?= base_url() ?>master/risk_type/store",
+                        url: "<?= base_url() ?>manajemen/risk_type/store",
                         data: form.serializeArray(),
                         dataType: "json",
                         success: function(response){
@@ -185,10 +185,9 @@
                         confirmButtonText: 'Yes, delete it!'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            console.log(id);
                             $.ajax({
                                 type: "POST",
-                                url: "<?= base_url() ?>master/risk_type/destroy",
+                                url: "<?= base_url() ?>manajemen/risk_type/destroy",
                                 data: {
                                     id: id
                                 },
@@ -197,7 +196,7 @@
                                     if(response.code == 200)
                                     {
                                         var icon = 'success';
-                                        var title = 'Success';
+                                        var title = 'Deleted';
                                         var text = response.msg;
                                     }else if(response.code == 400)
                                     {
@@ -223,7 +222,7 @@
                     var keyword = $(this).val();
                     $.ajax({
                         type: "POST",
-                        url: "<?= base_url() ?>master/risk_type/search",
+                        url: "<?= base_url() ?>manajemen/risk_type/search",
                         dataType: "json",
                         data: {
                             keyword:keyword
