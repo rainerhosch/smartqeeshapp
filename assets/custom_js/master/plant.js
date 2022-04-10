@@ -82,6 +82,7 @@ $("#tombol_simpan").on('click', function (e) {
 	let data = {
 		txtNamaPlant: $("#txtNamaPlant").val(),
 		bitActive: $("#bitActive").val(),
+		txtSingkatan: $("#txtSingkatan").val(),
 		intIdPlant: id
 	}
 	if (id == "") {

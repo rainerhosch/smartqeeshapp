@@ -9,18 +9,22 @@ defined('BASEPATH') or exit('No direct script access allowed');
  *  Date Created          : 23/03/2022
  *  Quots of the code     : PKadang susah kalo udah nyaman sama framework sebelah :D
  */
-class M_plant extends CI_Model
+class M_risk_context extends CI_Model
 {
-	var $table = 'mPlant'; //nama tabel dari database
+	var $table = 'trRiskContext'; //nama tabel dari database
 	var $column_order = array(null); //field yang ada di table user
-	var $column_search = array('txtNamaPlant'); //field yang diizin untuk pencarian 
+	var $column_search = array('trRiskContext.txtNamaContext'); //field yang diizin untuk pencarian 
 	var $order = array('dtmInsertedBy' => 'desc'); // default order 
 
-	private function _get_datatables_query()
+	private function _get_datatables_query($intIdTahapanProsesRisk)
 	{
-
+		$this->db->select('*');		
 		$this->db->from($this->table);
-
+		$this->db->where([
+			'intIdTahapanProsesRisk' => $intIdTahapanProsesRisk
+		]);
+				
+		// var_dump($this->db->last_query());exit;
 		$i = 0;
 
 		foreach ($this->column_search as $item) // looping awal
@@ -50,71 +54,51 @@ class M_plant extends CI_Model
 		// }
 	}
 
-	function get_datatables()
+	function get_datatables($intIdTahapanProsesRisk)
 	{
-		$this->_get_datatables_query();
+		$this->_get_datatables_query($intIdTahapanProsesRisk);
 		if ($_POST['length'] != -1)
-			$this->db->limit($_POST['length'], $_POST['start']);
+			$this->db->limit($_POST['length'], $_POST['start']);				
 		$query = $this->db->get();
 		$list = $query->result();
 		$data = array();
 		$no = $_POST['start'];
 		foreach ($list as $field) {
 			$no++;
-			$row = array();
-			$row["txtNamaPlant"] = $field->txtNamaPlant;
-			$row["bitActive"] = $field->bitActive;
-			$row["txtSingkatan"] = $field->txtSingkatan;
-			$row["intIdPlant"] = $field->intIdPlant;
-			$data[] = $row;
+			$row 						= array();
+			$row["no"] 					= $no;
+			$row["txtNamaContext"] 		= $field->txtNamaContext;
+			$row["intIdTrRiskContext"] 	= $field->intIdTrRiskContext;
+			$data[] 					= $row;
 		}
 
 		$output = array(
 			"draw" => $_POST['draw'],
-			"recordsTotal" => $this->count_all(),
-			"recordsFiltered" => $this->count_filtered(),
+			"recordsTotal" => $this->count_all($intIdTahapanProsesRisk),
+			"recordsFiltered" => $this->count_filtered($intIdTahapanProsesRisk),
 			"data" => $data,
 		);
 		return $output;
 	}
 
-	function count_filtered()
+	function count_filtered($intIdTahapanProsesRisk)
 	{
-		$this->_get_datatables_query();
+		$this->_get_datatables_query($intIdTahapanProsesRisk);
 		$query = $this->db->get();
 		return $query->num_rows();
 	}
 
-	public function count_all()
-	{
+	public function count_all($intIdTahapanProsesRisk)
+	{		
 		$this->db->from($this->table);
+		$this->db->where([
+			'intIdTahapanProsesRisk' => $intIdTahapanProsesRisk
+		]);
 		return $this->db->count_all_results();
 	}
 
-	public function getById ($id)
-	{
-		
-		return $this->db->get_where($this->table, ['intIdPlant' => $id])->row();
-		
-	}
-	
-	public function simpan($data)
-	{
+	public function simpan_tahapan_baru($data) {		
 		$this->db->insert($this->table, $data);
-	}
-
-	public function update($data, $id)
-	{		
-		$this->db->update($this->table, $data, ['intIdPlant' => $id]);
-		// try {
-			
-		// } catch (\Exception $e) {
-		// 	var_dump($e->getMessage());exit;
-		// }	
-	}
-	
-	public function getsPlantActive()
-	{
-		return $this->db->get_where($this->table, ["bitActive" => 1])->result_array();
+		return true;
 	}
 }

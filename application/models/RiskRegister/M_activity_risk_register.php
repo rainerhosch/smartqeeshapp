@@ -9,20 +9,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
  *  Date Created          : 23/03/2022
  *  Quots of the code     : PKadang susah kalo udah nyaman sama framework sebelah :D
  */
-class M_dok_register extends CI_Model
+class M_activity_risk_register extends CI_Model
 {
-	var $table = 'trDokRiskRegister'; //nama tabel dari database
+	var $table = 'trActivityRiskRegister'; //nama tabel dari database
 	var $column_order = array(null); //field yang ada di table user
-	var $column_search = array('txtDocNumber'); //field yang diizin untuk pencarian 
+	var $column_search = array('txtNamaActivity'); //field yang diizin untuk pencarian 
 	var $order = array('dtmInsertedBy' => 'desc'); // default order 
 
 	private function _get_datatables_query()
 	{
-		$this->db->select('trDokRiskRegister.txtDocNumber, trDokRiskRegister.txtStatus, user_detail.nama, trDokRiskRegister.dtmInsertedBy, trDokRiskRegister.intIdDokRiskRegister');		
+		$this->db->select('trActivityRiskRegister.intIdActivityRisk, mActivity.txtNamaActivity');		
 		$this->db->from($this->table);
-		$this->db->join('user', 'trDokRiskRegister.intInsertedBy=user.user_detail_id');
-		$this->db->join('user_detail', 'user.user_detail_id=user_detail.user_detail_id');
-		
+		$this->db->join('mActivity', 'trActivityRiskRegister.intIdActivity=mActivity.intIdActivity');
+		$this->db->order_by('trActivityRiskRegister.intIdActivityRisk', 'desc');
 
 		$i = 0;
 
@@ -66,11 +65,8 @@ class M_dok_register extends CI_Model
 			$no++;
 			$row = array();
 			$row["no"] = $no;
-			$row["txtDocNumber"] = $field->txtDocNumber;
-			$row["txtStatus"] = $field->txtStatus;
-			$row["intIdDokRiskRegister"] = $field->intIdDokRiskRegister;
-			$row["nama"] = $field->nama;
-			$row["dtmInsertedBy"] = date('d-m-Y', strtotime($field->dtmInsertedBy));
+			$row["txtNamaActivity"] = $field->txtNamaActivity;
+			$row["intIdActivityRisk"] = $field->intIdActivityRisk;
 			$data[] = $row;
 		}
 
@@ -93,22 +89,61 @@ class M_dok_register extends CI_Model
 	public function count_all()
 	{
 		$this->db->from($this->table);
-		$this->db->join('user', 'trDokRiskRegister.intInsertedBy=user.user_detail_id');
-		$this->db->join('user_detail', 'user.user_detail_id=user_detail.user_detail_id');
+		$this->db->join('mActivity', 'trActivityRiskRegister.intIdActivity=mActivity.intIdActivity');
 		return $this->db->count_all_results();
 	}
 
-	public function simpan ($data)
+	public function simpan ($data, $id_departemen)
 	{
-		$this->db->insert($this->table, $data);	
+		$activityData 			= $this->db->get_where('mActivity', ['txtNamaActivity' => $data['txtActivityAdd']])->row();
+		$dataFinal 				= [];
+		$dataInsertNewActivity 	= [];
+		if ($activityData != null) {
+			$dataFinal = [
+				"intIdActivity" 			=> $activityData->intIdActivity,
+				"intIdDokRiskRegister" 		=> $data['intIdDokRiskRegister'],
+				"intInsertedBy" 			=> $data['intInsertedBy'],
+				"dtmInsertedDate"			=> $data['dtmInsertedDate'] 
+			];
+		} else {
+			$dataInsertNewActivity = [
+                    "intIdDepartemen"   => $id_departemen,
+                    "txtNamaActivity"   => strtoupper($data['txtActivityAdd']),
+                    "bitActive"         => true,
+                    "intInsertedBy"     => $data['intInsertedBy'],
+                    "dtmInsertedDate"   => $data['dtmInsertedDate'],
+                    "intUpdatedBy"      => $data['intInsertedBy'],
+                    "dtmUpdatedDate"    => $data['dtmInsertedDate']
+			];
+			$this->db->insert('mActivity', $dataInsertNewActivity);
+			$dataActivityNew = $this->db->get_where('mActivity', $dataInsertNewActivity)->row();
+			$dataFinal = [
+				"intIdActivity" 			=> $dataActivityNew->intIdActivity,
+				"intIdDokRiskRegister" 		=> $data['intIdDokRiskRegister'],
+				"intInsertedBy" 			=> $data['intInsertedBy'],
+				"dtmInsertedDate"			=> $data['dtmInsertedDate'] 
+			];
+		}
+		$activityExist = $this->db->get_where($this->table, [
+			"intIdActivity" 			=> $dataFinal['intIdActivity'],
+			"intIdDokRiskRegister" 		=> $dataFinal['intIdDokRiskRegister'],
+		])->row();
+		if ($activityExist == null) {
+			$this->db->insert($this->table, $dataFinal);
+			return true;
+		} else {
+			return false;
+		}
+		
+		
 	}
 
 	public function getByID ($id) {		
 		$this->db->select('trDokRiskRegister.txtDocNumber, trDokRiskRegister.txtStatus, trDokRiskRegister.intInspectedBy, trDokRiskRegister.intValidateBy, mSection.txtNamaSection, mPlant.txtNamaPlant, mDepartemen.txtNamaDepartement, trDokRiskRegister.intIdDokRiskRegister, trDokRiskRegister.dtmInsertedBy, trDokRiskRegister.dtmInspectedDate, trDokRiskRegister.dtmValidatedDate, trDokRiskRegister.intInsertedBy');
 		$this->db->from($this->table);
-		$this->db->join('mDepartemen', $this->table.'.intIdDepartement = mDepartemen.intIdDepartement');
-		$this->db->join('mSection', 'mDepartemen.intIdSection = mSection.intIdSection');				
-		$this->db->join('mPlant', 'mSection.intIdPlant = mPlant.intIdPlant');
+		$this->db->join('mSection', 'trDokRiskRegister.intIdSection = mSection.intIdSection');		
+		$this->db->join('mDepartemen', 'mSection.intIdDepartemen = mDepartemen.intIdDepartement');
+		$this->db->join('mPlant', 'mDepartemen.intIdPlant = mPlant.intIdPlant');
 		$this->db->where('trDokRiskRegister.intIdDokRiskRegister', $id);
 		return $this->db->get()->row();								
 	}

@@ -53,4 +53,10 @@ class M_activity extends CI_Model
      {
           return $this->db->get_where($this->table, ['intIdSection' => $id, "bitActive" => 1])->result_array();
      }
+
+	public function getActivityByDepartemen($id)
+     {
+          return $this->db->get_where($this->table, ['intIdDepartemen' => $id, "bitActive" => 1])->result_array();
+		
+     }
 }

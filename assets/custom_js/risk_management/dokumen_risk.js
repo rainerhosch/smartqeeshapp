@@ -53,10 +53,11 @@ function p_InitiateDataList() {
 		]
 	});
 	$("#dtList").css("width", "100%");
+	$("#dtList_filter").parent().addClass("d-flex justify-content-end");
+	$("#dtList_paginate").parent().addClass("d-flex justify-content-end");
 }
 
 $("#tombol_simpan_dokumen").on('click', function (e) {
-	e.preventDefault();
 	let data = {
 		txtDocNumber: $("#txtNoDocNumber").val()
 	}
@@ -66,9 +67,12 @@ $("#tombol_simpan_dokumen").on('click', function (e) {
 		data: data,
 		dataType: "json",
 		success: function (response) {
-			let otable = $('#dtList').dataTable();
-			otable.fnDraw(false);
-
+			alert(response.msg)
+			let oTable = $('#dtList').dataTable();
+			oTable.fnDraw(false);
+		},
+		error: (res) => {
+			alert(res)
 		}
 	});
 });

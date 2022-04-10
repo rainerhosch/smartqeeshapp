@@ -45,7 +45,11 @@ class Auth extends CI_Controller
                 if ($data_user['password'] === md5($password)) {
                     if ($data_user['is_active'] > 0) {
                         $session_login = [
+<<<<<<< HEAD
                             'user_id' => $data_user['user_id'],
+=======
+                            'user_id' 		=> $data_user['user_id'],
+>>>>>>> 7874b071a59bfea3d2757dcb77e6117cefbec27b
                             'id_departemen' => $data_user['id_departemen'],
                         ];
                         $this->session->set_userdata($session_login);
@@ -111,13 +115,13 @@ class Auth extends CI_Controller
             // data insert user detail
             $tbl = 'user_detail';
             $data_detail_user = [
-                'nama'          => $post_regist['nama_user'],
-                'email'         => $post_regist['email_user'],
-                'divisi'        => "-",
-                'jabatan'       => $post_regist['jabatan_user'],
+                'nama'      	=> $post_regist['nama_user'],
+                'email'     	=> $post_regist['email_user'],
+                'divisi'    	=> "-",
+                'jabatan'   	=> $post_regist['jabatan_user'],
                 'id_departemen' => $post_regist['id_departemen'],
-                'tlp'           => 62,
-                'img'           => 'default.jpg'
+                'tlp'       	=> 62,
+                'img'       	=> 'default.jpg'
             ];
 
             $id_detail_user = $this->user->insert_data($tbl, $data_detail_user);

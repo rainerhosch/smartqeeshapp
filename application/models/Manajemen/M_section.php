@@ -15,14 +15,14 @@ class M_section extends CI_Model
 	var $column_order 	= array(null); //field yang ada di table user
 	var $column_search 	= array('mSection.txtNamaSection'); //field yang diizin untuk pencarian 
 	var $order 			= array('mSection.dtmInsertedBy' => 'desc'); // default order
-	var $columnData 	= "mDepartemen.txtNamaDepartement, mSection.txtNamaSection, mSection.intIdSection, mSection.bitActive";
+	var $columnData 	= "mSection.txtNamaSection, mSection.intIdSection, mSection.bitActive, mPlant.txtNamaPlant";
 
 	private function _get_datatables_query()
 	{
 		
 		$this->db->select($this->columnData);		
-		$this->db->from($this->table);		
-		$this->db->join("mDepartemen", 'mDepartemen.intIdDepartement = mSection.intIdDepartemen');		
+		$this->db->from($this->table);
+		$this->db->join("mPlant", 'mSection.intIdPlant = mPlant.intIdPlant');
 		// var_dump($q);exit;
 
 		$i = 0;
@@ -69,17 +69,17 @@ class M_section extends CI_Model
 			$no++;
 			$row = array();
 			$row["txtNamaSection"] 		= $field->txtNamaSection;
-			$row["txtNamaDepartemen"] 	= $field->txtNamaDepartement;
+			$row["txtNamaPlant"] 		= $field->txtNamaPlant;
 			$row["bitActive"] 			= $field->bitActive;
 			$row["intIdSection"] 		= $field->intIdSection;
 			$data[] = $row;
 		}
 
 		$output = array(
-			"draw" => $_POST['draw'],
-			"recordsTotal" => $this->count_all(),
-			"recordsFiltered" => $this->count_filtered(),
-			"data" => $data,
+			"draw" 				=> $_POST['draw'],
+			"recordsTotal" 		=> $this->count_all(),
+			"recordsFiltered" 	=> $this->count_filtered(),
+			"data" 				=> $data,
 		);
 		return $output;
 	}
@@ -95,7 +95,7 @@ class M_section extends CI_Model
 	{
 		$this->db->select($this->columnData);
 		$this->db->from($this->table);
-		$this->db->join("mDepartemen", 'mSection.intIdDepartemen = mDepartemen.intIdDepartement');
+		$this->db->join("mPlant", 'mSection.intIdPlant = mPlant.intIdPlant');
 		return $this->db->count_all_results();
 	}
 
@@ -135,8 +135,8 @@ class M_section extends CI_Model
 		return $this->db->get()->result();
 	}
 
-	public function getDataByIdDepartement ($id)
+	public function getDataByIdPlant ($id)
 	{
-		return $this->db->get_where($this->table, ["intIdDepartemen" => $id, "bitActive" => true])->result_array();
+		return $this->db->get_where($this->table, ["intIdPlant" => $id, "bitActive" => true])->result_array();
 	}
 }

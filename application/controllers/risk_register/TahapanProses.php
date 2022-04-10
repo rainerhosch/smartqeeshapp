@@ -10,43 +10,55 @@ defined('BASEPATH') or exit('No direct script access allowed');
  *  Date Created          : 23/03/2022
  *  Quots of the code     : Kadang susah kalo udah nyaman sama framework sebelah :D
  */
-class Dokumen extends CI_Controller
+class TahapanProses extends CI_Controller
 {
     public function __construct()
     {
         parent::__construct();
         login_check();
-        $this->load->model('/RiskRegister/M_dok_register', 'dokumen');
-    }
-
-    public function index()
-    {
-        $data['title'] 		= 'Smart Qeesh App';
-        $data['page'] 		= 'Risk Register';
-        $data['subpage'] 	= 'Blank Page';        
-        $data['content'] 	= 'pages/risk_management/risk_register/tahapan_proses';
-        $this->load->view('template', $data);
+        $this->load->model('/RiskRegister/M_tahapan_proses_risk', 'tahapan_proses');
     }
 
 	public function getDataTable()
 	{
-		echo json_encode($this->dokumen->get_datatables());
+		$intIdActivityRisk = $this->input->post('intIdActivityRisk');		
+		echo json_encode($this->tahapan_proses->get_datatables($intIdActivityRisk));
 	}
 
 	public function simpan()
 	{
-		$dateNow = date("yyyy-mm-dd");
+		$dateNow = date("Y-m-d");
 		$data = [
-			"txtDocNumber" 		=> $this->input->post('txtDocNumber'),
-			"txtInsertedBy" 	=> $this->session->userdata('user_id'),
-			"dtmInsertedDate" 	=> $dateNow
+			"intIdActivityRisk" 		=> $this->input->post('intIdActivityRisk'),
+			"txtTahapanProses" 			=> strtoupper($this->input->post('txtTahapanProses')),
+			"txtInsertedBy" 			=> $this->session->userdata('user_id'),
+			"dtmInsertedDate" 			=> $dateNow,
+			"intIdDepartemen"			=> $this->session->userdata('id_departemen')
 		];
-		$this->dokumen->simpan ($data);
+		$status = $this->tahapan_proses->simpan_tahapan_baru($data);
+		$response = [
+						'code' => 200,
+						'status' => $status,
+						'msg' => 'Berhasil disimpan.',
+						'data' => "-"
+					];
+		echo json_encode($response);
+	}
+
+	public function cekTahapan () {
+		$dateNow = date("Y-m-d");
+		$data = [
+			"intIdActivityRisk" 		=> $this->input->get('intIdActivityRisk'),
+			"intIdTahapanProses" 		=> $this->input->get('id'),
+			"intInsertedBy" 			=> $this->session->userdata('user_id'),
+			"dtmInsertedDate" 			=> $dateNow
+		];
+		$data = $this->tahapan_proses->cekTahapan($data);
 		$response = [
 						'code' => 200,
 						'status' => true,
-						'msg' => 'Berhasil disimpan.',
-						'data' => "-"
+						'msg' => '',
+						'data' => $data
 					];
 		echo json_encode($response);
 	}
