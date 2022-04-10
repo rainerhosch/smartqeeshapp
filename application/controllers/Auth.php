@@ -45,8 +45,8 @@ class Auth extends CI_Controller
                 if ($data_user['password'] === md5($password)) {
                     if ($data_user['is_active'] > 0) {
                         $session_login = [
-                            'user_id' => $data_user['user_id'],
-                            'id_section' => $data_user['id_section'],
+                            'user_id' 		=> $data_user['user_id'],
+                            'id_departemen' => $data_user['id_departemen'],
                         ];
                         $this->session->set_userdata($session_login);
                         $data_user = $session_login;
@@ -115,7 +115,7 @@ class Auth extends CI_Controller
                 'email'     	=> $post_regist['email_user'],
                 'divisi'    	=> "-",
                 'jabatan'   	=> $post_regist['jabatan_user'],
-                'id_section'   	=> $post_regist['id_section'],
+                'id_departemen' => $post_regist['id_departemen'],
                 'tlp'       	=> 62,
                 'img'       	=> 'default.jpg'
             ];

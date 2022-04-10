@@ -9,6 +9,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
  *  Author                : Dimas Fauzan
  *  Date Created          : 26/03/2022
  *  Quots of the code     : Kadang susah kalo udah nyaman sama framework sebelah :D
+ * Note 				  : Ini sebenernya controller untuk manajemen function
  */
 class Section extends CI_Controller
 {
@@ -18,6 +19,7 @@ class Section extends CI_Controller
 		login_check();
 		$this->load->model('/Manajemen/M_section', 'section');
 		$this->load->model('/Manajemen/M_department', 'departement');
+		$this->load->model('/Manajemen/M_plant', 'plant');		
 	}
 
 	public function getsSection()
@@ -33,9 +35,10 @@ class Section extends CI_Controller
 	public function index()
 	{
 		$data['title'] 		= 'Smart Qeesh App';
-		$data['page'] 		= 'Manajemen Section';
+		$data['page'] 		= 'Manajemen Function';
 		$data['subpage'] 	= 'Blank Page';
 		$data['content'] 	= 'pages/manajemen/v_section';
+		$data["plant"]		= $this->plant->getsPlantActive();
 		$data["departemen"]	= $this->departement->getsDepartmentActive();
 		$this->load->view('template', $data);
 	}
@@ -72,7 +75,7 @@ class Section extends CI_Controller
 		$data = [
 			"txtNamaSection" 	=> strtoupper($this->input->post('txtNamaSection')),
 			"bitActive" 		=> $this->input->post('bitActive'),
-			"intIdDepartemen" 	=> $this->input->post('intIdDepartement'),
+			"intIdPlant" 		=> $this->input->post('intIdPlant'),
 			"intInsertBy" 		=> $this->session->userdata('user_id'),
 			"dtmInsertedDate" 	=> $dateNow
 		];
@@ -94,7 +97,7 @@ class Section extends CI_Controller
 		$data = [
 			"txtNamaSection" 	=> strtoupper($this->input->post('txtNamaSection')),
 			"bitActive" 		=> $this->input->post('bitActive'),
-			"intIdDepartemen" 	=> $this->input->post('intIdDepartement'),
+			"intIdPlant" 		=> $this->input->post('intIdPlant'),
 			"intUpdatedBy" 		=> $this->session->userdata('user_id'),
 			"dtmUpdatedDate" 	=> $dateNow
 		];
@@ -108,11 +111,11 @@ class Section extends CI_Controller
 		echo json_encode($response);
 	}
 
-	public function getDataByIdDepartement()
+	public function getDataByIdPlant()
 	{
 		$id 		= $this->input->get('id');
-		$data_dept 	= $this->section->getDataByIdDepartement($id);
-		$opt 		= '<option value ="">Silahkan Pilih Section</option>';
+		$data_dept 	= $this->section->getDataByIdPlant($id);
+		$opt 		= '<option value ="">Silahkan Pilih Function</option>';
 		if (!empty($data_dept)) {
 			foreach ($data_dept as $item) {
 				$opt .= '<option value="' . $item["intIdSection"] . '"> ' . $item["txtNamaSection"] . '</option>';

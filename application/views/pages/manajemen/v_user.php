@@ -108,21 +108,21 @@
 						</div>
 					</div>
 					<div class="form-group row">
-						<label for="divisi_user" class="col-sm-2 col-form-label">Departemen</label>
-						<div class="col-sm-10">
-							<select name="" id="id_departemen" class="form-control">
-								<option value="">Silah Pilih Departemen</option>
-							</select>
-						</div>
-					</div>
-					<div class="form-group row">
 						<label for="id_section" class="col-sm-2 col-form-label">Section</label>
 						<div class="col-sm-10">
-							<select name="id_section" id="id_section" class="form-control" required>
+							<select name="" id="id_section" class="form-control" required>
 								<option value="">Silah Pilih Section</option>
 							</select>
 						</div>
 					</div>
+					<div class="form-group row">
+						<label for="divisi_user" class="col-sm-2 col-form-label">Departemen</label>
+						<div class="col-sm-10">
+							<select name="id_departemen" id="id_departemen" class="form-control" required>
+								<option value="">Silah Pilih Departemen</option>
+							</select>
+						</div>
+					</div>					
 					<div class="form-group row">
 						<label for="jabatan_user" class="col-sm-2 col-form-label">Jabatan</label>
 						<div class="col-sm-10">
@@ -378,11 +378,11 @@
 			if (id_plant != "") {
 				$.ajax({
 					type: "get",
-					url: `${url}manajemen/Department/getDataByIdPlant`,
+					url: `${url}manajemen/Section/getDataByIdPlant`,
 					data: {id: id_plant},
 					dataType: "json",
 					success: function(response) {
-						$("#id_departemen").html(response.data);
+						$("#id_section").html(response.data);
 					}
 				});
 			} else {
@@ -391,14 +391,14 @@
 			}
 
 		});
-		$("#id_departemen").on('change', function () {
-			let id_departemen = $(this).val();
-			if (id_departemen != "") {
+		$("#id_section").on('change', function () {
+			let id_section = $(this).val();
+			if (id_section != "") {
 				$.ajax({
 					type: "get",
-					url: `${url}manajemen/section/getDataByIdDepartement`,
+					url: `${url}manajemen/Departement/getDataByIdDepartement`,
 					data: {
-						id: id_departemen
+						id: id_section
 					},
 					dataType: "json",
 					success: function (response) {
@@ -406,7 +406,7 @@
 					}
 				});
 			} else {
-				$("#id_section").html(`<option value="">Silahkan Pilih Section</option>`);
+				$("#id_departemen").html(`<option value="">Silahkan Pilih Departemen</option>`);
 			}
 		});
 	});

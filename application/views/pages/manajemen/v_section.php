@@ -27,13 +27,21 @@
 								<div class="col-lg-12">									
 									<input type="hidden" name="" id="intIdSection">
 									<div class="form-group">
+										<label for="">Plant</label>
+										<select name="intIdPlant" id="intIdPlant" class="form-control">
+											<?php foreach ($plant as $item) { ?>
+												<option value="<?= $item['intIdPlant'] ?>"><?= $item['txtNamaPlant'] ?></option>
+											<?php } ?>
+										</select>
+									</div>
+									<!-- <div class="form-group">
 										<label for="">Departement</label>
 										<select name="intIdDepartement" id="intIdDepartement" class="form-control">
 											<?php foreach ($departemen as $item) { ?>
 												<option value="<?= $item->intIdDepartement ?>"><?= $item->txtNamaDepartement ?></option>
 											<?php } ?>
 										</select>
-									</div>
+									</div> -->
 									<div class="form-group">
 										<label for="">Nama Section</label>
 										<input type="text" name="txtNamaSection" id="txtNamaSection" class="form-control">
@@ -77,7 +85,7 @@
 											<thead>
 												<tr>
 													<th class="text-center">Nama</th>
-													<th class="text-center">Nama Dept</th>
+													<th class="text-center">Nama Plant</th>
 													<th class="text-center">Status</th>
 													<th class="text-center">Option</th>
 												</tr>

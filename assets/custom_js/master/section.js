@@ -25,8 +25,8 @@ function p_InitiateDataList() {
 				className: 'text-center'
 			},
 			{
-				"data": "txtNamaDepartemen",
-				"name": "txtNamaDepartemen",
+				"data": "txtNamaPlant",
+				"name": "txtNamaPlant",
 				className: 'text-center'
 			},			
 			{				
@@ -69,7 +69,7 @@ $(document).on('click', '#tombol_edit', function (e) {
 				let data = response.data
 				$("#intIdSection").val(data.intIdSection);
 				$("#txtNamaSection").val(data.txtNamaSection);
-				$("#intIdDepartement").val(data.intIdDepartemen);
+				$("#intIdPlant").val(data.intIdPlant);
 				$("#bitActive").val(data.bitActive);
 			}
 		}
@@ -81,7 +81,7 @@ $("#tombol_simpan").on('click', function (e) {
 	let id = $("#intIdSection").val()
 	let data = {
 		txtNamaSection: $("#txtNamaSection").val(),
-		intIdDepartement: $("#intIdDepartement").val(),
+		intIdPlant: $("#intIdPlant").val(),
 		bitActive: $("#bitActive").val(),
 		intIdSection: id
 	}
