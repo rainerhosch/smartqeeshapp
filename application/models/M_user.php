@@ -75,9 +75,9 @@ class M_user extends CI_Model
 		$this->db->select('user_detail.nama, mSection.txtNamaSection, mDepartemen.txtNamaDepartement, mPlant.txtSingkatan as txtCodePlant, mPlant.txtNamaPlant, mDepartemen.txtSingkatan as txtCodeDept, user.user_id');
 		$this->db->from('user');
 		$this->db->join('user_detail', 'user.user_detail_id = user_detail.user_detail_id');
-		$this->db->join('mSection', 'user_detail.id_section = mSection.intIdSection');
-		$this->db->join('mDepartemen', 'mSection.intIdDepartemen = mDepartemen.intIdDepartement');
-		$this->db->join('mPlant', 'mDepartemen.intIdPlant = mPlant.intIdPlant');
+		$this->db->join('mDepartemen', 'user_detail.id_departemen = mDepartemen.intIdDepartement');
+		$this->db->join('mSection', 'mDepartemen.intIdSection = mSection.intIdSection');		
+		$this->db->join('mPlant', 'mSection.intIdPlant = mPlant.intIdPlant');
 		$this->db->where('user.user_id', $id);
 		return $this->db->get()->row();				
 	}

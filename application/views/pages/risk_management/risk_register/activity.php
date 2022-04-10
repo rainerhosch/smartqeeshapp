@@ -1,7 +1,10 @@
-<link rel="stylesheet" href="<?= base_url('assets/templates') ?>/plugins/datatables-bs4/css/dataTables.bootstrap4.min">
+<link rel="stylesheet" href="<?= base_url('assets/templates') ?>/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
 <input type="hidden" name="intIdDokRiskRegister" id="intIdDokRiskRegister" value="<?= $intIdDokRegister ?>">
 <input type="hidden" name="intIdActivityRisk" id="intIdActivityRisk">
 <input type="hidden" name="intIdTahapanProsesRisk" id="intIdTahapanProsesRisk">
+<input type="hidden" name="intIdTrRiskContext" id="intIdTrRiskContext">
+<input type="hidden" name="intIdRiskSourceIdentification" id="intIdRiskSourceIdentification">
+<input type="hidden" name="intIdRiskEvaluation" id="intIdRiskEvaluation">
 <div class="content-wrapper" style="z-index: -999 !important;">
 	<section class="content-header">
 		<div class="container-fluid">
@@ -70,19 +73,40 @@
 						</div>
 						<div id="show_activity_current">
 							<div class="row">
-								<div class="col-lg-4 col-xs-4">
+								<div class="col-lg-12 col-xs-12">
 									<div class="form-group">
 										<label for="">Activity</label>
 										<input type="text" name="" id="txtNamaActivityShow" class="form-control" value="" disabled>
 									</div>
-								</div>								
+								</div>
+							</div>
+						</div>
+
+						<div id="show_tahapan_current">
+							<div class="row">
+								<div class="col-lg-12 col-xs-12">
+									<div class="form-group">
+										<label for="">Tahapan</label>
+										<input type="text" name="" id="txtNamaTahapanShow" class="form-control" value="" disabled>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div id="show_context_current">
+							<div class="row">
+								<div class="col-lg-12 col-xs-12">
+									<div class="form-group">
+										<label for="">Risk Context</label>
+										<input type="text" name="" id="txtNamaContextShow" class="form-control" value="" disabled>
+									</div>
+								</div>
 							</div>
 						</div>
 
 						<div class="row">
 							<div class="col-lg-12">
 								<div class="d-flex justify-content-end">
-									<button class="btn btn-success" id="tombol_simpan_dokumen">OK</button>&nbsp;
 									<button class="btn btn-success" id="tombol_simpan_dokumen">Validasi</button>
 								</div>
 							</div>
@@ -121,19 +145,26 @@
 			</div>
 		</div>
 		<?php $this->load->view('pages/risk_management/risk_register/tahapan_proses'); ?>
+		<?php $this->load->view('pages/risk_management/risk_register/contextTahapan'); ?>
 	</section>
 </div>
+<!-- Modal Area -->
 <?php $this->load->view('pages/risk_management/risk_register/modal/modal_add_activity'); ?>
+<?php $this->load->view('pages/risk_management/risk_register/modal/modal_add_tahapan'); ?>
+
 <script src="<?= base_url('assets/templates') ?>/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="<?= base_url('assets/templates') ?>/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
 <script>
 	var url = `<?= base_url() ?>`;
-	$("#show_activity_current").css({
+	$("#show_activity_current, #show_tahapan_current, #show_context_current").css({
 		'display': 'none'
 	});
-	$("#data_tahapan").css({
+	$("#data_tahapan, #data_context").css({
 		'display': 'none'
 	});
+	
 </script>
 <script src="<?= base_url('assets/custom_js') ?>/risk_management/activity_risk.js"></script>
 <script src="<?= base_url('assets/custom_js') ?>/risk_management/tahapan_proses.js"></script>
+<script src="<?= base_url('assets/custom_js') ?>/risk_management/risk_context.js"></script>
+<script src="<?= base_url('assets/custom_js') ?>/risk_management/risk_iden.js"></script>

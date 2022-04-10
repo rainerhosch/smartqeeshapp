@@ -18,12 +18,14 @@ class M_tahapan_proses_risk extends CI_Model
 
 	private function _get_datatables_query($intIdActivityRisk)
 	{
-		$this->db->select('trTahapanProsesRisk.intIdTahapanProsesRisk, mTahapanProses.txtNamaTahapan');
+		$this->db->select('mTahapanProses.txtNamaTahapan, mActivity.intIdDepartement, trTahapanProsesRisk.intIdTahapanProsesRisk, mTahapanProses.intIdTahapanProses, trTahapanProsesRisk.intIdActivityRisk');
 		$this->db->from($this->table);
-		$this->db->join('mTahapanProses', 'mTahapanProses.intIdTahapanProses = trTahapanProsesRisk.intIdTahapanProses');
-		$this->db->where('trTahapanProsesRisk.intIdActivityRisk', $intIdActivityRisk);
-
-		
+		$this->db->join('mTahapanProses', 'trTahapanProsesRisk.intIdTahapanProses = mTahapanProses.intIdTahapanProses', 'right');
+		$this->db->join('mActivity', 'mTahapanProses.intIdActivty = mActivity.intIdActivity');
+		$this->db->where([
+			'mActivity.intIdDepartement' => $this->session->userdata('id_departemen')			
+		]);
+		// var_dump($this->db->last_query());exit;
 		$i = 0;
 
 		foreach ($this->column_search as $item) // looping awal
@@ -57,23 +59,23 @@ class M_tahapan_proses_risk extends CI_Model
 	{
 		$this->_get_datatables_query($intIdActivityRisk);
 		if ($_POST['length'] != -1)
-			$this->db->limit($_POST['length'], $_POST['start']);
+			$this->db->limit($_POST['length'], $_POST['start']);				
 		$query = $this->db->get();
 		$list = $query->result();
 		$data = array();
 		$no = $_POST['start'];
 		foreach ($list as $field) {
 			$no++;
-			$row = array();
-			$row["no"] = $no;
-			$row["txtNamaTahapan"] = $field->txtNamaTahapan;
-			$row["intIdTahapanProsesRisk"] = $field->intIdTahapanProsesRisk;
-			$data[] = $row;
+			$row 						= array();
+			$row["no"] 					= $no;
+			$row["txtNamaTahapan"] 		= $field->txtNamaTahapan;
+			$row["intIdTahapanProses"] 	= $field->intIdTahapanProses;
+			$data[] 					= $row;
 		}
 
 		$output = array(
 			"draw" => $_POST['draw'],
-			"recordsTotal" => $this->count_all(),
+			"recordsTotal" => $this->count_all($intIdActivityRisk),
 			"recordsFiltered" => $this->count_filtered($intIdActivityRisk),
 			"data" => $data,
 		);
@@ -87,10 +89,69 @@ class M_tahapan_proses_risk extends CI_Model
 		return $query->num_rows();
 	}
 
-	public function count_all()
-	{
+	public function count_all($intIdActivityRisk)
+	{		
 		$this->db->from($this->table);
-		$this->db->join('mTahapanProses', 'mTahapanProses.intIdTahapanProses = trTahapanProsesRisk.intIdTahapanProses');
+		$this->db->join('mTahapanProses', 'mTahapanProses.intIdTahapanProses = trTahapanProsesRisk.intIdTahapanProses', 'right');
+		$this->db->join('mActivity', 'mTahapanProses.intIdActivty = mActivity.intIdActivity');
+		$this->db->where([
+			'trTahapanProsesRisk.intIdActivityRisk' => $intIdActivityRisk,
+		]);
 		return $this->db->count_all_results();
+	}
+
+	public function simpan_tahapan_baru($data) {
+		$trActivity 		= $this->db->get_where('trActivityRiskRegister', ['intIdActivityRisk' => $data['intIdActivityRisk']])->row();
+		$mTahapan 			= $this->db->get_where('mTahapanProses', ['txtNamaTahapan' => $data['txtTahapanProses']])->row();
+		$dataNewTrTahapan 	= [];
+		if ($mTahapan == null) {
+			$dataTahapanBaru = [
+				"intIdActivty" 			=> $trActivity->intIdActivity,
+				"txtNamaTahapan" 		=> $data['txtTahapanProses'],
+				"bitActive" 			=> 1,	
+				"intInsertedBy" 		=> $data['txtInsertedBy'],
+				"dtmInsertedDate" 		=> $data['dtmInsertedDate'],
+			];
+			$this->db->insert('mTahapanProses', $dataTahapanBaru);
+			$tahapanBaru = $this->db->get_where('mTahapanProses', $dataTahapanBaru)->row();
+			$dataNewTrTahapan = [
+				'intIdTahapanProses' 	=> $tahapanBaru->intIdTahapanProses,
+				'intIdActivityRisk' 	=> $data['intIdActivityRisk'],
+				"intInsertedBy" 		=> $data['txtInsertedBy'],
+				"dtmInsertedDate" 		=> $data['dtmInsertedDate'],
+			];		
+		} else {
+			$dataNewTrTahapan = [
+				'intIdTahapanProses' 	=> $mTahapan->intIdTahapanProses,
+				'intIdActivityRisk' 	=> $data['intIdActivityRisk'],
+				"intInsertedBy" 		=> $data['txtInsertedBy'],
+				"dtmInsertedDate" 		=> $data['dtmInsertedDate'],
+			];
+		}
+		$this->db->insert($this->table, $dataNewTrTahapan);
+		return true;
+	}
+
+	public function cekTahapan ($param)
+	{
+		$tahapan_proses_exist = $this->db->get_where($this->table, [
+			'intIdActivityRisk' 	=> $param['intIdActivityRisk'],
+			'intIdTahapanProses' 	=> $param['intIdTahapanProses'],
+		])->row();		
+		if ($tahapan_proses_exist == null) {
+			$dataInsert = [
+				'intIdActivityRisk' 	=> $param['intIdActivityRisk'],
+				'intIdTahapanProses' 	=> $param['intIdTahapanProses'],
+				'intInsertedBy'			=> $param['intInsertedBy'],
+				'dtmInsertedDate'		=> $param['dtmInsertedDate'],
+			];
+			$this->db->insert($this->table, $dataInsert);
+			return $this->db->get_where($this->table, [
+				'intIdActivityRisk' 	=> $param['intIdActivityRisk'],
+				'intIdTahapanProses' 	=> $param['intIdTahapanProses'],
+			])->row();						
+		} else {
+			return $tahapan_proses_exist;
+		}
 	}
 }

@@ -93,30 +93,49 @@ class M_activity_risk_register extends CI_Model
 		return $this->db->count_all_results();
 	}
 
-	public function simpan ($data)
+	public function simpan ($data, $id_departemen)
 	{
-		$this->db->insert($this->table, $data);
-		$data_activity = $this->db->get_where($this->table, $data)->row();
-		if ($data_activity != null) {
-			$data_tahapan = $this->db->get_where('mTahapanProses', ['intIdActivty' => $data["intIdActivity"]])->result();			
-			if (!empty($data_tahapan)) {
-				foreach ($data_tahapan as $item) {
-					$data_tahapan_ins = [
-						"intIdActivityRisk" 	=> $data_activity->intIdActivityRisk,
-						"intIdTahapanProses" 	=> $item->intIdTahapanProses,
-						"intInsertedBy" 		=> $data["intInsertedBy"],
-						"dtmInsertedDate" 		=> $data["dtmInsertedDate"],
-					];
-					$this->db->insert('trTahapanProsesRisk', $data_tahapan_ins);					
-				}
-				return true;
-			} else {
-				// $this->db->delete($this->table, $data);
-				return null;				
-			}
+		$activityData 			= $this->db->get_where('mActivity', ['txtNamaActivity' => $data['txtActivityAdd']])->row();
+		$dataFinal 				= [];
+		$dataInsertNewActivity 	= [];
+		if ($activityData != null) {
+			$dataFinal = [
+				"intIdActivity" 			=> $activityData->intIdActivity,
+				"intIdDokRiskRegister" 		=> $data['intIdDokRiskRegister'],
+				"intInsertedBy" 			=> $data['intInsertedBy'],
+				"dtmInsertedDate"			=> $data['dtmInsertedDate'] 
+			];
 		} else {
-			return null;
+			$dataInsertNewActivity = [
+                    "intIdDepartemen"   => $id_departemen,
+                    "txtNamaActivity"   => strtoupper($data['txtActivityAdd']),
+                    "bitActive"         => true,
+                    "intInsertedBy"     => $data['intInsertedBy'],
+                    "dtmInsertedDate"   => $data['dtmInsertedDate'],
+                    "intUpdatedBy"      => $data['intInsertedBy'],
+                    "dtmUpdatedDate"    => $data['dtmInsertedDate']
+			];
+			$this->db->insert('mActivity', $dataInsertNewActivity);
+			$dataActivityNew = $this->db->get_where('mActivity', $dataInsertNewActivity)->row();
+			$dataFinal = [
+				"intIdActivity" 			=> $dataActivityNew->intIdActivity,
+				"intIdDokRiskRegister" 		=> $data['intIdDokRiskRegister'],
+				"intInsertedBy" 			=> $data['intInsertedBy'],
+				"dtmInsertedDate"			=> $data['dtmInsertedDate'] 
+			];
 		}
+		$activityExist = $this->db->get_where($this->table, [
+			"intIdActivity" 			=> $dataFinal['intIdActivity'],
+			"intIdDokRiskRegister" 		=> $dataFinal['intIdDokRiskRegister'],
+		])->row();
+		if ($activityExist == null) {
+			$this->db->insert($this->table, $dataFinal);
+			return true;
+		} else {
+			return false;
+		}
+		
+		
 	}
 
 	public function getByID ($id) {		

@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="<?= base_url('assets/templates') ?>/plugins/datatables-bs4/css/dataTables.bootstrap4.min">
+<link rel="stylesheet" href="<?= base_url('assets/templates') ?>/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
 <div class="content-wrapper" style="z-index: -999 !important;">
 	<section class="content-header">
 		<div class="container-fluid">

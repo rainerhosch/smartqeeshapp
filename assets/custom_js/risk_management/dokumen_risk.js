@@ -58,7 +58,6 @@ function p_InitiateDataList() {
 }
 
 $("#tombol_simpan_dokumen").on('click', function (e) {
-	e.preventDefault();
 	let data = {
 		txtDocNumber: $("#txtNoDocNumber").val()
 	}
@@ -68,9 +67,12 @@ $("#tombol_simpan_dokumen").on('click', function (e) {
 		data: data,
 		dataType: "json",
 		success: function (response) {
-			let otable = $('#dtList').dataTable();
-			otable.fnDraw(false);
-
+			alert(response.msg)
+			let oTable = $('#dtList').dataTable();
+			oTable.fnDraw(false);
+		},
+		error: (res) => {
+			alert(res)
 		}
 	});
 });

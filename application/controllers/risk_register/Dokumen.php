@@ -41,11 +41,10 @@ class Dokumen extends CI_Controller
 		$data = [
 			"txtDocNumber" 		=> $this->input->post('txtDocNumber'),
 			"intInsertedBy" 	=> $this->session->userdata('user_id'),
-			"intIdSection" 		=> $this->session->userdata('id_section'),
+			"intIdDepartement" 	=> $this->session->userdata('id_departemen'),
 			"txtStatus"			=> "ON PROGRESS",
 			"dtmInsertedBy" 	=> $dateNow
 		];
-		var_Dump($data);
 		$this->dokumen->simpan ($data);
 		$response = [
 						'code' => 200,

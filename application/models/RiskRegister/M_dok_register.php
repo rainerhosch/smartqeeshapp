@@ -106,9 +106,9 @@ class M_dok_register extends CI_Model
 	public function getByID ($id) {		
 		$this->db->select('trDokRiskRegister.txtDocNumber, trDokRiskRegister.txtStatus, trDokRiskRegister.intInspectedBy, trDokRiskRegister.intValidateBy, mSection.txtNamaSection, mPlant.txtNamaPlant, mDepartemen.txtNamaDepartement, trDokRiskRegister.intIdDokRiskRegister, trDokRiskRegister.dtmInsertedBy, trDokRiskRegister.dtmInspectedDate, trDokRiskRegister.dtmValidatedDate, trDokRiskRegister.intInsertedBy');
 		$this->db->from($this->table);
-		$this->db->join('mSection', 'trDokRiskRegister.intIdSection = mSection.intIdSection');		
-		$this->db->join('mDepartemen', 'mSection.intIdDepartemen = mDepartemen.intIdDepartement');
-		$this->db->join('mPlant', 'mDepartemen.intIdPlant = mPlant.intIdPlant');
+		$this->db->join('mDepartemen', $this->table.'.intIdDepartement = mDepartemen.intIdDepartement');
+		$this->db->join('mSection', 'mDepartemen.intIdSection = mSection.intIdSection');				
+		$this->db->join('mPlant', 'mSection.intIdPlant = mPlant.intIdPlant');
 		$this->db->where('trDokRiskRegister.intIdDokRiskRegister', $id);
 		return $this->db->get()->row();								
 	}

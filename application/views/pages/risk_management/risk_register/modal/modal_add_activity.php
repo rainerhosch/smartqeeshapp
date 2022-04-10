@@ -8,14 +8,20 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<div class="form-group">
+				<!-- <div class="form-group">
 					<label for="">Activity</label>
 					<select name="" class="form-control" id="intIdActivityModalAdd">
 						<option value="">Silahkan Pilih Activity</option>
 						<?php foreach($activity as $data): ?>
 							<option value="<?= $data["intIdActivity"] ?>"><?= $data["txtNamaActivity"] ?></option>
 						<?php endforeach; ?>
-					</select>
+					</select>					
+				</div> -->
+				<div class="form-group">
+					<label for="">Activity</label>
+					<input list="listActivity" id="txtActivityAdd" class="form-control" autocomplete="false" />
+					<datalist id="listActivity" class="actList">						
+					</datalist>
 				</div>
 			</div>
 			<div class="modal-footer justify-content-between">
@@ -27,3 +33,6 @@
 	</div>
 	<!-- /.modal-dialog -->
 </div>
+<script>
+	
+</script>

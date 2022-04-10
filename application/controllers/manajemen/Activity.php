@@ -186,4 +186,23 @@ class Activity extends CI_Controller
 
 		echo json_encode($response);		
 	}
+
+	public function getActivityByDepartemen()
+	{
+		$data_dept 	= $this->activity->getActivityBySection($this->session->userdata('id_departemen'));
+		$opt 		= '';		
+		if (!empty($data_dept)) {
+			foreach ($data_dept as $item) {
+				$opt .= '<option value="' . $item["txtNamaActivity"] . '"></option>';
+			}
+		}
+		$response = [
+			'code'    => 200,
+			'status'  => "OK",
+			'msg'     => "OK",
+			'data'    => $opt
+		];
+
+		echo json_encode($response);		
+	}
 }

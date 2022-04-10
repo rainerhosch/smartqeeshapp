@@ -1,10 +1,10 @@
-<div class="row" id="data_tahapan">
+<div class="row" id="data_context">
 	<div class="col-lg-12">
 		<div class="card card-primary">
 			<div class="card-header">
-				<h3 class="card-title">Tahapan Proses</h3>
+				<h3 class="card-title">Risk Context</h3>
 				<div class="card-tools">
-					<button type="button" class="btn btn-tool" id="close_tahapan">
+					<button type="button" class="btn btn-tool" id="close_context">
 						<i class="fas fa-times"></i>
 					</button>
 				</div>
@@ -12,13 +12,13 @@
 			<div class="card-body">
 				<div class="row">
 					<div class="col-lg-12 d-flex justify-content-end">
-						<button class="btn btn-info" data-toggle="modal" data-target="#modal-add_tahapan" id="tombol_add_tahapan">Add Tahapan</button>
+						<button class="btn btn-info" data-toggle="modal" data-target="#modal-add_context" id="tombol_add_context">Add Context Risk</button>
 					</div>
 				</div>
 				<div class="row mt-4">
 					<div class="col-lg-12">
 						<div class="table-responsive">
-							<table class="table-bordered table" id="dtListTahapan">
+							<table class="table-bordered table" id="dtListContext">
 								<thead>
 									<tr>
 										<th class="text-center">No</th>

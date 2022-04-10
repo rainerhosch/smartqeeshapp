@@ -27,18 +27,38 @@ class TahapanProses extends CI_Controller
 
 	public function simpan()
 	{
-		$dateNow = date("yyyy-mm-dd");
+		$dateNow = date("Y-m-d");
 		$data = [
-			"txtDocNumber" 		=> $this->input->post('txtDocNumber'),
-			"txtInsertedBy" 	=> $this->session->userdata('user_id'),
-			"dtmInsertedDate" 	=> $dateNow
+			"intIdActivityRisk" 		=> $this->input->post('intIdActivityRisk'),
+			"txtTahapanProses" 			=> strtoupper($this->input->post('txtTahapanProses')),
+			"txtInsertedBy" 			=> $this->session->userdata('user_id'),
+			"dtmInsertedDate" 			=> $dateNow,
+			"intIdDepartemen"			=> $this->session->userdata('id_departemen')
 		];
-		$this->dokumen->simpan ($data);
+		$status = $this->tahapan_proses->simpan_tahapan_baru($data);
+		$response = [
+						'code' => 200,
+						'status' => $status,
+						'msg' => 'Berhasil disimpan.',
+						'data' => "-"
+					];
+		echo json_encode($response);
+	}
+
+	public function cekTahapan () {
+		$dateNow = date("Y-m-d");
+		$data = [
+			"intIdActivityRisk" 		=> $this->input->get('intIdActivityRisk'),
+			"intIdTahapanProses" 		=> $this->input->get('id'),
+			"intInsertedBy" 			=> $this->session->userdata('user_id'),
+			"dtmInsertedDate" 			=> $dateNow
+		];
+		$data = $this->tahapan_proses->cekTahapan($data);
 		$response = [
 						'code' => 200,
 						'status' => true,
-						'msg' => 'Berhasil disimpan.',
-						'data' => "-"
+						'msg' => '',
+						'data' => $data
 					];
 		echo json_encode($response);
 	}

@@ -1,10 +1,10 @@
 $(document).ready(function () {
-	p_InitiateDataListTahapan();
+	p_InitiateDataListContext();
 });
 
-function p_InitiateDataListTahapan() {
-	let intIdActivityRisk = $("#intIdActivityRisk").val();
-	var oTableTahapan = $('#dtListTahapan').DataTable({
+function p_InitiateDataListContext() {
+	let intIdTahapanProsesRisk = $("#intIdTahapanProsesRisk").val();
+	var oTableContext = $('#dtListContext').DataTable({
 				"bPaginate": true,
 				"bSort": false,
 				"iDisplayLength": 10,
@@ -14,10 +14,11 @@ function p_InitiateDataListTahapan() {
 				"serverSide": true,
 				searching: true,
 				"ajax": {
-					"url": `${url}risk_register/TahapanProses/getDataTable`,
+					"url": `${url}risk_register/RiskContext/getDataTable`,
 					"method": "POST",
 					"data": function (d) {
 						d.intIdActivityRisk = $('#intIdActivityRisk').val()
+						d.intIdTahapanProsesRisk = $('#intIdTahapanProsesRisk').val()
 					}
 				},
 				columns: [{
@@ -38,27 +39,26 @@ function p_InitiateDataListTahapan() {
 					},
 				]
 			});
-			$("#dtListTahapan").css("width", "100%");
-			$("#dtListTahapan_filter").parent().addClass("d-flex justify-content-end");
-			$("#dtListTahapan_paginate").parent().addClass("d-flex justify-content-end");
+			$("#dtListContext").css("width", "100%");
+			$("#dtListContext_filter").parent().addClass("d-flex justify-content-end");
+			$("#dtListContext_paginate").parent().addClass("d-flex justify-content-end");
 }
 
-$("#tombol_simpan_add_tahapan").on('click', function (e) {
+$("#tombol_simpan_add_context").on('click', function (e) {
 	e.preventDefault();
 	let data = {
-		intIdDokRiskRegister: $("#intIdDokRiskRegister").val(),
-		intIdActivityRisk: $("#intIdActivityRisk").val(),
-		txtTahapanProses: $("#txtTahapanProses").val(),
+		intIdTahapanProsesRisk: $("#intIdTahapanProsesRisk").val(),
+		txtNamaContext: $("#txtNamaContext").val(),
 	}
 	$.ajax({
 		type: "post",
-		url: `${url}risk_register/TahapanProses/simpan`,
+		url: `${url}risk_register/RiskContext/simpan`,
 		data: data,
 		dataType: "json",
 		success: function (response) {
-			let otable = $('#dtListTahapan').dataTable();
+			let otable = $('#dtListContext').dataTable();
 			otable.fnDraw(false);
-			$("#button_close_tahapan").click();
+			$("#button_close_context").click();
 		}
 	});
 });
@@ -66,7 +66,7 @@ $("#tombol_simpan_add_tahapan").on('click', function (e) {
 
 
 /*============================== NAVIGASI ==============================*/
-$(document).on('click', "#tombol_detail_tahapan", async function (e) {
+$(document).on('click', "#tombol_detail_context", async function (e) {
 	e.preventDefault()
 	let id = $(this).data('id');
 	$("#txtNamaContextShow").val($(this).data('nama'));	
@@ -85,16 +85,16 @@ $(document).on('click', "#tombol_detail_tahapan", async function (e) {
 			alert('Silahkan Coba Lagi !')
 		}
 	});
-	showContext()
+	showIden()
 	let otableContext = $('#dtListContext').dataTable();
 	await otableContext.fnDraw(false);
 });
 
-$("#close_context").on("click", function () {
+$("#close_iden").on("click", function () {
 	showDetailActivity() //from activity.js
 });
 
-function showContext() {
+function showIden() {
 	$("#show_activity_current, #show_context_current").css({'display': 'inline'});
 	$("#data_tahapan").css({'display': 'none'});
 	$("#data_act").css({'display': 'none'});

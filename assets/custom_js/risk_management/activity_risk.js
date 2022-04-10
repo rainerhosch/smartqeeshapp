@@ -42,11 +42,23 @@ function p_InitiateDataList() {
 	$("#dtList_paginate").parent().addClass("d-flex justify-content-end");
 }
 
+$("#tombol_add_activity").on('click', function (e) {
+	$("#txtActivityAdd").val("");
+	$.ajax({
+		type: "get",
+		url: `${url}manajemen/Activity/getActivityByDepartemen`,		
+		dataType: "json",
+		success: function (response) {
+			$(".actList").html(response.data);
+		}
+	});
+});
+
 $("#tombol_simpan_add_activity").on('click', function (e) {
 	e.preventDefault();
 	let data = {
 		intIdDokRiskRegister: $("#intIdDokRiskRegister").val(),
-		intIdActivity: $("#intIdActivityModalAdd").val(),
+		txtActivityAdd: $("#txtActivityAdd").val(),
 	}
 	$.ajax({
 		type: "post",
@@ -54,13 +66,17 @@ $("#tombol_simpan_add_activity").on('click', function (e) {
 		data: data,
 		dataType: "json",
 		success: function (response) {
-			let otable = $('#dtList').dataTable();
-			otable.fnDraw(false);
-			$("#button_close_activity").click();
+			if (response.status) {
+				let otable = $('#dtList').dataTable();
+				otable.fnDraw(false);
+				$("#button_close_activity").click();
+			} else {
+				alert('Tidak dapat menyimpan data ! Periksa Kembali Nama Activity')
+			}			
 		}
 	});
 });
-
+/*============================== NAVIGASI ==============================*/
 $(document).on('click', "#tombol_detail_activity", function (e) {
 	e.preventDefault()
 	let id = $(this).data('id');
@@ -85,6 +101,7 @@ function showActivity() {
 function showDetailActivity() {
 	$("#show_activity_current").css({'display': 'inline'});
 	$("#data_tahapan").css({'display': 'inline'});
-	$("#data_act").css({'display': 'none'});
+	$("#data_act, #data_context").css({'display': 'none'});
+	$("#show_context_current").css({'display': 'none'});
 	window.scrollTo(0, 0);
 }

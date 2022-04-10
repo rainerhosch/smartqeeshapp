@@ -46,15 +46,17 @@ class Activity extends CI_Controller
 	{
 		$dateNow = date("Y-m-d");
 		$data = [
-			"intIdActivity" 			=> $this->input->post('intIdActivity'),
+			"txtActivityAdd" 			=> $this->input->post('txtActivityAdd'),
 			"intIdDokRiskRegister" 		=> $this->input->post('intIdDokRiskRegister'),
 			"intInsertedBy" 			=> $this->session->userdata('user_id'),
 			"dtmInsertedDate" 			=> $dateNow
 		];
-		$this->activity->simpan($data);
+		$id_departemen = $this->session->userdata('id_departemen');
+		
+		$status = $this->activity->simpan($data, $id_departemen);
 		$response = [
 						'code' => 200,
-						'status' => true,
+						'status' => $status,
 						'msg' => 'Berhasil disimpan.',
 						'data' => "-"
 					];
