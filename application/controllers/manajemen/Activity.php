@@ -17,7 +17,7 @@ class Activity extends CI_Controller
           parent::__construct();
           login_check();
           $this->load->model("Manajemen/M_activity", "activity");
-          $this->load->model("Manajemen/M_section", "section");
+          $this->load->model("Manajemen/M_department", "departemen");
      }
 
      public function index()
@@ -27,8 +27,8 @@ class Activity extends CI_Controller
           $data['subpage']         = 'Manajemen Activity';
           $data['content']         = 'pages/manajemen/v_activity';
 
-          $data["activities"]     = $this->activity->getsActivitySection();
-          $data["sections"]       = $this->section->getSectionActive();
+          $data["activities"]     = $this->activity->getsActivityDepartment();
+          $data["department"]     = $this->departemen->getsDepartmentActive();
           $this->load->view('template', $data);
      }
 
@@ -37,7 +37,7 @@ class Activity extends CI_Controller
           try {
                $data = [
                     "intIdActivity"     => 0,
-                    "intIdSection"      => 0,
+                    "intIdDepartement"  => 0,
                     "txtNamaActivity"   => "",
                     "bitActive"         => true,
                     "intInsertedBy"     => 0,
@@ -114,8 +114,8 @@ class Activity extends CI_Controller
      {
           if ($data["intIdActivity"] == null) {
                $pesan = "ID Activity tidak boleh kosong";
-          } elseif ($data["intIdSection"] == null || $data["intIdSection"] == 0) {
-               $pesan = "Section tidak boleh kosong";
+          } elseif ($data["intIdDepartement"] == null || $data["intIdDepartement"] == 0) {
+               $pesan = "Department tidak boleh kosong";
           } elseif ($data["txtNamaActivity"] == null) {
                $pesan = "Nama Activity tidak boleh kosong";
           } else {
@@ -124,28 +124,28 @@ class Activity extends CI_Controller
 
           if ($data["intIdActivity"] == 0) {
                //CREATE
-               $validasi = $this->activity->validateSectionActivity($data["intIdSection"], $data["txtNamaActivity"]);
+               $validasi = $this->activity->validateDepartmentActivity($data["intIdDepartement"], $data["txtNamaActivity"]);
 
                if ($validasi != null) {
-                    $pesan = "Nama Activity sudah tersedia di section tersebut, silahkan gunakan nama lain";
+                    $pesan = "Nama Activity sudah tersedia di department tersebut, silahkan gunakan nama lain";
                }
           } else {
                //UPDATE
                $dataDB = $this->activity->getActivity($data["intIdActivity"]);
-               if ($dataDB["intIdSection"] == $data["intIdSection"]) {
+               if ($dataDB["intIdDepartement"] == $data["intIdDepartement"]) {
                     //JIKA SECTION TIDAK BERUBAH
                     if ($dataDB["txtNamaActivity"] != $data["txtNamaActivity"]) {
-                         $validasi = $this->activity->validateSectionActivity($data["intIdSection"], $data["txtNamaActivity"]);
+                         $validasi = $this->activity->validateDepartmentActivity($data["intIdDepartement"], $data["txtNamaActivity"]);
 
                          if ($validasi != null) {
-                              $pesan = "Nama Activity sudah tersedia di section tersebut, silahkan gunakan nama lain";
+                              $pesan = "Nama Activity sudah tersedia di department tersebut, silahkan gunakan nama lain";
                          }
                     }
                } else {
-                    $validasi = $this->activity->validateSectionActivity($data["intIdSection"], $data["txtNamaActivity"]);
+                    $validasi = $this->activity->validateDepartmentActivity($data["intIdDepartement"], $data["txtNamaActivity"]);
 
                     if ($validasi != null) {
-                         $pesan = "Nama Activity sudah tersedia di section tersebut, silahkan gunakan nama lain";
+                         $pesan = "Nama Activity sudah tersedia di department tersebut, silahkan gunakan nama lain";
                     }
                }
           }
@@ -167,23 +167,23 @@ class Activity extends CI_Controller
           return $returnData;
      }
 
-	public function getActivityBySection()
-	{
-		$id 			= $this->input->get('id');
-		$data_dept 	= $this->activity->getActivityBySection($id);
-		$opt 		= '<option value ="">Silahkan Pilih Activity</option>';		
-		if (!empty($data_dept)) {
-			foreach ($data_dept as $item) {
-				$opt .= '<option value="' . $item["intIdActivity"] . '"> ' . $item["txtNamaActivity"] . '</option>';
-			}
-		}
-		$response = [
-			'code'    => 200,
-			'status'  => "OK",
-			'msg'     => "OK",
-			'data'    => $opt
-		];
+     public function getActivityBySection()
+     {
+          $id                = $this->input->get('id');
+          $data_dept      = $this->activity->getActivityBySection($id);
+          $opt           = '<option value ="">Silahkan Pilih Activity</option>';
+          if (!empty($data_dept)) {
+               foreach ($data_dept as $item) {
+                    $opt .= '<option value="' . $item["intIdActivity"] . '"> ' . $item["txtNamaActivity"] . '</option>';
+               }
+          }
+          $response = [
+               'code'    => 200,
+               'status'  => "OK",
+               'msg'     => "OK",
+               'data'    => $opt
+          ];
 
-		echo json_encode($response);		
-	}
+          echo json_encode($response);
+     }
 }

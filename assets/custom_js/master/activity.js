@@ -66,7 +66,7 @@ function saveData(){
 function p_DataToUI(objData){
      $("#intIdActivity").val(objData.intIdActivity);
      $("#txtNamaActivity").val(objData.txtNamaActivity);
-     $("#intIdSection").val(objData.intIdSection);
+     $("#intIdDepartement").val(objData.intIdDepartement);
      $("#bitActive").prop("checked", clsGlobal.parseToBoolean(objData.bitActive));
 }
 
@@ -76,7 +76,7 @@ function p_UIToData(){
 
      jsonData.intIdActivity        = $("#intIdActivity").val();
      jsonData.txtNamaActivity      = $("#txtNamaActivity").val();
-     jsonData.intIdSection         = $("#intIdSection").val();   
+     jsonData.intIdDepartement     = $("#intIdDepartement").val();   
      jsonData.bitActive            = $("#bitActive").prop("checked");
 
      $("#txtHiddenObject").val(JSON.stringify(jsonData));

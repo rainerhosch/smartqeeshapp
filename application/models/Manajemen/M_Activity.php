@@ -13,21 +13,18 @@ class M_activity extends CI_Model
 {
      var $table = 'mActivity'; //nama tabel dari database
      //CONTROL
-     public function validateSectionActivity($id_section, $nama_activity)
+     public function validateDepartmentActivity($id_department, $nama_activity)
      {
-          $this->db->where("intIdSection", $id_section);
+          $this->db->where("intIdDepartement", $id_department);
           $this->db->where("txtNamaActivity", $nama_activity);
           return $this->db->get($this->table)->row_array();
      }
 
      //ACTION
-     public function getsActivitySection()
+     public function getsActivityDepartment()
      {
-          /*
-               SELECT mActivity.intIdActivity, txtNamaActivity, mActivity.bitActive, txtNamaSection from mActivity join mSection on mActivity.intIdSection = mSection.intIdSection
-          */
-          $this->db->select("mActivity.intIdActivity, txtNamaActivity, mActivity.bitActive, txtNamaSection");
-          $this->db->join("mSection", "mActivity.intIdSection = mSection.intIdSection");
+          $this->db->select("mActivity.intIdActivity, txtNamaActivity, mActivity.bitActive, txtNamaDepartement");
+          $this->db->join("mDepartemen", "mActivity.intIdDepartement = mDepartemen.intIdDepartement");
           return $this->db->get($this->table)->result_array();
      }
 
@@ -52,9 +49,8 @@ class M_activity extends CI_Model
           $this->db->update($this->table, $data, ["intIdActivity" => $id]);
      }
 
-	public function getActivityBySection($id)
+     public function getActivityBySection($id)
      {
           return $this->db->get_where($this->table, ['intIdSection' => $id, "bitActive" => 1])->result_array();
-		
      }
 }

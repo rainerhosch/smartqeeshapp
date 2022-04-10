@@ -23,7 +23,7 @@ class Section extends CI_Controller
 	public function getsSection()
 	{
 		try {
-			$allData = $this->section->getsPlantActive();
+			$allData = $this->section->getSectionActive();
 			echo json_encode($allData);
 		} catch (\Exception $e) {
 			die($e->getMessage());

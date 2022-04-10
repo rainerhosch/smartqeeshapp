@@ -40,12 +40,12 @@
                                              </div>
                                         </div>
                                         <div class="form-group row">
-                                             <label for="intIdSection" class="col-sm-2 col-form-label">Section<small class="text-danger">*</small></label>
+                                             <label for="intIdDepartement" class="col-sm-2 col-form-label">Departement<small class="text-danger">*</small></label>
                                              <div class="col-sm-10">
-                                                  <select class="form-control" id="intIdSection" required>
-                                                       <option value="0">Pilih Section</option>
-                                                       <?php foreach ($sections as $section) : ?>
-                                                            <option value="<?= $section["intIdSection"]; ?>"><?= $section["txtNamaSection"]; ?></option>
+                                                  <select class="form-control" id="intIdDepartement" required>
+                                                       <option value="0">Pilih Departement</option>
+                                                       <?php foreach ($department as $departemen) : ?>
+                                                            <option value="<?= $departemen->intIdDepartement; ?>"><?= $departemen->txtNamaDepartement; ?></option>
                                                        <?php endforeach; ?>
                                                   </select>
                                                   <small class="text-danger">*Wajib di isi</small>
@@ -88,7 +88,7 @@
                                         <thead>
                                              <tr>
                                                   <th class="text-center">#</th>
-                                                  <th class="text-center">NAMA SECTION</th>
+                                                  <th class="text-center">NAMA DEPARTEMENT</th>
                                                   <th class="text-center">NAMA ACTIVITY</th>
                                                   <th class="text-center">AKTIF</th>
                                                   <th class="text-center">TOOL</th>
@@ -98,7 +98,7 @@
                                              <?php foreach ($activities as $activity) : ?>
                                                   <tr>
                                                        <td class="text-center"><?= $activity["intIdActivity"] ?></td>
-                                                       <td><?= $activity["txtNamaSection"] ?></td>
+                                                       <td><?= $activity["txtNamaDepartement"] ?></td>
                                                        <td><?= $activity["txtNamaActivity"] ?></td>
                                                        <td class="text-center">
                                                             <?php if ($activity["bitActive"]) : ?>

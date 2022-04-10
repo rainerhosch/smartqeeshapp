@@ -13,25 +13,25 @@ class M_department extends CI_Model
 {
      var $table = 'mDepartemen'; //nama tabel dari database
      //CONTROL
-     public function validatePlantNamaDepartment($id_plant, $nama_department)
+     public function validateSectionNamaDepartment($id_section, $nama_department)
      {
-          $this->db->where("intIdPlant", $id_plant);
+          $this->db->where("intIdSection", $id_section);
           $this->db->where("txtNamaDepartement", $nama_department);
           return $this->db->get($this->table)->row_array();
      }
 
-     public function validatePlantKodeDepartment($id_plant, $kode_department)
+     public function validateSectionKodeDepartment($id_section, $kode_department)
      {
-          $this->db->where("intIdPlant", $id_plant);
+          $this->db->where("intIdSection", $id_section);
           $this->db->where("txtSingkatan", $kode_department);
           return $this->db->get($this->table)->row_array();
      }
 
      //ACTION
-     public function getsDepartmentPlant()
+     public function getsDepartmentSection()
      {
-          $this->db->select("intIdDepartement, mDepartemen.intIdPlant, mPlant.txtNamaPlant, txtNamaDepartement, mDepartemen.bitActive, mDepartemen.txtSingkatan");
-          $this->db->join("mPlant", "mDepartemen.intIdPlant = mPlant.intIdPlant");
+          $this->db->select("intIdDepartement, mDepartemen.intIdSection, mSection.txtNamaSection, txtNamaDepartement, mDepartemen.bitActive, mDepartemen.txtSingkatan");
+          $this->db->join("mSection", "mDepartemen.intIdSection = mSection.intIdSection");
           return $this->db->get($this->table)->result_array();
      }
 
@@ -56,8 +56,8 @@ class M_department extends CI_Model
           $this->db->update($this->table, $data, ["intIdDepartement" => $id]);
      }
 
-	public function getDepartemenByIdPlant ($id)
-	{
-		return $this->db->get_where($this->table, ["intIdPlant" => $id, "bitActive" => true])->result_array();
-	}
+     public function getDepartemenByIdPlant($id)
+     {
+          return $this->db->get_where($this->table, ["intIdPlant" => $id, "bitActive" => true])->result_array();
+     }
 }

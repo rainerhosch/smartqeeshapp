@@ -40,7 +40,7 @@
                                         <thead>
                                              <tr>
                                                   <th class="text-center">#</th>
-                                                  <th class="text-center">NAMA PLANT</th>
+                                                  <th class="text-center">NAMA SECTION</th>
                                                   <th class="text-center">NAMA DEPARTMENT</th>
                                                   <th class="text-center">KODE DEPARTMENT</th>
                                                   <th class="text-center">AKTIF</th>
@@ -51,7 +51,7 @@
                                              <?php foreach ($departments as $department) : ?>
                                                   <tr>
                                                        <td class="text-center"><?= $department["intIdDepartement"] ?></td>
-                                                       <td><?= $department["txtNamaPlant"] ?></td>
+                                                       <td><?= $department["txtNamaSection"] ?></td>
                                                        <td><?= $department["txtNamaDepartement"] ?></td>
                                                        <td><?= $department["txtSingkatan"] ?></td>
                                                        <td class="text-center">
@@ -102,8 +102,8 @@
                               <input type="text" class="form-control" name="intIdDepartement" id="intIdDepartement" readonly>
                          </div>
                          <div class="form-group">
-                              <label for="intIdPlant">Plant<small class="text-danger">* (Wajib di isi)</small></label>
-                              <select class="form-control" id="intIdPlant" name="intIdPlant"></select>
+                              <label for="intIdPlant">Section<small class="text-danger">* (Wajib di isi)</small></label>
+                              <select class="form-control" id="intIdSection" name="intIdSection"></select>
                          </div>
                          <div class="form-group">
                               <label for="txtNamaDepartement">Nama<small class="text-danger">* (Wajib di isi)</small></label>

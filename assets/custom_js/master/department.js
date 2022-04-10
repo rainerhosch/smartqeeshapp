@@ -13,7 +13,7 @@ function p_InitiateData(){
                $("#txtHiddenObject").val(JSON.stringify(response));
                p_DataToUI(response);
 
-               getsPlant();
+               getsSection();
           },
           error: function(e){
                console.log(e);
@@ -22,19 +22,19 @@ function p_InitiateData(){
 }
 
 //COMMUNICATION
-function getsPlant(){
+function getsSection(){
      $.ajax({
-          url: `${url}manajemen/plant/getsPlant`,
+          url: `${url}manajemen/Section/getsSection`,
           type: "GET",
           dataType: "json",
           success: function(response){
-               $("#intIdPlant").empty();
-               let html = `<option value="0" selected>Pilih Data Plant</option>`;
+               $("#intIdSection").empty();
+               let html = `<option value="0" selected>Pilih Data Section</option>`;
                $.each(response, function(i, val){
-                    html += `<option value="${val.intIdPlant}">${val.txtNamaPlant}</option>`;
+                    html += `<option value="${val.intIdSection}">${val.txtNamaSection}</option>`;
                });
 
-               $("#intIdPlant").append(html);
+               $("#intIdSection").append(html);
           },
           error: function(e){
                console.log(e);
@@ -88,7 +88,7 @@ function saveData(){
 //CONVERTER
 function p_DataToUI(objData){
      $("#intIdDepartement").val(objData.intIdDepartement);
-     $("#intIdPlant").val(objData.intIdPlant);
+     $("#intIdSection").val(objData.intIdSection);
      $("#txtNamaDepartement").val(objData.txtNamaDepartement);
      $("#txtSingkatan").val(objData.txtSingkatan);
      $("#bitActive").prop("checked", clsGlobal.parseToBoolean(objData.bitActive));
@@ -99,7 +99,7 @@ function p_UIToData(){
      jsonData = JSON.parse(htmljson);
 
      jsonData.intIdDepartement     = $("#intIdDepartement").val();
-     jsonData.intIdPlant           = $("#intIdPlant").val();
+     jsonData.intIdSection         = $("#intIdSection").val();
      jsonData.txtNamaDepartement   = $("#txtNamaDepartement").val(); 
      jsonData.txtSingkatan         = $("#txtSingkatan").val();
      jsonData.bitActive            = $("#bitActive").prop("checked");

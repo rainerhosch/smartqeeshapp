@@ -25,7 +25,7 @@ class Department extends CI_Controller
           $data['subpage']         = 'Manajemen Department';
           $data['content']         = 'pages/manajemen/v_department';
 
-          $data["departments"]     = $this->department->getsDepartmentPlant();
+          $data["departments"]     = $this->department->getsDepartmentSection();
           $this->load->view('template', $data);
      }
 
@@ -34,14 +34,14 @@ class Department extends CI_Controller
           try {
                $data = [
                     "intIdDepartement"       => 0,
-                    "intIdPlant"             => 0,
                     "txtNamaDepartement"     => "",
                     "txtSingkatan"           => "",
                     "bitActive"              => true,
                     "intInsertedBy"          => 0,
                     "dtmInsertedDate"        => "",
                     "intUpdatedBy"           => 0,
-                    "dtmUpdatedDate"         => ""
+                    "dtmUpdatedDate"         => "",
+                    "intIdSection"           => 0,
                ];
 
                echo json_encode($data);
@@ -114,8 +114,8 @@ class Department extends CI_Controller
      {
           if ($data["intIdDepartement"] == null) {
                $pesan = "ID Department tidak boleh kosong";
-          } elseif ($data["intIdPlant"] == null || $data["intIdPlant"] == 0) {
-               $pesan = "Plant tidak boleh kosong";
+          } elseif ($data["intIdSection"] == null || $data["intIdSection"] == 0) {
+               $pesan = "Section tidak boleh kosong";
           } elseif ($data["txtNamaDepartement"] == null) {
                $pesan = "Nama Department tidak boleh kosong";
           } elseif ($data["txtSingkatan"] == null) {
@@ -126,51 +126,51 @@ class Department extends CI_Controller
 
           if ($data["intIdDepartement"] == 0) {
                //CREATE
-               $validasiIdPlantNamaDepartment = $this->department->validatePlantNamaDepartment($data["intIdPlant"], $data["txtNamaDepartement"]);
+               $validasiIdSectionNamaDepartment = $this->department->validateSectionNamaDepartment($data["intIdSection"], $data["txtNamaDepartement"]);
 
-               if ($validasiIdPlantNamaDepartment != null) {
-                    $pesan = "Nama Department sudah tersedia di plant tersebut, silahkan gunakan nama lain";
+               if ($validasiIdSectionNamaDepartment != null) {
+                    $pesan = "Nama Department sudah tersedia di section tersebut, silahkan gunakan nama lain";
                } else {
-                    $validasiIdPlantKodeDepartment = $this->department->validatePlantKodeDepartment($data["intIdPlant"], $data["txtSingkatan"]);
+                    $validasiIdSectionKodeDepartment = $this->department->validateSectionKodeDepartment($data["intIdSection"], $data["txtSingkatan"]);
 
-                    if ($validasiIdPlantKodeDepartment != null) {
-                         $pesan = "Kode Department sudah tersedia di plant tersebut, silahkan gunakan nama lain";
+                    if ($validasiIdSectionKodeDepartment != null) {
+                         $pesan = "Kode Department sudah tersedia di section tersebut, silahkan gunakan nama lain";
                     }
                }
           } else {
                //UPDATE
                $dataDB = $this->department->getDepartment($data["intIdDepartement"]);
-               if ($dataDB["intIdPlant"] == $data["intIdPlant"]) {
+               if ($dataDB["intIdSection"] == $data["intIdSection"]) {
                     //JIKA PLANT TIDAK BERUBAH
                     if ($dataDB["txtNamaDepartement"] != $data["txtNamaDepartement"]) {
-                         $validasiIdPlantNamaDepartment = $this->department->validatePlantNamaDepartment($data["intIdPlant"], $data["txtNamaDepartement"]);
+                         $validasiIdSectionNamaDepartment = $this->department->validateSectionNamaDepartment($data["intIdSection"], $data["txtNamaDepartement"]);
 
-                         if ($validasiIdPlantNamaDepartment != null) {
-                              $pesan = "Nama Department sudah tersedia di plant tersebut, silahkan gunakan nama lain";
+                         if ($validasiIdSectionNamaDepartment != null) {
+                              $pesan = "Nama Department sudah tersedia di section tersebut, silahkan gunakan nama lain";
                          } else {
-                              $validasiIdPlantKodeDepartment = $this->department->validatePlantKodeDepartment($data["intIdPlant"], $data["txtSingkatan"]);
+                              $validasiIdSectionKodeDepartment = $this->department->validateSectionKodeDepartment($data["intIdSection"], $data["txtSingkatan"]);
 
-                              if ($validasiIdPlantKodeDepartment != null) {
-                                   $pesan = "Kode Department sudah tersedia di plant tersebut, silahkan gunakan nama lain";
+                              if ($validasiIdSectionKodeDepartment != null) {
+                                   $pesan = "Kode Department sudah tersedia di section tersebut, silahkan gunakan nama lain";
                               }
                          }
                     } else {
-                         $validasiIdPlantKodeDepartment = $this->department->validatePlantKodeDepartment($data["intIdPlant"], $data["txtSingkatan"]);
+                         $validasiIdSectionKodeDepartment = $this->department->validateSectionKodeDepartment($data["intIdSection"], $data["txtSingkatan"]);
 
-                         if ($validasiIdPlantKodeDepartment != null) {
-                              $pesan = "Kode Department sudah tersedia di plant tersebut, silahkan gunakan nama lain";
+                         if ($validasiIdSectionKodeDepartment != null) {
+                              $pesan = "Kode Department sudah tersedia di section tersebut, silahkan gunakan nama lain";
                          }
                     }
                } else {
-                    $validasiIdPlantNamaDepartment = $this->department->validatePlantNamaDepartment($data["intIdPlant"], $data["txtNamaDepartement"]);
+                    $validasiIdSectionNamaDepartment = $this->department->validateSectionNamaDepartment($data["intIdSection"], $data["txtNamaDepartement"]);
 
-                    if ($validasiIdPlantNamaDepartment != null) {
-                         $pesan = "Nama Department sudah tersedia di plant tersebut, silahkan gunakan nama lain";
+                    if ($validasiIdSectionNamaDepartment != null) {
+                         $pesan = "Nama Department sudah tersedia di section tersebut, silahkan gunakan nama lain";
                     } else {
-                         $validasiIdPlantKodeDepartment = $this->department->validatePlantKodeDepartment($data["intIdPlant"], $data["txtSingkatan"]);
+                         $validasiIdSectionKodeDepartment = $this->department->validateSectionKodeDepartment($data["intIdSection"], $data["txtSingkatan"]);
 
-                         if ($validasiIdPlantKodeDepartment != null) {
-                              $pesan = "Kode Department sudah tersedia di plant tersebut, silahkan gunakan nama lain";
+                         if ($validasiIdSectionKodeDepartment != null) {
+                              $pesan = "Kode Department sudah tersedia di section tersebut, silahkan gunakan nama lain";
                          }
                     }
                }
@@ -193,18 +193,17 @@ class Department extends CI_Controller
           return $returnData;
      }
 
-	public function getDataByIdPlant ()
-	{
-		$id 			= $this->input->get('id');
-		$data_dept 	= $this->department->getDepartemenByIdPlant($id);
-		$opt 		= '<option value ="">Silahkan Pilih Departemen</option>';		
-		if (!empty($data_dept))
-		{			
-			foreach ($data_dept as $item) {
-				$opt .= '<option value="'.$item["intIdDepartement"].'"> '.$item["txtNamaDepartement"].'</option>';
-			}
-		}
-		$response = [
+     public function getDataByIdPlant()
+     {
+          $id                = $this->input->get('id');
+          $data_dept      = $this->department->getDepartemenByIdPlant($id);
+          $opt           = '<option value ="">Silahkan Pilih Departemen</option>';
+          if (!empty($data_dept)) {
+               foreach ($data_dept as $item) {
+                    $opt .= '<option value="' . $item["intIdDepartement"] . '"> ' . $item["txtNamaDepartement"] . '</option>';
+               }
+          }
+          $response = [
                'code'    => 200,
                'status'  => "OK",
                'msg'     => "OK",
@@ -212,5 +211,5 @@ class Department extends CI_Controller
           ];
 
           echo json_encode($response);
-	}
+     }
 }

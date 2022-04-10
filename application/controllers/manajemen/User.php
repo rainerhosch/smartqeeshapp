@@ -22,11 +22,11 @@ class User extends CI_Controller
     public function index()
     {
         // code here...
-        $data['title'] 		= 'Smart Qeesh App';
-        $data['page'] 		= 'Manajemen';
-        $data['subpage'] 	= 'User';
-        $data['content'] 	= 'pages/manajemen/v_user';
-        $data['plant'] 		= $this->plant->getsPlantActive();
+        $data['title']      = 'Smart Qeesh App';
+        $data['page']       = 'Manajemen';
+        $data['subpage']    = 'User';
+        $data['content']    = 'pages/manajemen/v_user';
+        $data['plant']      = $this->plant->getsPlantActive();
         $this->load->view('template', $data);
     }
 
@@ -34,7 +34,7 @@ class User extends CI_Controller
     {
         if ($this->input->is_ajax_request()) {
             $data_post = $this->input->post('method');
-            $field = 'user.user_id, user.is_active, user_detail.*, user_role.role_type, id_section';
+            $field = 'user.user_id, user.is_active, user_detail.*, user_role.role_type, id_departemen';
             if (isset($data_post) != 'get_all') {
                 $condition = ['user.user_id' => $this->session->userdata('user_id')];
                 $datauser = $this->user->get_user($field, $condition)->row_array();
