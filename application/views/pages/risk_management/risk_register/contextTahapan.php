@@ -22,7 +22,7 @@
 								<thead>
 									<tr>
 										<th class="text-center">No</th>
-										<th class="text-center">Tahapan Proses</th>
+										<th class="text-center">Risk Context</th>
 										<th class="text-center">Option</th>
 									</tr>
 								</thead>

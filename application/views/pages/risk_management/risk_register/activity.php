@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="<?= base_url('assets/templates') ?>/plugins/summernote/summernote-bs4.min.css">
 <input type="hidden" name="intIdDokRiskRegister" id="intIdDokRiskRegister" value="<?= $intIdDokRegister ?>">
 <input type="hidden" name="intIdActivityRisk" id="intIdActivityRisk">
 <input type="hidden" name="intIdTahapanProsesRisk" id="intIdTahapanProsesRisk">
@@ -151,9 +152,11 @@
 <!-- Modal Area -->
 <?php $this->load->view('pages/risk_management/risk_register/modal/modal_add_activity'); ?>
 <?php $this->load->view('pages/risk_management/risk_register/modal/modal_add_tahapan'); ?>
+<?php $this->load->view('pages/risk_management/risk_register/modal/modal_add_context'); ?>
 
 <script src="<?= base_url('assets/templates') ?>/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="<?= base_url('assets/templates') ?>/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="<?= base_url('assets/templates') ?>/plugins/summernote/summernote-bs4.min.js"></script>
 <script>
 	var url = `<?= base_url() ?>`;
 	$("#show_activity_current, #show_tahapan_current, #show_context_current").css({

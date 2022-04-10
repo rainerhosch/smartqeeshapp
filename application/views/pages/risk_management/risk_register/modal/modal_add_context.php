@@ -1,5 +1,5 @@
-<div class="modal fade" id="modal-add_tahapan">
-	<div class="modal-dialog">
+<div class="modal fade" id="modal-add_context">
+	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title">Tambah Context Risk</h4>
@@ -9,8 +9,8 @@
 			</div>
 			<div class="modal-body">
 				<div class="form-group">
-					<label for="">Context Risk</label>
-					<input id="txtTahapanProses" class="form-control" autocomplete="false" />					
+					<label for="">Context Risk</label>					
+					<textarea id="txtNamaContext" class="form-control" cols="30" rows="15" autocomplete="false"> </textarea>					
 				</div>
 			</div>
 			<div class="modal-footer justify-content-between">
@@ -23,5 +23,8 @@
 	<!-- /.modal-dialog -->
 </div>
 <script>
+	$(document).ready(function () {
+		$('#txtNamaContext').summernote()
+	});
 	
 </script>

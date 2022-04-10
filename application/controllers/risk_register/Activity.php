@@ -27,7 +27,7 @@ class Activity extends CI_Controller
 		$id 						= $this->input->get('id');
         $data['title'] 				= 'Smart Qeesh App';
         $data['page'] 				= 'Risk Register';
-        $data['subpage'] 			= 'Blank Page';        
+        $data['subpage'] 			= 'Blank Page';
         $data['content'] 			= 'pages/risk_management/risk_register/activity';
 		$data["intIdDokRegister"] 	= $id;		
 		$data["user"]				= $this->user->getDataUserDept($this->session->userdata('user_id'));		

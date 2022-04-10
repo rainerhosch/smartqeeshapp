@@ -27,13 +27,13 @@ function p_InitiateDataListContext() {
 						className: 'text-center'
 					},
 					{
-						"data": "txtNamaTahapan",
-						"name": "txtNamaTahapan",
+						"data": "txtNamaContext",
+						"name": "txtNamaContext",
 						className: 'text-center'
 					},
 					{
 						render: function (data, type, full, meta) {
-							return `<a class="btn btn-primary" data-id="${full.intIdTahapanProses}" data-nama="${full.txtNamaTahapan}" id="tombol_detail_tahapan"><i class="fa fa-eye"></i></a>`
+							return `<a class="btn btn-primary" data-id="${full.intIdTrRiskContext}" data-nama="${full.txtNamaContext}" id="tombol_detail_tahapan"><i class="fa fa-eye"></i></a>`
 						},
 						className: 'text-center'
 					},
@@ -56,6 +56,7 @@ $("#tombol_simpan_add_context").on('click', function (e) {
 		data: data,
 		dataType: "json",
 		success: function (response) {
+			$("#txtNamaContext").summernote('reset');
 			let otable = $('#dtListContext').dataTable();
 			otable.fnDraw(false);
 			$("#button_close_context").click();
