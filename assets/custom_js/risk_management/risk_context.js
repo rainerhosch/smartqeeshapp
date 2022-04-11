@@ -33,7 +33,7 @@ function p_InitiateDataListContext() {
 					},
 					{
 						render: function (data, type, full, meta) {
-							return `<a class="btn btn-primary" data-id="${full.intIdTrRiskContext}" data-nama="${full.txtNamaContext}" id="tombol_detail_tahapan"><i class="fa fa-eye"></i></a>`
+							return `<a class="btn btn-primary" data-id="${full.intIdTrRiskContext}" data-nama="${full.txtNamaContext}" id="tombol_detail_context"><i class="fa fa-eye"></i></a>`
 						},
 						className: 'text-center'
 					},
@@ -67,28 +67,14 @@ $("#tombol_simpan_add_context").on('click', function (e) {
 
 
 /*============================== NAVIGASI ==============================*/
-$(document).on('click', "#tombol_detail_context", async function (e) {
-	e.preventDefault()
+$(document).on('click', "#tombol_detail_context", function (e) {
+	e.preventDefault()	
 	let id = $(this).data('id');
-	$("#txtNamaContextShow").val($(this).data('nama'));	
-	await $.ajax({
-		type: "get",
-		url: `${url}/risk_register/TahapanProses/cekTahapan`,
-		data: {
-			id: id,
-			intIdActivityRisk: $("#intIdActivityRisk").val()
-		},
-		dataType: "json",
-		success: function (response) {
-			$("#intIdTahapanProsesRisk").val(response.data.intIdTahapanProsesRisk);
-		},
-		error: () => {
-			alert('Silahkan Coba Lagi !')
-		}
-	});
+	$("#txtNamaContextShow").html($(this).data('nama'));
+	$("#intIdTrRiskContext").val(id);	
 	showIden()
-	let otableContext = $('#dtListContext').dataTable();
-	await otableContext.fnDraw(false);
+	let oTableIden = $('#dtListRiskIden').dataTable();
+	oTableIden.fnDraw(false);
 });
 
 $("#close_iden").on("click", function () {
@@ -96,9 +82,21 @@ $("#close_iden").on("click", function () {
 });
 
 function showIden() {
-	$("#show_activity_current, #show_context_current").css({'display': 'inline'});
+	$("#show_activity_current, #show_tahapan_current, #show_context_current").css({'display': 'inline'});
 	$("#data_tahapan").css({'display': 'none'});
 	$("#data_act").css({'display': 'none'});
+	$("#data_context").css({'display': 'none'});
+	$("#form_risk_iden").css({'display': 'none'});
+	$("#data_risk_iden").css({'display': 'inline'});
+	window.scrollTo(0, 0);
+}
+
+function showRiskContext() {
+	$("#show_activity_current, #show_tahapan_current").css({'display': 'inline'});
+	$("#show_context_current").css({'display': 'none'});
+	$("#data_tahapan").css({'display': 'none'});
+	$("#data_act").css({'display': 'none'});
+	$("#data_risk_iden").css({'display': 'none'});
 	$("#data_context").css({'display': 'inline'});
 	window.scrollTo(0, 0);
 }

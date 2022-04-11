@@ -16,13 +16,13 @@ class RiskIdentification extends CI_Controller
     {
         parent::__construct();
         login_check();
-        $this->load->model('/RiskRegister/M_risk_context', 'risk_context');
+        $this->load->model('/RiskRegister/M_risk_identification', 'risk_iden');
     }
 
 	public function getDataTable()
 	{
-		$intIdTahapanProsesRisk = $this->input->post('intIdTahapanProsesRisk');		
-		echo json_encode($this->risk_context->get_datatables($intIdTahapanProsesRisk));
+		$intIdTrRiskContext = $this->input->post('intIdTrRiskContext');		
+		echo json_encode($this->risk_iden->get_datatables($intIdTrRiskContext));
 	}
 
 	public function simpan()
@@ -34,7 +34,7 @@ class RiskIdentification extends CI_Controller
 			"intInsertedBy" 			=> $this->session->userdata('user_id'),
 			"dtmInsertedDate" 			=> $dateNow
 		];
-		$status = $this->risk_context->simpan_tahapan_baru($data);
+		$status = $this->risk_iden->simpan_tahapan_baru($data);
 		$response = [
 						'code' => 200,
 						'status' => $status,

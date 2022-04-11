@@ -45,11 +45,7 @@ class Auth extends CI_Controller
                 if ($data_user['password'] === md5($password)) {
                     if ($data_user['is_active'] > 0) {
                         $session_login = [
-<<<<<<< HEAD
                             'user_id' => $data_user['user_id'],
-=======
-                            'user_id' 		=> $data_user['user_id'],
->>>>>>> 7874b071a59bfea3d2757dcb77e6117cefbec27b
                             'id_departemen' => $data_user['id_departemen'],
                         ];
                         $this->session->set_userdata($session_login);

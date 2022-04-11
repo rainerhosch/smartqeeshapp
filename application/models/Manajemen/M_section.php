@@ -129,8 +129,8 @@ class M_section extends CI_Model
 	public function getSectionActiveWithDept()
 	{
 		$this->db->select('mSection.intIdSection, mSection.txtNamaSection, mSection.bitActive, mDepartemen.txtNamaDepartement');
-		$this->db->from('mDepartemen');
-		$this->db->join('mSection', 'mDepartemen.intIdDepartement = mSection.intIdDepartemen');
+		$this->db->from('mSection');
+		$this->db->join('mDepartemen', 'mDepartemen.intIdSection = mSection.intIdSection');
 		$this->db->where('mSection.bitActive', 1);		
 		return $this->db->get()->result();
 	}

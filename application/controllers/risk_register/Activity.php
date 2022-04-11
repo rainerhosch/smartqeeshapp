@@ -33,7 +33,7 @@ class Activity extends CI_Controller
 		$data["user"]				= $this->user->getDataUserDept($this->session->userdata('user_id'));		
 		$data["dok"]				= $this->dokumen->getByID($id);		
 		$data["createBy"]			= $this->user->getDataUserDept($data["dok"]->intInsertedBy);				
-		$data["activity"]			= $this->activity_master->getActivityBySection($this->session->userdata('id_section'));		
+		$data["activity"]			= $this->activity_master->getActivityByDepartemen($this->session->userdata('id_departemen'));		
         $this->load->view('template', $data);
     }
 

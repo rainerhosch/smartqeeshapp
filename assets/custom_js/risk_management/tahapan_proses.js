@@ -69,7 +69,7 @@ $("#tombol_simpan_add_tahapan").on('click', function (e) {
 $(document).on('click', "#tombol_detail_tahapan", async function (e) {
 	e.preventDefault()
 	let id = $(this).data('id');
-	$("#txtNamaContextShow").val($(this).data('nama'));	
+	$("#txtNamaTahapanShow").val($(this).data('nama'));	
 	await $.ajax({
 		type: "get",
 		url: `${url}/risk_register/TahapanProses/cekTahapan`,
@@ -95,7 +95,7 @@ $("#close_context").on("click", function () {
 });
 
 function showContext() {
-	$("#show_activity_current, #show_context_current").css({'display': 'inline'});
+	$("#show_activity_current, #show_tahapan_current").css({'display': 'inline'});
 	$("#data_tahapan").css({'display': 'none'});
 	$("#data_act").css({'display': 'none'});
 	$("#data_context").css({'display': 'inline'});

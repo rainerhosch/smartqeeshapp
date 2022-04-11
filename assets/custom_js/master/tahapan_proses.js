@@ -20,8 +20,8 @@ function p_InitiateDataList() {
 			}
 		},
 		columns: [{
-				"data": "txtNamaSection",
-				"name": "txtNamaSection",
+				"data": "txtNamaDepartement",
+				"name": "txtNamaDepartement",
 				className: 'text-center'
 			},
 			{

@@ -30,6 +30,11 @@
 				<div class="card card-success">
 					<div class="card-header">
 						<h3 class="card-title">Data Dokumen</h3>
+						<div class="card-tools">
+							<a href="<?= base_url('risk_register/dokumen') ?>" class="btn btn-tool" id="">
+								<i class="fas fa-times"></i>
+							</a>
+						</div>
 					</div>
 					<div class="card-body">
 						<div class="row">
@@ -87,7 +92,7 @@
 							<div class="row">
 								<div class="col-lg-12 col-xs-12">
 									<div class="form-group">
-										<label for="">Tahapan</label>
+										<label for="">Tahapan Proses</label>
 										<input type="text" name="" id="txtNamaTahapanShow" class="form-control" value="" disabled>
 									</div>
 								</div>
@@ -99,7 +104,19 @@
 								<div class="col-lg-12 col-xs-12">
 									<div class="form-group">
 										<label for="">Risk Context</label>
-										<input type="text" name="" id="txtNamaContextShow" class="form-control" value="" disabled>
+										<div id="txtNamaContextShow" contenteditable="true"></div>
+										<!-- <input type="text" name="" id="txtNamaContextShow" class="form-control" value="" disabled> -->
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div id="show_iden_current">
+							<div class="row">
+								<div class="col-lg-12 col-xs-12">
+									<div class="form-group">
+										<label for="">Risk Identification</label>
+										<input type="text" name="" id="txtNamaIdentificationShow" class="form-control" value="" disabled>
 									</div>
 								</div>
 							</div>
@@ -118,7 +135,7 @@
 			<div class="col-lg-12" id="data_act">
 				<div class="card card-primary">
 					<div class="card-header">
-						<h3 class="card-title">Data Activity</h3>
+						<h3 class="card-title">Data Activity</h3>						
 					</div>
 					<div class="card-body">
 						<div class="row">
@@ -147,6 +164,8 @@
 		</div>
 		<?php $this->load->view('pages/risk_management/risk_register/tahapan_proses'); ?>
 		<?php $this->load->view('pages/risk_management/risk_register/contextTahapan'); ?>
+		<?php $this->load->view('pages/risk_management/risk_register/risk_iden'); ?>
+		<?php $this->load->view('pages/risk_management/risk_register/form_risk_iden'); ?>
 	</section>
 </div>
 <!-- Modal Area -->
@@ -159,13 +178,12 @@
 <script src="<?= base_url('assets/templates') ?>/plugins/summernote/summernote-bs4.min.js"></script>
 <script>
 	var url = `<?= base_url() ?>`;
-	$("#show_activity_current, #show_tahapan_current, #show_context_current").css({
+	$("#show_activity_current, #show_tahapan_current, #show_context_current, #show_iden_current").css({
 		'display': 'none'
 	});
-	$("#data_tahapan, #data_context").css({
+	$("#data_tahapan, #data_context, #data_risk_iden, #form_risk_iden").css({
 		'display': 'none'
 	});
-	
 </script>
 <script src="<?= base_url('assets/custom_js') ?>/risk_management/activity_risk.js"></script>
 <script src="<?= base_url('assets/custom_js') ?>/risk_management/tahapan_proses.js"></script>
