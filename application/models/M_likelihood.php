@@ -13,12 +13,22 @@ class M_likelihood extends CI_Model{
 
     public $table = 'mLikelihood';
 
-    public function get()
+    public function get($id = NULL)
     {
-        $this->db->select('ml.*,us.username as insertedBy,us2.username as updatedBy');
-        $this->db->from('mLikelihood ml');
-        $this->db->join('user us','ml.intInsertedBy=us.user_id','left');
-        $this->db->join('user us2','ml.intUpdatedBy=us2.user_id','left');
+        if($id)
+        {
+            $this->db->select('ml.*,us.username as insertedBy,us2.username as updatedBy');
+            $this->db->from('mLikelihood ml');
+            $this->db->join('user us','ml.intInsertedBy=us.user_id','left');
+            $this->db->join('user us2','ml.intUpdatedBy=us2.user_id','left');
+            $this->db->where('intIdLikelihood',$id);
+        }else{
+            $this->db->select('ml.*,us.username as insertedBy,us2.username as updatedBy');
+            $this->db->from('mLikelihood ml');
+            $this->db->join('user us','ml.intInsertedBy=us.user_id','left');
+            $this->db->join('user us2','ml.intUpdatedBy=us2.user_id','left');
+        }
+        
         return $this->db->get();
     }
 
