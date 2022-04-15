@@ -104,7 +104,7 @@
 								<div class="col-lg-12 col-xs-12">
 									<div class="form-group">
 										<label for="">Risk Context</label>
-										<div id="txtNamaContextShow" contenteditable="true"></div>
+										<div id="txtNamaContextShow" style="background-color: #E9ECEF; padding: 0.375rem 0.75rem; border-radius: 0.25rem; border: 1px solid #ced4da;"></div>
 										<!-- <input type="text" name="" id="txtNamaContextShow" class="form-control" value="" disabled> -->
 									</div>
 								</div>
@@ -172,6 +172,7 @@
 <?php $this->load->view('pages/risk_management/risk_register/modal/modal_add_activity'); ?>
 <?php $this->load->view('pages/risk_management/risk_register/modal/modal_add_tahapan'); ?>
 <?php $this->load->view('pages/risk_management/risk_register/modal/modal_add_context'); ?>
+<?php $this->load->view('pages/risk_management/risk_register/modal/modal_revaluation_risk'); ?>
 
 <script src="<?= base_url('assets/templates') ?>/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="<?= base_url('assets/templates') ?>/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
@@ -189,3 +190,4 @@
 <script src="<?= base_url('assets/custom_js') ?>/risk_management/tahapan_proses.js"></script>
 <script src="<?= base_url('assets/custom_js') ?>/risk_management/risk_context.js"></script>
 <script src="<?= base_url('assets/custom_js') ?>/risk_management/risk_iden.js"></script>
+<script src="<?= base_url('assets/custom_js') ?>/risk_management/risk_form.js"></script>

@@ -100,5 +100,5 @@ class M_risk_identification extends CI_Model
 	public function simpan_tahapan_baru($data) {		
 		$this->db->insert($this->table, $data);
 		return true;
-	}
+	}	
 }

@@ -25,6 +25,11 @@ class M_RiskConsequence extends CI_Model
           return $this->db->get($this->table)->result_array();
      }
 
+	public function getsRiskConsequenceActive()
+     {
+          return $this->db->get_where($this->table, ['bitActive' => 1])->result_array();
+     }
+
      public function getRiskConsequence($id)
      {
           return $this->db->get_where($this->table, ["intIdRiskConsequence" => $id])->row_array();

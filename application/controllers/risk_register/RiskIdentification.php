@@ -17,6 +17,11 @@ class RiskIdentification extends CI_Controller
         parent::__construct();
         login_check();
         $this->load->model('/RiskRegister/M_risk_identification', 'risk_iden');
+		$this->load->model('M_risk_condition', 'risk_condition');
+		$this->load->model('M_risk_category', 'risk_category');
+		$this->load->model('M_risk_type', 'risk_type');
+		$this->load->model('M_likelihood', 'likelihood');
+		$this->load->model("manajemen/M_RiskConsequence", "riskconsequence");
     }
 
 	public function getDataTable()
@@ -40,6 +45,22 @@ class RiskIdentification extends CI_Controller
 						'status' => $status,
 						'msg' => 'Berhasil disimpan.',
 						'data' => "-"
+					];
+		echo json_encode($response);
+	}
+
+	function iniateForm ()
+	{
+		$data['risk_type'] 			= $this->risk_type->get()->result();
+		$data['risk_condition'] 	= $this->risk_condition->get()->result();
+		$data['risk_category'] 		= $this->risk_category->get()->result();
+		$data['likelihood'] 		= $this->likelihood->get()->result_array();
+		$data['consequence'] 		= $this->riskconsequence->getsRiskConsequenceActive();
+		$response = [
+						'code' => 200,
+						'status' => 'OK',
+						'msg' => '-',
+						'data' => $data
 					];
 		echo json_encode($response);
 	}
