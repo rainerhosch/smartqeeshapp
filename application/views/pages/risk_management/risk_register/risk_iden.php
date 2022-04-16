@@ -23,6 +23,11 @@
 									<tr>
 										<th class="text-center">No</th>
 										<th class="text-center">Risk Identification</th>
+										<th class="text-center">Risk Level</th>
+										<th class="text-center">Risk Status</th>
+										<th class="text-center">Risk Level Last Evaluation</th>
+										<th class="text-center">Risk Status Last Evaluation</th>
+										<th class="text-center">Status Implementation</th>
 										<th class="text-center">Option</th>
 									</tr>
 								</thead>

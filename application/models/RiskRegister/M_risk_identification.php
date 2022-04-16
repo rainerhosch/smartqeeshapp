@@ -68,7 +68,11 @@ class M_risk_identification extends CI_Model
 			$row 									= array();
 			$row["no"] 								= $no;
 			$row["txtSourceRiskIden"] 				= $field->txtSourceRiskIden;
-			$row["intIdRiskSourceIdentification"] 	= $field->intIdRiskSourceIdentification;
+			$row["txtStatusImplementation"] 		= $field->txtStatusImplementation;
+			$row["bitLastStatusRiskRegister"] 		= $field->bitLastStatusRiskRegister;
+			$row["txtLastRiskLevel"] 				= $field->txtLastRiskLevel;
+			$row["txtRiskLevel"] 					= $field->txtRiskLevel;
+			$row["bitStatusKepentingan"] 			= $field->bitStatusKepentingan;
 			$data[] 								= $row;
 		}
 

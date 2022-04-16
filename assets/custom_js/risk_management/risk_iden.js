@@ -5,46 +5,89 @@ $(document).ready(function () {
 function p_InitiateDataListIden() {
 	let intIdTrRiskContext = $("#intIdTrRiskContext").val();
 	var oTableIden = $('#dtListRiskIden').DataTable({
-				"bPaginate": true,
-				"bSort": false,
-				"iDisplayLength": 10,
-				"lengthMenu": [20, 40, 80, 100, 120],
-				"pageLength": 20,
-				"processing": true,
-				"serverSide": true,
-				searching: true,
-				"ajax": {
-					"url": `${url}risk_register/RiskIdentification/getDataTable`,
-					"method": "POST",
-					"data": function (d) {
-						d.intIdTrRiskContext = $('#intIdTrRiskContext').val()
+		"bPaginate": true,
+		"bSort": false,
+		"iDisplayLength": 10,
+		"lengthMenu": [20, 40, 80, 100, 120],
+		"pageLength": 20,
+		"processing": true,
+		"serverSide": true,
+		searching: true,
+		"ajax": {
+			"url": `${url}risk_register/RiskIdentification/getDataTable`,
+			"method": "POST",
+			"data": function (d) {
+				d.intIdTrRiskContext = $('#intIdTrRiskContext').val()
+			}
+		},
+		columns: [{
+				"data": "no",
+				"name": "no",
+				className: 'text-center'
+			},
+			{
+				"data": "txtSourceRiskIden",
+				"name": "txtSourceRiskIden",
+				className: 'text-center'
+			},
+			{
+				"data": "txtRiskLevel",
+				"name": "txtRiskLevel",
+				className: 'text-center'
+			},
+			{
+				render: function (data, type, full, meta) {
+					if (full.bitStatusKepentingan == 1) {
+						return `<p class="badge badge-success">ACCEPT</p>`
+					} else {
+						return `<p class="badge badge-danger">NOT ACCEPT</p>`
 					}
 				},
-				columns: [{
-						"data": "no",
-						"name": "no",
-						className: 'text-center'
-					},
-					{
-						"data": "txtSourceRiskIden",
-						"name": "txtSourceRiskIden",
-						className: 'text-center'
-					},
-					{
-						render: function (data, type, full, meta) {
-							return `<a class="btn btn-primary" data-id="${full.intIdRiskSourceIdentification}" data-nama="${full.txtSourceRiskIden}" id="tombol_detail_context"><i class="fa fa-eye"></i></a>`
-						},
-						className: 'text-center'
-					},
-				]
-			});
-			$("#dtListRiskIden").css("width", "100%");
-			$("#dtListRiskIden_filter").parent().addClass("d-flex justify-content-end");
-			$("#dtListRiskIden_paginate").parent().addClass("d-flex justify-content-end");
+				className: 'text-center'
+			},
+			{
+				render: function (data, type, full, meta) {
+					if (full.txtLastRiskLevel != full.txtRiskLevel) {
+						return full.txtLastRiskLevel
+					} else {
+						return `N/A`
+					}
+				},
+				className: 'text-center'
+			},
+			{
+				render: function (data, type, full, meta) {
+					if (full.txtLastRiskLevel != full.txtRiskLevel) {
+						if (full.bitLastStatusRiskRegister == 1) {
+							return `<p class="badge badge-success">ACCEPT</p>`
+						} else {
+							return `<p class="badge badge-danger">NOT ACCEPT</p>`
+						}
+					} else {
+						return `N/A`
+					}
+				},
+				className: 'text-center'
+			},
+			{
+				"data": "txtStatusImplementation",
+				"name": "txtStatusImplementation",
+				className: 'text-center'
+			},
+			{
+				render: function (data, type, full, meta) {
+					return `<a class="btn btn-primary" data-id="${full.intIdRiskSourceIdentification}" data-nama="${full.txtSourceRiskIden}" id="tombol_detail_context"><i class="fa fa-eye"></i></a>`
+				},
+				className: 'text-center'
+			},
+		]
+	});
+	$("#dtListRiskIden").css("width", "100%");
+	$("#dtListRiskIden_filter").parent().addClass("d-flex justify-content-end");
+	$("#dtListRiskIden_paginate").parent().addClass("d-flex justify-content-end");
 }
 
-function clear_input()
-{
+function clear_input() {
 	$("#txtSourceRiskIden").val("");
 	$("#txtRiskAnalysis").val("");
 	$("#txtRiskType").val("");
@@ -57,6 +100,7 @@ function clear_input()
 	$("#txtFileEvidance").val(null);
 	$("#txtRiskPriorityConsideration").val("");
 	$("#charRiskPriority").val("");
+	$("#txtStatusImplementation").val("");
 
 	//modal
 	$("#bitStatusKepentingan_revaluation").val("");
@@ -67,17 +111,29 @@ function clear_input()
 }
 
 $("#tombol_add_risk_iden").on("click", function () {
-	$("#show_activity_current, #show_tahapan_current, #show_context_current").css({'display': 'inline'});
-	$("#data_tahapan").css({'display': 'none'});
-	$("#data_act").css({'display': 'none'});
-	$("#data_context").css({'display': 'none'});
-	$("#data_risk_iden").css({'display': 'none'});
-	$("#form_risk_iden").css({'display': 'inline'});
+	$("#show_activity_current, #show_tahapan_current, #show_context_current").css({
+		'display': 'inline'
+	});
+	$("#data_tahapan").css({
+		'display': 'none'
+	});
+	$("#data_act").css({
+		'display': 'none'
+	});
+	$("#data_context").css({
+		'display': 'none'
+	});
+	$("#data_risk_iden").css({
+		'display': 'none'
+	});
+	$("#form_risk_iden").css({
+		'display': 'inline'
+	});
 
 	//Iniate data form
 	$.ajax({
 		type: "get",
-		url: `${url}risk_register/RiskIdentification/iniateForm`,		
+		url: `${url}risk_register/RiskIdentification/iniateForm`,
 		dataType: "json",
 		success: function (response) {
 			let risk_type = response.data.risk_type

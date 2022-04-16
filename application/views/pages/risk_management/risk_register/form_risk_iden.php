@@ -84,7 +84,7 @@
 											<div class="row">
 												<div class="col-lg-2 col-xs-12"><label for="">Risk Level</label></div>
 												<div class="col-lg-10 col-xs-12">
-													<input type="text" name="txtRiskLevel" id="txtRiskLevel" class="form-control" required>
+													<input type="text" name="txtRiskLevel" id="txtRiskLevel" class="form-control" required disabled>
 												</div>
 											</div>
 										</div>
@@ -110,7 +110,7 @@
 											<div class="row">
 												<div class="col-lg-2 col-xs-12"><label for="">Risk Status</label></div>
 												<div class="col-lg-10 col-xs-12">
-													<select name="bitStatusKepentingan" class="form-control" id="bitStatusKepentingan" required>
+													<select name="bitStatusKepentingan" class="form-control" id="bitStatusKepentingan" required disabled>
 														<option value="">Select Risk Status</option>
 														<option value="1">Accepted</option>
 														<option value="0">Not Accepted</option>
@@ -126,7 +126,7 @@
 							<div class="row">
 								<div class="col-lg-2 col-xs-12"><label for="">Risk Owner</label></div>
 								<div class="col-lg-10 col-xs-12">
-									<input type="text" name="txtRiskOwner" id="txtRiskOwner" class="form-control">
+									<input type="text" name="txtRiskOwner" id="txtRiskOwner" class="form-control" disabled>
 								</div>
 							</div>
 						</div>
@@ -174,6 +174,19 @@
 								</div>
 							</div>
 						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-lg-2 col-xs-12"><label for="">Status Implementation</label></div>
+								<div class="col-lg-10 col-xs-12">
+									<select name="txtStatusImplementation" id="txtStatusImplementation" class="form-control" required>
+										<option value="">Select Status Implementation</option>
+										<option value="Not Completed">Not Completed</option>
+										<option value="In Progress">In Progress</option>
+										<option value="Completed">Completed</option>
+									</select>
+								</div>
+							</div>
+						</div>						
 						<div class="form-group">
 							<div class="row">
 								<div class="col-lg-2 col-xs-12"><label for="">Time Plant</label></div>

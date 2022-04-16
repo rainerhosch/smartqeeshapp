@@ -79,12 +79,14 @@ $("#tombol_simpan_add_activity").on('click', function (e) {
 /*============================== NAVIGASI ==============================*/
 $(document).on('click', "#tombol_detail_activity", function (e) {
 	e.preventDefault()
+	clsGlobal.showPreloader()
 	let id = $(this).data('id');
 	$("#intIdActivityRisk").val(id);
 	$("#txtNamaActivityShow").val($(this).data('nama'));	
 	showDetailActivity()
 	let otableTah = $('#dtListTahapan').dataTable();
 	otableTah.fnDraw(false);
+	clsGlobal.hidePreloader()	
 });
 
 $("#close_tahapan").on("click", function () {
