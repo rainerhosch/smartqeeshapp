@@ -98,10 +98,25 @@ class RiskIdentification extends CI_Controller
 		}		
 	}
 
+	public function getIdenRisk() 
+	{
+		$where = [
+			'intIdRiskSourceIdentification' => $this->input->get('intIdRiskSourceIdentification')
+		];
+		$data = $this->risk_iden->getById($where)->row();
+		$response = [
+						'code' => 200,
+						'status' => 'OK',
+						'msg' => '-',
+						'data' => $data
+					];
+		echo json_encode($response);
+	}
+
 	public function getRevaluationData () 
 	{
 		$where = [
-			'intIdRiskSourceIdentification' => $this->input->post('intIdRiskSourceIdentification')
+			'intIdRiskSourceIdentification' => $this->input->get('intIdRiskSourceIdentification')
 		];
 		$data = $this->risk_revaluation->getData($where)->result();
 		$response = [

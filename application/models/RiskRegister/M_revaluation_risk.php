@@ -13,13 +13,13 @@ class M_revaluation_risk extends CI_Model
 {
 	var $table = 'trRiskEvaluation'; //nama tabel dari database
 
-	private function getData($where)
+	public function getData($where)
 	{
-		$this->db->order_by('intIdRiskEvaluation', 'desc');		
+		$this->db->order_by('intIdRiskEvaluation', 'asc');		
 		return $this->db->get_where($this->table, $where);		
 	}
 
-	public function simpan_tahapan_baru($data) {		
+	public function simpanRevaluation($data) {		
 		$this->db->insert($this->table, $data);
 		$data_last = [
 			"bitLastStatusRiskRegister" 	=> $data["bitStatusKepentingan_revaluation"],												

@@ -148,7 +148,7 @@ async function renderTable()
 	}
 	await $.ajax({
 		type: "get",
-		url: `${url}risk_register/RiskIdentifiaction/getRevaluationData`,
+		url: `${url}risk_register/RiskIdentification/getRevaluationData`,
 		data: data,
 		dataType: "json",
 		success: function (response) {
@@ -159,7 +159,6 @@ async function renderTable()
 				$.each(data, function (i, item) {
 					body_table += `<tr>`				
 					body_table += `<td class="text-center">${i+1}</td>`
-					body_table += `<td class="text-center"></td>`
 					body_table += `<td class="text-center"></td>`
 					body_table += `<td class="text-center"></td>`
 					body_table += `<td class="text-center"></td>`
@@ -182,25 +181,85 @@ $("#tombol_simpan_revaluation_risk").on('click', function (e) {
 	e.preventDefault()
 
 	clsGlobal.showPreloader()
+	let intIdRiskSourceIdentification = $("#intIdRiskSourceIdentification").val()
 	let data = {
 		intConsequence_revaluation: $("#intConsequence_revaluation").val(),
 		txtRiskLevel_revaluation: $("#txtRiskLevel_revaluation").val(),
 		intLikelihood_revaluation: $("#intLikelihood_revaluation").val(),
 		bitStatusKepentingan_revaluation: $("#bitStatusKepentingan_revaluation").val(),
-		txtRiskOwner_revaluation: $("#txtRiskOwner_revaluation").val()
+		txtRiskOwner_revaluation: $("#txtRiskOwner_revaluation").val(),
+		intIdRiskSourceIdentification: intIdRiskSourceIdentification
+	}
+	
+	if (intIdRiskSourceIdentification == "") {
+		alert('Oops Silahkan Refresh Halaman ini terlebih dahulu !')
+		return
 	}
 
 	$.ajax({
 		type: "post",
-		url: `${url}`,
+		url: `${url}risk_register/RiskIdentification/simpanRevaluation`,
 		data: data,
 		dataType: "json",
-		success: async function (response) {
-			await renderTable()
+		success: function (response) {
+			renderTable()
 			clsGlobal.hidePreloader()
 		},
 		error: () => {
 			clsGlobal.hidePreloader()
 		}
 	});
+});
+
+
+//Tombol detail di list risk identifiaction
+$(document).on('click', '#tombol_detail_risk_iden', function (e) {
+	e.preventDefault()
+	clsGlobal.showPreloader()
+	
+	let intIdRiskSourceIdentification = $(this).data('id');
+	$("#intIdRiskSourceIdentification").val(intIdRiskSourceIdentification);
+	
+	clear_input()
+	iniate_form_risk()
+	showFormRisk()
+	disableFieldForm()
+
+	$.ajax({
+		type: "get",
+		url: `${url}risk_register/RiskIdentification/getIdenRisk`,
+		data: {intIdRiskSourceIdentification: intIdRiskSourceIdentification},
+		dataType: "json",
+		success: function (response) {
+			let data = response.data
+			if (data.bitLastStatusRiskRegister == 0) {
+				$("#intIdRiskSourceIdentification").val(intIdRiskSourceIdentification);
+				renderTable()
+				$("#data_revaluation").css({display: 'inline'});
+			}
+			$("#txtSourceRiskIden").val(data.txtSourceRiskIden)
+			$("#txtRiskAnalysis").val(data.txtRiskAnalysis)
+			$("#txtRiskType").val(data.txtRiskType)
+			$("#txtRiskCategory").val(data.txtRiskCategory)
+			$("#txtRiskCondition").val(data.txtRiskCondition)
+			$("#txtRiskTreatmentCurrent").summernote('code', data.txtRiskTreatmentCurrent)
+			$("#intConsequence").val(data.intConsequence)
+			$("#txtRiskLevel").val(data.txtRiskLevel)
+			$("#intLikelihood").val(data.intLikelihood)
+			$("#bitStatusKepentingan").val(data.bitStatusKepentingan) // ini risk status sesuai bahasa di excel
+			$("#txtRiskOwner").val(data.txtRiskOwner)
+			$("#txtRiskTreatmentFuture").summernote('code', data.txtRiskTreatmentFuture)
+			$("#txtRiskPriorityConsideration").val(data.txtRiskPriorityConsideration)
+			$("#txtImprovement").val(data.txtImprovement)
+			$("#charRiskPriority").val(data.charRiskPriority)
+			$("#txtStatusImplementation").val(data.txtStatusImplementation)
+			$("#intTimePlantMonth").val(data.intTimePlantMonth)
+			$("#intTimePlantYear").val(data.intTimePlantYear)
+		},
+		error: () => {
+			return
+		}
+	});	
+
+	clsGlobal.hidePreloader()
 });

@@ -115,32 +115,30 @@ function clear_input() {
 	$("#txtStatusImplementation").val("");
 }
 
-function disableFieldForm()
-{
-	$("#txtSourceRiskIden").attr('disable', 'true')
-	$("#txtRiskAnalysis").attr('disable', 'true')
-	$("#txtRiskType").attr('disable', 'true')
-	$("#txtRiskCategory").attr('disable', 'true')
-	$("#txtRiskCondition").attr('disable', 'true')
+function disableFieldForm() {
+	$("#txtSourceRiskIden").attr('disabled', 'true')
+	$("#txtRiskAnalysis").attr('disabled', 'true')
+	$("#txtRiskType").attr('disabled', 'true')
+	$("#txtRiskCategory").attr('disabled', 'true')
+	$("#txtRiskCondition").attr('disabled', 'true')
 	$("#txtRiskTreatmentCurrent").summernote('disable')
-	$("#intConsequence").attr('disable', 'true')
-	$("#txtRiskLevel").attr('disable', 'true')
-	$("#intLikelihood").attr('disable', 'true')
-	$("#bitStatusKepentingan").attr('disable', 'true') // ini risk status sesuai bahasa di excel
+	$("#intConsequence").attr('disabled', 'true')
+	$("#txtRiskLevel").attr('disabled', 'true')
+	$("#intLikelihood").attr('disabled', 'true')
+	$("#bitStatusKepentingan").attr('disabled', 'true') // ini risk status sesuai bahasa di excel
 	$("#txtRiskOwner").attr('disable', 'true')
 	$("#txtRiskTreatmentFuture").summernote('disable')
-	$("#txtRiskPriorityConsideration").attr('disable', 'true')
-	$("#txtImprovement").attr('disable', 'true')
-	$("#charRiskPriority").attr('disable', 'true')
-	$("#txtStatusImplementation").attr('disable', 'true')
-	$("#intTimePlantMonth").attr('disable', 'true')
-	$("#intTimePlantYear").attr('disable', 'true')
-	$("#txtFileEvidance").attr('disable', 'true')
-	$("#simpan_form_risk").attr('disabled')
+	$("#txtRiskPriorityConsideration").attr('disabled', 'true')
+	$("#txtImprovement").attr('disabled', 'true')
+	$("#charRiskPriority").attr('disabled', 'true')
+	$("#txtStatusImplementation").attr('disabled', 'true')
+	$("#intTimePlantMonth").attr('disabled', 'true')
+	$("#intTimePlantYear").attr('disabled', 'true')
+	$("#txtFileEvidance").attr('disabled', 'true')
+	$("#simpan_form_risk").attr('disabled', '')
 }
 
-function enableFieldForm()
-{
+function enableFieldForm() {
 	$("#txtSourceRiskIden").removeAttr('disable')
 	$("#txtRiskAnalysis").removeAttr('disable')
 	$("#txtRiskType").removeAttr('disable')
@@ -163,25 +161,8 @@ function enableFieldForm()
 	$("#simpan_form_risk").removeAttr('disabled')
 }
 
-$("#tombol_add_risk_iden").on("click", function (e) {
-	e.preventDefault()
-
-	clsGlobal.showPreloader()
-
-	enableFieldForm()
-
-	$("#show_activity_current, #show_tahapan_current, #show_context_current").css({
-		'display': 'inline'
-	});
-	$("#data_tahapan, #data_act, #data_context, #data_risk_iden, #data_revaluation").css({
-		'display': 'none'
-	});	
-	$("#form_risk_iden").css({
-		'display': 'inline'
-	});
-
-	//Iniate data form
-	$.ajax({
+async function iniate_form_risk() {
+	await $.ajax({
 		type: "get",
 		url: `${url}risk_register/RiskIdentification/iniateForm`,
 		dataType: "json",
@@ -229,16 +210,35 @@ $("#tombol_add_risk_iden").on("click", function (e) {
 			$("#intConsequence, #intConsequence_revaluation").html(option_risk_consequence);
 		}
 	});
-	clear_input()
-	window.scrollTo(0, 0);
+}
+
+$("#tombol_add_risk_iden").on("click", function (e) {
+	e.preventDefault()
+
+	clsGlobal.showPreloader()
+
+	enableFieldForm()
+	
+	showFormRisk()	
+
+	//Iniate data form
+	iniate_form_risk()
+	clear_input()	
 	clsGlobal.hidePreloader()
 });
 
-$(document).on('click', '#tombol_detail_risk_iden', function (e) {
-	e.preventDefault()
-	clsGlobal.showPreloader()
-	disableFieldForm()
-});
+function showFormRisk() {
+	$("#show_activity_current, #show_tahapan_current, #show_context_current").css({
+		'display': 'inline'
+	});
+	$("#data_tahapan, #data_act, #data_context, #data_risk_iden, #data_revaluation").css({
+		'display': 'none'
+	});
+	$("#form_risk_iden").css({
+		'display': 'inline'
+	});
+	window.scrollTo(0, 0);
+}
 
 $("#close_form_risk_iden").on("click", function () {
 	showIden();

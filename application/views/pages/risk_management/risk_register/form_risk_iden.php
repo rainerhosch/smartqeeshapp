@@ -220,7 +220,12 @@
 							<div class="input-group">
 								<div class="custom-file">
 									<input type="file" class="custom-file-input" id="txtFileEvidance">
-									<label class="custom-file-label" for="txtFileEvidance">Choose file</label>
+									<label class="custom-file-label" for="txtFileEvidance">Choose file</label>									
+								</div>
+							</div>
+							<div class="row mt-2" id="v_buton_download_evidence">
+								<div class="col-lg-12 d-flex justify-content-end">
+									<a href="" class="btn btn-success" id="btn_download_evidence"><i class="fa fa-download"></i> Download Evidence</a>
 								</div>
 							</div>
 						</div>
@@ -229,7 +234,9 @@
 			</div>
 			<div class="card-footer">
 				<div class="row">
-					<div class="col-lg-12 d-flex justify-content-end"><button class="btn btn-success" id="simpan_form_risk">Save</button></div>
+					<div class="col-lg-12 d-flex justify-content-end">
+						<a href="" class="btn btn-success" id="simpan_form_risk" target="_blank">Save</a>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -255,7 +262,6 @@
 									<th class="text-center">Risk Level</th>
 									<th class="text-center">Risk Status</th>
 									<th class="text-center">Risk Owner</th>
-									<th class="text-center">Option</th>
 								</tr>
 							</thead>
 							<tbody></tbody>
@@ -267,5 +273,5 @@
 	</div>
 </div>
 <script>	
-	
+	$("#v_buton_download_evidence").css({'display': 'none'});
 </script>
