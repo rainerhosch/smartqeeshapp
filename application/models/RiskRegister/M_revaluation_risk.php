@@ -22,9 +22,8 @@ class M_revaluation_risk extends CI_Model
 	public function simpanRevaluation($data) {		
 		$this->db->insert($this->table, $data);
 		$data_last = [
-			"bitLastStatusRiskRegister" 	=> $data["bitStatusKepentingan_revaluation"],												
-			"txtLastRiskLevel" 				=> $data["txtRiskLevel_revaluation"],
-			"dtmUpdatedDate" 				=> $data["dtmUpdatedDate"],
+			"bitLastStatusRiskRegister" 	=> $data["bitRiskStatus"],												
+			"txtLastRiskLevel" 				=> $data["txtRiskLevelEvaluation"],			
 		];
 		$this->db->update('trRiskIdentification', $data_last, [
 			'intIdRiskSourceIdentification' => $data['intIdRiskSourceIdentification']

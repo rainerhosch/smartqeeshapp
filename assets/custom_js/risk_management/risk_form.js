@@ -154,15 +154,19 @@ async function renderTable()
 		success: function (response) {
 			let data = response.data
 			let body_table = ``
-			if (data.length == 0)
+			if (data.length != 0)
 			{
 				$.each(data, function (i, item) {
 					body_table += `<tr>`				
 					body_table += `<td class="text-center">${i+1}</td>`
-					body_table += `<td class="text-center"></td>`
-					body_table += `<td class="text-center"></td>`
-					body_table += `<td class="text-center"></td>`
-					body_table += `</tr>`				
+					body_table += `<td class="text-center">${item.txtRiskLevelEvaluation}</td>`
+					if (item.bitRiskStatus == 1) {
+						body_table += `<td class="text-center"><p class="badge badge-success">ACCEPT</p></td>`
+					} else {
+						body_table += `<td class="text-center"><p class="badge badge-danger">NOT ACCEPT</p></td>`						
+					}					
+					body_table += `<td class="text-center">${item.txtRiskOwner}</td>`
+					body_table += `</tr>`
 				});				
 			}
 			$("#risk_revaluation_table>tbody").html(body_table);
@@ -232,10 +236,13 @@ $(document).on('click', '#tombol_detail_risk_iden', function (e) {
 		dataType: "json",
 		success: function (response) {
 			let data = response.data
-			if (data.bitLastStatusRiskRegister == 0) {
-				$("#intIdRiskSourceIdentification").val(intIdRiskSourceIdentification);
-				renderTable()
-				$("#data_revaluation").css({display: 'inline'});
+			$("#intIdRiskSourceIdentification").val(intIdRiskSourceIdentification);
+			renderTable()
+			$("#data_revaluation").css({display: 'inline'});
+			if (data.bitLastStatusRiskRegister == 1) {
+				$("#v_buton_add_revaluation").css({display: 'none'});
+			} else {
+				$("#v_buton_add_revaluation").css({display: 'inline'});
 			}
 			$("#txtSourceRiskIden").val(data.txtSourceRiskIden)
 			$("#txtRiskAnalysis").val(data.txtRiskAnalysis)

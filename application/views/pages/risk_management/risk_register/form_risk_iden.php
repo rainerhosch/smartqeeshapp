@@ -235,7 +235,7 @@
 			<div class="card-footer">
 				<div class="row">
 					<div class="col-lg-12 d-flex justify-content-end">
-						<a href="" class="btn btn-success" id="simpan_form_risk" target="_blank">Save</a>
+						<button class="btn btn-success" id="simpan_form_risk">Save</button>
 					</div>
 				</div>
 			</div>
@@ -250,10 +250,12 @@
 				</div>
 			</div>
 			<div class="card-body">
-				<div class="row">
-					<div class="col-lg-12 d-flex justify-content-end">
+				<div class="row" id="v_buton_add_revaluation">
+					<div class="col-lg-12" class="col-lg-12 d-flex justify-content-end">
 						<button class="btn btn-primary mb-4" id="add_risk_reevaluation" data-toggle="modal" data-target="#modal-revaluation_risk">Add Risk Re-evaluation</button>
 					</div>
+				</div>
+				<div class="row">					
 					<div class="col-lg-12">
 						<table class="table table-bordered" id="risk_revaluation_table">
 							<thead>

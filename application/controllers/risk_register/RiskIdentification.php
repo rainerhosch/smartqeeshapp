@@ -130,7 +130,25 @@ class RiskIdentification extends CI_Controller
 
 	public function simpanRevaluation()
 	{
-
+		$date = date('Y-m-d H:i:s');
+		$data = [
+			'intIdRiskSourceIdentification' => $this->input->post('intIdRiskSourceIdentification'),
+			'intConsequenceEvaluation' 		=> $this->input->post('intConsequence_revaluation'),
+			'intLikelihoodEvaluation' 		=> $this->input->post('intLikelihood_revaluation'),
+			'txtRiskLevelEvaluation' 		=> $this->input->post('txtRiskLevel_revaluation'),
+			'bitRiskStatus' 				=> $this->input->post('bitStatusKepentingan_revaluation'),
+			'txtRiskOwner' 					=> $this->input->post('txtRiskOwner_revaluation'),
+			'dtmInsertedDate' 				=> $date,
+			'intInsertedBy'	 				=> $this->session->userdata('user_id'),			
+		];
+		$this->risk_revaluation->simpanRevaluation($data);
+		$response = [
+						'code' => 200,
+						'status' => 'OK',
+						'msg' => '-',
+						'data' => "-"
+					];
+		echo json_encode($response);
 	}
 
 	public function iniateForm ()
