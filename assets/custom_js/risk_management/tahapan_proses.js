@@ -60,6 +60,7 @@ $("#tombol_simpan_add_tahapan").on('click', function (e) {
 			let otable = $('#dtListTahapan').dataTable();
 			otable.fnDraw(false);
 			$("#button_close_tahapan").click();
+			clsGlobal.hidePreloader()
 		},
 		error: () => {
 			clsGlobal.hidePreloader()

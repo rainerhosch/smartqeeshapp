@@ -102,6 +102,18 @@ function showIden() {
 	clsGlobal.hidePreloader()
 }
 
+async function showIdenAsync() {	
+	let oTableIden = $('#dtListRiskIden').dataTable();
+	await oTableIden.fnDraw(false);
+	$("#show_activity_current, #show_tahapan_current, #show_context_current").css({'display': 'inline'});
+	$("#data_tahapan").css({'display': 'none'});
+	$("#data_act").css({'display': 'none'});
+	$("#data_context").css({'display': 'none'});
+	$("#form_risk_iden").css({'display': 'none'});
+	$("#data_risk_iden").css({'display': 'inline'});
+	window.scrollTo(0, 0);
+}
+
 //back to context
 function showRiskContext() {
 	clsGlobal.showPreloader()

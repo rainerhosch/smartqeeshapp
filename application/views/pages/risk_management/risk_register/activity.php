@@ -5,7 +5,6 @@
 <input type="hidden" name="intIdTahapanProsesRisk" id="intIdTahapanProsesRisk">
 <input type="hidden" name="intIdTrRiskContext" id="intIdTrRiskContext">
 <input type="hidden" name="intIdRiskSourceIdentification" id="intIdRiskSourceIdentification">
-<input type="hidden" name="intIdRiskEvaluation" id="intIdRiskEvaluation">
 <div class="content-wrapper" style="z-index: -999 !important;">
 	<section class="content-header">
 		<div class="container-fluid">

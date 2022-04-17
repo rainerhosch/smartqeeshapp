@@ -17,6 +17,7 @@ class RiskIdentification extends CI_Controller
         parent::__construct();
         login_check();
         $this->load->model('/RiskRegister/M_risk_identification', 'risk_iden');
+        $this->load->model('/RiskRegister/M_revaluation_risk', 'risk_revaluation');
 		$this->load->model('M_risk_condition', 'risk_condition');
 		$this->load->model('M_risk_category', 'risk_category');
 		$this->load->model('M_risk_type', 'risk_type');
@@ -28,8 +29,8 @@ class RiskIdentification extends CI_Controller
     {
         $config['upload_path'] = $imgpath;
         $config['allowed_types'] = $filetype;
-        $config['encrypt_name'] = TRUE;
-        $config['file_name'] = 'evidance-' . time();
+        // $config['encrypt_name'] = TRUE;
+        $config['file_name'] = 'evidance_' . time();
         $this->load->library('upload', $config);
         $this->upload->initialize($config);
     }
@@ -43,13 +44,18 @@ class RiskIdentification extends CI_Controller
 
 	public function simpan()
 	{
+		header('Content-Type: text/html; charset=UTF-8');
 		//iniate upload evidence
-		$this->upload_config_iden('./uploads_file/evidence_risk_register/','gif|jpg|png|pdf|xlsx|docx|xls|doc|jpeg|bmp');
+		$this->upload_config_iden('./upload_file/evidence_risk_register','gif|jpg|png|pdf|xlsx|docx|xls|doc|jpeg|bmp');
 		$attr_file 		= 'txtFileEvidance';
 		$file_upload 	= $this->upload->do_upload($attr_file);
 		$datetime 		= date('Y-m-d H:i:s');
+		// var_dump($file_upload);exit;
 		if ($file_upload) {
+			$file_iden 		= $this->upload->data();
+            $nama_file_iden = $file_iden['file_name'];
 			$data = [
+				"intIdTrRiskContext" 			=> $this->input->post("intIdTrRiskContext"),
 				"txtSourceRiskIden" 			=> $this->input->post("txtSourceRiskIden"),
 				"txtRiskAnalysis" 				=> $this->input->post("txtRiskAnalysis"),
 				"txtRiskType" 					=> $this->input->post("txtRiskType"),
@@ -70,7 +76,7 @@ class RiskIdentification extends CI_Controller
 				"intTimePlantYear" 				=> $this->input->post("intTimePlantYear"),
 				"bitLastStatusRiskRegister" 	=> $this->input->post("bitStatusKepentingan"),												
 				"txtLastRiskLevel" 				=> $this->input->post("txtRiskLevel"),												
-				"txtFileEvidance" 				=> $file_upload,
+				"txtFileEvidance" 				=> $nama_file_iden,
 				"dtmInsertedDate"				=> $datetime
 			];
 			$data = $this->risk_iden->simpan_tahapan_baru($data);
@@ -90,6 +96,21 @@ class RiskIdentification extends CI_Controller
 						];
 			echo json_encode($response);
 		}		
+	}
+
+	public function getRevaluationData () 
+	{
+		$where = [
+			'intIdRiskSourceIdentification' => $this->input->post('intIdRiskSourceIdentification')
+		];
+		$data = $this->risk_revaluation->getData($where)->result();
+		$response = [
+						'code' => 200,
+						'status' => 'OK',
+						'msg' => '-',
+						'data' => $data
+					];
+		echo json_encode($response);
 	}
 
 	public function simpanRevaluation()

@@ -54,12 +54,13 @@ $("#add_risk_reevaluation").on('click', function () {
 	$("#txtRiskOwner_revaluation").val("");
 });
 
-$("#simpan_form_risk").on('click', function (e) {
-	e.preventDefault()
-	clsGlobal.showPreloader()
+$("#simpan_form_risk").on('click', async function (e) {
+	e.preventDefault()	
 
 	let formData = new FormData();
+	let file_evidence = $("#txtFileEvidance")[0].files
 
+	let intIdTrRiskContext 				= $("#intIdTrRiskContext").val();
 	let txtSourceRiskIden 				= $("#txtSourceRiskIden").val();
 	let txtRiskAnalysis 				= $("#txtRiskAnalysis").val();
 	let txtRiskType 					= $("#txtRiskType").val();
@@ -78,9 +79,9 @@ $("#simpan_form_risk").on('click', function (e) {
 	let txtStatusImplementation 		= $("#txtStatusImplementation").val();
 	let intTimePlantMonth 				= $("#intTimePlantMonth").val();
 	let intTimePlantYear 				= $("#intTimePlantYear").val();
-	let txtFileEvidance 				= $("#txtFileEvidance")[0].files
-
+	let txtFileEvidance 				= file_evidence[0]
 	//isi fiel form data
+	formData.append('intIdTrRiskContext', intIdTrRiskContext)
 	formData.append('txtSourceRiskIden', txtSourceRiskIden)
 	formData.append('txtRiskAnalysis', txtRiskAnalysis)
 	formData.append('txtRiskType', txtRiskType)
@@ -99,28 +100,34 @@ $("#simpan_form_risk").on('click', function (e) {
 	formData.append('txtStatusImplementation', txtStatusImplementation)
 	formData.append('intTimePlantMonth', intTimePlantMonth)
 	formData.append('intTimePlantYear', intTimePlantYear)
-	formData.append('txtFileEvidance', txtFileEvidance)
-
-	if (bitStatusKepentingan == 0) {
-
-	}
+	formData.append('txtFileEvidance', txtFileEvidance)	
 
 	$.ajax({
 		type: "post",
 		url: `${url}risk_register/RiskIdentification/simpan`,
 		data: formData,
 		contentType: false,
-        processData: false,
+		processData: false,
 		dataType: "json",
-		success: async function (response) {
-			disableFieldForm()
+		beforeSend: () => {
+			clsGlobal.showPreloader()
+		},
+		success: function (response) {			
+			let intIdRiskSourceIdentification = response.data.intIdRiskSourceIdentification						
+			if (bitStatusKepentingan == 0) {
+				disableFieldForm()
+				$("#intIdRiskSourceIdentification").val(intIdRiskSourceIdentification);
+				renderTable()		
+			} else {				
+				showIden()
+			}
 			clsGlobal.hidePreloader()
 		},
 		error: () => {
-			clsGlobal.hidePreloader()
 			alert('Ups tidak dapat menyimpan data !')
+			clsGlobal.hidePreloader()
 		}
-	});
+	});	
 });
 
 // RISK Revaluation
@@ -136,24 +143,29 @@ function clearForm()
 
 async function renderTable()
 {
-	let data = {}
+	let data = {
+		intIdRiskSourceIdentification: $("#intIdRiskSourceIdentification").val()
+	}
 	await $.ajax({
 		type: "get",
-		url: `${url}risk_register/RiskIdentifiaction`,
+		url: `${url}risk_register/RiskIdentifiaction/getRevaluationData`,
 		data: data,
 		dataType: "json",
 		success: function (response) {
 			let data = response.data
 			let body_table = ``
-			$.each(data, function (i, item) {
-				body_table += `<tr>`				
-				body_table += `<td class="text-center">${i+1}</td>`
-				body_table += `<td class="text-center"></td>`
-				body_table += `<td class="text-center"></td>`
-				body_table += `<td class="text-center"></td>`
-				body_table += `<td class="text-center"></td>`
-				body_table += `</tr>`				
-			});
+			if (data.length == 0)
+			{
+				$.each(data, function (i, item) {
+					body_table += `<tr>`				
+					body_table += `<td class="text-center">${i+1}</td>`
+					body_table += `<td class="text-center"></td>`
+					body_table += `<td class="text-center"></td>`
+					body_table += `<td class="text-center"></td>`
+					body_table += `<td class="text-center"></td>`
+					body_table += `</tr>`				
+				});				
+			}
 			$("#risk_revaluation_table>tbody").html(body_table);
 		},
 		error: () => {

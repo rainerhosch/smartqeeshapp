@@ -209,7 +209,7 @@
 											</select>
 										</div>
 										<div class="col-lg-6 col-xs-6">
-											<input type="number" name="intTimePlantYear" id="intTimePlantYear" class="form-control" placeholder="Year">
+											<input type="number" name="intTimePlantYear" id="intTimePlantYear" class="form-control" placeholder="Year" value="<?= date('Y') ?>">
 										</div>
 									</div>
 								</div>
