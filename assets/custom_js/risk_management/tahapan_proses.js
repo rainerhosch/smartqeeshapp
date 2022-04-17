@@ -90,7 +90,7 @@ $(document).on('click', "#tombol_detail_tahapan", async function (e) {
 			alert('Silahkan Coba Lagi !')
 		}
 	});
-	showContext()
+	showContext(1)
 	let otableContext = $('#dtListContext').dataTable();
 	await otableContext.fnDraw(false);
 	await clsGlobal.hidePreloader()
@@ -100,10 +100,23 @@ $("#close_context").on("click", function () {
 	showDetailActivity() //from activity.js
 });
 
-function showContext() {
-	$("#show_activity_current, #show_tahapan_current").css({'display': 'inline'});
-	$("#data_tahapan").css({'display': 'none'});
-	$("#data_act").css({'display': 'none'});
-	$("#data_context").css({'display': 'inline'});
-	window.scrollTo(0, 0);
+//back to context
+function showContext(x = 0) {
+	if (x == 0) {
+		clsGlobal.showPreloader()
+		let otableContext = $('#dtListContext').dataTable();
+		otableContext.fnDraw(false);
+		$("#show_activity_current, #show_tahapan_current").css({'display': 'inline'});
+		$("#data_tahapan").css({'display': 'none'});
+		$("#data_act").css({'display': 'none'});
+		$("#data_context").css({'display': 'inline'});
+		window.scrollTo(0, 0);
+		clsGlobal.hidePreloader()
+	} else {
+		$("#show_activity_current, #show_tahapan_current").css({'display': 'inline'});
+		$("#data_tahapan").css({'display': 'none'});
+		$("#data_act").css({'display': 'none'});
+		$("#data_context").css({'display': 'inline'});
+		window.scrollTo(0, 0);
+	}	
 }

@@ -84,14 +84,10 @@ $("#tombol_simpan_add_activity").on('click', function (e) {
 /*============================== NAVIGASI ==============================*/
 $(document).on('click', "#tombol_detail_activity", function (e) {
 	e.preventDefault()
-	clsGlobal.showPreloader()
 	let id = $(this).data('id');
 	$("#intIdActivityRisk").val(id);
 	$("#txtNamaActivityShow").val($(this).data('nama'));	
-	showDetailActivity()
-	let otableTah = $('#dtListTahapan').dataTable();
-	otableTah.fnDraw(false);
-	clsGlobal.hidePreloader()	
+	showDetailActivity()		
 });
 
 $("#close_tahapan").on("click", function () {
@@ -109,10 +105,15 @@ function showActivity() {
 	clsGlobal.hidePreloader()
 }
 
+//back to tahapan proses
 function showDetailActivity() {
+	clsGlobal.showPreloader()
+	let otableTah = $('#dtListTahapan').dataTable();
+	otableTah.fnDraw(false);
 	$("#show_activity_current").css({'display': 'inline'});
 	$("#data_tahapan").css({'display': 'inline'});
 	$("#data_act, #data_context").css({'display': 'none'});
 	$("#show_context_current").css({'display': 'none'});
 	window.scrollTo(0, 0);
+	clsGlobal.hidePreloader()
 }

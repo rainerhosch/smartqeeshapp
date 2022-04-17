@@ -1,10 +1,1 @@
 application/config/database.php
-upload_file/evidence_risk_register/*.jpeg
-upload_file/evidence_risk_register/*.jpg
-upload_file/evidence_risk_register/*.bmp
-upload_file/evidence_risk_register/*.png
-upload_file/evidence_risk_register/*.pdf
-upload_file/evidence_risk_register/*.xlsx
-upload_file/evidence_risk_register/*.xls
-upload_file/evidence_risk_register/*.docx
-upload_file/evidence_risk_register/*.doc

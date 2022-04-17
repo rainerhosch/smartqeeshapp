@@ -45,9 +45,9 @@ class RiskIdentification extends CI_Controller
 	{
 		//iniate upload evidence
 		$this->upload_config_iden('./uploads_file/evidence_risk_register/','gif|jpg|png|pdf|xlsx|docx|xls|doc|jpeg|bmp');
-		$attr_file = 'txtFileEvidance';
-		$file_upload = $this->upload->do_upload($attr_file);
-		
+		$attr_file 		= 'txtFileEvidance';
+		$file_upload 	= $this->upload->do_upload($attr_file);
+		$datetime 		= date('Y-m-d H:i:s');
 		if ($file_upload) {
 			$data = [
 				"txtSourceRiskIden" 			=> $this->input->post("txtSourceRiskIden"),
@@ -70,7 +70,8 @@ class RiskIdentification extends CI_Controller
 				"intTimePlantYear" 				=> $this->input->post("intTimePlantYear"),
 				"bitLastStatusRiskRegister" 	=> $this->input->post("bitStatusKepentingan"),												
 				"txtLastRiskLevel" 				=> $this->input->post("txtRiskLevel"),												
-				"txtFileEvidance" 				=> $file_upload,												
+				"txtFileEvidance" 				=> $file_upload,
+				"dtmInsertedDate"				=> $datetime
 			];
 			$data = $this->risk_iden->simpan_tahapan_baru($data);
 			$response = [

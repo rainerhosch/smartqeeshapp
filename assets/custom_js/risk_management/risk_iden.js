@@ -1,5 +1,17 @@
 $(document).ready(function () {
 	p_InitiateDataListIden();
+	$('#txtRiskTreatmentFuture, #txtRiskTreatmentCurrent').summernote({
+		height: 150,
+		toolbar: [
+			['style', ['style']],
+			['font', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
+			['fontname', ['fontname']],
+			['fontsize', ['fontsize']],
+			['color', ['color']],
+			['para', ['ol', 'ul', 'paragraph', 'height']],
+			['view', ['undo', 'redo', 'fullscreen', 'codeview', 'help']]
+		]
+	})
 });
 
 function p_InitiateDataListIden() {
@@ -110,13 +122,13 @@ function disableFieldForm()
 	$("#txtRiskType").attr('disable', 'true')
 	$("#txtRiskCategory").attr('disable', 'true')
 	$("#txtRiskCondition").attr('disable', 'true')
-	$("#txtRiskTreatmentCurrent").attr('disable', 'true')
+	$("#txtRiskTreatmentCurrent").summernote('disable')
 	$("#intConsequence").attr('disable', 'true')
 	$("#txtRiskLevel").attr('disable', 'true')
 	$("#intLikelihood").attr('disable', 'true')
 	$("#bitStatusKepentingan").attr('disable', 'true') // ini risk status sesuai bahasa di excel
 	$("#txtRiskOwner").attr('disable', 'true')
-	$("#txtRiskTreatmentFuture").attr('disable', 'true')
+	$("#txtRiskTreatmentFuture").summernote('disable')
 	$("#txtRiskPriorityConsideration").attr('disable', 'true')
 	$("#txtImprovement").attr('disable', 'true')
 	$("#charRiskPriority").attr('disable', 'true')
@@ -134,13 +146,13 @@ function enableFieldForm()
 	$("#txtRiskType").removeAttr('disable')
 	$("#txtRiskCategory").removeAttr('disable')
 	$("#txtRiskCondition").removeAttr('disable', 'true')
-	$("#txtRiskTreatmentCurrent").removeAttr('disable')
+	$("#txtRiskTreatmentCurrent").summernote('enable')
 	$("#intConsequence").removeAttr('disable')
 	$("#txtRiskLevel").removeAttr('disable')
 	$("#intLikelihood").removeAttr('disable')
 	$("#bitStatusKepentingan").removeAttr('disable') // ini risk status sesuai bahasa di excel
 	$("#txtRiskOwner").removeAttr('disable')
-	$("#txtRiskTreatmentFuture").removeAttr('disable')
+	$("#txtRiskTreatmentFuture").summernote('enable')
 	$("#txtRiskPriorityConsideration").removeAttr('disable')
 	$("#txtImprovement").removeAttr('disable')
 	$("#charRiskPriority").removeAttr('disable')

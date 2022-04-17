@@ -89,6 +89,9 @@ $("#close_iden").on("click", function () {
 });
 
 function showIden() {
+	clsGlobal.showPreloader()
+	let oTableIden = $('#dtListRiskIden').dataTable();
+	oTableIden.fnDraw(false);
 	$("#show_activity_current, #show_tahapan_current, #show_context_current").css({'display': 'inline'});
 	$("#data_tahapan").css({'display': 'none'});
 	$("#data_act").css({'display': 'none'});
@@ -96,9 +99,14 @@ function showIden() {
 	$("#form_risk_iden").css({'display': 'none'});
 	$("#data_risk_iden").css({'display': 'inline'});
 	window.scrollTo(0, 0);
+	clsGlobal.hidePreloader()
 }
 
+//back to context
 function showRiskContext() {
+	clsGlobal.showPreloader()
+	let otableContext = $('#dtListContext').dataTable();
+	otableContext.fnDraw(false);
 	$("#show_activity_current, #show_tahapan_current").css({'display': 'inline'});
 	$("#show_context_current").css({'display': 'none'});
 	$("#data_tahapan").css({'display': 'none'});
@@ -106,4 +114,5 @@ function showRiskContext() {
 	$("#data_risk_iden").css({'display': 'none'});
 	$("#data_context").css({'display': 'inline'});
 	window.scrollTo(0, 0);
+	clsGlobal.hidePreloader()
 }

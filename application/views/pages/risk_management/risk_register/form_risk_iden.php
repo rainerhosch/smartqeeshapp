@@ -16,7 +16,7 @@
 							<div class="row">
 								<div class="col-lg-2 col-xs-12"><label for="">Risk Source Identification</label></div>
 								<div class="col-lg-10 col-xs-12">
-									<input type="text" name="txtSourceRiskIden" id="txtSourceRiskIden" class="form-control">									
+									<input type="text" name="txtSourceRiskIden" id="txtSourceRiskIden" class="form-control">
 								</div>
 							</div>
 						</div>
@@ -186,7 +186,7 @@
 									</select>
 								</div>
 							</div>
-						</div>						
+						</div>
 						<div class="form-group">
 							<div class="row">
 								<div class="col-lg-2 col-xs-12"><label for="">Time Plan</label></div>
@@ -223,7 +223,7 @@
 									<label class="custom-file-label" for="txtFileEvidance">Choose file</label>
 								</div>
 							</div>
-						</div>						
+						</div>
 					</div>
 				</div>
 			</div>
@@ -266,3 +266,6 @@
 		</div>
 	</div>
 </div>
+<script>	
+	
+</script>

@@ -9,8 +9,8 @@
 			</div>
 			<div class="modal-body">
 				<div class="form-group">
-					<label for="">Context Risk</label>					
-					<textarea id="txtNamaContext" class="form-control" cols="30" rows="15" autocomplete="false"> </textarea>					
+					<label for="">Context Risk</label>
+					<textarea id="txtNamaContext" class="form-control" cols="30" rows="15" autocomplete="false"> </textarea>
 				</div>
 			</div>
 			<div class="modal-footer justify-content-between">
@@ -23,8 +23,18 @@
 	<!-- /.modal-dialog -->
 </div>
 <script>
-	$(document).ready(function () {
-		$('#txtNamaContext').summernote()
+	$(document).ready(function() {
+		$('#txtNamaContext').summernote({
+			height: 300,
+			toolbar: [
+				['style', ['style']],
+				['font', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
+				['fontname', ['fontname']],
+				['fontsize', ['fontsize']],
+				['color', ['color']],
+				['para', ['ol', 'ul', 'paragraph', 'height']],				
+				['view', ['undo', 'redo', 'fullscreen', 'codeview', 'help']]
+			]
+		})
 	});
-	
 </script>
