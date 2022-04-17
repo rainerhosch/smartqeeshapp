@@ -269,6 +269,5 @@ $(document).on('click', '#tombol_detail_risk_iden', function (e) {
 			return
 		}
 	});	
-
 	clsGlobal.hidePreloader()
 });

@@ -76,6 +76,7 @@ class RiskIdentification extends CI_Controller
 				"intTimePlantYear" 				=> $this->input->post("intTimePlantYear"),
 				"bitLastStatusRiskRegister" 	=> $this->input->post("bitStatusKepentingan"),												
 				"txtLastRiskLevel" 				=> $this->input->post("txtRiskLevel"),												
+				"intInsertedBy" 				=> $this->session->userdata("user_id"),												
 				"txtFileEvidance" 				=> $nama_file_iden,
 				"dtmInsertedDate"				=> $datetime
 			];
