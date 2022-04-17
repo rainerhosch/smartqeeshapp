@@ -56,6 +56,7 @@ $("#tombol_add_activity").on('click', function (e) {
 
 $("#tombol_simpan_add_activity").on('click', function (e) {
 	e.preventDefault();
+	clsGlobal.showPreloader()
 	let data = {
 		intIdDokRiskRegister: $("#intIdDokRiskRegister").val(),
 		txtActivityAdd: $("#txtActivityAdd").val(),
@@ -72,9 +73,13 @@ $("#tombol_simpan_add_activity").on('click', function (e) {
 				$("#button_close_activity").click();
 			} else {
 				alert('Tidak dapat menyimpan data ! Periksa Kembali Nama Activity')
-			}			
+			}
+			clsGlobal.hidePreloader()
+		},
+		error: () => {
+			clsGlobal.hidePreloader()
 		}
-	});
+	});	
 });
 /*============================== NAVIGASI ==============================*/
 $(document).on('click', "#tombol_detail_activity", function (e) {
@@ -94,10 +99,14 @@ $("#close_tahapan").on("click", function () {
 });
 
 function showActivity() {
+	clsGlobal.showPreloader()
 	$("#show_activity_current").css({'display': 'none'});
 	$("#data_tahapan").css({'display': 'none'});
 	$("#data_act").css({'display': 'inline'});
 	window.scrollTo(0, 0);
+	let otableTah = $('#dtList').dataTable();
+	otableTah.fnDraw(false);	
+	clsGlobal.hidePreloader()
 }
 
 function showDetailActivity() {

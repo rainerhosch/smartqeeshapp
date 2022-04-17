@@ -76,7 +76,7 @@ function p_InitiateDataListIden() {
 			},
 			{
 				render: function (data, type, full, meta) {
-					return `<a class="btn btn-primary" data-id="${full.intIdRiskSourceIdentification}" data-nama="${full.txtSourceRiskIden}" id="tombol_detail_context"><i class="fa fa-eye"></i></a>`
+					return `<a class="btn btn-primary" data-id="${full.intIdRiskSourceIdentification}" data-nama="${full.txtSourceRiskIden}" id="tombol_detail_risk_iden"><i class="fa fa-eye"></i></a>`
 				},
 				className: 'text-center'
 			},
@@ -101,31 +101,69 @@ function clear_input() {
 	$("#txtRiskPriorityConsideration").val("");
 	$("#charRiskPriority").val("");
 	$("#txtStatusImplementation").val("");
-
-	//modal
-	$("#bitStatusKepentingan_revaluation").val("");
-	$("#txtRiskLevel_revaluation").val("");
-	$("#intConsequence_revaluation").val("");
-	$("#intLikelihood_revaluation").val("");
-	$("#txtRiskOwner_revaluation").val("");
 }
 
-$("#tombol_add_risk_iden").on("click", function () {
+function disableFieldForm()
+{
+	$("#txtSourceRiskIden").attr('disable', 'true')
+	$("#txtRiskAnalysis").attr('disable', 'true')
+	$("#txtRiskType").attr('disable', 'true')
+	$("#txtRiskCategory").attr('disable', 'true')
+	$("#txtRiskCondition").attr('disable', 'true')
+	$("#txtRiskTreatmentCurrent").attr('disable', 'true')
+	$("#intConsequence").attr('disable', 'true')
+	$("#txtRiskLevel").attr('disable', 'true')
+	$("#intLikelihood").attr('disable', 'true')
+	$("#bitStatusKepentingan").attr('disable', 'true') // ini risk status sesuai bahasa di excel
+	$("#txtRiskOwner").attr('disable', 'true')
+	$("#txtRiskTreatmentFuture").attr('disable', 'true')
+	$("#txtRiskPriorityConsideration").attr('disable', 'true')
+	$("#txtImprovement").attr('disable', 'true')
+	$("#charRiskPriority").attr('disable', 'true')
+	$("#txtStatusImplementation").attr('disable', 'true')
+	$("#intTimePlantMonth").attr('disable', 'true')
+	$("#intTimePlantYear").attr('disable', 'true')
+	$("#txtFileEvidance").attr('disable', 'true')
+	$("#simpan_form_risk").attr('disabled')
+}
+
+function enableFieldForm()
+{
+	$("#txtSourceRiskIden").removeAttr('disable')
+	$("#txtRiskAnalysis").removeAttr('disable')
+	$("#txtRiskType").removeAttr('disable')
+	$("#txtRiskCategory").removeAttr('disable')
+	$("#txtRiskCondition").removeAttr('disable', 'true')
+	$("#txtRiskTreatmentCurrent").removeAttr('disable')
+	$("#intConsequence").removeAttr('disable')
+	$("#txtRiskLevel").removeAttr('disable')
+	$("#intLikelihood").removeAttr('disable')
+	$("#bitStatusKepentingan").removeAttr('disable') // ini risk status sesuai bahasa di excel
+	$("#txtRiskOwner").removeAttr('disable')
+	$("#txtRiskTreatmentFuture").removeAttr('disable')
+	$("#txtRiskPriorityConsideration").removeAttr('disable')
+	$("#txtImprovement").removeAttr('disable')
+	$("#charRiskPriority").removeAttr('disable')
+	$("#txtStatusImplementation").removeAttr('disable')
+	$("#intTimePlantMonth").removeAttr('disable')
+	$("#intTimePlantYear").removeAttr('disable')
+	$("#txtFileEvidance").removeAttr('disable')
+	$("#simpan_form_risk").removeAttr('disabled')
+}
+
+$("#tombol_add_risk_iden").on("click", function (e) {
+	e.preventDefault()
+
+	clsGlobal.showPreloader()
+
+	enableFieldForm()
+
 	$("#show_activity_current, #show_tahapan_current, #show_context_current").css({
 		'display': 'inline'
 	});
-	$("#data_tahapan").css({
+	$("#data_tahapan, #data_act, #data_context, #data_risk_iden, #data_revaluation").css({
 		'display': 'none'
-	});
-	$("#data_act").css({
-		'display': 'none'
-	});
-	$("#data_context").css({
-		'display': 'none'
-	});
-	$("#data_risk_iden").css({
-		'display': 'none'
-	});
+	});	
 	$("#form_risk_iden").css({
 		'display': 'inline'
 	});
@@ -181,6 +219,13 @@ $("#tombol_add_risk_iden").on("click", function () {
 	});
 	clear_input()
 	window.scrollTo(0, 0);
+	clsGlobal.hidePreloader()
+});
+
+$(document).on('click', '#tombol_detail_risk_iden', function (e) {
+	e.preventDefault()
+	clsGlobal.showPreloader()
+	disableFieldForm()
 });
 
 $("#close_form_risk_iden").on("click", function () {

@@ -107,9 +107,9 @@ class M_activity_risk_register extends CI_Model
 			];
 		} else {
 			$dataInsertNewActivity = [
-                    "intIdDepartemen"   => $id_departemen,
+                    "intIdDepartement"  => $id_departemen,
                     "txtNamaActivity"   => strtoupper($data['txtActivityAdd']),
-                    "bitActive"         => true,
+                    "bitActive"         => 1,
                     "intInsertedBy"     => $data['intInsertedBy'],
                     "dtmInsertedDate"   => $data['dtmInsertedDate'],
                     "intUpdatedBy"      => $data['intInsertedBy'],

@@ -46,6 +46,7 @@ function p_InitiateDataListContext() {
 
 $("#tombol_simpan_add_context").on('click', function (e) {
 	e.preventDefault();
+	clsGlobal.showPreloader()
 	let data = {
 		intIdTahapanProsesRisk: $("#intIdTahapanProsesRisk").val(),
 		txtNamaContext: $("#txtNamaContext").val(),
@@ -60,6 +61,10 @@ $("#tombol_simpan_add_context").on('click', function (e) {
 			let otable = $('#dtListContext').dataTable();
 			otable.fnDraw(false);
 			$("#button_close_context").click();
+			clsGlobal.hidePreloader()			
+		},
+		error: () =>{
+			clsGlobal.hidePreloader()
 		}
 	});
 });
@@ -68,13 +73,15 @@ $("#tombol_simpan_add_context").on('click', function (e) {
 
 /*============================== NAVIGASI ==============================*/
 $(document).on('click', "#tombol_detail_context", function (e) {
-	e.preventDefault()	
+	e.preventDefault()
+	clsGlobal.showPreloader()
 	let id = $(this).data('id');
 	$("#txtNamaContextShow").html($(this).data('nama'));
 	$("#intIdTrRiskContext").val(id);	
 	showIden()
 	let oTableIden = $('#dtListRiskIden').dataTable();
 	oTableIden.fnDraw(false);
+	clsGlobal.hidePreloader()
 });
 
 $("#close_iden").on("click", function () {

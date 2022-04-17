@@ -184,11 +184,7 @@
 	});
 	$("#data_tahapan, #data_context, #data_risk_iden, #form_risk_iden").css({
 		'display': 'none'
-	});
-	$(document).ready(function () {		
-		clsGlobal.showPreloader()
-		clsGlobal.hidePreloader()		
-	});
+	});	
 </script>
 <script src="<?= base_url('assets/custom_js') ?>/risk_management/activity_risk.js"></script>
 <script src="<?= base_url('assets/custom_js') ?>/risk_management/tahapan_proses.js"></script>

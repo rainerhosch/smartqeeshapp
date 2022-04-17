@@ -16,7 +16,7 @@
 							<div class="row">
 								<div class="col-lg-2 col-xs-12"><label for="">Risk Source Identification</label></div>
 								<div class="col-lg-10 col-xs-12">
-									<input type="text" name="txtSourceRiskIden" id="txtSourceRiskIden" class="form-control">
+									<input type="text" name="txtSourceRiskIden" id="txtSourceRiskIden" class="form-control">									
 								</div>
 							</div>
 						</div>
@@ -189,7 +189,7 @@
 						</div>						
 						<div class="form-group">
 							<div class="row">
-								<div class="col-lg-2 col-xs-12"><label for="">Time Plant</label></div>
+								<div class="col-lg-2 col-xs-12"><label for="">Time Plan</label></div>
 								<div class="col-lg-10 col-xs-12">
 									<div class="row">
 										<div class="col-lg-6 col-xs-6">
@@ -234,7 +234,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-lg-12">
+	<div class="col-lg-12" id="data_revaluation">
 		<div class="card card-warning">
 			<div class="card-header">
 				<h3 class="card-title" style="color: white;">Risk Re-evaluation</h3>
@@ -252,7 +252,9 @@
 							<thead>
 								<tr>
 									<th class="text-center">Evaluasi Ke-</th>
-									<th class="text-center">Result</th>
+									<th class="text-center">Risk Level</th>
+									<th class="text-center">Risk Status</th>
+									<th class="text-center">Risk Owner</th>
 									<th class="text-center">Option</th>
 								</tr>
 							</thead>
