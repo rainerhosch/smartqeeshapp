@@ -117,7 +117,9 @@ $("#simpan_form_risk").on('click', async function (e) {
 			if (bitStatusKepentingan == 0) {
 				disableFieldForm()
 				$("#intIdRiskSourceIdentification").val(intIdRiskSourceIdentification);
-				renderTable()		
+				renderTable()
+				$("#v_buton_add_revaluation").css({display: 'inline'});
+				$("#data_revaluation").css({display: 'inline'});
 			} else {				
 				showIden()
 			}
