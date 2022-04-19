@@ -22,7 +22,7 @@ class RiskIdentification extends CI_Controller
 		$this->load->model('M_risk_category', 'risk_category');
 		$this->load->model('M_risk_type', 'risk_type');
 		$this->load->model('M_likelihood', 'likelihood');
-		$this->load->model("manajemen/M_RiskConsequence", "riskconsequence");		
+		$this->load->model("Manajemen/M_RiskConsequence", "riskconsequence");		
     }
 
 	public function upload_config_iden($imgpath, $filetype)

@@ -95,7 +95,7 @@ class M_activity_risk_register extends CI_Model
 
 	public function simpan ($data, $id_departemen)
 	{
-		$activityData 			= $this->db->get_where('mActivity', ['txtNamaActivity' => $data['txtActivityAdd']])->row();
+		$activityData 			= $this->db->get_where('mActivity', ['txtNamaActivity' => strtoupper($data['txtActivityAdd'])])->row();
 		$dataFinal 				= [];
 		$dataInsertNewActivity 	= [];
 		if ($activityData != null) {
