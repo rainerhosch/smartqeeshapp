@@ -113,7 +113,7 @@ function showDetailActivity() {
 	$("#show_activity_current").css({'display': 'inline'});
 	$("#data_tahapan").css({'display': 'inline'});
 	$("#data_act, #data_context").css({'display': 'none'});
-	$("#show_context_current").css({'display': 'none'});
+	$("#show_context_current, #show_tahapan_current").css({'display': 'none'});	
 	window.scrollTo(0, 0);
 	clsGlobal.hidePreloader()
 }
