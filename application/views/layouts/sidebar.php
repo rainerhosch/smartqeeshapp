@@ -50,29 +50,34 @@
             success: function(response) {
                 if (response.status === true) {
                     if (response.data != 0) {
+                        let base_url = `<?= base_url(); ?>`;
                         let url = $(location).attr('href').split("/").splice(0, 10).join("/");
                         let segments = url.split('/');
                         let numb = segments.length - 1;
                         let html = ``;
                         let class_active = ``;
                         $.each(response.data, function(i, menu) {
-                            html += `<li class="nav-header"><strong>${menu.nama_menu}</strong></li>`;
-                            if (menu.submenu != 0) {
-                                $.each(menu.submenu, function(i, sm) {
-                                    let nm_submenu = sm.nama_submenu;
-                                    nm_submenu = nm_submenu.replace(/ /g, "_");
-                                    html += `<li class="nav-item">`;
-                                    if (nm_submenu.toLowerCase() === segments[numb].toLowerCase()) {
-                                        html += `<a href="<?= base_url() ?>${sm.url}" class="nav-link active">`;
-                                    } else {
-                                        html += `<a href="<?= base_url() ?>${sm.url}" class="nav-link ">`;
-                                    }
-                                    html += `${sm.icon} `;
-                                    html += `<p class="ml-3">${sm.nama_submenu}</p>`;
-                                    html += `</a>`;
-                                    html += `</li>`;
-                                    html += `</li>`;
-                                });
+                            if (menu.type != 'statis') {
+                                html += `<li class="nav-header"><strong><a href="${base_url + menu.link_menu}">${menu.nama_menu}</a></strong></li>`;
+                            } else {
+                                html += `<li class="nav-header"><strong>${menu.nama_menu}</strong></li>`;
+                                if (menu.submenu != 0) {
+                                    $.each(menu.submenu, function(i, sm) {
+                                        let nm_submenu = sm.nama_submenu;
+                                        nm_submenu = nm_submenu.replace(/ /g, "_");
+                                        html += `<li class="nav-item">`;
+                                        if (nm_submenu.toLowerCase() === segments[numb].toLowerCase()) {
+                                            html += `<a href="<?= base_url() ?>${sm.url}" class="nav-link active">`;
+                                        } else {
+                                            html += `<a href="<?= base_url() ?>${sm.url}" class="nav-link ">`;
+                                        }
+                                        html += `${sm.icon} `;
+                                        html += `<p class="ml-3">${sm.nama_submenu}</p>`;
+                                        html += `</a>`;
+                                        html += `</li>`;
+                                        html += `</li>`;
+                                    });
+                                }
                             }
                         });
                         $(".sidebar_menu").html(html);
