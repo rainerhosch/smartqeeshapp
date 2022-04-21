@@ -5,7 +5,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
  *  File Type             : Controller
  *  File Package          : CI_Controller
  ** * * * * * * * * * * * * * * * * * **
- *  Author                : Rizky Ardiansyah
+ *  Author                : Rizky Ardiansyah (Edited by Dimas Fauzan Tambah modul pilih section)
  *  Date Created          : 05/02/2022
  *  Quots of the code     : 'rapihkan lah code mu, seperti halnya kau menata kehidupan'
  */
@@ -16,15 +16,17 @@ class User extends CI_Controller
         parent::__construct();
         login_check();
         $this->load->model('M_user', 'user');
+        $this->load->model('Manajemen/M_plant', 'plant');
     }
 
     public function index()
     {
         // code here...
-        $data['title'] = 'Smart Qeesh App';
-        $data['page'] = 'Manajemen';
-        $data['subpage'] = 'User';
-        $data['content'] = 'pages/manajemen/v_user';
+        $data['title']      = 'Smart Qeesh App';
+        $data['page']       = 'Manajemen';
+        $data['subpage']    = 'User';
+        $data['content']    = 'pages/manajemen/v_user';
+        $data['plant']      = $this->plant->getsPlantActive();
         $this->load->view('template', $data);
     }
 
@@ -32,7 +34,7 @@ class User extends CI_Controller
     {
         if ($this->input->is_ajax_request()) {
             $data_post = $this->input->post('method');
-            $field = 'user.user_id, user.is_active, user_detail.*, user_role.role_type';
+            $field = 'user.user_id, user.is_active, user_detail.*, user_role.role_type, id_departemen';
             if (isset($data_post) != 'get_all') {
                 $condition = ['user.user_id' => $this->session->userdata('user_id')];
                 $datauser = $this->user->get_user($field, $condition)->row_array();

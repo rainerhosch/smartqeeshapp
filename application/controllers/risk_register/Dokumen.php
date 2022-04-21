@@ -17,6 +17,7 @@ class Dokumen extends CI_Controller
         parent::__construct();
         login_check();
         $this->load->model('/RiskRegister/M_dok_register', 'dokumen');
+        $this->load->model('M_user', 'user');
     }
 
     public function index()
@@ -25,6 +26,7 @@ class Dokumen extends CI_Controller
         $data['page'] 		= 'Risk Register';
         $data['subpage'] 	= 'Blank Page';        
         $data['content'] 	= 'pages/risk_management/risk_register/dokumen';
+		$data["user"]		= $this->user->getDataUserDept($this->session->userdata('user_id'));		
         $this->load->view('template', $data);
     }
 
@@ -35,11 +37,13 @@ class Dokumen extends CI_Controller
 
 	public function simpan()
 	{
-		$dateNow = date("yyyy-mm-dd");
+		$dateNow = date("Y-m-d");
 		$data = [
 			"txtDocNumber" 		=> $this->input->post('txtDocNumber'),
-			"txtInsertedBy" 	=> $this->session->userdata('user_id'),
-			"dtmInsertedDate" 	=> $dateNow
+			"intInsertedBy" 	=> $this->session->userdata('user_id'),
+			"intIdDepartement" 	=> $this->session->userdata('id_departemen'),
+			"txtStatus"			=> "ON PROGRESS",
+			"dtmInsertedBy" 	=> $dateNow
 		];
 		$this->dokumen->simpan ($data);
 		$response = [

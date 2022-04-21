@@ -9,7 +9,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
  *  Date Created          : 29/01/2022
  *  Quots of the code     : 'rapihkan lah code mu, seperti halnya kau menata kehidupan'
  */
-class Risk_dashboard extends CI_Controller
+class Dashboard extends CI_Controller
 {
     public function __construct()
     {
@@ -24,7 +24,7 @@ class Risk_dashboard extends CI_Controller
         $data['page'] = 'Home';
         $data['subpage'] = 'Blank Page';
         // $data['user_divisi'] = 'CT-HSE';
-        $data['content'] = 'pages/risk_management/process_dashboard';
+        $data['content'] = 'pages/dashboard';
         $this->load->view('template', $data);
     }
 }

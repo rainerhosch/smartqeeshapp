@@ -86,7 +86,7 @@ class Sub_menu extends CI_Controller
             $data = [];
             if (isset($data_post['id_submenu_edit']) != null) {
                 $data_input = [
-                    // 'id_menu'           => $data_post['menu_parent'],
+                    'id_menu'           => $data_post['menu_parent'],
                     'nama_submenu'      => $data_post['nama_submenu_edit'],
                     'url'               => $data_post['url_submenu_edit'],
                     'icon'              => $data_post['icon_submenu_edit'],
@@ -110,7 +110,7 @@ class Sub_menu extends CI_Controller
                 }
             } else {
                 $data_input = [
-                    // 'id_menu'           => $data_post['menu_parent'],
+                    'id_menu'           => $data_post['menu_parent'],
                     'nama_submenu'      => $data_post['nama_submenu'],
                     'url'               => $data_post['url_submenu'],
                     'icon'              => $data_post['icon_submenu'],

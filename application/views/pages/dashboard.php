@@ -121,118 +121,118 @@
             <hr>
             <div class="row">
               <div class="col-1 mr-auto">
-                <a href="<?=base_url('risk_management/home')?>" class="card text-center">
-                  <div class="card-header bg-warning py-1" style="font-weight: bold;">
+                <a href="<?=base_url('risk_management/home')?>" class="card text-center bg-warning btn-warning">
+                  <div class="card-header py-1" style="font-weight: bold;">
                     RISK MANAGEMENT
                   </div>
                   <div class="card-body px-1 py-1" style="background-color: #e3e6df;">
                     <img src="<?= base_url('assets/templates/img/icon/rim_icon.png')?>" style="width: 60px; height: 60px;">
                   </div>
-                  <div class="card-footer bg-warning" style="font-weight: bold;">
+                  <div class="card-footer" style="font-weight: bold;">
                     (1) RIM
                   </div>
                 </a>
               </div>
               <div class="col-1 mr-auto">
-                <a href="<?=base_url('legal_compliance/legal_compliance_home')?>" class="card text-center">
-                  <div class="card-header bg-warning py-1" style="font-weight: bold;">
+                <a href="<?=base_url('legal_compliance/legal_compliance_home')?>" class="card text-center bg-warning btn-warning">
+                  <div class="card-header py-1" style="font-weight: bold;">
                     REGULATION COMPLIANCE
                   </div>
                   <div class="card-body px-1 py-1" style="background-color: #e3e6df;">
                     <img src="<?= base_url('assets/templates/img/icon/leg_icon2.png')?>" style="width: 60px; height: 60px;">
                   </div>
-                  <div class="card-footer bg-warning" style="font-weight: bold;">
+                  <div class="card-footer" style="font-weight: bold;">
                     (2) LEG
                   </div>
                 </a>
               </div>
               <div class="col-1 mr-auto">
-                <a href="#" class="card text-center">
-                  <div class="card-header bg-warning py-1" style="font-weight: bold;  line-height: 3;">
+                <a href="#" class="card text-center bg-warning btn-warning">
+                  <div class="card-header py-1" style="font-weight: bold;  line-height: 3;">
                     BUSSINES PLAN
                   </div>
                   <div class="card-body px-1 py-1" style="background-color: #e3e6df;">
                     <img src="<?= base_url('assets/templates/img/icon/bnp_icon.png')?>" style="width: 60px; height: 60px;">
                   </div>
-                  <div class="card-footer bg-warning" style="font-weight: bold;">
+                  <div class="card-footer" style="font-weight: bold;">
                     (3) BNP
                   </div>
                 </a>
               </div>
               <div class="col-1 mr-auto">
-                <a href="#" class="card text-center">
-                  <div class="card-header bg-warning py-1" style="font-weight: bold;">
+                <a href="#" class="card text-center bg-warning btn-warning">
+                  <div class="card-header py-1" style="font-weight: bold;">
                     PERFORMANCE MANAGEMENT
                   </div>
                   <div class="card-body px-1 py-1" style="background-color: #e3e6df;">
                     <img src="<?= base_url('assets/templates/img/icon/pfm_icon.png')?>" style="width: 60px; height: 60px;">
                   </div>
-                  <div class="card-footer bg-warning" style="font-weight: bold;">
+                  <div class="card-footer" style="font-weight: bold;">
                     (4) PFM
                   </div>
                 </a>
               </div>
               <div class="col-1 mr-auto">
-                <a href="dashboard.html" class="card text-center">
-                  <div class="card-header bg-warning py-1 px-1" style="font-weight: bold;">
+                <a href="dashboard.html" class="card text-center bg-warning btn-warning">
+                  <div class="card-header py-1 px-1" style="font-weight: bold;">
                     NONCOMFORMITY & CORRECTIVE ACTION
                   </div>
                   <div class="card-body px-1 py-1" style="background-color: #e3e6df;">
                     <img src="<?= base_url('assets/templates/img/icon/nca_icon.png')?>" style="width: 60px; height: 60px;">
                   </div>
-                  <div class="card-footer bg-warning" style="font-weight: bold;">
+                  <div class="card-footer" style="font-weight: bold;">
                     (5) NCA
                   </div>
                 </a>
               </div>
               <div class="col-1 mr-auto">
-                <a href="#" class="card text-center">
-                  <div class="card-header bg-warning py-auto" style="font-weight: bold;">
+                <a href="#" class="card text-center bg-warning btn-warning">
+                  <div class="card-header py-auto" style="font-weight: bold;">
                     INTERNAL AUDIT
                   </div>
                   <div class="card-body px-1 py-1" style="background-color: #e3e6df;">
                     <img src="<?= base_url('assets/templates/img/icon/ina_icon.png')?>" style="width: 60px; height: 60px;">
                   </div>
-                  <div class="card-footer bg-warning" style="font-weight: bold;">
+                  <div class="card-footer" style="font-weight: bold;">
                     (6) INA
                   </div>
                 </a>
               </div>
               <div class="col-1 mr-auto">
-                <a href="dashboard.html" class="card text-center">
-                  <div class="card-header bg-warning py-1" style="font-weight: bold;">
+                <a href="dashboard.html" class="card text-center bg-warning btn-warning">
+                  <div class="card-header py-1" style="font-weight: bold;">
                     MANAGEMENT REVIEW
                   </div>
                   <div class="card-body px-1 py-1" style="background-color: #e3e6df;">
                     <img src="<?= base_url('assets/templates/img/icon/mrg_icon.png')?>" style="width: 60px; height: 60px;">
                   </div>
-                  <div class="card-footer bg-warning" style="font-weight: bold;">
+                  <div class="card-footer" style="font-weight: bold;">
                     (7) MRG
                   </div>
                 </a>
               </div>
               <div class="col-1 mr-auto">
-                <a href="#" class="card text-center">
-                  <div class="card-header bg-warning py-1" style="font-weight: bold;">
+                <a href="#" class="card text-center bg-warning btn-warning">
+                  <div class="card-header py-1" style="font-weight: bold;">
                     CONTINUAL IMPROVEMENT
                   </div>
                   <div class="card-body px-1 py-1" style="background-color: #e3e6df;">
                     <img src="<?= base_url('assets/templates/img/icon/cim_icon.png')?>" style="width: 60px; height: 60px;">
                   </div>
-                  <div class="card-footer bg-warning" style="font-weight: bold;">
+                  <div class="card-footer" style="font-weight: bold;">
                     (8) CIM
                   </div>
                 </a>
               </div>
               <div class="col-1 mr-auto">
-                <a href="#" class="card text-center">
-                  <div class="card-header bg-warning py-1" style="font-weight: bold;">
+                <a href="#" class="card text-center bg-warning btn-warning">
+                  <div class="card-header py-1" style="font-weight: bold;">
                     MANAGEMENT OF CHANGE
                   </div>
                   <div class="card-body px-1 py-1" style="background-color: #e3e6df;">
                     <img src="<?= base_url('assets/templates/img/icon/moc_icon.png')?>" style="width: 60px; height: 60px;">
                   </div>
-                  <div class="card-footer bg-warning" style="font-weight: bold;">
+                  <div class="card-footer" style="font-weight: bold;">
                     (9) MOC
                   </div>
                 </a>
@@ -261,118 +261,118 @@
               <hr>
             <div class="row">
               <div class="col-1 mr-auto">
-                <a href="<?=base_url('risk_management/home')?>" class="card text-center">
-                  <div class="card-header bg-success py-1" style="font-weight: bold; line-height: 1.5;">
+                <a href="<?=base_url('risk_management/home')?>" class="card text-center bg-success btn-success">
+                  <div class="card-header py-1" style="font-weight: bold; line-height: 1.5;">
                     FINANCE MANAGEMENT
                   </div>
                   <div class="card-body px-1 py-1" style="background-color: #c7e3b3;">
                     <img src="<?= base_url('assets/templates/img/icon/fin_icon.png')?>" style="width: 60px; height: 60px;">
                   </div>
-                  <div class="card-footer bg-success" style="font-weight: bold;">
+                  <div class="card-footer" style="font-weight: bold;">
                     (1) FIN
                   </div>
                 </a>
               </div>
               <div class="col-1 mr-auto">
-                <a href="#" class="card text-center">
-                  <div class="card-header bg-success py-1" style="font-weight: bold;">
+                <a href="#" class="card text-center bg-success btn-success">
+                  <div class="card-header py-1" style="font-weight: bold;">
                     HUMAN CAPITAL MANAGEMENT
                   </div>
                   <div class="card-body px-1 py-1" style="background-color: #c7e3b3;">
                     <img src="<?= base_url('assets/templates/img/icon/hcm_icon.png')?>" style="width: 60px; height: 60px;">
                   </div>
-                  <div class="card-footer bg-success" style="font-weight: bold;">
+                  <div class="card-footer" style="font-weight: bold;">
                     (2) HCM
                   </div>
                 </a>
               </div>
               <div class="col-1 mr-auto">
-                <a href="#" class="card text-center">
-                  <div class="card-header bg-success py-1" style="font-weight: bold; line-height: 1.5;">
+                <a href="#" class="card text-center bg-success btn-success">
+                  <div class="card-header py-1" style="font-weight: bold; line-height: 1.5;">
                     ASSET MANAGEMENT
                   </div>
                   <div class="card-body px-1 py-1" style="background-color: #c7e3b3;">
                     <img src="<?= base_url('assets/templates/img/icon/asm_icon.png')?>" style="width: 60px; height: 60px;">
                   </div>
-                  <div class="card-footer bg-success" style="font-weight: bold;">
+                  <div class="card-footer" style="font-weight: bold;">
                     (3) ASM
                   </div>
                 </a>
               </div>
               <div class="col-1 mr-auto">
-                <a href="#" class="card text-center">
-                  <div class="card-header bg-success py-1" style="font-weight: bold;">
+                <a href="#" class="card text-center bg-success btn-success">
+                  <div class="card-header py-1" style="font-weight: bold;">
                     MAINTENANCE MANAGEMENT
                   </div>
                   <div class="card-body px-1 py-1" style="background-color: #c7e3b3;">
                     <img src="<?= base_url('assets/templates/img/icon/mms_icon.png')?>" style="width: 60px; height: 60px;">
                   </div>
-                  <div class="card-footer bg-success" style="font-weight: bold;">
+                  <div class="card-footer" style="font-weight: bold;">
                     (4) MMS
                   </div>
                 </a>
               </div>
               <div class="col-1 mr-auto">
-                <a href="dashboard.html" class="card text-center">
-                  <div class="card-header bg-success py-1 px-1" style="font-weight: bold; line-height: 1.5;">
+                <a href="dashboard.html" class="card text-center bg-success btn-success">
+                  <div class="card-header py-1 px-1" style="font-weight: bold; line-height: 1.5;">
                     WORKING ENVIRONMENT MANAGEMENT
                   </div>
                   <div class="card-body px-1 py-1" style="background-color: #c7e3b3;">
                     <img src="<?= base_url('assets/templates/img/icon/wem_icon.png')?>" style="width: 60px; height: 60px;">
                   </div>
-                  <div class="card-footer bg-success" style="font-weight: bold;">
+                  <div class="card-footer" style="font-weight: bold;">
                     (5) WEM
                   </div>
                 </a>
               </div>
               <div class="col-1 mr-auto">
-                <a href="#" class="card text-center">
-                  <div class="card-header bg-success py-1" style="font-weight: bold; line-height: 1.5;">
+                <a href="#" class="card text-center bg-success btn-success">
+                  <div class="card-header py-1" style="font-weight: bold; line-height: 1.5;">
                     INFORMATION MANAGEMENT
                   </div>
                   <div class="card-body px-1 py-1" style="background-color: #c7e3b3;">
                     <img src="<?= base_url('assets/templates/img/icon/ifm_icon.png')?>" style="width: 60px; height: 60px;">
                   </div>
-                  <div class="card-footer bg-success" style="font-weight: bold;">
+                  <div class="card-footer" style="font-weight: bold;">
                     (6) IFM
                   </div>
                 </a>
               </div>
               <div class="col-1 mr-auto">
-                <a href="dashboard.html" class="card text-center">
-                  <div class="card-header bg-success py-1" style="font-weight: bold;">
+                <a href="dashboard.html" class="card text-center bg-success btn-success">
+                  <div class="card-header py-1" style="font-weight: bold;">
                     COMMUNICATION MANAGEMENT
                   </div>
                   <div class="card-body px-1 py-1" style="background-color: #c7e3b3;">
                     <img src="<?= base_url('assets/templates/img/icon/com_icon.png')?>" style="width: 60px; height: 60px;">
                   </div>
-                  <div class="card-footer bg-success" style="font-weight: bold;">
+                  <div class="card-footer" style="font-weight: bold;">
                     (7) COM
                   </div>
                 </a>
               </div>
               <div class="col-1 mr-auto">
-                <a href="#" class="card text-center">
-                  <div class="card-header bg-success py-1 px-1" style="font-weight: bold;">
+                <a href="#" class="card text-center bg-success btn-success">
+                  <div class="card-header py-1 px-1" style="font-weight: bold;">
                     EMERGENCY RESPONSE MANAGEMENT
                   </div>
                   <div class="card-body px-1 py-1" style="background-color: #c7e3b3;">
                     <img src="<?= base_url('assets/templates/img/icon/erm_icon.png')?>" style="width: 60px; height: 60px;">
                   </div>
-                  <div class="card-footer bg-success" style="font-weight: bold;">
+                  <div class="card-footer" style="font-weight: bold;">
                     (8) ERM
                   </div>
                 </a>
               </div>
               <div class="col-1 mr-auto">
-                <a href="#" class="card text-center">
-                  <div class="card-header bg-success py-1 px-1" style="font-weight: bold;">
+                <a href="#" class="card text-center bg-success btn-success">
+                  <div class="card-header py-1 px-1" style="font-weight: bold;">
                     BUSSINES CONTINUITY MANAGEMENT
                   </div>
                   <div class="card-body px-1 py-1" style="background-color: #c7e3b3;">
                     <img src="<?= base_url('assets/templates/img/icon/bcm_icon.png')?>" style="width: 60px; height: 60px;">
                   </div>
-                  <div class="card-footer bg-success" style="font-weight: bold;">
+                  <div class="card-footer" style="font-weight: bold;">
                     (9) BCM
                   </div>
                 </a>
@@ -382,7 +382,7 @@
         </div>
       </div>
       <div class="col-lg-2 my-2">
-        <a href="<?= base_url('dashboard/risk_dashboard')?>" class="btn btn-block btn-warning btn-flat info-box-dasbor text-center py-auto" style="height: 31.5%;">
+        <a href="<?= base_url('process_dashboard')?>" class="btn btn-block btn-warning btn-flat info-box-dasbor text-center py-auto" style="height: 31.5%;">
           <div class="text-lg" style="padding-top: 50%;">PROCESS MANAGEMENT</div>
         </a>
         <a href="#" class="btn btn-block btn-primary btn-flat info-box-dasbor" style="height: 35.5%;">

@@ -30,40 +30,35 @@ function p_InitiateDataList() {
 				className: 'text-center'
 			},
 			{
-				"data": "dtmInsertedDate",
-				"name": "dtmInsertedDate",
+				"data": "nama",
+				"name": "nama",
 				className: 'text-center'
 			},
 			{
-				"data": "txtTestCode",
-				"name": "txtTestCode",
+				"data": "dtmInsertedBy",
+				"name": "dtmInsertedBy",
+				className: 'text-center'
+			},
+			{
+				"data": "txtStatus",
+				"name": "txtStatus",
 				className: 'text-center'
 			},
 			{				
-				"name": "txtStatus",
-				render: function (data, type, full, meta) {
-					if (full.txtStatus == null || full.txtStatus == "") {
-						return "ON PROGRESS"
-					} else {
-						return full.txtStatus
-					}
-                },
-				className: 'text-center'
-			},
-			{				
-				"name": "txtStatus",
 				render: function (data, type, full, meta) {					
-					return `<button class="btn btn-primary" id="tombol_show_detail_dok" data-id="${full.intIdDocRegisterRisk}"><i class="fa fa-eye"></i></button>`
+					return `<a class="btn btn-primary" href="${url}risk_register/Activity/index?id=${full.intIdDokRiskRegister}"><i class="fa fa-eye"></i></a>`
                 },
 				className: 'text-center'
 			},
 		]
 	});
 	$("#dtList").css("width", "100%");
+	$("#dtList_filter").parent().addClass("d-flex justify-content-end");
+	$("#dtList_paginate").parent().addClass("d-flex justify-content-end");
 }
 
 $("#tombol_simpan_dokumen").on('click', function (e) {
-	e.preventDefault();
+	clsGlobal.showPreloader()
 	let data = {
 		txtDocNumber: $("#txtNoDocNumber").val()
 	}
@@ -73,9 +68,14 @@ $("#tombol_simpan_dokumen").on('click', function (e) {
 		data: data,
 		dataType: "json",
 		success: function (response) {
-			let otable = $('#dtList').dataTable();
-			otable.fnDraw(false);
-
+			alert(response.msg)
+			let oTable = $('#dtList').dataTable();
+			oTable.fnDraw(false);
+			clsGlobal.hidePreloader()
+		},
+		error: (res) => {
+			clsGlobal.hidePreloader()
+			alert("Upps Tidak Dapat Menyimpan Data !")
 		}
 	});
 });
