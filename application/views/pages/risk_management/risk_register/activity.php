@@ -2,6 +2,7 @@
 <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/plugins/summernote/summernote-bs4.min.css">
 <input type="hidden" name="intIdDokRiskRegister" id="intIdDokRiskRegister" value="<?= $intIdDokRegister ?>">
 <input type="hidden" name="intIdActivityRisk" id="intIdActivityRisk">
+<input type="hidden" name="intIdActivity" id="intIdActivity">
 <input type="hidden" name="intIdTahapanProsesRisk" id="intIdTahapanProsesRisk">
 <input type="hidden" name="intIdTrRiskContext" id="intIdTrRiskContext">
 <input type="hidden" name="intIdRiskSourceIdentification" id="intIdRiskSourceIdentification">

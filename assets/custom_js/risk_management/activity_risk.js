@@ -31,7 +31,7 @@ function p_InitiateDataList() {
 			},			
 			{				
 				render: function (data, type, full, meta) {					
-					return `<a class="btn btn-primary" data-id="${full.intIdActivityRisk}" data-nama="${full.txtNamaActivity}" id="tombol_detail_activity"><i class="fa fa-eye"></i></a>`
+					return `<a class="btn btn-primary" data-id="${full.intIdActivityRisk}" data-nama="${full.txtNamaActivity}" data-id_activity = ${full.intIdActivity} id="tombol_detail_activity"><i class="fa fa-eye"></i></a>`
                 },
 				className: 'text-center'
 			},
@@ -85,7 +85,9 @@ $("#tombol_simpan_add_activity").on('click', function (e) {
 $(document).on('click', "#tombol_detail_activity", function (e) {
 	e.preventDefault()
 	let id = $(this).data('id');
+	let id_activity = $(this).data('id_activity');
 	$("#intIdActivityRisk").val(id);
+	$("#intIdActivity").val(id_activity);
 	$("#txtNamaActivityShow").val($(this).data('nama'));	
 	showDetailActivity()		
 });

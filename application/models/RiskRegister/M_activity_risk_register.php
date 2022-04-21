@@ -18,7 +18,7 @@ class M_activity_risk_register extends CI_Model
 
 	private function _get_datatables_query()
 	{
-		$this->db->select('trActivityRiskRegister.intIdActivityRisk, mActivity.txtNamaActivity');		
+		$this->db->select('trActivityRiskRegister.intIdActivityRisk, mActivity.txtNamaActivity, mActivity.intIdActivity');		
 		$this->db->from($this->table);
 		$this->db->join('mActivity', 'trActivityRiskRegister.intIdActivity=mActivity.intIdActivity');
 		$this->db->order_by('trActivityRiskRegister.intIdActivityRisk', 'desc');
@@ -65,8 +65,9 @@ class M_activity_risk_register extends CI_Model
 			$no++;
 			$row = array();
 			$row["no"] = $no;
-			$row["txtNamaActivity"] = $field->txtNamaActivity;
-			$row["intIdActivityRisk"] = $field->intIdActivityRisk;
+			$row["txtNamaActivity"] 	= $field->txtNamaActivity;
+			$row["intIdActivityRisk"] 	= $field->intIdActivityRisk;
+			$row["intIdActivity"] 		= $field->intIdActivity;
 			$data[] = $row;
 		}
 
