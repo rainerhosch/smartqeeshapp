@@ -5,7 +5,6 @@
 <input type="hidden" name="intIdTahapanProsesRisk" id="intIdTahapanProsesRisk">
 <input type="hidden" name="intIdTrRiskContext" id="intIdTrRiskContext">
 <input type="hidden" name="intIdRiskSourceIdentification" id="intIdRiskSourceIdentification">
-<input type="hidden" name="intIdRiskEvaluation" id="intIdRiskEvaluation">
 <div class="content-wrapper" style="z-index: -999 !important;">
 	<section class="content-header">
 		<div class="container-fluid">
@@ -178,13 +177,13 @@
 <script src="<?= base_url('assets/templates') ?>/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
 <script src="<?= base_url('assets/templates') ?>/plugins/summernote/summernote-bs4.min.js"></script>
 <script>
-	var url = `<?= base_url() ?>`;
+	var url = `<?= base_url() ?>`;	
 	$("#show_activity_current, #show_tahapan_current, #show_context_current, #show_iden_current").css({
 		'display': 'none'
 	});
 	$("#data_tahapan, #data_context, #data_risk_iden, #form_risk_iden").css({
 		'display': 'none'
-	});
+	});	
 </script>
 <script src="<?= base_url('assets/custom_js') ?>/risk_management/activity_risk.js"></script>
 <script src="<?= base_url('assets/custom_js') ?>/risk_management/tahapan_proses.js"></script>

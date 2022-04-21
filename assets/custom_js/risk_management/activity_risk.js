@@ -56,6 +56,7 @@ $("#tombol_add_activity").on('click', function (e) {
 
 $("#tombol_simpan_add_activity").on('click', function (e) {
 	e.preventDefault();
+	clsGlobal.showPreloader()
 	let data = {
 		intIdDokRiskRegister: $("#intIdDokRiskRegister").val(),
 		txtActivityAdd: $("#txtActivityAdd").val(),
@@ -72,9 +73,13 @@ $("#tombol_simpan_add_activity").on('click', function (e) {
 				$("#button_close_activity").click();
 			} else {
 				alert('Tidak dapat menyimpan data ! Periksa Kembali Nama Activity')
-			}			
+			}
+			clsGlobal.hidePreloader()
+		},
+		error: () => {
+			clsGlobal.hidePreloader()
 		}
-	});
+	});	
 });
 /*============================== NAVIGASI ==============================*/
 $(document).on('click', "#tombol_detail_activity", function (e) {
@@ -82,9 +87,7 @@ $(document).on('click', "#tombol_detail_activity", function (e) {
 	let id = $(this).data('id');
 	$("#intIdActivityRisk").val(id);
 	$("#txtNamaActivityShow").val($(this).data('nama'));	
-	showDetailActivity()
-	let otableTah = $('#dtListTahapan').dataTable();
-	otableTah.fnDraw(false);
+	showDetailActivity()		
 });
 
 $("#close_tahapan").on("click", function () {
@@ -92,16 +95,25 @@ $("#close_tahapan").on("click", function () {
 });
 
 function showActivity() {
+	clsGlobal.showPreloader()
 	$("#show_activity_current").css({'display': 'none'});
 	$("#data_tahapan").css({'display': 'none'});
 	$("#data_act").css({'display': 'inline'});
 	window.scrollTo(0, 0);
+	let otableTah = $('#dtList').dataTable();
+	otableTah.fnDraw(false);	
+	clsGlobal.hidePreloader()
 }
 
+//back to tahapan proses
 function showDetailActivity() {
+	clsGlobal.showPreloader()
+	let otableTah = $('#dtListTahapan').dataTable();
+	otableTah.fnDraw(false);
 	$("#show_activity_current").css({'display': 'inline'});
 	$("#data_tahapan").css({'display': 'inline'});
 	$("#data_act, #data_context").css({'display': 'none'});
-	$("#show_context_current").css({'display': 'none'});
+	$("#show_context_current, #show_tahapan_current").css({'display': 'none'});	
 	window.scrollTo(0, 0);
+	clsGlobal.hidePreloader()
 }

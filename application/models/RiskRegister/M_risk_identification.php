@@ -68,6 +68,11 @@ class M_risk_identification extends CI_Model
 			$row 									= array();
 			$row["no"] 								= $no;
 			$row["txtSourceRiskIden"] 				= $field->txtSourceRiskIden;
+			$row["txtStatusImplementation"] 		= $field->txtStatusImplementation;
+			$row["bitLastStatusRiskRegister"] 		= $field->bitLastStatusRiskRegister;
+			$row["txtLastRiskLevel"] 				= $field->txtLastRiskLevel;
+			$row["txtRiskLevel"] 					= $field->txtRiskLevel;
+			$row["bitStatusKepentingan"] 			= $field->bitStatusKepentingan;
 			$row["intIdRiskSourceIdentification"] 	= $field->intIdRiskSourceIdentification;
 			$data[] 								= $row;
 		}
@@ -97,8 +102,18 @@ class M_risk_identification extends CI_Model
 		return $this->db->count_all_results();
 	}
 
+	public function getById($where)
+	{		
+		return $this->db->get_where($this->table, $where);
+	}
+
 	public function simpan_tahapan_baru($data) {		
 		$this->db->insert($this->table, $data);
-		return true;
+		$data = $this->db->get_where($this->table, [
+			"intTimePlantMonth" 			=> $data["intTimePlantMonth"],
+			"intTimePlantYear" 				=> $data["intTimePlantYear"],
+			"txtSourceRiskIden" 			=> $data["txtSourceRiskIden"],
+		])->row();
+		return $data;
 	}	
 }

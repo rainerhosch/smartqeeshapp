@@ -58,6 +58,7 @@ function p_InitiateDataList() {
 }
 
 $("#tombol_simpan_dokumen").on('click', function (e) {
+	clsGlobal.showPreloader()
 	let data = {
 		txtDocNumber: $("#txtNoDocNumber").val()
 	}
@@ -70,9 +71,11 @@ $("#tombol_simpan_dokumen").on('click', function (e) {
 			alert(response.msg)
 			let oTable = $('#dtList').dataTable();
 			oTable.fnDraw(false);
+			clsGlobal.hidePreloader()
 		},
 		error: (res) => {
-			alert(res)
+			clsGlobal.hidePreloader()
+			alert("Upps Tidak Dapat Menyimpan Data !")
 		}
 	});
 });

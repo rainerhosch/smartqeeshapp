@@ -45,6 +45,7 @@ function p_InitiateDataListTahapan() {
 
 $("#tombol_simpan_add_tahapan").on('click', function (e) {
 	e.preventDefault();
+	clsGlobal.showPreloader()
 	let data = {
 		intIdDokRiskRegister: $("#intIdDokRiskRegister").val(),
 		intIdActivityRisk: $("#intIdActivityRisk").val(),
@@ -59,6 +60,10 @@ $("#tombol_simpan_add_tahapan").on('click', function (e) {
 			let otable = $('#dtListTahapan').dataTable();
 			otable.fnDraw(false);
 			$("#button_close_tahapan").click();
+			clsGlobal.hidePreloader()
+		},
+		error: () => {
+			clsGlobal.hidePreloader()
 		}
 	});
 });
@@ -68,6 +73,7 @@ $("#tombol_simpan_add_tahapan").on('click', function (e) {
 /*============================== NAVIGASI ==============================*/
 $(document).on('click', "#tombol_detail_tahapan", async function (e) {
 	e.preventDefault()
+	clsGlobal.showPreloader()
 	let id = $(this).data('id');
 	$("#txtNamaTahapanShow").val($(this).data('nama'));	
 	await $.ajax({
@@ -85,19 +91,33 @@ $(document).on('click', "#tombol_detail_tahapan", async function (e) {
 			alert('Silahkan Coba Lagi !')
 		}
 	});
-	showContext()
+	showContext(1)
 	let otableContext = $('#dtListContext').dataTable();
 	await otableContext.fnDraw(false);
+	await clsGlobal.hidePreloader()
 });
 
 $("#close_context").on("click", function () {
 	showDetailActivity() //from activity.js
 });
 
-function showContext() {
-	$("#show_activity_current, #show_tahapan_current").css({'display': 'inline'});
-	$("#data_tahapan").css({'display': 'none'});
-	$("#data_act").css({'display': 'none'});
-	$("#data_context").css({'display': 'inline'});
-	window.scrollTo(0, 0);
+//back to context
+function showContext(x = 0) {
+	if (x == 0) {
+		clsGlobal.showPreloader()
+		let otableContext = $('#dtListContext').dataTable();
+		otableContext.fnDraw(false);
+		$("#show_activity_current, #show_tahapan_current").css({'display': 'inline'});
+		$("#data_tahapan").css({'display': 'none'});
+		$("#data_act").css({'display': 'none'});
+		$("#data_context").css({'display': 'inline'});
+		window.scrollTo(0, 0);
+		clsGlobal.hidePreloader()
+	} else {
+		$("#show_activity_current, #show_tahapan_current").css({'display': 'inline'});
+		$("#data_tahapan").css({'display': 'none'});
+		$("#data_act").css({'display': 'none'});
+		$("#data_context").css({'display': 'inline'});
+		window.scrollTo(0, 0);
+	}	
 }

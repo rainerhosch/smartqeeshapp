@@ -95,7 +95,7 @@ class M_activity_risk_register extends CI_Model
 
 	public function simpan ($data, $id_departemen)
 	{
-		$activityData 			= $this->db->get_where('mActivity', ['txtNamaActivity' => $data['txtActivityAdd']])->row();
+		$activityData 			= $this->db->get_where('mActivity', ['txtNamaActivity' => strtoupper($data['txtActivityAdd'])])->row();
 		$dataFinal 				= [];
 		$dataInsertNewActivity 	= [];
 		if ($activityData != null) {
@@ -107,9 +107,9 @@ class M_activity_risk_register extends CI_Model
 			];
 		} else {
 			$dataInsertNewActivity = [
-                    "intIdDepartemen"   => $id_departemen,
+                    "intIdDepartement"  => $id_departemen,
                     "txtNamaActivity"   => strtoupper($data['txtActivityAdd']),
-                    "bitActive"         => true,
+                    "bitActive"         => 1,
                     "intInsertedBy"     => $data['intInsertedBy'],
                     "dtmInsertedDate"   => $data['dtmInsertedDate'],
                     "intUpdatedBy"      => $data['intInsertedBy'],

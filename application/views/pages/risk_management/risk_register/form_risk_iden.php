@@ -84,7 +84,7 @@
 											<div class="row">
 												<div class="col-lg-2 col-xs-12"><label for="">Risk Level</label></div>
 												<div class="col-lg-10 col-xs-12">
-													<input type="text" name="txtRiskLevel" id="txtRiskLevel" class="form-control" required>
+													<input type="text" name="txtRiskLevel" id="txtRiskLevel" class="form-control" required disabled>
 												</div>
 											</div>
 										</div>
@@ -110,7 +110,7 @@
 											<div class="row">
 												<div class="col-lg-2 col-xs-12"><label for="">Risk Status</label></div>
 												<div class="col-lg-10 col-xs-12">
-													<select name="bitStatusKepentingan" class="form-control" id="bitStatusKepentingan" required>
+													<select name="bitStatusKepentingan" class="form-control" id="bitStatusKepentingan" required disabled>
 														<option value="">Select Risk Status</option>
 														<option value="1">Accepted</option>
 														<option value="0">Not Accepted</option>
@@ -126,7 +126,7 @@
 							<div class="row">
 								<div class="col-lg-2 col-xs-12"><label for="">Risk Owner</label></div>
 								<div class="col-lg-10 col-xs-12">
-									<input type="text" name="txtRiskOwner" id="txtRiskOwner" class="form-control">
+									<input type="text" name="txtRiskOwner" id="txtRiskOwner" class="form-control" disabled>
 								</div>
 							</div>
 						</div>
@@ -176,7 +176,20 @@
 						</div>
 						<div class="form-group">
 							<div class="row">
-								<div class="col-lg-2 col-xs-12"><label for="">Time Plant</label></div>
+								<div class="col-lg-2 col-xs-12"><label for="">Status Implementation</label></div>
+								<div class="col-lg-10 col-xs-12">
+									<select name="txtStatusImplementation" id="txtStatusImplementation" class="form-control" required>
+										<option value="">Select Status Implementation</option>
+										<option value="Not Completed">Not Completed</option>
+										<option value="In Progress">In Progress</option>
+										<option value="Completed">Completed</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-lg-2 col-xs-12"><label for="">Time Plan</label></div>
 								<div class="col-lg-10 col-xs-12">
 									<div class="row">
 										<div class="col-lg-6 col-xs-6">
@@ -196,7 +209,7 @@
 											</select>
 										</div>
 										<div class="col-lg-6 col-xs-6">
-											<input type="number" name="intTimePlantYear" id="intTimePlantYear" class="form-control" placeholder="Year">
+											<input type="number" name="intTimePlantYear" id="intTimePlantYear" class="form-control" placeholder="Year" value="<?= date('Y') ?>">
 										</div>
 									</div>
 								</div>
@@ -207,21 +220,28 @@
 							<div class="input-group">
 								<div class="custom-file">
 									<input type="file" class="custom-file-input" id="txtFileEvidance">
-									<label class="custom-file-label" for="txtFileEvidance">Choose file</label>
+									<label class="custom-file-label" for="txtFileEvidance">Choose file</label>									
 								</div>
 							</div>
-						</div>						
+							<div class="row mt-2" id="v_buton_download_evidence">
+								<div class="col-lg-12 d-flex justify-content-end">
+									<a href="" class="btn btn-success" id="btn_download_evidence"><i class="fa fa-download"></i> Download Evidence</a>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 			<div class="card-footer">
 				<div class="row">
-					<div class="col-lg-12 d-flex justify-content-end"><button class="btn btn-success" id="simpan_form_risk">Save</button></div>
+					<div class="col-lg-12 d-flex justify-content-end">
+						<button class="btn btn-success" id="simpan_form_risk">Save</button>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="col-lg-12">
+	<div class="col-lg-12" id="data_revaluation">
 		<div class="card card-warning">
 			<div class="card-header">
 				<h3 class="card-title" style="color: white;">Risk Re-evaluation</h3>
@@ -230,17 +250,20 @@
 				</div>
 			</div>
 			<div class="card-body">
-				<div class="row">
-					<div class="col-lg-12 d-flex justify-content-end">
+				<div class="row" id="v_buton_add_revaluation">
+					<div class="col-lg-12" class="col-lg-12 d-flex justify-content-end">
 						<button class="btn btn-primary mb-4" id="add_risk_reevaluation" data-toggle="modal" data-target="#modal-revaluation_risk">Add Risk Re-evaluation</button>
 					</div>
+				</div>
+				<div class="row">					
 					<div class="col-lg-12">
 						<table class="table table-bordered" id="risk_revaluation_table">
 							<thead>
 								<tr>
 									<th class="text-center">Evaluasi Ke-</th>
-									<th class="text-center">Result</th>
-									<th class="text-center">Option</th>
+									<th class="text-center">Risk Level</th>
+									<th class="text-center">Risk Status</th>
+									<th class="text-center">Risk Owner</th>
 								</tr>
 							</thead>
 							<tbody></tbody>
@@ -251,3 +274,6 @@
 		</div>
 	</div>
 </div>
+<script>	
+	$("#v_buton_download_evidence").css({'display': 'none'});
+</script>
