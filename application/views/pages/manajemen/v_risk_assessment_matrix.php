@@ -255,12 +255,101 @@
 
                 $('body').on('click','.btnEdit', function(){
                     var id = $(this).data('id');
-                    var name = $(this).data('name');
-                    var description = $(this).data('description');
+                    // get risk assessment by id
+                    $.ajax({
+                        type:'POST',
+                        dataType: 'JSON',
+                        url: '<?= base_url('manajemen/risk_assessment_matrix/show') ?>',
+                        data: {
+                            id:id
+                        },
+                        success: function(response){
+                                var matrix = response.data;
+                                // get data risk consequence
+                                $.ajax({
+                                    type:'POST',
+                                    dataType: 'JSON',
+                                    url: '<?= base_url('manajemen/risk_assessment_matrix/getConsequence') ?>',
+                                    success: function(response){
+                                        $('#intIdRiskConsequence').empty();
+                                        $('#intIdRiskConsequence').append('<option selected disabled>-- Pilih Risk Consequence --</option>');
+                                        $.each(response, function(key,value){
+                                            if(value['intIdRiskConsequence'] == matrix['intIdRiskConsequence']){
+                                                $('#intIdRiskConsequence').append('<option selected value="'+value['intIdRiskConsequence']+'">'+ value['txtNamaTingkatKlasifikasi'] +'</option>');
+                                            }else{
+                                                $('#intIdRiskConsequence').append('<option value="'+value['intIdRiskConsequence']+'">'+ value['txtNamaTingkatKlasifikasi'] +'</option>');
+                                            }
+                                        })
+                                    }
+                                })
+                                // get data likelihood
+                                $.ajax({
+                                    type:'POST',
+                                    dataType: 'JSON',
+                                    url: '<?= base_url('manajemen/risk_assessment_matrix/getLikelihood') ?>',
+                                    success: function(response){
+                                        $('#intIdLikelihood').append('<option selected disabled>-- Pilih Likelihood --</option>');
+                                        $.each(response, function(key,value){
+                                            if(value['intIdLikelihood'] == matrix['intIdLikelihood'])
+                                            {
+                                                $('#intIdLikelihood').append('<option selected value="'+value['intIdLikelihood']+'">'+ value['intLikelihoodNumber'] + ' - ' + value['txtNamaLikelihood'] + '</option>');
+                                            }else{
+                                                $('#intIdLikelihood').append('<option value="'+value['intIdLikelihood']+'">'+ value['intLikelihoodNumber'] + ' - ' + value['txtNamaLikelihood'] + '</option>');
+                                            }
+                                        })
+                                    }
+                                })
+
+                                // get rule likelihood
+                                $('#ruleLikelihood').empty();
+                                var likelihood = $('#ruleLikelihood').val();
+                                $.ajax({
+                                    type:'POST',
+                                    dataType: 'JSON',
+                                    url: '<?= base_url('manajemen/risk_assessment_matrix/ruleLikelihood') ?>',
+                                    data: {
+                                        likelihood
+                                    },
+                                    success: function(response){
+                                        $('#ruleLikelihood').append('<option selected disabledd>-- Pilih --</option>');
+                                        $.each(response, function(key,value){
+                                            // var mat = value['no']+ ',' +value['nama']+ ',' +value['keterangan'];
+                                            // var mat2 = mat.split(',');
+                                            // var mat3 = split[0] + split[1].charAt(0);
+                                            // if(value['']){
+                                            //     $('#ruleLikelihood').append('<option value="'+value['no']+ ',' +value['nama']+ ',' +value['keterangan']+'">'+ value['nama'] + ' - ' + value['keterangan'] + '</option>');
+                                            // }else{
+                                            //     $('#ruleLikelihood').append('<option value="'+value['no']+ ',' +value['nama']+ ',' +value['keterangan']+'">'+ value['nama'] + ' - ' + value['keterangan'] + '</option>');
+                                            // }
+                                            // $('#ruleLikelihood').append('<option value="'+value['no']+ ',' +value['nama']+ ',' +value['keterangan']+'">'+ value['nama'] + ' - ' + value['keterangan'] + '</option>');
+                                        })
+                                    }
+                                })
+
+                                // get data rulelikelihood after select likelihood
+                                $('#intIdLikelihood').on('change', function()
+                                {
+                                    $('#ruleLikelihood').empty();
+                                    var likelihood = $(this).val();
+                                    $.ajax({
+                                        type:'POST',
+                                        dataType: 'JSON',
+                                        url: '<?= base_url('manajemen/risk_assessment_matrix/ruleLikelihood') ?>',
+                                        data: {
+                                            likelihood
+                                        },
+                                        success: function(response){
+                                            $('#ruleLikelihood').append('<option selected disabledd>-- Pilih --</option>');
+                                            $.each(response, function(key,value){
+                                                $('#ruleLikelihood').append('<option value="'+value['no']+ ',' +value['nama']+ ',' +value['keterangan']+'">'+ value['nama'] + ' - ' + value['keterangan'] + '</option>');
+                                            })
+                                        }
+                                    })
+                                });
+                        }
+                    })
+                    
                     $('.modal-title').text('Edit Risk Assessment Matrix');
-                    $('#id').val(id);
-                    $('#name').val(name);
-                    $('#description').val(description);
                     $('#myModal').modal('show');
                 })
                 
@@ -342,7 +431,7 @@
                     dataType: 'JSON',
                     url: '<?= base_url('manajemen/risk_assessment_matrix/getConsequence') ?>',
                     success: function(response){
-                        $('#intIdRiskConsequence').append('<option selected disable>-- Pilih Risk Consequence --</option>');
+                        $('#intIdRiskConsequence').append('<option selected disabled>-- Pilih Risk Consequence --</option>');
                         $.each(response, function(key,value){
                             $('#intIdRiskConsequence').append('<option value="'+value['intIdRiskConsequence']+'">'+ value['txtNamaTingkatKlasifikasi'] +'</option>');
                         })
@@ -354,7 +443,7 @@
                     dataType: 'JSON',
                     url: '<?= base_url('manajemen/risk_assessment_matrix/getLikelihood') ?>',
                     success: function(response){
-                        $('#intIdLikelihood').append('<option selected disable>-- Pilih Likelihood --</option>');
+                        $('#intIdLikelihood').append('<option selected disabled>-- Pilih Likelihood --</option>');
                         $.each(response, function(key,value){
                             $('#intIdLikelihood').append('<option value="'+value['intIdLikelihood']+'">'+ value['intLikelihoodNumber'] + ' - ' + value['txtNamaLikelihood'] + '</option>');
                         })
@@ -374,7 +463,7 @@
                         likelihood
                     },
                     success: function(response){
-                            $('#ruleLikelihood').append('<option selected disabled>-- Pilih --</option>');
+                            $('#ruleLikelihood').append('<option selected disabledd>-- Pilih --</option>');
                             $.each(response, function(key,value){
                                 $('#ruleLikelihood').append('<option value="'+value['no']+ ',' +value['nama']+ ',' +value['keterangan']+'">'+ value['nama'] + ' - ' + value['keterangan'] + '</option>');
                             })
@@ -457,7 +546,7 @@
                             $('#tbRiskMatrix').text(response.txtRiskMatrix);
                             $('#tbNamaResiko').text(response.txtNamaResiko);
                             $('#tbIsAcceptable').text(isAcceptable);
-                            $('#tbRiskOwner').text(response.txtRiskMatrix);
+                            $('#tbRiskOwner').text(response.txtRiskOwner);
                             $('#tbInsertedBy').text(response.us1Username);
                             $('#tbInserted').text(response.dtmInsertedDate);
                             $('#tbUpdatedBy').text(response.us2Username);
