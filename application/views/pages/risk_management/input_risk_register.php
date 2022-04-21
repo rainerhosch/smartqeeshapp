@@ -72,7 +72,7 @@
                     </div>
                     <label for="input" class="col-sm-3 col-form-label" style="text-align:right">RISK LEVEL</label>
                     <div class="col-sm-3">
-                      <input type="text" class="form-control" id="input" name="input" placeholder="TEXT">
+                      <input type="text" class="form-control" id="input" name="" placeholder="TEXT">
                     </div>
                   </div>
                   <div class="form-group row">
@@ -293,7 +293,7 @@
             <!--FORM FILL-->
             <div class="tab-pane fade show active" id="form-filled" role="tabpanel" aria-labelledby="custom-content-above-home-tab">
               <!-- form -->
-              <form class="form-horizontal" method="post">
+              <form class="form-horizontal" method="post" > 
                 <!--card body-->
                 <div class="card-body" style="background-color: #F8ECC2;">
                   <div class="form-group row">

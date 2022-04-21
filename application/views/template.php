@@ -13,6 +13,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/plugins/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/css/adminlte.min.css">
+    <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
     <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/css/templates.css">
     <?php if ($page != 'Auth') : ?>
         <!-- <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> -->
@@ -25,10 +27,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <?php endif; ?>
     <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/css/main-bg-photo.css">
     <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/css/main.css">
+    
 </head>
 <?php if ($page != 'Auth') : ?>
 
-    <body class="hold-transition layout-navbar-fixed layout-footer-fixed" style="height: auto;">
+    <body class="hold-transition layout-navbar-fixed layout-footer-fixed" style="height: auto;" id="mydiv">
         <div class="wrapper">
 
             <?php $this->load->view('layouts/script'); ?>
