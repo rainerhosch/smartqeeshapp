@@ -11,5 +11,5 @@
 <?php endif; ?>
 <script src="<?= base_url("assets/custom_js/clsGlobal.js") ?>"></script>
 <script>
-	var clsGlobal = new clsGlobalClass();
+    var clsGlobal = new clsGlobalClass();
 </script>
