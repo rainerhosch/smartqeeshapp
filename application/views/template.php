@@ -58,10 +58,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<?php $this->load->view('layouts/footer'); ?>
 		</div>
 		<script>
-			$(document).ready(function () {				
+			$(document).ready(function() {
 				clsGlobal.showPreloader()
 				clsGlobal.hidePreloader()
-			});			
+			});
 			setTimeout(function() {
 				$(".alert_content").html("");
 			}, 2000);
