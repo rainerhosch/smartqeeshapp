@@ -46,57 +46,77 @@ class RiskIdentification extends CI_Controller
 	{
 		header('Content-Type: text/html; charset=UTF-8');
 		//iniate upload evidence
-		$this->upload_config_iden('./upload_file/evidence_risk_register','gif|jpg|png|pdf|xlsx|docx|xls|doc|jpeg|bmp');
-		$attr_file 		= 'txtFileEvidance';
-		$file_upload 	= $this->upload->do_upload($attr_file);
+		// $this->upload_config_iden('./upload_file/evidence_risk_register','gif|jpg|png|pdf|xlsx|docx|xls|doc|jpeg|bmp');
+		// $attr_file 		= 'txtFileEvidance';
+		// $file_upload 	= $this->upload->do_upload($attr_file);
 		$datetime 		= date('Y-m-d H:i:s');
 		// var_dump($file_upload);exit;
-		if ($file_upload) {
-			$file_iden 		= $this->upload->data();
-            $nama_file_iden = $file_iden['file_name'];
-			$data = [
-				"intIdTrRiskContext" 			=> $this->input->post("intIdTrRiskContext"),
-				"txtSourceRiskIden" 			=> $this->input->post("txtSourceRiskIden"),
-				"txtRiskAnalysis" 				=> $this->input->post("txtRiskAnalysis"),
-				"txtRiskType" 					=> $this->input->post("txtRiskType"),
-				"txtRiskCategory" 				=> $this->input->post("txtRiskCategory"),
-				"txtRiskCondition" 				=> $this->input->post("txtRiskCondition"),
-				"txtRiskTreatmentCurrent" 		=> $this->input->post("txtRiskTreatmentCurrent"),
-				"intConsequence" 				=> $this->input->post("intConsequence"),
-				"txtRiskLevel" 					=> $this->input->post("txtRiskLevel"),
-				"intLikelihood" 				=> $this->input->post("intLikelihood"),
-				"bitStatusKepentingan" 			=> $this->input->post("bitStatusKepentingan"), // ini risk status sesuai bahasa di excel
-				"txtRiskOwner" 					=> $this->input->post("txtRiskOwner"),
-				"txtRiskTreatmentFuture" 		=> $this->input->post("txtRiskTreatmentFuture"),
-				"txtRiskPriorityConsideration" 	=> $this->input->post("txtRiskPriorityConsideration"),
-				"txtImprovement" 				=> $this->input->post("txtImprovement"),
-				"charRiskPriority" 				=> $this->input->post("charRiskPriority"),
-				"txtStatusImplementation" 		=> $this->input->post("txtStatusImplementation"),
-				"intTimePlantMonth" 			=> $this->input->post("intTimePlantMonth"),
-				"intTimePlantYear" 				=> $this->input->post("intTimePlantYear"),
-				"bitLastStatusRiskRegister" 	=> $this->input->post("bitStatusKepentingan"),												
-				"txtLastRiskLevel" 				=> $this->input->post("txtRiskLevel"),												
-				"intInsertedBy" 				=> $this->session->userdata("user_id"),												
-				"txtFileEvidance" 				=> $nama_file_iden,
-				"dtmInsertedDate"				=> $datetime
-			];
-			$data = $this->risk_iden->simpan_tahapan_baru($data);
-			$response = [
-							'code' => 200,
-							'status' => "OK",
-							'msg' => 'Berhasil disimpan.',
-							'data' => $data
-						];
-			echo json_encode($response);
-		} else {
-			$response = [
-							'code' => 500,
-							'status' => "Server Error",
-							'msg' => 'File gagal diupload',
-							'data' => ''
-						];
-			echo json_encode($response);
-		}		
+		// if ($file_upload) {
+			// $file_iden 		= $this->upload->data();
+            // $nama_file_iden = $file_iden['file_name'];
+		// 	$data = [
+		// 		"intIdTrRiskContext" 			=> $this->input->post("intIdTrRiskContext"),
+		// 		"txtSourceRiskIden" 			=> $this->input->post("txtSourceRiskIden"),
+		// 		"txtRiskAnalysis" 				=> $this->input->post("txtRiskAnalysis"),
+		// 		"txtRiskType" 					=> $this->input->post("txtRiskType"),
+		// 		"txtRiskCategory" 				=> $this->input->post("txtRiskCategory"),
+		// 		"txtRiskCondition" 				=> $this->input->post("txtRiskCondition"),
+		// 		"txtRiskTreatmentCurrent" 		=> $this->input->post("txtRiskTreatmentCurrent"),
+		// 		"intConsequence" 				=> $this->input->post("intConsequence"),
+		// 		"txtRiskLevel" 					=> $this->input->post("txtRiskLevel"),
+		// 		"intLikelihood" 				=> $this->input->post("intLikelihood"),
+		// 		"bitStatusKepentingan" 			=> $this->input->post("bitStatusKepentingan"), // ini risk status sesuai bahasa di excel
+		// 		"txtRiskOwner" 					=> $this->input->post("txtRiskOwner"),
+		// 		"txtRiskTreatmentFuture" 		=> $this->input->post("txtRiskTreatmentFuture"),
+		// 		"txtRiskPriorityConsideration" 	=> $this->input->post("txtRiskPriorityConsideration"),
+		// 		"txtImprovement" 				=> $this->input->post("txtImprovement"),
+		// 		"charRiskPriority" 				=> $this->input->post("charRiskPriority"),
+		// 		"txtStatusImplementation" 		=> $this->input->post("txtStatusImplementation"),
+		// 		"intTimePlantMonth" 			=> $this->input->post("intTimePlantMonth"),
+		// 		"intTimePlantYear" 				=> $this->input->post("intTimePlantYear"),
+		// 		"bitLastStatusRiskRegister" 	=> $this->input->post("bitStatusKepentingan"),												
+		// 		"txtLastRiskLevel" 				=> $this->input->post("txtRiskLevel"),												
+		// 		"intInsertedBy" 				=> $this->session->userdata("user_id"),												
+		// 		"txtFileEvidance" 				=> $nama_file_iden,
+		// 		"dtmInsertedDate"				=> $datetime
+		// 	];
+		// 	$data = $this->risk_iden->simpan_tahapan_baru($data);
+		// 	$response = [
+		// 					'code' => 200,
+		// 					'status' => "OK",
+		// 					'msg' => 'Berhasil disimpan.',
+		// 					'data' => $data
+		// 				];
+		// 	echo json_encode($response);
+		// }
+		$data = [
+			"intIdTrRiskContext" 				=> $this->input->post("intIdTrRiskContext"),
+			"txtSourceRiskIden" 				=> $this->input->post("txtSourceRiskIden"),
+			"txtRiskAnalysis" 					=> $this->input->post("txtRiskAnalysis"),
+			"txtRiskType" 						=> $this->input->post("txtRiskType"),
+			"txtRiskCategory" 					=> $this->input->post("txtRiskCategory"),
+			"txtRiskCondition" 					=> $this->input->post("txtRiskCondition"),
+			"txtRiskTreatmentCurrent" 			=> $this->input->post("txtRiskTreatmentCurrent"),
+			"intConsequence" 					=> $this->input->post("intConsequence"),
+			"txtRiskLevel" 						=> $this->input->post("txtRiskLevel"),
+			"intLikelihood" 					=> $this->input->post("intLikelihood"),
+			"bitStatusKepentingan" 				=> $this->input->post("bitStatusKepentingan"), // ini risk status sesuai bahasa di excel
+			"txtRiskOwner" 						=> $this->input->post("txtRiskOwner"),
+			"intIdRiskAssessmentMatrix" 		=> $this->input->post("intIdRiskAssessmentMatrix"),
+			"bitLastStatusRiskRegister" 		=> $this->input->post("bitStatusKepentingan"),												
+			"txtLastRiskLevel" 					=> $this->input->post("txtRiskLevel"),												
+			"intLastIdRiskAssessmentMatrixEval"	=> $this->input->post("intLastIdRiskAssessmentMatrixEval"),		
+			"intInsertedBy" 					=> $this->session->userdata("user_id"),
+			"dtmInsertedDate"					=> $datetime
+		];
+		$data = $this->risk_iden->simpan_tahapan_baru($data);
+		$response = [
+						'code' => 200,
+						'status' => "OK",
+						'msg' => 'Berhasil disimpan.',
+						'data' => $data
+					];
+		echo json_encode($response);
 	}
 
 	public function getIdenRisk() 
@@ -139,6 +159,7 @@ class RiskIdentification extends CI_Controller
 			'txtRiskLevelEvaluation' 		=> $this->input->post('txtRiskLevel_revaluation'),
 			'bitRiskStatus' 				=> $this->input->post('bitStatusKepentingan_revaluation'),
 			'txtRiskOwner' 					=> $this->input->post('txtRiskOwner_revaluation'),
+			'intIdRiskAssessmentMatrix' 	=> $this->input->post('intIdRiskAssessmentMatrix_revaluation'),
 			'dtmInsertedDate' 				=> $date,
 			'intInsertedBy'	 				=> $this->session->userdata('user_id'),			
 		];

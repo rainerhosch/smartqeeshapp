@@ -52,17 +52,18 @@
 								</div>
 							</div>
 						</div>
-						<div class="form-group">
+						<!-- <div class="form-group">
 							<div class="row">
 								<div class="col-lg-2 col-xs-12"><label for="">Risk Treatmen (Present)</label></div>
 								<div class="col-lg-10 col-xs-12">
 									<textarea name="txtRiskTreatmentCurrent" id="txtRiskTreatmentCurrent" class="form-control" cols="30" rows="4"></textarea>
 								</div>
 							</div>
-						</div>
+						</div> -->
 						<div class="row">
 							<div class="col-lg-12">
 								<h3 class="text-center"><b>Risk Evaluation</b></h3>
+								<input type="hidden" name="intIdRiskAssessmentMatrix" id="intIdRiskAssessmentMatrix">
 								<br>
 							</div>
 						</div>
@@ -121,7 +122,7 @@
 									</div>
 								</div>
 							</div>
-						</div>
+						</div>												
 						<div class="form-group">
 							<div class="row">
 								<div class="col-lg-2 col-xs-12"><label for="">Risk Owner</label></div>
@@ -131,6 +132,24 @@
 							</div>
 						</div>
 						<div class="form-group">
+							<div class="row">
+								<div class="col-lg-12">
+									<table class="table table-bordered" id="detail_risk_level">
+										<thead>
+											<tr>
+												<th class="text-center">Tingkat Keparahan</th>
+												<th class="text-center">Sebaran Risiko</th>
+												<th class="text-center">Lama Pemulihan</th>
+												<th class="text-center">Biaya Pemulihan</th>
+												<th class="text-center">Citra Perusahaan</th>
+											</tr>
+										</thead>
+										<tbody></tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+						<!-- <div class="form-group">
 							<div class="row">
 								<div class="col-lg-2 col-xs-12"><label for="">Risk Treatment (Future)</label></div>
 								<div class="col-lg-10 col-xs-12">
@@ -222,13 +241,8 @@
 									<input type="file" class="custom-file-input" id="txtFileEvidance">
 									<label class="custom-file-label" for="txtFileEvidance">Choose file</label>									
 								</div>
-							</div>
-							<div class="row mt-2" id="v_buton_download_evidence">
-								<div class="col-lg-12 d-flex justify-content-end">
-									<a href="" class="btn btn-success" id="btn_download_evidence"><i class="fa fa-download"></i> Download Evidence</a>
-								</div>
-							</div>
-						</div>
+							</div>							
+						</div> -->
 					</div>
 				</div>
 			</div>
@@ -238,6 +252,34 @@
 						<button class="btn btn-success" id="simpan_form_risk">Save</button>
 					</div>
 				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-12" id="treatment_panel">
+		<div class="card card-primary">
+			<div class="card-header">
+				<div class="card-title">Risk Treatment Current</div>
+			</div>
+			<div class="card-body">
+				<div class="row">
+					<!-- <div class="col-lg-12">
+						<h3 class="text-center">Risk Treatment Current</h3>
+					</div> -->
+					<div class="col-lg-12 d-flex justify-content-end">
+						<button class="btn btn-info" id="add_treatement_current">Add</button>
+					</div>
+					<div class="col-lg-12">
+						<table class="table table-bordered mt-3">
+							<thead>
+								<tr>
+									<th class="text-center">No</th>
+									<th class="text-center">Risk Treatement Current</th>
+								</tr>
+							</thead>
+							<tbody id="list_treatment_current"></tbody>
+						</table>
+					</div>
+				</div>				
 			</div>
 		</div>
 	</div>
@@ -264,9 +306,46 @@
 									<th class="text-center">Risk Level</th>
 									<th class="text-center">Risk Status</th>
 									<th class="text-center">Risk Owner</th>
+									<th class="text-center">Tingkat Keparahan</th>
+									<th class="text-center">Sebaran Risiko</th>
+									<th class="text-center">Lama Pemulihan</th>
+									<th class="text-center">Biaya Pemulihan</th>
+									<th class="text-center">Citra Perusahaan</th>
 								</tr>
 							</thead>
 							<tbody></tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-12" id="treatment_panel_future">
+		<div class="card card-primary">
+			<div class="card-header">
+				<div class="card-title">Risk Treatment Future</div>
+			</div>
+			<div class="card-body">				
+				<div class="row">
+					<!-- <div class="col-lg-12">
+						<h3 class="text-center">Risk Treatment Future</h3>
+					</div> -->
+					<div class="col-lg-12 d-flex justify-content-end">
+						<button class="btn btn-info" id="add_treatement_future">Add</button>
+					</div>
+					<div class="col-lg-12">
+						<table class="table table-bordered mt-3">
+							<thead>
+								<tr>
+									<th class="text-center">No</th>
+									<th class="text-center">Risk Treatement Future</th>
+									<th class="text-center">Improvement Opurtunity / Strategic Initiative</th>
+									<th class="text-center">Priority</th>
+									<th class="text-center">Status Implementation</th>
+									<th class="text-center">Time Plan</th>
+								</tr>
+							</thead>
+							<tbody id="list_treatment_current"></tbody>
 						</table>
 					</div>
 				</div>

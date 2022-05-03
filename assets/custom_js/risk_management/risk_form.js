@@ -28,6 +28,15 @@ $("#intConsequence, #intLikelihood").on('change', async function (e) {
 			$("#bitStatusKepentingan").val(data.intIsAcceptable);
 			$("#txtRiskLevel").val(data.txtRiskMatrix);
 			$("#txtRiskOwner").val(data.txtRiskOwner);
+			$("#intIdRiskAssessmentMatrix").val(data.intIdRiskAssessmentMatrix);
+			let render_detail_risk_level = `<tr>`
+			render_detail_risk_level += `<td class="text-center">${data.txtTingkatKeparahan}</td>`
+			render_detail_risk_level += `<td class="text-center">${data.txtSebaranResiko}</td>`
+			render_detail_risk_level += `<td class="text-center">${data.txtLamaPemulihan}</td>`
+			render_detail_risk_level += `<td class="text-center">${data.txtBiayaPemulihan}</td>`
+			render_detail_risk_level += `<td class="text-center">${data.txtCitraPerusahaan}</td>`
+			render_detail_risk_level += `</tr>`
+			$("#detail_risk_level>tbody").html(render_detail_risk_level);
 		}
 	}
 });
@@ -42,6 +51,15 @@ $("#intConsequence_revaluation, #intLikelihood_revaluation").on('change', async 
 			$("#bitStatusKepentingan_revaluation").val(data.intIsAcceptable);
 			$("#txtRiskLevel_revaluation").val(data.txtRiskMatrix);
 			$("#txtRiskOwner_revaluation").val(data.txtRiskOwner);
+			$("#intIdRiskAssessmentMatrix_revaluation").val(data.intIdRiskAssessmentMatrix);
+			let render_detail_risk_level = `<tr>`
+			render_detail_risk_level += `<td class="text-center">${data.txtTingkatKeparahan}</td>`
+			render_detail_risk_level += `<td class="text-center">${data.txtSebaranResiko}</td>`
+			render_detail_risk_level += `<td class="text-center">${data.txtLamaPemulihan}</td>`
+			render_detail_risk_level += `<td class="text-center">${data.txtBiayaPemulihan}</td>`
+			render_detail_risk_level += `<td class="text-center">${data.txtCitraPerusahaan}</td>`
+			render_detail_risk_level += `</tr>`
+			$("#detail_risk_level_revaluation>tbody").html(render_detail_risk_level);
 		}
 	}
 });
@@ -58,7 +76,6 @@ $("#simpan_form_risk").on('click', async function (e) {
 	e.preventDefault()	
 
 	let formData = new FormData();
-	let file_evidence = $("#txtFileEvidance")[0].files
 
 	let intIdTrRiskContext 				= $("#intIdTrRiskContext").val();
 	let txtSourceRiskIden 				= $("#txtSourceRiskIden").val();
@@ -66,20 +83,12 @@ $("#simpan_form_risk").on('click', async function (e) {
 	let txtRiskType 					= $("#txtRiskType").val();
 	let txtRiskCategory 				= $("#txtRiskCategory").val();
 	let txtRiskCondition 				= $("#txtRiskCondition").val();
-	let txtRiskTreatmentCurrent 		= $("#txtRiskTreatmentCurrent").val();
 	let intConsequence 					= $("#intConsequence").val();
 	let txtRiskLevel 					= $("#txtRiskLevel").val();
 	let intLikelihood 					= $("#intLikelihood").val();
 	let bitStatusKepentingan 			= $("#bitStatusKepentingan").val(); // ini risk status sesuai bahasa di excel
 	let txtRiskOwner 					= $("#txtRiskOwner").val();
-	let txtRiskTreatmentFuture 			= $("#txtRiskTreatmentFuture").val();
-	let txtRiskPriorityConsideration 	= $("#txtRiskPriorityConsideration").val();
-	let txtImprovement 					= $("#txtImprovement").val();
-	let charRiskPriority 				= $("#charRiskPriority").val();
-	let txtStatusImplementation 		= $("#txtStatusImplementation").val();
-	let intTimePlantMonth 				= $("#intTimePlantMonth").val();
-	let intTimePlantYear 				= $("#intTimePlantYear").val();
-	let txtFileEvidance 				= file_evidence[0]
+	let intIdRiskAssessmentMatrix 		= $("#intIdRiskAssessmentMatrix").val();	
 	//isi fiel form data
 	formData.append('intIdTrRiskContext', intIdTrRiskContext)
 	formData.append('txtSourceRiskIden', txtSourceRiskIden)
@@ -93,14 +102,7 @@ $("#simpan_form_risk").on('click', async function (e) {
 	formData.append('intLikelihood', intLikelihood)
 	formData.append('txtRiskOwner', txtRiskOwner)
 	formData.append('bitStatusKepentingan', bitStatusKepentingan)
-	formData.append('txtRiskTreatmentFuture', txtRiskTreatmentFuture)
-	formData.append('txtRiskPriorityConsideration', txtRiskPriorityConsideration)
-	formData.append('txtImprovement', txtImprovement)
-	formData.append('charRiskPriority', charRiskPriority)
-	formData.append('txtStatusImplementation', txtStatusImplementation)
-	formData.append('intTimePlantMonth', intTimePlantMonth)
-	formData.append('intTimePlantYear', intTimePlantYear)
-	formData.append('txtFileEvidance', txtFileEvidance)	
+	formData.append('intIdRiskAssessmentMatrix', intIdRiskAssessmentMatrix)	
 
 	$.ajax({
 		type: "post",
@@ -168,6 +170,11 @@ async function renderTable()
 						body_table += `<td class="text-center"><p class="badge badge-danger">NOT ACCEPT</p></td>`						
 					}					
 					body_table += `<td class="text-center">${item.txtRiskOwner}</td>`
+					body_table += `<td class="text-center">${item.txtTingkatKeparahan}</td>`
+					body_table += `<td class="text-center">${item.txtSebaranResiko}</td>`
+					body_table += `<td class="text-center">${item.txtLamaPemulihan}</td>`
+					body_table += `<td class="text-center">${item.txtBiayaPemulihan}</td>`
+					body_table += `<td class="text-center">${item.txtCitraPerusahaan}</td>`
 					body_table += `</tr>`
 				});				
 			}
@@ -194,6 +201,7 @@ $("#tombol_simpan_revaluation_risk").on('click', function (e) {
 		intLikelihood_revaluation: $("#intLikelihood_revaluation").val(),
 		bitStatusKepentingan_revaluation: $("#bitStatusKepentingan_revaluation").val(),
 		txtRiskOwner_revaluation: $("#txtRiskOwner_revaluation").val(),
+		intIdRiskAssessmentMatrix_revaluation: $("#intIdRiskAssessmentMatrix_revaluation").val(),
 		intIdRiskSourceIdentification: intIdRiskSourceIdentification
 	}
 	
@@ -219,7 +227,7 @@ $("#tombol_simpan_revaluation_risk").on('click', function (e) {
 
 
 //Tombol detail di list risk identifiaction
-$(document).on('click', '#tombol_detail_risk_iden', function (e) {
+$(document).on('click', '#tombol_detail_risk_iden', async function (e) {
 	e.preventDefault()
 	clsGlobal.showPreloader()
 	
@@ -227,11 +235,11 @@ $(document).on('click', '#tombol_detail_risk_iden', function (e) {
 	$("#intIdRiskSourceIdentification").val(intIdRiskSourceIdentification);
 	
 	clear_input()
-	iniate_form_risk()
+	await iniate_form_risk()
 	showFormRisk()
 	disableFieldForm()
 
-	$.ajax({
+	await $.ajax({
 		type: "get",
 		url: `${url}risk_register/RiskIdentification/getIdenRisk`,
 		data: {intIdRiskSourceIdentification: intIdRiskSourceIdentification},
@@ -248,22 +256,32 @@ $(document).on('click', '#tombol_detail_risk_iden', function (e) {
 			}
 			$("#txtSourceRiskIden").val(data.txtSourceRiskIden)
 			$("#txtRiskAnalysis").val(data.txtRiskAnalysis)
-			$("#txtRiskType").val(data.txtRiskType)
+			$("#txtRiskType").val(data.txtRiskType)			
 			$("#txtRiskCategory").val(data.txtRiskCategory)
 			$("#txtRiskCondition").val(data.txtRiskCondition)
-			$("#txtRiskTreatmentCurrent").summernote('code', data.txtRiskTreatmentCurrent)
+			// $("#txtRiskTreatmentCurrent").summernote('code', data.txtRiskTreatmentCurrent)
 			$("#intConsequence").val(data.intConsequence)
 			$("#txtRiskLevel").val(data.txtRiskLevel)
 			$("#intLikelihood").val(data.intLikelihood)
 			$("#bitStatusKepentingan").val(data.bitStatusKepentingan) // ini risk status sesuai bahasa di excel
 			$("#txtRiskOwner").val(data.txtRiskOwner)
-			$("#txtRiskTreatmentFuture").summernote('code', data.txtRiskTreatmentFuture)
-			$("#txtRiskPriorityConsideration").val(data.txtRiskPriorityConsideration)
-			$("#txtImprovement").val(data.txtImprovement)
-			$("#charRiskPriority").val(data.charRiskPriority)
-			$("#txtStatusImplementation").val(data.txtStatusImplementation)
-			$("#intTimePlantMonth").val(data.intTimePlantMonth)
-			$("#intTimePlantYear").val(data.intTimePlantYear)
+
+			let render_detail_risk_level = `<tr>`
+			render_detail_risk_level += `<td class="text-center">${data.txtTingkatKeparahan}</td>`
+			render_detail_risk_level += `<td class="text-center">${data.txtSebaranResiko}</td>`
+			render_detail_risk_level += `<td class="text-center">${data.txtLamaPemulihan}</td>`
+			render_detail_risk_level += `<td class="text-center">${data.txtBiayaPemulihan}</td>`
+			render_detail_risk_level += `<td class="text-center">${data.txtCitraPerusahaan}</td>`
+			render_detail_risk_level += `</tr>`
+
+			$("#detail_risk_level>tbody").html(render_detail_risk_level);			
+			// $("#txtRiskTreatmentFuture").summernote('code', data.txtRiskTreatmentFuture)
+			// $("#txtRiskPriorityConsideration").val(data.txtRiskPriorityConsideration)
+			// $("#txtImprovement").val(data.txtImprovement)
+			// $("#charRiskPriority").val(data.charRiskPriority)
+			// $("#txtStatusImplementation").val(data.txtStatusImplementation)
+			// $("#intTimePlantMonth").val(data.intTimePlantMonth)
+			// $("#intTimePlantYear").val(data.intTimePlantYear)
 		},
 		error: () => {
 			return

@@ -105,14 +105,9 @@ function clear_input() {
 	$("#txtRiskType").val("");
 	$("#txtRiskOwner").val("");
 	$("#bitStatusKepentingan").val("");
-	$("#txtRiskLevel").val("");
-	$("#txtRiskTreatmentFuture").val("");
-	$("#txtRiskTreatmentCurrent").val("");
-	$("#txtImprovement").val("");
-	$("#txtFileEvidance").val(null);
-	$("#txtRiskPriorityConsideration").val("");
-	$("#charRiskPriority").val("");
-	$("#txtStatusImplementation").val("");
+	$("#txtRiskLevel").val("");	
+	$("#intIdRiskAssessmentMatrix").val("");
+	$("#detail_risk_level>tbody").html("");
 }
 
 function disableFieldForm() {
@@ -125,39 +120,17 @@ function disableFieldForm() {
 	$("#intConsequence").attr('disabled', 'true')
 	$("#txtRiskLevel").attr('disabled', 'true')
 	$("#intLikelihood").attr('disabled', 'true')
-	$("#bitStatusKepentingan").attr('disabled', 'true') // ini risk status sesuai bahasa di excel
-	$("#txtRiskOwner").attr('disable', 'true')
-	$("#txtRiskTreatmentFuture").summernote('disable')
-	$("#txtRiskPriorityConsideration").attr('disabled', 'true')
-	$("#txtImprovement").attr('disabled', 'true')
-	$("#charRiskPriority").attr('disabled', 'true')
-	$("#txtStatusImplementation").attr('disabled', 'true')
-	$("#intTimePlantMonth").attr('disabled', 'true')
-	$("#intTimePlantYear").attr('disabled', 'true')
-	$("#txtFileEvidance").attr('disabled', 'true')
-	$("#simpan_form_risk").attr('disabled', '')
+	$("#simpan_form_risk").attr('disabled', 'true')
 }
 
 function enableFieldForm() {
-	$("#txtSourceRiskIden").removeAttr('disable')
-	$("#txtRiskAnalysis").removeAttr('disable')
-	$("#txtRiskType").removeAttr('disable')
-	$("#txtRiskCategory").removeAttr('disable')
-	$("#txtRiskCondition").removeAttr('disable', 'true')
-	$("#txtRiskTreatmentCurrent").summernote('enable')
-	$("#intConsequence").removeAttr('disable')
-	$("#txtRiskLevel").removeAttr('disable')
-	$("#intLikelihood").removeAttr('disable')
-	$("#bitStatusKepentingan").removeAttr('disable') // ini risk status sesuai bahasa di excel
-	$("#txtRiskOwner").removeAttr('disable')
-	$("#txtRiskTreatmentFuture").summernote('enable')
-	$("#txtRiskPriorityConsideration").removeAttr('disable')
-	$("#txtImprovement").removeAttr('disable')
-	$("#charRiskPriority").removeAttr('disable')
-	$("#txtStatusImplementation").removeAttr('disable')
-	$("#intTimePlantMonth").removeAttr('disable')
-	$("#intTimePlantYear").removeAttr('disable')
-	$("#txtFileEvidance").removeAttr('disable')
+	$("#txtSourceRiskIden").removeAttr('disabled')
+	$("#txtRiskAnalysis").removeAttr('disabled')
+	$("#txtRiskType").removeAttr('disabled')
+	$("#txtRiskCategory").removeAttr('disabled')
+	$("#txtRiskCondition").removeAttr('disabled')	
+	$("#intConsequence").removeAttr('disabled')	
+	$("#intLikelihood").removeAttr('disabled')
 	$("#simpan_form_risk").removeAttr('disabled')
 }
 
@@ -207,7 +180,7 @@ async function iniate_form_risk() {
 				option_risk_consequence += `<option value="${item.intTingkatKlasifikasi}">${item.txtNamaTingkatKlasifikasi}</option>`
 			});
 
-			$("#intConsequence, #intConsequence_revaluation").html(option_risk_consequence);
+			$("#intConsequence, #intConsequence_revaluation").html(option_risk_consequence);			
 		}
 	});
 }

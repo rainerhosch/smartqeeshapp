@@ -22,9 +22,8 @@ class M_tahapan_proses_risk extends CI_Model
 		$this->db->from($this->table);
 		$this->db->join('mTahapanProses', 'trTahapanProsesRisk.intIdTahapanProses = mTahapanProses.intIdTahapanProses', 'right');
 		$this->db->join('mActivity', 'mTahapanProses.intIdActivty = mActivity.intIdActivity');
-		$this->db->where([
-			'mActivity.intIdDepartement' => $this->session->userdata('id_departemen'),
-			'mTahapanProses.intIdActivty' => $intIdActivity
+		$this->db->where([			
+			'mActivity.intIdActivity' => $intIdActivity
 		]);
 		// var_dump($this->db->last_query());exit;
 		$i = 0;
@@ -96,8 +95,7 @@ class M_tahapan_proses_risk extends CI_Model
 		$this->db->join('mTahapanProses', 'mTahapanProses.intIdTahapanProses = trTahapanProsesRisk.intIdTahapanProses', 'right');
 		$this->db->join('mActivity', 'mTahapanProses.intIdActivty = mActivity.intIdActivity');
 		$this->db->where([
-			'mActivity.intIdDepartement' 	=> $this->session->userdata('id_departemen'),
-			'mTahapanProses.intIdActivty' 	=> $intIdActivity
+			'mActivity.intIdActivity' => $intIdActivity
 		]);
 		return $this->db->count_all_results();
 	}

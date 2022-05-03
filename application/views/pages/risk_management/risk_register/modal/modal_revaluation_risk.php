@@ -8,6 +8,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
+				<input type="hidden" name="intIdRiskAssessmentMatrix_revaluation" id="intIdRiskAssessmentMatrix_revaluation">
 				<div class="form-group">
 					<div class="row">
 						<div class="col-lg-2 col-xs-12"><label for="">Consequences</label></div>
@@ -69,6 +70,24 @@
 						<div class="col-lg-2 col-xs-12"><label for="">Risk Owner</label></div>
 						<div class="col-lg-10 col-xs-12">
 							<input type="text" name="txtRiskOwner_revaluation" id="txtRiskOwner_revaluation" class="form-control" disabled>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="row">
+						<div class="col-lg-12">
+							<table class="table table-bordered" id="detail_risk_level_revaluation">
+								<thead>
+									<tr>
+										<th class="text-center">Tingkat Keparahan</th>
+										<th class="text-center">Sebaran Risiko</th>
+										<th class="text-center">Lama Pemulihan</th>
+										<th class="text-center">Biaya Pemulihan</th>
+										<th class="text-center">Citra Perusahaan</th>
+									</tr>
+								</thead>
+								<tbody></tbody>
+							</table>
 						</div>
 					</div>
 				</div>
