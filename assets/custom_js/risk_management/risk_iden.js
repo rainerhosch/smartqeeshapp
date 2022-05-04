@@ -1,17 +1,17 @@
 $(document).ready(function () {
 	p_InitiateDataListIden();
-	$('#txtRiskTreatmentFuture, #txtRiskTreatmentCurrent').summernote({
-		height: 150,
-		toolbar: [
-			['style', ['style']],
-			['font', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
-			['fontname', ['fontname']],
-			['fontsize', ['fontsize']],
-			['color', ['color']],
-			['para', ['ol', 'ul', 'paragraph', 'height']],
-			['view', ['undo', 'redo', 'fullscreen', 'codeview', 'help']]
-		]
-	})
+	// $('#txtRiskTreatmentFuture, #txtRiskTreatmentCurrent').summernote({
+	// 	height: 150,
+	// 	toolbar: [
+	// 		['style', ['style']],
+	// 		['font', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
+	// 		['fontname', ['fontname']],
+	// 		['fontsize', ['fontsize']],
+	// 		['color', ['color']],
+	// 		['para', ['ol', 'ul', 'paragraph', 'height']],
+	// 		['view', ['undo', 'redo', 'fullscreen', 'codeview', 'help']]
+	// 	]
+	// })
 });
 
 function p_InitiateDataListIden() {
@@ -80,12 +80,7 @@ function p_InitiateDataListIden() {
 					}
 				},
 				className: 'text-center'
-			},
-			{
-				"data": "txtStatusImplementation",
-				"name": "txtStatusImplementation",
-				className: 'text-center'
-			},
+			},			
 			{
 				render: function (data, type, full, meta) {
 					return `<a class="btn btn-primary" data-id="${full.intIdRiskSourceIdentification}" data-nama="${full.txtSourceRiskIden}" id="tombol_detail_risk_iden"><i class="fa fa-eye"></i></a>`
@@ -116,7 +111,7 @@ function disableFieldForm() {
 	$("#txtRiskType").attr('disabled', 'true')
 	$("#txtRiskCategory").attr('disabled', 'true')
 	$("#txtRiskCondition").attr('disabled', 'true')
-	$("#txtRiskTreatmentCurrent").summernote('disable')
+	// $("#txtRiskTreatmentCurrent").summernote('disable')
 	$("#intConsequence").attr('disabled', 'true')
 	$("#txtRiskLevel").attr('disabled', 'true')
 	$("#intLikelihood").attr('disabled', 'true')
@@ -204,7 +199,7 @@ function showFormRisk() {
 	$("#show_activity_current, #show_tahapan_current, #show_context_current").css({
 		'display': 'inline'
 	});
-	$("#data_tahapan, #data_act, #data_context, #data_risk_iden, #data_revaluation").css({
+	$("#data_tahapan, #data_act, #data_context, #data_risk_iden, #data_revaluation, #treatment_panel_future, #treatment_current_panel").css({
 		'display': 'none'
 	});
 	$("#form_risk_iden").css({

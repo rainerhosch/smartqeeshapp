@@ -173,6 +173,8 @@
 <?php $this->load->view('pages/risk_management/risk_register/modal/modal_add_tahapan'); ?>
 <?php $this->load->view('pages/risk_management/risk_register/modal/modal_add_context'); ?>
 <?php $this->load->view('pages/risk_management/risk_register/modal/modal_revaluation_risk'); ?>
+<?php $this->load->view('pages/risk_management/risk_register/modal/modal_risk_treatment_current'); ?>
+<?php $this->load->view('pages/risk_management/risk_register/modal/modal_risk_treatment_future'); ?>
 
 <script src="<?= base_url('assets/templates') ?>/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="<?= base_url('assets/templates') ?>/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>

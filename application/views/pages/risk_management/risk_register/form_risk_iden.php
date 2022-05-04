@@ -255,7 +255,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-lg-12" id="treatment_panel">
+	<div class="col-lg-12" id="treatment_current_panel">
 		<div class="card card-primary">
 			<div class="card-header">
 				<div class="card-title">Risk Treatment Current</div>
@@ -266,7 +266,7 @@
 						<h3 class="text-center">Risk Treatment Current</h3>
 					</div> -->
 					<div class="col-lg-12 d-flex justify-content-end">
-						<button class="btn btn-info" id="add_treatement_current">Add</button>
+						<button class="btn btn-info" id="add_treatement_current" data-toggle="modal" data-target="#modal-risk_current">Add</button>
 					</div>
 					<div class="col-lg-12">
 						<table class="table table-bordered mt-3">
@@ -331,7 +331,7 @@
 						<h3 class="text-center">Risk Treatment Future</h3>
 					</div> -->
 					<div class="col-lg-12 d-flex justify-content-end">
-						<button class="btn btn-info" id="add_treatement_future">Add</button>
+						<button class="btn btn-info" id="add_treatement_future" data-toggle="modal" data-target="#modal-risk_future">Add</button>
 					</div>
 					<div class="col-lg-12">
 						<table class="table table-bordered mt-3">

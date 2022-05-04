@@ -18,11 +18,12 @@ class RiskIdentification extends CI_Controller
         login_check();
         $this->load->model('/RiskRegister/M_risk_identification', 'risk_iden');
         $this->load->model('/RiskRegister/M_revaluation_risk', 'risk_revaluation');
+        $this->load->model('/RiskRegister/M_risk_treatment_current', 'risk_treatment_current');
 		$this->load->model('M_risk_condition', 'risk_condition');
 		$this->load->model('M_risk_category', 'risk_category');
 		$this->load->model('M_risk_type', 'risk_type');
 		$this->load->model('M_likelihood', 'likelihood');
-		$this->load->model("Manajemen/M_RiskConsequence", "riskconsequence");		
+		$this->load->model("Manajemen/M_RiskConsequence", "riskconsequence");
     }
 
 	public function upload_config_iden($imgpath, $filetype)
@@ -124,7 +125,9 @@ class RiskIdentification extends CI_Controller
 		$where = [
 			'intIdRiskSourceIdentification' => $this->input->get('intIdRiskSourceIdentification')
 		];
-		$data = $this->risk_iden->getById($where)->row();
+		$data 						= $this->risk_iden->getById($where)->row();
+		$data->treatment_current 	= $this->risk_treatment_current->getData ($where)->result();
+		$data->treatment_future 	= null;
 		$response = [
 						'code' => 200,
 						'status' => 'OK',
@@ -181,6 +184,26 @@ class RiskIdentification extends CI_Controller
 		$data['likelihood'] 		= $this->likelihood->get()->result_array();
 		$data['consequence'] 		= $this->riskconsequence->getsRiskConsequenceActive();
 		$response = [
+						'code' => 200,
+						'status' => 'OK',
+						'msg' => '-',
+						'data' => $data
+					];
+		echo json_encode($response);
+	}
+
+	public function simpan_treatment_current ()
+	{		
+		$data = [
+			'intIdRiskSourceIdentification' => $this->input->post('intIdRiskSourceIdentification'),
+			'txtRiskTreatmentCurrent' 		=> $this->input->post('txtRiskTreatmentCurrent'),
+			'bitActive' 					=> 1		
+		];
+		$this->risk_treatment_current->simpan($data);
+		$data 		= $this->risk_treatment_current->getData([
+				'intIdRiskSourceIdentification' => $data["intIdRiskSourceIdentification"]
+		])->result();
+		$response 	= [
 						'code' => 200,
 						'status' => 'OK',
 						'msg' => '-',
