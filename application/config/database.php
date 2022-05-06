@@ -4,7 +4,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 $active_group = 'development';
 $query_builder = TRUE;
 
-$db['default'] = array(
+$db['live'] = array(
 	'dsn'	=> '',
 	'hostname' => '45.130.230.220',
 	'username' => 'u1121502_smarqeesh_dev',
