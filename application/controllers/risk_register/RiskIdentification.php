@@ -190,8 +190,8 @@ class RiskIdentification extends CI_Controller
 			$file_iden 					= $this->upload->data();
 			$nama_file_iden 			= $file_iden['file_name'];
 			$data["txtFileEvidance"] 	= $nama_file_iden;
-			$data_insert_risk_future = $this->risk_treatment_current->simpan($data)->row();
-			if (!empty($risk_consideration)) {
+			$data_insert_risk_future = $this->risk_treatment_future->simpan($data)->row();			
+			if (!empty($risk_consideration) && $data_insert_risk_future != null) {
 				$data_consideration = [
 					'data_insert_risk_future' => $data_insert_risk_future,
 					'data_risk_consideration' => $risk_consideration
@@ -199,9 +199,8 @@ class RiskIdentification extends CI_Controller
 				$this->risk_consideration->simpan($data_consideration);
 			}
 		} else {
-			$this->risk_treatment_current->simpan($data);
-			$data_insert_risk_future = $this->risk_treatment_current->simpan($data)->row();
-			if (!empty($risk_consideration)) {
+			$data_insert_risk_future = $this->risk_treatment_future->simpan($data)->row();
+			if (!empty($risk_consideration) && $data_insert_risk_future != null) {
 				$data_consideration = [
 					'data_insert_risk_future' => $data_insert_risk_future,
 					'data_risk_consideration' => $risk_consideration
@@ -227,7 +226,7 @@ class RiskIdentification extends CI_Controller
 			'intIdTrRiskTreatmentFuture' => $this->input->get('id')			
 		];
 		$data["risk_future"] 		= $this->risk_treatment_future->getData ($where)->row();
-		$data["risk_consideration"] = $this->risk_consideration->getData ($where)->row();
+		$data["risk_consideration"] = $this->risk_consideration->getData ($where)->result();
 		$response 	= [
 			'code' => 200,
 			'status' => 'OK',

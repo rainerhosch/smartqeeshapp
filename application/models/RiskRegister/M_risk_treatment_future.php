@@ -21,7 +21,7 @@ class M_risk_treatment_future extends CI_Model {
     }
 
 	public function getLastData($where) {
-		$this->db->order_by('intIdTrRiskConsideration', 'desc');
+		$this->db->order_by('intIdTrRiskTreatmentFuture', 'desc');
 		return $this->db->get_where($this->table, $where);		
 	}
 

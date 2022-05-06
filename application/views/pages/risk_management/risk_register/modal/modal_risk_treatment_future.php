@@ -11,7 +11,7 @@
 				<div class="modal-body">
 					<div class="form-group">
 						<label for="">Risk Treatment Future</label>
-						<input type="text" id="txtRiskTreatmentFuture" class="form-control" autocomplete="false" />
+						<input type="text" id="txtRiskTreatmentFuture" name="txtRiskTreatmentFuture" class="form-control" autocomplete="false" />
 					</div>
 					<p><b>Risk Priority Consideration</b></p>
 					<div class="form-group" id="checkbox_consideration">

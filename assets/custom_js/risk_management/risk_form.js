@@ -15,6 +15,7 @@ function renderListTreatmentFuture(data) {
 		htmlString += `<tr>`
 		htmlString += `<td class="text-center">${(i+1)}</td>`
 		htmlString += `<td class="text-center">${item.txtRiskTreatmentFuture}</td>`
+		htmlString += `<td class="text-center">${item.txtImprovement}</td>`
 		htmlString += `<td class="text-center">${convertRiskPriority(item.charRiskPriority)}</td>`
 		htmlString += `<td class="text-center">${item.txtStatusImplementation}</td>`
 		htmlString += `<td class="text-center">${item.intTimePlantMonth} / ${item.intTimePlantYear}</td>`
@@ -419,11 +420,11 @@ $("#add_treatement_future").on('click', function (e) {
 
 function convertRiskPriority(riskPriority) {
 	switch (riskPriority) {
-		case 1:
+		case "1":
 			return 'Urgent';
-		case 2:
+		case "2":
 			return 'Medium';
-		case 3:
+		case "3":
 			return 'Low';
 		default:
 			return 'Undefiened'
@@ -454,16 +455,16 @@ $("#form_data_risk_future").on('submit', function (e) {
 	clsGlobal.hidePreloader()
 });
 
-$(document).on('click', '#buton_detail_future', function (e) {
+$(document).on('click', '#buton_detail_future', async function (e) {
 	e.preventDefault()
 	clsGlobal.showPreloader()
 	let data = {
 		id: $(this).data('id')
 	}
-	$.ajax({
+	await $.ajax({
 		type: "get",
 		url: `${url}risk_register/RiskIdentification/getTreatmentFuture`,
-		data: id,
+		data: data,
 		dataType: "json",
 		success: function (response) {
 			let risk_future 		= response.data.risk_future
@@ -474,9 +475,11 @@ $(document).on('click', '#buton_detail_future', function (e) {
 				$("#v_txtImprovement").html(risk_future.txtImprovement);
 				$("#v_charRiskPriority").html(convertRiskPriority(risk_future.charRiskPriority));
 				$("#v_txtStatusImplementation").html(risk_future.txtStatusImplementation);
-				$("#v_timeplan").html(risk_future.intTimePlantMonth + " / " + intTimePlantYear);
-				if (risk_future.txtFileEvidence != null) {
-					$("#file_evidence").html(`<a class="btn btn-info" target="_blank" href="${url}upload_file/evidence_risk_register/${risk_future.txtFileEvidance}"><i class="fa fa-download"/></a>`);
+				$("#v_timeplan").html(risk_future.intTimePlantMonth + " / " + risk_future.intTimePlantYear);
+				if (risk_future.txtFileEvidance != null) {
+					$("#file_evidence").html(`<a class="btn btn-info" target="_blank" href="${url}upload_file/evidence_risk_register/${risk_future.txtFileEvidance}"><i class="fa fa-download"/> Download Evidence</a>`);
+				} else {
+					$("#file_evidence").html(`<a class="btn btn-info" onclick="alert('File not uploaded")"><i class="fa fa-download"/></a>`);
 				}
 			}
 
@@ -493,5 +496,5 @@ $(document).on('click', '#buton_detail_future', function (e) {
 
 		}
 	});
-	clsGlobal.hidePreloader()
+	await clsGlobal.hidePreloader()
 });

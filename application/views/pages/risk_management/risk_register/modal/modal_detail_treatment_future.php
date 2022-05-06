@@ -2,7 +2,7 @@
 	<div class="modal-dialog modal-xl">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title">Add Risk Treatment Curren</h4>
+				<h4 class="modal-title">Detail Risk Treatment Future</h4>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -27,9 +27,9 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-lg-12">FIle Evidence</div>
-					<div class="col-lg-12" id="file_evidence">
-
+					<div class="col-lg-12"><b>FIle Evidence</b></div>
+					<div class="col-lg-12">
+						<div id="file_evidence"></div>
 					</div>
 				</div>
 			</div>

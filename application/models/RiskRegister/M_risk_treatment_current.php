@@ -16,7 +16,7 @@ class M_risk_treatment_current extends CI_Model {
 
     public function simpan($data)
     {
-        $this->db->insert($this->table, $data);		
+        $this->db->insert($this->table, $data);	
     }
 
 	public function getData ($where)
