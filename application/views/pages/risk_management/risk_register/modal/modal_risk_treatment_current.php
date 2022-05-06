@@ -2,7 +2,7 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title">Tambah Risk Treatment Curren</h4>
+				<h4 class="modal-title">Add Risk Treatment Curren</h4>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="button_close_risk_current">
 					<span aria-hidden="true">&times;</span>
 				</button>

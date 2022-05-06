@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 /**
- *  File Name             : M_risk_type.php
+ *  File Name             : M_risk_treatment_future.php
  *  File Type             : Model
  *  File Package          : CI_Models
  ** * * * * * * * * * * * * * * * * * **
@@ -10,14 +10,20 @@ defined('BASEPATH') or exit('No direct script access allowed');
  *  Quots of the code     :
  */ 
 
-class M_risk_treatment_current extends CI_Model {
+class M_risk_treatment_future extends CI_Model {
 
-    var $table = 'trRiskTreatmentCurrent'; //nama tabel dari database
+    var $table = 'trRiskTreatmentFuture'; //nama tabel dari database    
 
     public function simpan($data)
     {
-        $this->db->insert($this->table, $data);		
+        $this->db->insert($this->table, $data);
+		return $this->getLastData($data);
     }
+
+	public function getLastData($where) {
+		$this->db->order_by('intIdTrRiskConsideration', 'desc');
+		return $this->db->get_where($this->table, $where);		
+	}
 
 	public function getData ($where)
 	{

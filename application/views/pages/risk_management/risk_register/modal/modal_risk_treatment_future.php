@@ -3,7 +3,7 @@
 		<div class="modal-dialog modal-xl">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title">Tambah Risk Treatment Current</h4>
+					<h4 class="modal-title">Add Risk Treatment Future</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="button_close_risk_future">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -11,25 +11,34 @@
 				<div class="modal-body">
 					<div class="form-group">
 						<label for="">Risk Treatment Future</label>
-						<input type="text" id="txtRiskTreatmentCurrent" class="form-control" autocomplete="false" />
+						<input type="text" id="txtRiskTreatmentFuture" class="form-control" autocomplete="false" />
 					</div>
-					<div class="form-group" class="checkbox_consideration">
-						<label for="">Risk Priority Consideration</label>
-						<br>
-						<input type="checkbox" value="Regulation Compliance" name="txtRiskPriorityConsideration[]" id="txtRiskPriorityConsideration">
-						<label for="">Regulation Compliance</label>
-						<br>
-						<input type="checkbox" value="The availability of technology options" name="txtRiskPriorityConsideration[]" id="txtRiskPriorityConsideration">
-						<label for="">The availability of technology options</label>
-						<br>
-						<input type="checkbox" value="Consideration of financial capability" name="txtRiskPriorityConsideration[]" id="txtRiskPriorityConsideration">
-						<label for="">Consideration of financial capability</label>
-						<br>
-						<input type="checkbox" value="Requirements for business interests" name="txtRiskPriorityConsideration[]" id="txtRiskPriorityConsideration">
-						<label for="">Requirements for business interests</label>
-						<br>
-						<input type="checkbox" value="Consideration of related parties" name="txtRiskPriorityConsideration[]" id="txtRiskPriorityConsideration">
-						<label for="">Consideration of related parties</label>
+					<p><b>Risk Priority Consideration</b></p>
+					<div class="form-group" id="checkbox_consideration">
+						<div class="form-check" style="display: none;">
+							<input class="form-check-input" type="checkbox" value="Regulation Compliance" name="txtRiskPriorityConsideration[]" id="txtRiskPriorityConsideration">
+							<label class="form-check-label" for="">Regulation Compliance</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="Regulation Compliance" name="txtRiskPriorityConsideration[]" id="txtRiskPriorityConsideration">
+							<label class="form-check-label" for="">Regulation Compliance</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="The availability of technology options" name="txtRiskPriorityConsideration[]" id="txtRiskPriorityConsideration">
+							<label class="form-check-label" for="">The availability of technology options</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="Consideration of financial capability" name="txtRiskPriorityConsideration[]" id="txtRiskPriorityConsideration">
+							<label class="form-check-label" for="">Consideration of financial capability</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="Requirements for business interests" name="txtRiskPriorityConsideration[]" id="txtRiskPriorityConsideration">
+							<label class="form-check-label" for="">Requirements for business interests</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="Consideration of related parties" name="txtRiskPriorityConsideration[]" id="txtRiskPriorityConsideration">
+							<label class="form-check-label" for="">Consideration of related parties</label>
+						</div>						
 					</div>
 					<div class="form-group">
 						<div class="row">
@@ -97,7 +106,7 @@
 						<label for="exampleInputFile">Evidence</label>
 						<div class="input-group">
 							<div class="custom-file">
-								<input type="file" class="custom-file-input" id="txtFileEvidance">
+								<input type="file" name="txtFileEvidance" id="txtFileEvidance">
 								<label class="custom-file-label" for="txtFileEvidance">Choose file</label>
 							</div>
 						</div>

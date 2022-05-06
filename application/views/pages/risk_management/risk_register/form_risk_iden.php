@@ -343,9 +343,10 @@
 									<th class="text-center">Priority</th>
 									<th class="text-center">Status Implementation</th>
 									<th class="text-center">Time Plan</th>
+									<th class="text-center">Option</th>
 								</tr>
 							</thead>
-							<tbody id="list_treatment_current"></tbody>
+							<tbody id="list_treatment_future"></tbody>
 						</table>
 					</div>
 				</div>

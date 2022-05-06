@@ -1,3 +1,31 @@
+function renderListTreatmentCurrent(data) {
+	let renderHtml_current = ``
+	$.each(data, function (i, item) {
+		renderHtml_current += `<tr>`
+		renderHtml_current += `<td class="text-center">${(i+1)}</td>`
+		renderHtml_current += `<td class="text-center">${(item.txtRiskTreatmentCurrent)}</td>`
+		renderHtml_current += `</tr>`
+	});
+	$("#list_treatment_current").html(renderHtml_current);
+}
+
+function renderListTreatmentFuture(data) {
+	let htmlString = ``
+	$.each(data, function (i, item) {
+		htmlString += `<tr>`
+		htmlString += `<td class="text-center">${(i+1)}</td>`
+		htmlString += `<td class="text-center">${item.txtRiskTreatmentFuture}</td>`
+		htmlString += `<td class="text-center">${convertRiskPriority(item.charRiskPriority)}</td>`
+		htmlString += `<td class="text-center">${item.txtStatusImplementation}</td>`
+		htmlString += `<td class="text-center">${item.intTimePlantMonth} / ${item.intTimePlantYear}</td>`
+		htmlString += `<td class="text-center">
+					<button type="button" id="buton_detail_future" data-toggle="modal" data-target="#modal-risk_detail_future" class="btn btn-info" data-id="${item.intIdTrRiskTreatmentFuture}"><i class="fa fa-eye" /></button>
+				</td>`
+		htmlString += `</tr>`
+	});
+	$("#list_treatment_future").html(htmlString);
+}
+
 async function calculateRiskAssesment(consequence, likelihood) {
 	let data_res = null
 	await $.ajax({
@@ -308,14 +336,10 @@ $(document).on('click', '#tombol_detail_risk_iden', async function (e) {
 			// $("#intTimePlantYear").val(data.intTimePlantYear)
 
 			let data_treatment = data.treatment_current
-			let renderHtml_current = ``
-			$.each(data_treatment, function (i, item) {
-				renderHtml_current += `<tr>`
-				renderHtml_current += `<td class="text-center">${(i+1)}</td>`
-				renderHtml_current += `<td class="text-center">${(item.txtRiskTreatmentCurrent)}</td>`
-				renderHtml_current += `</tr>`
-			});
-			$("#list_treatment_current").html(renderHtml_current);
+			renderListTreatmentCurrent(data_treatment)
+
+			let data_future = data.treatment_future
+			renderListTreatmentFuture(data_future)
 
 		},
 		error: () => {
@@ -346,14 +370,7 @@ $("#tombol_simpan_add_risk_current").on('click', function (e) {
 		dataType: "json",
 		success: function (response) {
 			let data = response.data
-			let renderHtml = ``
-			$.each(data, function (i, item) {
-				renderHtml += `<tr>`
-				renderHtml += `<td class="text-center">${(i+1)}</td>`
-				renderHtml += `<td class="text-center">${(item.txtRiskTreatmentCurrent)}</td>`
-				renderHtml += `</tr>`
-			});
-			$("#list_treatment_current").html(renderHtml);
+			renderListTreatmentCurrent(data)
 			$("#button_close_risk_current").click();
 		},
 		error: () => {
@@ -374,28 +391,50 @@ $("#add_treatement_future").on('click', function (e) {
 	$("#txtRiskPriorityConsideration").val("");
 	$("#charRiskPriority").val("");
 	$("#txtStatusImplementation").val("");
-	$('#checkbox_consideration').html(`<label for="">Risk Priority Consideration</label>
-						<br>
-						<input type="checkbox" value="Regulation Compliance" name="txtRiskPriorityConsideration[]" id="txtRiskPriorityConsideration">
-						<label for="">Regulation Compliance</label>
-						<br>
-						<input type="checkbox" value="The availability of technology options" name="txtRiskPriorityConsideration[]" id="txtRiskPriorityConsideration">
-						<label for="">The availability of technology options</label>
-						<br>
-						<input type="checkbox" value="Consideration of financial capability" name="txtRiskPriorityConsideration[]" id="txtRiskPriorityConsideration">
-						<label for="">Consideration of financial capability</label>
-						<br>
-						<input type="checkbox" value="Requirements for business interests" name="txtRiskPriorityConsideration[]" id="txtRiskPriorityConsideration">
-						<label for="">Requirements for business interests</label>
-						<br>
-						<input type="checkbox" value="Consideration of related parties" name="txtRiskPriorityConsideration[]" id="txtRiskPriorityConsideration">
-						<label for="">Consideration of related parties</label>`);
+	$('#checkbox_consideration').html(`<div class="form-check" style="display: none;">
+							<input class="form-check-input" type="checkbox" value="Regulation Compliance" name="txtRiskPriorityConsideration[]" id="txtRiskPriorityConsideration">
+							<label class="form-check-label" for="">Regulation Compliance</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="Regulation Compliance" name="txtRiskPriorityConsideration[]" id="txtRiskPriorityConsideration">
+							<label class="form-check-label" for="">Regulation Compliance</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="The availability of technology options" name="txtRiskPriorityConsideration[]" id="txtRiskPriorityConsideration">
+							<label class="form-check-label" for="">The availability of technology options</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="Consideration of financial capability" name="txtRiskPriorityConsideration[]" id="txtRiskPriorityConsideration">
+							<label class="form-check-label" for="">Consideration of financial capability</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="Requirements for business interests" name="txtRiskPriorityConsideration[]" id="txtRiskPriorityConsideration">
+							<label class="form-check-label" for="">Requirements for business interests</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="Consideration of related parties" name="txtRiskPriorityConsideration[]" id="txtRiskPriorityConsideration">
+							<label class="form-check-label" for="">Consideration of related parties</label>
+						</div>`);
 });
+
+function convertRiskPriority(riskPriority) {
+	switch (riskPriority) {
+		case 1:
+			return 'Urgent';
+		case 2:
+			return 'Medium';
+		case 3:
+			return 'Low';
+		default:
+			return 'Undefiened'
+	}
+}
 
 $("#form_data_risk_future").on('submit', function (e) {
 	e.preventDefault()
 	clsGlobal.showPreloader()
 	let formData = new FormData(this)
+	formData.append('intIdRiskSourceIdentification', $("#intIdRiskSourceIdentification").val())
 	$.ajax({
 		type: "post",
 		url: `${url}risk_register/RiskIdentification/simpan_treatment_future`,
@@ -404,10 +443,33 @@ $("#form_data_risk_future").on('submit', function (e) {
 		processData: false,
 		dataType: "json",
 		success: function (response) {
-			
+			let data = response.data
+			renderListTreatmentFuture(data)
+			$("#button_close_risk_future").click();
 		},
 		error: () => {
 			alert('Uppss gagal menyimpan data')
+		}
+	});
+	clsGlobal.hidePreloader()
+});
+
+$(document).on('click', '#buton_detail_future', function (e) {
+	e.preventDefault()
+	clsGlobal.showPreloader()
+	let data = {
+		id: $(this).data('id')
+	}
+	$.ajax({
+		type: "get",
+		url: `${url}risk_register/RiskIdentification/getTreatmentFuture`,
+		data: id,
+		dataType: "json",
+		success: function (response) {
+
+		},
+		error: () => {
+
 		}
 	});
 	clsGlobal.hidePreloader()
