@@ -466,7 +466,28 @@ $(document).on('click', '#buton_detail_future', function (e) {
 		data: id,
 		dataType: "json",
 		success: function (response) {
+			let risk_future 		= response.data.risk_future
+			let risk_consideration 	= response.data.risk_consideration
 
+			if (risk_future != null) {
+				$("#v_txtRiskTreatmentFuture").html(risk_future.txtRiskTreatmentFuture);
+				$("#v_txtImprovement").html(risk_future.txtImprovement);
+				$("#v_charRiskPriority").html(convertRiskPriority(risk_future.charRiskPriority));
+				$("#v_txtStatusImplementation").html(risk_future.txtStatusImplementation);
+				$("#v_timeplan").html(risk_future.intTimePlantMonth + " / " + intTimePlantYear);
+				if (risk_future.txtFileEvidence != null) {
+					$("#file_evidence").html(`<a class="btn btn-info" target="_blank" href="${url}upload_file/evidence_risk_register/${risk_future.txtFileEvidance}"><i class="fa fa-download"/></a>`);
+				}
+			}
+
+			if (risk_consideration.length != 0) {
+				let htmlStringConsideration = `<ul>`
+				$.each(risk_consideration, function (i, item) {
+					htmlStringConsideration += `<li>${item.txtRiskPriorityConsideration}</li>`
+				});
+				htmlStringConsideration += `</ul>`
+				$("#v_txtRiskConsideration").html(htmlStringConsideration  );
+			}
 		},
 		error: () => {
 

@@ -7,25 +7,29 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<div class="modal-body">				
+			<div class="modal-body">
 				<div class="row">
 					<div class="col-lg-6 col-xs-12">
 						<dt>Risk Treatment Future</dt>
 						<dd id="v_txtRiskTreatmentFuture"></dd>
 						<dt>Improvement Opurtunity / Strategic Initiative</dt>
-						<dd id="v_txtRiskTreatmentFuture"></dd>
-						<dt>Priority</dt>
-						<dd id="v_txtRiskTreatmentFuture"></dd>
+						<dd id="v_txtImprovement"></dd>
+						<dt>Risk Priority Consideration</dt>
+						<dd id="v_txtRiskConsideration"></dd>
 					</div>
-					<div class="row">
-						<div class="col-lg-6 col-xs-12">
-							<dt></dt>
-							<dd></dd>
-							<dt></dt>
-							<dd></dd>
-							<dt></dt>
-							<dd></dd>
-						</div>
+					<div class="col-lg-6 col-xs-12">
+						<dt>Priority</dt>
+						<dd id="v_charRiskPriority"></dd>
+						<dt>Status Implementation</dt>
+						<dd id="v_txtStatusImplementation"></dd>
+						<dt>Time Plan</dt>
+						<dd id="v_timeplan"></dd>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">FIle Evidence</div>
+					<div class="col-lg-12" id="file_evidence">
+
 					</div>
 				</div>
 			</div>
