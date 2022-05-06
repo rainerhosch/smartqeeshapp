@@ -1,5 +1,5 @@
 .feature-box {
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgb(255, 204, 0);
     font-family: Arial;
     display: inline-block;
     font-size: 1rem;
@@ -11,17 +11,36 @@
     -webkit-transition: -webkit-transform .3s;
     transition: -webkit-transform .3s;
     transition: transform .3s;
-    width: 33%;
+    /* width: 33%; */
     /* of wrapper width */
     vertical-align: bottom;
     transition: transform .3s, -webkit-transform .3s
 }
-
-.feature-box-bottom {
-    background-color: rgba(255, 255, 255, 0.8);
+.feature-box-heading {
+    background-color: rgb(255, 204, 0);
     font-family: Arial;
     display: inline-block;
-    background-image: -webkit-gradient(linear, left top, right bottom, from(rgba(255, 255, 255, 0.8)), to(rgb(245, 242, 242)));
+    /* background-image: -webkit-gradient(linear, left top, right bottom, from(rgba(255, 255, 255, 0.8)), to(rgb(245, 242, 242))); */
+    font-size: 1rem;
+    padding: 1rem;
+    text-align: center;
+    border-radius: 10px;
+    -webkit-box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.15);
+    box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.15);
+    -webkit-transition: -webkit-transform .3s;
+    transition: -webkit-transform .3s;
+    transition: transform .3s;
+    /* width: 33%; */
+    /* of wrapper width */
+    vertical-align: text-top;
+    transition: transform .3s, -webkit-transform .3s
+}
+
+.feature-box-bottom {
+    background-color: rgb(255, 204, 0);
+    font-family: Arial;
+    display: inline-block;
+    /* background-image: -webkit-gradient(linear, left top, right bottom, from(rgba(255, 255, 255, 0.8)), to(rgb(245, 242, 242))); */
     font-size: 1rem;
     padding: 1rem;
     text-align: -webkit-auto;
@@ -31,7 +50,7 @@
     -webkit-transition: -webkit-transform .3s;
     transition: -webkit-transform .3s;
     transition: transform .3s;
-    width: 33%;
+    /* width: 33%; */
     /* of wrapper width */
     vertical-align: text-top;
     transition: transform .3s, -webkit-transform .3s
@@ -51,7 +70,7 @@
     -webkit-transition: -webkit-transform .3s;
     transition: -webkit-transform .3s;
     transition: transform .3s;
-    width: 33%;
+    /* width: 33%; */
     /* of wrapper width */
     vertical-align: text-top;
     transition: transform .3s, -webkit-transform .3s
@@ -79,18 +98,18 @@
 }
 
 .arrow_box {
-    background-color: #383838;
+        background-color: #787878;
     font-family: Arial;
     position: relative;
-    /* padding: 1rem; */
+    padding: 0.1px;
     text-align: ceter;
-    border-radius: 10px;
-    color: rgb(255, 255, 255) !important;
-    -webkit-box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.15);
-    box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.15);
-    font-family: Arial;
-    font-size: 1.5rem;
-    font-weight: normal !important;
+    /* border-radius: 10px; */
+    /* color: rgb(255, 255, 255) !important; */
+    /* -webkit-box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 15%); */
+    /* box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 15%); */
+    /* font-family: Arial; */
+    /* font-size: 1.5rem; */
+    /* font-weight: normal !important; */
     text-align: center;
 }
 
@@ -107,13 +126,13 @@
 }
 
 .arrow_box:after {
-    border-left-color: #FFC107;
+    border-left-color: #006aff;
     border-width: 80px;
     margin-top: -80px;
 }
 
 .arrow_box:before {
-    border-left-color: #FFC107;
+    border-left-color: #006aff;
     border-width: 45px;
     margin-top: -45px;
 }
