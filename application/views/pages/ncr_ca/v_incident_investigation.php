@@ -27,6 +27,7 @@
     }
 </style>
 
+<link rel="stylesheet" href="<?= base_url('assets/templates') ?>/css/bootstrap-multiselect.css">
 <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/css/fishbone/style.css">
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper" style="z-index: -999 !important;">
@@ -203,108 +204,134 @@
 
 
                             <div class="separator">ROUTE COUSE ANALYSIS</div>
+                            <!-- Fish bone diagram -->
                             <div class="container">
-
                                 <div class="row">
-                                    <div class="col-md-12">
+                                    <div class="col-md-6">
                                         <div class="feature-box">
-                                            <h6 class="heading-secondary"> Method</h6>
-                                            <p class="feature-box__text ">
-                                                1) slots in the edge strip vary in opening. slots too narrow causes damage to inner strip
-                                            </p>
+                                            <strong class=""> MANPOWER : </strong>
+                                            <select class="form-control form-control-sm multiple-checkboxes" multiple="multiple" id="input_manpower" name="input_manpower" position="top">
+                                                <option value="MANPOWER_1">option 1</option>
+                                                <option value="MANPOWER_2">option 2</option>
+                                                <option value="MANPOWER_3">option 3</option>
+                                                <option value="MANPOWER_4">option 4</option>
+                                                <option value="MANPOWER_5">option 5</option>
+                                            </select>
                                         </div>
-                                        <div class="feature-box">
-                                            <h6 class="heading-secondary "> Method</h6>
-                                            <p class="feature-box__text">
-                                            </p>
-                                        </div>
-
-                                        <div class="feature-box">
-                                            <h6 class="heading-secondary "> Method</h6>
-                                            <p class="feature-box__text ">
-                                                slots in the edge strip vary in opening. slots too narrow causes damage to inner strip
-                                            </p>
-                                            <p class="feature-box__text ">
-                                                slots in the edge strip vary in opening. slots too narrow causes damage to inner strip
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-12">
                                         <div class="row" style="margin-right:-10% !important; margin-left:17% !important;">
                                             <svg>
-                                                <g writing-mode="tb" fill="tomato" font-size="12" transform="translate(5)">
-                                                    <text y="15px" letter-spacing=".5px" text-anchor="bottom">Man</text>
+                                                <line x1="0" y1="0" x2="200" y2="200" style="stroke:rgb(120,120,120);stroke-width:3.5" />
+                                                <g id="g_input_manpower" font-size="12" transform="translate(5)">
                                                 </g>
-                                                <line x1="0" y1="0" x2="200" y2="200" style="stroke:rgb(255,0,0);stroke-width:2" />
                                             </svg>
                                         </div>
-
-                                        <div class="arrow_box ">
-                                            <h6 class="heading-secondaryRootCauseArrow">&#82;&#67;&raquo;Slots in the edge strip vary in opening. slots too narrow causes damage to inner strip
-                                            </h6>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="feature-box">
+                                            <strong class=""> METHODE : </strong>
+                                            <select class="form-control form-control-sm multiple-checkboxes" multiple="multiple" id="input_method" name="input_method" position="top">
+                                                <option value="METHODE_1">option 1</option>
+                                                <option value="METHODE_2">option 2</option>
+                                                <option value="METHODE_3">option 3</option>
+                                                <option value="METHODE_4">option 4</option>
+                                                <option value="METHODE_5">option 5</option>
+                                            </select>
                                         </div>
-
-                                        <div class="row" style="margin-right: 24px !important; margin-left: 16% !important;">
+                                        <div class="row" style="margin-right:-10% !important; margin-left:17% !important;">
                                             <svg>
-                                                <g writing-mode="tb " fill="tomato" font-size="12" transform="translate(10) ">
-                                                    <text y="15px " letter-spacing=".5px " text-anchor="bottom ">Material</text>
+                                                <line x1="0" y1="0" x2="200" y2="200" style="stroke:rgb(120,120,120);stroke-width:3.5" />
+                                                <g id="g_input_method" font-size="12" transform="translate(5)">
                                                 </g>
-                                                <line x1="0 " y1="150 " x2="150 " y2="0 " style="stroke:rgb(255,0,0);stroke-width:2 " />
                                             </svg>
                                         </div>
-
-
-
-
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-md-12">
-
-                                        <div class="feature-box-bottom">
-                                            <h6 class="heading-secondary">Material</h6>
-                                            <p class="feature-box__text">
-                                                slots in the edge strip vary in opening. slots too narrow causes damage to inner strip
-                                            </p>
-                                            <p class="feature-box__text ">
-                                                slots in the edge strip vary in opening. slots too narrow causes damage to inner strip
-                                            </p>
-                                            <p class="feature-box__text">
-                                                slots in the edge strip vary in opening. slots too narrow causes damage to inner strip
-                                            </p>
-                                        </div>
-                                        <div class="feature-box-bottom ">
-                                            <h6 class="heading-secondary ">Measurment</h6>
-                                            <p class="feature-box__text ">
-                                                slots in the edge strip vary in opening. slots too narrow causes damage to inner strip
-                                            </p>
-                                            <p class="feature-box__text ">
-                                                slots in the edge strip vary in opening. slots too narrow causes damage to inner strip
-                                            </p>
-                                        </div>
-                                        <div class="feature-box-bottom ">
-                                            <h6 class="heading-secondary ">Environment</h6>
-                                            <p class="feature-box__text "></p>
+                                        <div class="arrow_box ">
+                                            <h6 class="heading-secondaryRootCauseArrow">line</h6>
                                         </div>
                                     </div>
+                                </div>
 
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="row" style="margin-right: 10% !important; margin-left: 17% !important;">
+                                            <svg>
+                                                <line x1="0 " y1="150 " x2="150 " y2="0 " style="stroke:rgb(120,120,120);stroke-width:3.5 " />
+                                                <g id="g_input_material" font-size="12" transform="translate(10) ">
+                                                </g>
+                                            </svg>
+                                        </div>
+                                        <div class="feature-box-bottom">
+                                            <strong>MATERIAL : </strong>
+                                            <select class="form-control form-control-sm multiple-checkboxes" multiple="multiple" id="input_material" name="input_material" position="bottom">
+                                                <option value="MATERIAL_1">option 1</option>
+                                                <option value="MATERIAL_2">option 2</option>
+                                                <option value="MATERIAL_3">option 3</option>
+                                                <option value="MATERIAL_4">option 4</option>
+                                                <option value="MATERIAL_5">option 5</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row" style="margin-right: 10% !important; margin-left: 17% !important;">
+                                            <svg>
+                                                <line x1="0 " y1="150 " x2="150 " y2="0 " style="stroke:rgb(120,120,120);stroke-width:3.5 " />
+                                                <g id="g_input_machine" font-size="12" transform="translate(10) ">
+                                                </g>
+                                            </svg>
+                                        </div>
+                                        <div class="feature-box-bottom ">
+                                            <strong>MACHINE : </strong>
+                                            <select class="form-control form-control-sm multiple-checkboxes" multiple="multiple" id="input_machine" name="input_machine" position="bottom">
+                                                <option value="MACHINE_1">option 1</option>
+                                                <option value="MACHINE_2">option 2</option>
+                                                <option value="MACHINE_3">option 3</option>
+                                                <option value="MACHINE_4">option 4</option>
+                                                <option value="MACHINE_5">option 5</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Eof Fish bone diagram -->
+                            <div class="separator">DOMINOS EFFECT IN ACCIDENT</div>
 
-
-
+                            <div class="form-group row">
+                                <label for="input" class="col-sm-2 col-form-label" style="text-align:right">ACTION :</label>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><textarea class="form-control" id="exampleFormControlTextarea1" rows="2"></textarea></div>
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0px">
+                                    <div class="short-div"><label for="input_person_responsibility" class="col-form-label" style="text-align:right">PERSON RESPONSIBILITY :</label></div>
+                                    <div class="short-div"><label for="input_time_target" class="col-form-label" style="text-align:right">TIME TARGET :</label></div>
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0px">
+                                    <div class="short-div">
+                                        <input type="text" class="form-control form-control-sm" id="input" name="input" placeholder="TEXT">
+                                        <input type="text" class="form-control form-control-sm" id="input" name="input" placeholder="TEXT">
+                                    </div>
                                 </div>
                             </div>
 
-
-                        </div>
-
-                        <br>
-                        <div class="form-group row">
-                            <label for="input" class="col-sm-2 col-form-label" style="text-align:right">UPLOAD MCU REPORT :</label>
-                            <button class="btn btn-flat btn-secondary mt-2 col-sm-1" onClick="dynamicinput()">BROWSE</button>
+                            <div class="separator">UPLOAD PHOTO</div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label" style="text-align:right">SELECT PHOTO :</label>
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0px">
+                                    <div class="short-div">
+                                        <input type="file" name="accident_photo" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="separator">PREVENTIVE AND CORECTIVE ACTION</div>
+                            <div class="form-group row">
+                                <div class="col-md-3 feature-box-heading"><strong>BASIC CAUSE</strong></div>
+                                <div class="col-md-3 feature-box-heading"><strong>IN DERECT CAUSE</strong></div>
+                                <div class="col-md-3 feature-box-heading"><strong>DERECT CAUSE</strong></div>
+                                <div class="col-md-3 feature-box-heading"><strong>LOSES</strong></div>
+                            </div>
+                            <div class="separator">INVESTIGATION TEAM</div>
+                            <div class="form-group row"></div>
                         </div>
 
                         <!--Button-->
@@ -459,8 +486,57 @@
 <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+<script src="<?= base_url('assets/templates') ?>/js/bootstrap-multiselect.js"></script>
 <script>
     $(document).ready(function() {
+        $('.multiple-checkboxes').multiselect({
+            includeSelectAllOption: true,
+        });
+
+        $('.multiple-checkboxes').on('change', function() {
+            let elementId = $(this).attr('name');
+            let position = $(this).attr('position');
+            let x = ``;
+            let y = ``;
+            let x_range = ``;
+            let y_range = ``;
+            if (position == 'top') {
+                x = 15;
+                y = 15;
+                x_range = 55;
+                y_range = 55;
+            } else {
+                x = 15;
+                y = 140;
+                x_range = 55;
+                y_range = 55;
+            }
+
+            const selected = document.querySelectorAll('.multiple-checkboxes#' + elementId + ' option:checked');
+            const dataSelect = Array.from(selected).map(el => el.value);
+            // console.log(position);
+            if (dataSelect.length > 0) {
+                if (dataSelect.length > 3) {
+                    x_range = x_range - 25;
+                    y_range = y_range - 25;
+                }
+                let html = ``;
+                $.each(dataSelect, function(i, value) {
+                    html += `<text y="${x}px" x="${y}px" letter-spacing=".5px" text-anchor="bottom" style="font-weight: bold;">${value}</text>`;
+                    if (position == 'top') {
+                        x += x_range;
+                        y += y_range;
+                        console.log(x);
+                        console.log(y);
+                    } else {
+                        x += x_range;
+                        y -= y_range;
+                    }
+                });
+                $('#g_' + elementId).html(html);
+            }
+        });
+
         $("#linesTop").fadeIn(1000);
         $("#arrow").fadeIn(1500);
         $("#linesBottom").fadeIn(2000);
