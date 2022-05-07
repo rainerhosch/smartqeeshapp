@@ -19,7 +19,7 @@
 .feature-box-heading {
     background-color: rgb(255, 204, 0);
     font-family: Arial;
-    display: inline-block;
+    /* display: inline-block; */
     /* background-image: -webkit-gradient(linear, left top, right bottom, from(rgba(255, 255, 255, 0.8)), to(rgb(245, 242, 242))); */
     font-size: 1rem;
     padding: 1rem;
@@ -131,11 +131,11 @@
     margin-top: -80px;
 }
 
-.arrow_box:before {
+/* .arrow_box:before {
     border-left-color: #006aff;
     border-width: 45px;
     margin-top: -45px;
-}
+} */
 
 .Why {
     font-family: Arial;

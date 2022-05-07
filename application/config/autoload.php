@@ -96,7 +96,7 @@ $autoload['drivers'] = array();
 $autoload['helper'] = [
     'url',
     'file',
-    'auth_helper'
+    'auth'
 ];
 
 /*

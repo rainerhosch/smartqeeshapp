@@ -69,9 +69,9 @@
                 <!--INPUT DATA PERSONAL MCU-->
                 <div class="tab-pane fade show active" id="activity-list" role="tabpanel" aria-labelledby="custom-content-above-home-tab">
                     <!-- form -->
-                    <form class="form-horizontal" method="post">
+                    <form class="form-horizontal" method="post" id="formInvestigationFire">
                         <!--card body-->
-                        <div class="card-body" style="background-color: #a5c0d3;">
+                        <div class="card-body" style="background-color: #ff000054;">
                             <div class="row">
                                 <label for="input" class="col-sm-2 col-form-label" style="text-align:right">DATE :</i> </label>
                                 <div class="col-sm-2">
@@ -79,6 +79,10 @@
                                 </div>
 
                                 <label for="input" class="col-sm-2 col-form-label" style="text-align:right">AREA :</i> </label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control form-control-sm" id="input" name="input" placeholder="TEXT">
+                                </div>
+                                <label for="input" class="col-sm-2 col-form-label" style="text-align:right">MACHINE :</i> </label>
                                 <div class="col-sm-2">
                                     <input type="text" class="form-control form-control-sm" id="input" name="input" placeholder="TEXT">
                                 </div>
@@ -93,38 +97,7 @@
                                 <div class="col-sm-2">
                                     <input type="text" class="form-control form-control-sm" id="input" name="input" placeholder="TEXT">
                                 </div>
-                            </div>
-                            <!-- victim information -->
-                            <div class="separator">Victim Information</div>
-                            <div class="row">
-                                <label for="input" class="col-sm-2 col-form-label" style="text-align:right">EMPLOYEE NUMBER :</i> </label>
-                                <div class="col-sm-2">
-                                    <input type="text" class="form-control form-control-sm" id="input" name="input" placeholder="TEXT">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label for="input" class="col-sm-2 col-form-label" style="text-align:right">NAME :</i> </label>
-                                <div class="col-sm-2">
-                                    <input type="text" class="form-control form-control-sm" id="input" name="input" placeholder="TEXT">
-                                </div>
-
-                                <label for="input" class="col-sm-2 col-form-label" style="text-align:right">DEPARTEMENT :</i> </label>
-                                <div class="col-sm-2">
-                                    <input type="text" class="form-control form-control-sm" id="input" name="input" placeholder="TEXT">
-                                </div>
-
-                                <label for="input" class="col-sm-2 col-form-label" style="text-align:right">AGE :</i> </label>
-                                <div class="col-sm-2">
-                                    <input type="text" class="form-control form-control-sm" id="input" name="input" placeholder="TEXT">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label for="input" class="col-sm-2 col-form-label" style="text-align:right">LEVEL :</i> </label>
-                                <div class="col-sm-2">
-                                    <input type="text" class="form-control form-control-sm" id="input" name="input" placeholder="TEXT">
-                                </div>
-
-                                <label for="input" class="col-sm-2 col-form-label" style="text-align:right">SERVICE PERIOD :</i> </label>
+                                <label for="input" class="col-sm-2 col-form-label" style="text-align:right">MACHINE :</i> </label>
                                 <div class="col-sm-2">
                                     <input type="text" class="form-control form-control-sm" id="input" name="input" placeholder="TEXT">
                                 </div>
@@ -139,11 +112,10 @@
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><textarea class="form-control" id="exampleFormControlTextarea1" rows="7"></textarea></div>
                                 <!-- <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="background-color:red;">Span 2</div> -->
                                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0px">
-                                    <div class="short-div"><label for="input" class="col-form-label" style="text-align:right">INJURED BODY PART :</label></div>
-                                    <div class="short-div"><label for="input" class="col-form-label" style="text-align:right">CONDITION OF THE WOUND :</label></div>
-                                    <div class="short-div"><label for="input" class="col-form-label" style="text-align:right">INCIDENT LEVEL :</label></div>
-                                    <div class="short-div"><label for="input" class="col-form-label" style="text-align:right">SEVERTY LEVEL :</label></div>
+                                    <div class="short-div"><label for="input" class="col-form-label" style="text-align:right">FIRE LEVEL :</label></div>
+                                    <div class="short-div"><label for="input" class="col-form-label" style="text-align:right">SEVERITY LEVEL :</label></div>
                                     <div class="short-div"><label for="input" class="col-form-label" style="text-align:right">RECURRENCE PROABILITY :</label></div>
+                                    <div class="short-div"><label for="input" class="col-form-label" style="text-align:right">FIRE FACILITY USED :</label></div>
                                 </div>
                                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0px">
                                     <div class="short-div"><select class="form-control form-control-sm" id="input" name="input" placeholder="TEXT">
@@ -192,14 +164,6 @@
                             <div class="form-group row">
                                 <label for="input" class="col-sm-2 col-form-label" style="text-align:right">ACTION TAKEN :</label>
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><textarea class="form-control" id="exampleFormControlTextarea1" rows="2"></textarea></div>
-                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0px">
-                                    <div class="short-div"> <label for="input" class="col-form-label" style="text-align:right">DATE BACK TO WORK :</label></div>
-                                </div>
-                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0px">
-                                    <div class="short-div">
-                                        <input type="date" class="form-control form-control-sm" id="input" name="input" placeholder="TEXT">
-                                    </div>
-                                </div>
                             </div>
 
 
@@ -382,11 +346,14 @@
                                 </div>
                             </div>
                             <!-- end form -->
+                            <div class="separator"></div>
+                            <!-- <br> -->
                         </div>
                         <!--Button-->
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-primary float-right" style="margin-left: 20px;">Submit</button>
-                            <button type="reset" class="btn btn-warning float-right">Reset</button>
+                            <button type="button" class="btn btn-primary float-right btnSaveToPdf" style="margin-left: 20px;">SAVE and DOWNLOAD PDF</button>
+                            <button type="button" class="btn btn-success float-right btnSaveOnly" style="margin-left: 20px;">SAVE ONLY</button>
+                            <button type="button" class="btn btn-warning float-right btnResetForm">RESET</button>
                         </div>
                         <!--/.Button-->
                         <!-- /.card-body -->
@@ -397,7 +364,7 @@
 
                 <!--PERSONAL MCU RECORD-->
                 <div class="tab-pane fade " id="tabel-data-activity" role="tabpanel" aria-labelledby="custom-content-above-profile-tab">
-                    <div class="card-body" style="background-color: #77a0e6;">
+                    <div class="card-body" style="background-color: #ff000054;">
                         <div class="form-grup row mb-2 col-12">
                             <label for="input" class="col-form-label col-2" style="text-align:right">MCU PERIOD :</label>
                             <div class="col-sm-4">
@@ -432,7 +399,7 @@
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered-sm ">
                                     <thead class="align-middle">
-                                        <tr class="table-primary align-middle" style="text-align: center;">
+                                        <tr class="table-danger align-middle" style="text-align: center;">
                                             <th scope="col">NO.</th>
                                             <th scope="col">NAME</th>
                                             <th scope="col">DEPARTEMENT</th>
@@ -537,6 +504,7 @@
 <script src="<?= base_url('assets/templates') ?>/js/bootstrap-multiselect.js"></script>
 <script>
     $(document).ready(function() {
+
         $('.container-invMember').on('click', '.btnAddInvMember:last-child', function() {
             let copylast = $(this).parents('.rowInvMember')[0].outerHTML;
             $(this)
@@ -570,7 +538,7 @@
 
             const selected = document.querySelectorAll('.multiple-checkboxes#' + elementId + ' option:checked');
             const dataSelect = Array.from(selected).map(el => el.value);
-            // console.log(position);
+            console.log(dataSelect.length);
             let html = ``;
             if (dataSelect.length > 0) {
                 if (dataSelect.length > 3) {
@@ -607,6 +575,19 @@
                     .slideToggle(500);
             });
         });
+
+
+        $('.btnResetForm').click(function() {
+            $(':input', '#formInvestigationFire')
+                .not(':button, :submit, :reset, :hidden')
+                .val('')
+                .removeAttr('checked')
+                .removeAttr('selected');
+
+            document.getElementById('formInvestigationFire').reset();
+            $(".multiple-checkboxes option:selected").removeAttr("selected");
+        });
+
     });
 </script>
 <script>
