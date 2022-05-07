@@ -16,14 +16,14 @@ class M_tahapan_proses_risk extends CI_Model
 	var $column_search = array('mTahapanProses.txtNamaTahapan'); //field yang diizin untuk pencarian 
 	var $order = array('dtmInsertedBy' => 'desc'); // default order 
 
-	private function _get_datatables_query($intIdActivityRisk)
+	private function _get_datatables_query($intIdActivityRisk, $intIdActivity)
 	{
 		$this->db->select('mTahapanProses.txtNamaTahapan, mActivity.intIdDepartement, trTahapanProsesRisk.intIdTahapanProsesRisk, mTahapanProses.intIdTahapanProses, trTahapanProsesRisk.intIdActivityRisk');
 		$this->db->from($this->table);
 		$this->db->join('mTahapanProses', 'trTahapanProsesRisk.intIdTahapanProses = mTahapanProses.intIdTahapanProses', 'right');
 		$this->db->join('mActivity', 'mTahapanProses.intIdActivty = mActivity.intIdActivity');
-		$this->db->where([
-			'mActivity.intIdDepartement' => $this->session->userdata('id_departemen')			
+		$this->db->where([			
+			'mActivity.intIdActivity' => $intIdActivity
 		]);
 		// var_dump($this->db->last_query());exit;
 		$i = 0;
@@ -55,15 +55,15 @@ class M_tahapan_proses_risk extends CI_Model
 		// }
 	}
 
-	function get_datatables($intIdActivityRisk)
+	function get_datatables($intIdActivityRisk, $intIdActivity)
 	{
-		$this->_get_datatables_query($intIdActivityRisk);
+		$this->_get_datatables_query($intIdActivityRisk, $intIdActivity);
 		if ($_POST['length'] != -1)
 			$this->db->limit($_POST['length'], $_POST['start']);				
 		$query = $this->db->get();
 		$list = $query->result();
 		$data = array();
-		$no = $_POST['start'];
+		$no = $_POST['start'];		
 		foreach ($list as $field) {
 			$no++;
 			$row 						= array();
@@ -75,27 +75,27 @@ class M_tahapan_proses_risk extends CI_Model
 
 		$output = array(
 			"draw" => $_POST['draw'],
-			"recordsTotal" => $this->count_all($intIdActivityRisk),
-			"recordsFiltered" => $this->count_filtered($intIdActivityRisk),
+			"recordsTotal" => $this->count_all($intIdActivityRisk, $intIdActivity),
+			"recordsFiltered" => $this->count_filtered($intIdActivityRisk, $intIdActivity),
 			"data" => $data,
 		);
 		return $output;
 	}
 
-	function count_filtered($intIdActivityRisk)
+	function count_filtered($intIdActivityRisk, $intIdActivity)
 	{
-		$this->_get_datatables_query($intIdActivityRisk);
+		$this->_get_datatables_query($intIdActivityRisk, $intIdActivity);
 		$query = $this->db->get();
 		return $query->num_rows();
 	}
 
-	public function count_all($intIdActivityRisk)
+	public function count_all($intIdActivityRisk, $intIdActivity)
 	{		
 		$this->db->from($this->table);
 		$this->db->join('mTahapanProses', 'mTahapanProses.intIdTahapanProses = trTahapanProsesRisk.intIdTahapanProses', 'right');
 		$this->db->join('mActivity', 'mTahapanProses.intIdActivty = mActivity.intIdActivity');
 		$this->db->where([
-			'trTahapanProsesRisk.intIdActivityRisk' => $intIdActivityRisk,
+			'mActivity.intIdActivity' => $intIdActivity
 		]);
 		return $this->db->count_all_results();
 	}

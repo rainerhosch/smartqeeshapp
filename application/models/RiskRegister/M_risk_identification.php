@@ -68,7 +68,6 @@ class M_risk_identification extends CI_Model
 			$row 									= array();
 			$row["no"] 								= $no;
 			$row["txtSourceRiskIden"] 				= $field->txtSourceRiskIden;
-			$row["txtStatusImplementation"] 		= $field->txtStatusImplementation;
 			$row["bitLastStatusRiskRegister"] 		= $field->bitLastStatusRiskRegister;
 			$row["txtLastRiskLevel"] 				= $field->txtLastRiskLevel;
 			$row["txtRiskLevel"] 					= $field->txtRiskLevel;
@@ -103,7 +102,9 @@ class M_risk_identification extends CI_Model
 	}
 
 	public function getById($where)
-	{		
+	{
+		$this->db->select('trRiskIdentification.intIdRiskSourceIdentification, trRiskIdentification.intIdTrRiskContext,	trRiskIdentification.txtSourceRiskIden,trRiskIdentification.txtRiskAnalysis, trRiskIdentification.txtRiskType, trRiskIdentification.txtRiskCategory, trRiskIdentification.txtRiskCondition, trRiskIdentification.bitStatusKepentingan, trRiskIdentification.intIdRiskAssessmentMatrix, vw_risk_assesment_matrix.txtRiskOwner, vw_risk_assesment_matrix.txtNamaResiko,vw_risk_assesment_matrix.txtNamaLikelihood, vw_risk_assesment_matrix.txtNamaTingkatKlasifikasi, vw_risk_assesment_matrix.txtTingkatKeparahan, vw_risk_assesment_matrix.txtSebaranResiko, vw_risk_assesment_matrix.txtLamaPemulihan, vw_risk_assesment_matrix.txtBiayaPemulihan, vw_risk_assesment_matrix.txtCitraPerusahaan, trRiskIdentification.intConsequence, trRiskIdentification.intLikelihood, trRiskIdentification.txtRiskLevel');
+		$this->db->join('vw_risk_assesment_matrix', 'trRiskIdentification.intIdRiskAssessmentMatrix = vw_risk_assesment_matrix.intIdRiskAssessmentMatrix');		
 		return $this->db->get_where($this->table, $where);
 	}
 

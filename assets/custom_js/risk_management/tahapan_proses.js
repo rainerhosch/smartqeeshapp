@@ -18,6 +18,7 @@ function p_InitiateDataListTahapan() {
 					"method": "POST",
 					"data": function (d) {
 						d.intIdActivityRisk = $('#intIdActivityRisk').val()
+						d.intIdActivity = $('#intIdActivity').val()
 					}
 				},
 				columns: [{

@@ -53,6 +53,7 @@ class M_dok_register extends CI_Model
 		// }
 	}
 
+	
 	function get_datatables()
 	{
 		$this->_get_datatables_query();

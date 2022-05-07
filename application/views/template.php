@@ -45,7 +45,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 </head>
 <?php if ($page != 'Auth') : ?>
 
-	<body class="hold-transition layout-navbar-fixed layout-footer-fixed" style="height: auto;">
+	<body class="hold-transition layout-fixed layout-navbar-fixed layout-footer-fixed" style="height: auto;" id="mydiv">
 		<div class="wrapper">
 			<!-- Preloader -->
 			<div class="preloader flex-column justify-content-center align-items-center">
@@ -58,10 +58,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<?php $this->load->view('layouts/footer'); ?>
 		</div>
 		<script>
-			$(document).ready(function () {				
+			$(document).ready(function() {
 				clsGlobal.showPreloader()
 				clsGlobal.hidePreloader()
-			});			
+			});
 			setTimeout(function() {
 				$(".alert_content").html("");
 			}, 2000);
