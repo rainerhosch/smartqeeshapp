@@ -111,9 +111,9 @@ class M_risk_identification extends CI_Model
 	public function simpan_tahapan_baru($data) {		
 		$this->db->insert($this->table, $data);
 		$data = $this->db->get_where($this->table, [
-			"intTimePlantMonth" 			=> $data["intTimePlantMonth"],
-			"intTimePlantYear" 				=> $data["intTimePlantYear"],
-			"txtSourceRiskIden" 			=> $data["txtSourceRiskIden"],
+			"dtmInsertedDate" 			=> $data["dtmInsertedDate"],
+			"intInsertedBy" 			=> $data["intInsertedBy"],
+			"txtSourceRiskIden" 		=> $data["txtSourceRiskIden"],
 		])->row();
 		return $data;
 	}	
