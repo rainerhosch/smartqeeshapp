@@ -28,32 +28,31 @@
                 <tr>
                   <td bgcolor="#1EAF9C"><strong>LOW RISK</strong></td>
                   <td align="center" bgcolor="#E2F0D9" width="20%">
-                    <strong>70</strong> 
-                    <!-- | <i class="fa fa-eye"></i> -->
+                    <strong>70</strong>
                   </td>
                   <td align="right" width="5%" bgcolor="#E2F0D9">
-                       <a data-toggle="tooltip" data-placement="top" title="Detail" href="<?= base_url(); ?>/dashboard/risk_manj_performance/low_risk" style="color: black;"><i class="fas fa-eye"></i></a>
+                    <a data-toggle="tooltip" data-placement="top" title="Detail" href="#" style="color: black;" data-filter="LOW" class="btnUpRisk"><i class="fas fa-eye"></i></a>
                   </td>
                 </tr>
                 <tr>
                   <td bgcolor="#5B9BD5">MEDIUM RISK</td>
                   <td align="center" bgcolor="#DEEBF7">20</td>
                   <td align="right" width="5%" bgcolor="#DEEBF7">
-                       <a data-toggle="tooltip" data-placement="top" title="Detail" href="<?= base_url(); ?>/dashboard/risk_manj_performance/medium_risk" style="color: black;"><i class="fas fa-eye"></i></a>
+                    <a data-toggle="tooltip" data-placement="top" title="Detail" href="#" style="color: black;" data-filter="MEDIUM" class="btnUpRisk"><i class="fas fa-eye"></i></a>
                   </td>
                 </tr>
                 <tr>
                   <td bgcolor="#FFD966">HIGH RISK</td>
                   <td align="center" bgcolor="#FFF2CC">8</td>
                   <td align="right" width="5%" bgcolor="#FFF2CC">
-                       <a data-toggle="tooltip" data-placement="top" title="Detail" href="<?= base_url(); ?>/dashboard/risk_manj_performance/hard_risk" style="color: black;"><i class="fas fa-eye"></i></a>
+                    <a data-toggle="tooltip" data-placement="top" title="Detail" href="#" style="color: black;" data-filter="HIGH" class="btnUpRisk"><i class="fas fa-eye"></i></a>
                   </td>
                 </tr>
                 <tr>
                   <td bgcolor="#E04A4A">EXTREME RISK</td>
                   <td align="center" bgcolor="#FBE5D6">2</td>
                   <td align="right" width="5%" bgcolor="#FBE5D6">
-                       <a data-toggle="tooltip" data-placement="top" title="Detail" href="<?= base_url(); ?>/dashboard/risk_manj_performance/extreme_risk" style="color: black;"><i class="fas fa-eye"></i></a>
+                    <a data-toggle="tooltip" data-placement="top" title="Detail" href="#" style="color: black;" data-filter="EXTREME" class="btnUpRisk"><i class="fas fa-eye"></i></a>
                   </td>
                 </tr>
               </tbody>
@@ -135,39 +134,39 @@
     <div class="row">
       <div class="col-lg-6">
         <div class="card" style="background-color: #76C1A5;">
-          
+
           <div class="card-body">
             <table class="table table-bordered">
               <tbody>
                 <tr>
                   <td bgcolor="#1EAF9C"><strong>LOW RISK</strong></td>
                   <td align="center" bgcolor="#E2F0D9" width="20%">
-                    <strong>70</strong> 
+                    <strong>70</strong>
                     <!-- | <i class="fa fa-eye"></i> -->
                   </td>
                   <td align="right" width="5%" bgcolor="#E2F0D9">
-                       <a data-toggle="tooltip" data-placement="top" title="Detail" href="<?= base_url(); ?>/dashboard/apf_performance/low_risk" style="color: black;"><i class="fas fa-eye"></i></a>
+                    <a data-toggle="tooltip" data-placement="top" title="Detail" href="<?= base_url(); ?>/dashboard/apf_performance/low_risk" style="color: black;"><i class="fas fa-eye"></i></a>
                   </td>
                 </tr>
                 <tr>
                   <td bgcolor="#5B9BD5">MEDIUM RISK</td>
                   <td align="center" bgcolor="#DEEBF7">20</td>
                   <td align="right" width="5%" bgcolor="#DEEBF7">
-                       <a data-toggle="tooltip" data-placement="top" title="Detail" href="<?= base_url(); ?>/dashboard/apf_performance/medium_risk" style="color: black;"><i class="fas fa-eye"></i></a>
+                    <a data-toggle="tooltip" data-placement="top" title="Detail" href="<?= base_url(); ?>/dashboard/apf_performance/medium_risk" style="color: black;"><i class="fas fa-eye"></i></a>
                   </td>
                 </tr>
                 <tr>
                   <td bgcolor="#FFD966">HIGH RISK</td>
                   <td align="center" bgcolor="#FFF2CC">8</td>
                   <td align="right" width="5%" bgcolor="#FFF2CC">
-                       <a data-toggle="tooltip" data-placement="top" title="Detail" href="<?= base_url(); ?>/dashboard/apf_performance/hard_risk" style="color: black;"><i class="fas fa-eye"></i></a>
+                    <a data-toggle="tooltip" data-placement="top" title="Detail" href="<?= base_url(); ?>/dashboard/apf_performance/hard_risk" style="color: black;"><i class="fas fa-eye"></i></a>
                   </td>
                 </tr>
                 <tr>
                   <td bgcolor="#E04A4A">EXTREME RISK</td>
                   <td align="center" bgcolor="#FBE5D6">2</td>
                   <td align="right" width="5%" bgcolor="#FBE5D6">
-                       <a data-toggle="tooltip" data-placement="top" title="Detail" href="<?= base_url(); ?>/dashboard/apf_performance/extreme_risk" style="color: black;"><i class="fas fa-eye"></i></a>
+                    <a data-toggle="tooltip" data-placement="top" title="Detail" href="<?= base_url(); ?>/dashboard/apf_performance/extreme_risk" style="color: black;"><i class="fas fa-eye"></i></a>
                   </td>
                 </tr>
               </tbody>
@@ -233,8 +232,43 @@
   </section>
   <!-- /.content 2-->
 
+  <div class="modal fade" id="modalTabelRisk">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="titleTabelRisk"></h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body table-responsive">
+          <table class="table" id="tabelRisk">
+            <thead>
+              <tr>
+                <th class="text-center">RISK RESOURCE IDENTIFICATION</th>
+                <th class="text-center">RISK ANALYSIS</th>
+                <th class="text-center">RISK TYPE</th>
+                <th class="text-center">RISK CATEGORY</th>
+                <th class="text-center">RISK CONDITION</th>
+                <th class="text-center">LAST STATUS</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+
 </div>
 <!-- /.content-wrapper -->
+<script src="<?= base_url('assets/templates') ?>/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="<?= base_url("assets/custom_js/risk_management/risk_man_perf.js"); ?>"></script>
 
 <script>
   $(function() {

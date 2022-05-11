@@ -16,6 +16,7 @@ class Risk_manj_performance extends CI_Controller
         parent::__construct();
         login_check();
         $this->load->model('M_user', 'user');
+        $this->load->model("RiskRegister/M_risk_identification", "risk_identification");
     }
 
     public function index()
@@ -26,6 +27,19 @@ class Risk_manj_performance extends CI_Controller
         // $data['user_divisi'] = 'CT-HSE';
         $data['content'] = 'pages/risk_management/risk_man_perf';
         $this->load->view('template', $data);
+    }
+
+    public function getsDataTableRisk()
+    {
+        $filterData = $_POST["filterData"];
+        $draw = $_POST["draw"];
+        $start = $_POST["start"];
+        $length = $_POST["length"];
+        $search = $_POST["search"]["value"];
+
+        $data = $this->risk_identification->get_datatables_manaj_performance($draw, $start, $length, $search, $filterData);
+
+        echo json_encode($search);
     }
 
     public function low_risk()

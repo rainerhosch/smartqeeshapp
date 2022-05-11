@@ -18,12 +18,12 @@ class M_risk_identification extends CI_Model
 
 	private function _get_datatables_query($intIdTrRiskContext)
 	{
-		$this->db->select('*');		
+		$this->db->select('*');
 		$this->db->from($this->table);
 		$this->db->where([
 			'intIdTrRiskContext' => $intIdTrRiskContext
 		]);
-				
+
 		// var_dump($this->db->last_query());exit;
 		$i = 0;
 
@@ -58,7 +58,7 @@ class M_risk_identification extends CI_Model
 	{
 		$this->_get_datatables_query($intIdTrRiskContext);
 		if ($_POST['length'] != -1)
-			$this->db->limit($_POST['length'], $_POST['start']);				
+			$this->db->limit($_POST['length'], $_POST['start']);
 		$query = $this->db->get();
 		$list = $query->result();
 		$data = array();
@@ -94,7 +94,7 @@ class M_risk_identification extends CI_Model
 	}
 
 	public function count_all($intIdTrRiskContext)
-	{		
+	{
 		$this->db->from($this->table);
 		$this->db->where([
 			'intIdTrRiskContext' => $intIdTrRiskContext
@@ -103,11 +103,12 @@ class M_risk_identification extends CI_Model
 	}
 
 	public function getById($where)
-	{		
+	{
 		return $this->db->get_where($this->table, $where);
 	}
 
-	public function simpan_tahapan_baru($data) {		
+	public function simpan_tahapan_baru($data)
+	{
 		$this->db->insert($this->table, $data);
 		$data = $this->db->get_where($this->table, [
 			"intTimePlantMonth" 			=> $data["intTimePlantMonth"],
@@ -115,5 +116,18 @@ class M_risk_identification extends CI_Model
 			"txtSourceRiskIden" 			=> $data["txtSourceRiskIden"],
 		])->row();
 		return $data;
-	}	
+	}
+
+	//RISK MANJ PERFORMANCE
+
+	public function get_datatables_manaj_performance($draw, $start, $length, $search, $txtFilter)
+	{
+		$output = array(
+			"draw" => $_POST['draw'],
+			"recordsTotal" => $length,
+			"recordsFiltered" => $length,
+			"data" => $data,
+		);
+		return $output;
+	}
 }

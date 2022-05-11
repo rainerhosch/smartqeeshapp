@@ -12,7 +12,10 @@ $db['default'] = array(
 	'database' => 'db_smart_qeesh', */
 	'username' => 'u1121502_smarqeesh_dev',
 	'password' => 'smarqeesh',
-	'database' => 'u1121502_smart_qeesh_testing',
+	// DATABASE PRODUCTION
+	'database' => 'u1121502_smart_qeesh',
+	// DATABASE TESTING
+	// 'database' => 'u1121502_smart_qeesh_testing',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
