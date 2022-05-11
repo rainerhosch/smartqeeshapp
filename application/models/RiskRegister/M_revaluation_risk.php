@@ -15,15 +15,18 @@ class M_revaluation_risk extends CI_Model
 
 	public function getData($where)
 	{
-		$this->db->order_by('intIdRiskEvaluation', 'asc');		
+		$this->db->select('trRiskEvaluation.intIdRiskSourceIdentification, trRiskEvaluation.intConsequenceEvaluation, trRiskEvaluation.intLikelihoodEvaluation, trRiskEvaluation.txtRiskLevelEvaluation, trRiskEvaluation.bitRiskStatus, trRiskEvaluation.txtRiskOwner, trRiskEvaluation.intIdRiskAssessmentMatrix, vw_risk_assesment_matrix.txtTingkatKeparahan, vw_risk_assesment_matrix.txtSebaranResiko, vw_risk_assesment_matrix.txtLamaPemulihan, vw_risk_assesment_matrix.txtBiayaPemulihan, vw_risk_assesment_matrix.txtCitraPerusahaan,trRiskEvaluation.intIdRiskEvaluation');		
+		$this->db->join('vw_risk_assesment_matrix', 'trRiskEvaluation.intIdRiskAssessmentMatrix = vw_risk_assesment_matrix.intIdRiskAssessmentMatrix');		
+		$this->db->order_by('trRiskEvaluation.intIdRiskEvaluation', 'asc');		
 		return $this->db->get_where($this->table, $where);		
 	}
 
 	public function simpanRevaluation($data) {		
 		$this->db->insert($this->table, $data);
 		$data_last = [
-			"bitLastStatusRiskRegister" 	=> $data["bitRiskStatus"],												
-			"txtLastRiskLevel" 				=> $data["txtRiskLevelEvaluation"],			
+			"bitLastStatusRiskRegister" 		=> $data["bitRiskStatus"],												
+			"txtLastRiskLevel" 					=> $data["txtRiskLevelEvaluation"],
+			"intLastIdRiskAssessmentMatrixEval" => $data["intIdRiskAssessmentMatrix"],
 		];
 		$this->db->update('trRiskIdentification', $data_last, [
 			'intIdRiskSourceIdentification' => $data['intIdRiskSourceIdentification']
