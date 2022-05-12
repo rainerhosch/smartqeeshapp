@@ -1,4 +1,14 @@
 <style>
+    .btn-circle {
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        padding: 6px 0;
+        font-size: 12px;
+        line-height: 1.42;
+        border-radius: 15px;
+    }
+
     .separator {
         display: flex;
         align-items: center;
@@ -209,40 +219,71 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="feature-box">
-                                            <strong class=""> MANPOWER : </strong>
-                                            <select class="form-control form-control-sm multiple-checkboxes" multiple="multiple" id="input_manpower" name="input_manpower" position="top">
+                                            <strong class=""> MANPOWER </strong>
+                                            <!-- <select class="form-control form-control-sm multiple-checkboxes" multiple="multiple" id="input_manpower" name="input_manpower" position="top">
                                                 <option value="MANPOWER_1">option 1</option>
                                                 <option value="MANPOWER_2">option 2</option>
                                                 <option value="MANPOWER_3">option 3</option>
                                                 <option value="MANPOWER_4">option 4</option>
                                                 <option value="MANPOWER_5">option 5</option>
-                                            </select>
+                                            </select> -->
                                         </div>
-                                        <div class="row" style="margin-right:-10% !important; margin-left:17% !important;">
-                                            <svg>
+                                        <div class="row" style="margin-right:-10% !important; margin-left:0px !important;">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+                                                <line x1="100" y1="0" x2="300" y2="200" style="stroke:rgb(120,120,120);stroke-width:3.5" />
+                                                <foreignObject x="50" y="5" width="150" height="150">
+
+                                                    <body xmlns="http://www.w3.org/1999/xhtml">
+                                                        <div class="div_input_manpower">
+                                                            <div class="row">
+                                                                <!-- <form> -->
+                                                                <div class="col-sm-3"><a class="btn btn-sm btn-primary btn-circle btn_add_input" data-target="input_manpower" position="top"><i class="fa fa-plus"></i></a></div>
+                                                                <div class="col-sm-9"><input type="text" class="form-control form-control-sm input_manpower" /></div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- </form> -->
+                                                    </body>
+                                                </foreignObject>
+                                            </svg>
+
+                                            <!-- <svg>
                                                 <line x1="0" y1="0" x2="200" y2="200" style="stroke:rgb(120,120,120);stroke-width:3.5" />
                                                 <g id="g_input_manpower" font-size="12" transform="translate(5)">
                                                 </g>
-                                            </svg>
+                                            </svg> -->
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="feature-box">
-                                            <strong class=""> METHODE : </strong>
-                                            <select class="form-control form-control-sm multiple-checkboxes" multiple="multiple" id="input_method" name="input_method" position="top">
+                                            <strong class=""> METHODE </strong>
+                                            <!-- <select class="form-control form-control-sm multiple-checkboxes" multiple="multiple" id="input_method" name="input_method" position="top">
                                                 <option value="METHODE_1">option 1</option>
                                                 <option value="METHODE_2">option 2</option>
                                                 <option value="METHODE_3">option 3</option>
                                                 <option value="METHODE_4">option 4</option>
                                                 <option value="METHODE_5">option 5</option>
-                                            </select>
+                                            </select> -->
                                         </div>
                                         <div class="row" style="margin-right:-10% !important; margin-left:17% !important;">
-                                            <svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+                                                <line x1="20" y1="0" x2="220" y2="200" style="stroke:rgb(120,120,120);stroke-width:3.5" />
+                                                <foreignObject x="0" y="5" width="150" height="31">
+
+                                                    <body xmlns="http://www.w3.org/1999/xhtml">
+                                                        <div class="div_input_methode">
+                                                            <div class="row">
+                                                                <div class="col-sm-3"><a class="btn btn-sm btn-primary btn-circle btn_add_input" data-target="input_methode" position="top"><i class="fa fa-plus"></i></a></div>
+                                                                <div class="col-sm-9"><input type="text" class="form-control form-control-sm input_methode" /></div>
+                                                            </div>
+                                                        </div>
+                                                    </body>
+                                                </foreignObject>
+                                            </svg>
+                                            <!-- <svg>
                                                 <line x1="0" y1="0" x2="200" y2="200" style="stroke:rgb(120,120,120);stroke-width:3.5" />
                                                 <g id="g_input_method" font-size="12" transform="translate(5)">
                                                 </g>
-                                            </svg>
+                                            </svg> -->
                                         </div>
                                     </div>
                                 </div>
@@ -258,40 +299,68 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="row" style="margin-right: 10% !important; margin-left: 17% !important;">
-                                            <svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+                                                <line x1="0 " y1="150 " x2="150 " y2="0 " style="stroke:rgb(120,120,120);stroke-width:3.5 " />
+                                                <foreignObject x="50" y="5" width="200" height="150">
+
+                                                    <body xmlns="http://www.w3.org/1999/xhtml">
+                                                        <!-- <form> -->
+                                                        <div class="row div_input_material">
+                                                            <div class="col-sm-3"><a class="btn btn-sm btn-primary btn-circle btn_add_input" data-target="input_material" position="bottom"><i class="fa fa-plus"></i></a></div>
+                                                            <div class="col-sm-9"><input type="text" class="form-control form-control-sm input_material" /></div>
+                                                        </div>
+                                                        <!-- </form> -->
+                                                    </body>
+                                                </foreignObject>
+                                            </svg>
+                                            <!-- <svg>
                                                 <line x1="0 " y1="150 " x2="150 " y2="0 " style="stroke:rgb(120,120,120);stroke-width:3.5 " />
                                                 <g id="g_input_material" font-size="12" transform="translate(10) ">
                                                 </g>
-                                            </svg>
+                                            </svg> -->
                                         </div>
                                         <div class="feature-box-bottom">
-                                            <strong>MATERIAL : </strong>
-                                            <select class="form-control form-control-sm multiple-checkboxes" multiple="multiple" id="input_material" name="input_material" position="bottom">
+                                            <strong>MATERIAL </strong>
+                                            <!-- <select class="form-control form-control-sm multiple-checkboxes" multiple="multiple" id="input_material" name="input_material" position="bottom">
                                                 <option value="MATERIAL_1">option 1</option>
                                                 <option value="MATERIAL_2">option 2</option>
                                                 <option value="MATERIAL_3">option 3</option>
                                                 <option value="MATERIAL_4">option 4</option>
                                                 <option value="MATERIAL_5">option 5</option>
-                                            </select>
+                                            </select> -->
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="row" style="margin-right: 10% !important; margin-left: 17% !important;">
-                                            <svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+                                                <line x1="0 " y1="150 " x2="150 " y2="0 " style="stroke:rgb(120,120,120);stroke-width:3.5 " />
+                                                <foreignObject x="50" y="5" width="200" height="150">
+
+                                                    <body xmlns="http://www.w3.org/1999/xhtml">
+                                                        <!-- <form> -->
+                                                        <div class="row div_input_machine">
+                                                            <div class="col-sm-3"><a class="btn btn-sm btn-primary btn-circle btn_add_input" data-target="input_machine" position="bottom"><i class="fa fa-plus"></i></a></div>
+                                                            <div class="col-sm-9"><input type="text" class="form-control form-control-sm input_machine" /></div>
+                                                        </div>
+                                                        <!-- </form> -->
+                                                    </body>
+                                                </foreignObject>
+                                            </svg>
+                                            <!-- <svg>
                                                 <line x1="0 " y1="150 " x2="150 " y2="0 " style="stroke:rgb(120,120,120);stroke-width:3.5 " />
                                                 <g id="g_input_machine" font-size="12" transform="translate(10) ">
                                                 </g>
-                                            </svg>
+                                            </svg> -->
                                         </div>
                                         <div class="feature-box-bottom ">
-                                            <strong>MACHINE : </strong>
-                                            <select class="form-control form-control-sm multiple-checkboxes" multiple="multiple" id="input_machine" name="input_machine" position="bottom">
+                                            <strong>MACHINE </strong>
+                                            <!-- <select class="form-control form-control-sm multiple-checkboxes" multiple="multiple" id="input_machine" name="input_machine" position="bottom">
                                                 <option value="MACHINE_1">option 1</option>
                                                 <option value="MACHINE_2">option 2</option>
                                                 <option value="MACHINE_3">option 3</option>
                                                 <option value="MACHINE_4">option 4</option>
                                                 <option value="MACHINE_5">option 5</option>
-                                            </select>
+                                            </select> -->
                                         </div>
                                     </div>
                                 </div>
@@ -535,80 +604,7 @@
 </div>
 <!-- /.content-wrapper -->
 <script src="<?= base_url('assets/templates') ?>/js/bootstrap-multiselect.js"></script>
-<script>
-    $(document).ready(function() {
-        $('.container-invMember').on('click', '.btnAddInvMember:last-child', function() {
-            let copylast = $(this).parents('.rowInvMember')[0].outerHTML;
-            $(this)
-                .parents('.rowInvMember:last-child')
-                .after(copylast);
-
-            console.log(copylast);
-        });
-        $('.multiple-checkboxes').multiselect({
-            includeSelectAllOption: true,
-        });
-
-        $('.multiple-checkboxes').on('change', function() {
-            let elementId = $(this).attr('name');
-            let position = $(this).attr('position');
-            let x = ``;
-            let y = ``;
-            let x_range = ``;
-            let y_range = ``;
-            if (position == 'top') {
-                x = 15;
-                y = 15;
-                x_range = 55;
-                y_range = 55;
-            } else {
-                x = 15;
-                y = 140;
-                x_range = 55;
-                y_range = 55;
-            }
-
-            const selected = document.querySelectorAll('.multiple-checkboxes#' + elementId + ' option:checked');
-            const dataSelect = Array.from(selected).map(el => el.value);
-            // console.log(position);
-            let html = ``;
-            if (dataSelect.length > 0) {
-                if (dataSelect.length > 3) {
-                    x_range = x_range - 25;
-                    y_range = y_range - 25;
-                }
-                $.each(dataSelect, function(i, value) {
-                    html += `<text y="${x}px" x="${y}px" letter-spacing=".5px" text-anchor="bottom" style="font-weight: bold;">${value}</text>`;
-                    if (position == 'top') {
-                        x += x_range;
-                        y += y_range;
-                        console.log(x);
-                        console.log(y);
-                    } else {
-                        x += x_range;
-                        y -= y_range;
-                    }
-                });
-                $('#g_' + elementId).html(html);
-            } else {
-                $('#g_' + elementId).html(html);
-            }
-        });
-
-        $("#linesTop").fadeIn(1000);
-        $("#arrow").fadeIn(1500);
-        $("#linesBottom").fadeIn(2000);
-
-        $(function() {
-            $(".diradd").click(function(event) {
-                event.preventDefault();
-                $(this)
-                    .next(".diraddform")
-                    .slideToggle(500);
-            });
-        });
-    });
-</script>
+<script src="<?= base_url('assets/templates') ?>/js/fishbone/custom_form.js"></script>
 <script>
     //Doughnut Chart
     new Chart(document.getElementById("doughnut-chart"), {

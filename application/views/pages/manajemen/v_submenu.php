@@ -134,7 +134,7 @@
                     <div class="form-group row">
                         <label for="menu_parent_edit" class="col-sm-2 col-form-label">Menu Parent</label>
                         <div class="col-sm-10">
-                            <select class="custom-select" id="menu_parent_edit" name="menu_parent_edit" disabled>
+                            <select class="custom-select" id="menu_parent_edit" name="menu_parent_edit" readonly>
                                 <option value="x">- Pilih Menu -</option>
                                 <?php $menu = $this->menu->get_all_menu()->result_array();
                                 foreach ($menu as $mn) : ?><option class="<?= $mn['id_menu'] ?>" value="<?= $mn['id_menu'] ?>"><?= $mn['nama_menu'] ?></option>
