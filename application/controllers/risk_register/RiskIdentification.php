@@ -55,7 +55,6 @@ class RiskIdentification extends CI_Controller
 			"txtRiskType" 						=> $this->input->post("txtRiskType"),
 			"txtRiskCategory" 					=> $this->input->post("txtRiskCategory"),
 			"txtRiskCondition" 					=> $this->input->post("txtRiskCondition"),
-			"txtRiskTreatmentCurrent" 			=> $this->input->post("txtRiskTreatmentCurrent"),
 			"intConsequence" 					=> $this->input->post("intConsequence"),
 			"txtRiskLevel" 						=> $this->input->post("txtRiskLevel"),
 			"intLikelihood" 					=> $this->input->post("intLikelihood"),

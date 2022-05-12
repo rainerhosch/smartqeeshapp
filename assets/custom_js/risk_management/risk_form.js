@@ -223,7 +223,7 @@ $("#add_risk_reevaluation").on('click', function () {
 	clearForm()
 });
 
-$("#tombol_simpan_revaluation_risk").on('click', function (e) {
+$("#tombol_simpan_revaluation_risk").on('click', async function (e) {
 	e.preventDefault()
 
 	clsGlobal.showPreloader()
@@ -243,19 +243,21 @@ $("#tombol_simpan_revaluation_risk").on('click', function (e) {
 		return
 	}
 
-	$.ajax({
+	await $.ajax({
 		type: "post",
 		url: `${url}risk_register/RiskIdentification/simpanRevaluation`,
 		data: data,
 		dataType: "json",
 		success: function (response) {
 			renderTable()
-			clsGlobal.hidePreloader()
+			$("#button_close_revaluation").click();			
 		},
 		error: () => {
-			clsGlobal.hidePreloader()
+						
 		}
 	});
+
+	await clsGlobal.hidePreloader()
 });
 
 
@@ -431,12 +433,12 @@ function convertRiskPriority(riskPriority) {
 	}
 }
 
-$("#form_data_risk_future").on('submit', function (e) {
+$("#form_data_risk_future").on('submit', async function (e) {
 	e.preventDefault()
 	clsGlobal.showPreloader()
 	let formData = new FormData(this)
 	formData.append('intIdRiskSourceIdentification', $("#intIdRiskSourceIdentification").val())
-	$.ajax({
+	await $.ajax({
 		type: "post",
 		url: `${url}risk_register/RiskIdentification/simpan_treatment_future`,
 		data: formData,
@@ -452,7 +454,7 @@ $("#form_data_risk_future").on('submit', function (e) {
 			alert('Uppss gagal menyimpan data')
 		}
 	});
-	clsGlobal.hidePreloader()
+	await clsGlobal.hidePreloader()
 });
 
 $(document).on('click', '#buton_detail_future', async function (e) {
