@@ -136,9 +136,7 @@
                         <div class="col-sm-10">
 <!-- <<<<<<< dev -->
 <!--                             <select class="custom-select" id="menu_parent_edit" name="menu_parent_edit" readonly> -->
-<!-- ======= -->
                             <select class="custom-select menu_parent_edit" id="menu_parent_edit" name="select_menu_parent_edit" disabled>
-<!-- >>>>>>> master -->
                                 <option value="x">- Pilih Menu -</option>
                                 <?php $menu = $this->menu->get_all_menu()->result_array();
                                 foreach ($menu as $mn) : ?><option class="<?= $mn['id_menu'] ?>" value="<?= $mn['id_menu'] ?>"><?= $mn['nama_menu'] ?></option>
