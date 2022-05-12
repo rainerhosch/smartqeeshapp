@@ -17,6 +17,7 @@ class Risk_manj_performance extends CI_Controller
         login_check();
         $this->load->model('M_user', 'user');
         $this->load->model("RiskRegister/M_risk_identification", "risk_identification");
+        $this->load->model("Manajemen/M_risk_assessment_matrix", "risk_matrix");
     }
 
     public function index()
@@ -29,7 +30,42 @@ class Risk_manj_performance extends CI_Controller
         $this->load->view('template', $data);
     }
 
+    public function getsTotalJenisRisk()
+    {
+        if ($this->input->is_ajax_request()) {
+            $jenisRisk = $this->risk_matrix->getJenisTingkatResiko();
+            $listData = [];
+
+            foreach ($jenisRisk as $jenis) {
+                $total = $this->risk_identification->countJenisRisk($jenis["txtTingkatResiko"]);
+
+                $totalRisk = [
+                    "jenis" => $jenis["txtTingkatResiko"],
+                    "total" => $total
+                ];
+
+                array_push($listData, $totalRisk);
+            }
+
+            echo json_encode($listData);
+        } else {
+            echo json_encode("Invalid Request");
+        }
+    }
+
     public function getsDataTableRisk()
+    {
+        if ($this->input->is_ajax_request()) {
+            $filterData = $this->input->post("filter");
+            $data = $this->risk_identification->getsDataByFilterRisk($filterData);
+
+            echo json_encode($data);
+        } else {
+            echo json_encode("Invalid Request");
+        }
+    }
+
+    /* public function getsDataTableRisk()
     {
         $filterData = $_POST["filterData"];
         $draw = $_POST["draw"];
@@ -40,7 +76,7 @@ class Risk_manj_performance extends CI_Controller
         $data = $this->risk_identification->get_datatables_manaj_performance($draw, $start, $length, $search, $filterData);
 
         echo json_encode($search);
-    }
+    } */
 
     public function low_risk()
     {

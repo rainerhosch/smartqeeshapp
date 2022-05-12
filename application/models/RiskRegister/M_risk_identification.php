@@ -121,7 +121,29 @@ class M_risk_identification extends CI_Model
 
 	//RISK MANJ PERFORMANCE
 
-	public function get_datatables_manaj_performance($draw, $start, $length, $search, $txtFilter)
+	public function countJenisRisk($jenisRisk)
+	{
+		$this->db->select("*");
+		$this->db->join("mRiskAssessmentMatrix", "mRiskAssessmentMatrix.txtRiskMatrix = trRiskIdentification.txtLastRiskLevel");
+		$this->db->from($this->table);
+		$this->db->where("txtTingkatResiko", $jenisRisk);
+		$this->db->group_by("intIdRiskSourceIdentification");
+
+		return $this->db->get()->num_rows();
+	}
+
+	public function getsDataByFilterRisk($filterData)
+	{
+		$this->db->select("txtSourceRiskIden, txtRiskAnalysis, txtRiskType, txtRiskCategory, txtRiskCondition, txtLastRiskLevel");
+		$this->db->join("mRiskAssessmentMatrix", "mRiskAssessmentMatrix.txtRiskMatrix = trRiskIdentification.txtLastRiskLevel");
+		$this->db->from($this->table);
+		$this->db->where("txtTingkatResiko", $filterData);
+		$this->db->group_by("intIdRiskSourceIdentification");
+
+		return $this->db->get()->result_array();
+	}
+
+	/* public function get_datatables_manaj_performance($draw, $start, $length, $search, $txtFilter)
 	{
 		$output = array(
 			"draw" => $_POST['draw'],
@@ -130,5 +152,5 @@ class M_risk_identification extends CI_Model
 			"data" => $data,
 		);
 		return $output;
-	}
+	} */
 }

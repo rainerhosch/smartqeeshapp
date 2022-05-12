@@ -28,7 +28,7 @@
                 <tr>
                   <td bgcolor="#1EAF9C"><strong>LOW RISK</strong></td>
                   <td align="center" bgcolor="#E2F0D9" width="20%">
-                    <strong>70</strong>
+                    <strong id="intLowRisk">>loading...</strong>
                   </td>
                   <td align="right" width="5%" bgcolor="#E2F0D9">
                     <a data-toggle="tooltip" data-placement="top" title="Detail" href="#" style="color: black;" data-filter="LOW" class="btnUpRisk"><i class="fas fa-eye"></i></a>
@@ -36,21 +36,21 @@
                 </tr>
                 <tr>
                   <td bgcolor="#5B9BD5">MEDIUM RISK</td>
-                  <td align="center" bgcolor="#DEEBF7">20</td>
+                  <td align="center" bgcolor="#DEEBF7" id="intMediumRisk">>loading...</td>
                   <td align="right" width="5%" bgcolor="#DEEBF7">
                     <a data-toggle="tooltip" data-placement="top" title="Detail" href="#" style="color: black;" data-filter="MEDIUM" class="btnUpRisk"><i class="fas fa-eye"></i></a>
                   </td>
                 </tr>
                 <tr>
                   <td bgcolor="#FFD966">HIGH RISK</td>
-                  <td align="center" bgcolor="#FFF2CC">8</td>
+                  <td align="center" bgcolor="#FFF2CC" id="intHighRisk">>loading...</td>
                   <td align="right" width="5%" bgcolor="#FFF2CC">
                     <a data-toggle="tooltip" data-placement="top" title="Detail" href="#" style="color: black;" data-filter="HIGH" class="btnUpRisk"><i class="fas fa-eye"></i></a>
                   </td>
                 </tr>
                 <tr>
                   <td bgcolor="#E04A4A">EXTREME RISK</td>
-                  <td align="center" bgcolor="#FBE5D6">2</td>
+                  <td align="center" bgcolor="#FBE5D6" id="intExtremeRisk">loading...</td>
                   <td align="right" width="5%" bgcolor="#FBE5D6">
                     <a data-toggle="tooltip" data-placement="top" title="Detail" href="#" style="color: black;" data-filter="EXTREME" class="btnUpRisk"><i class="fas fa-eye"></i></a>
                   </td>
@@ -62,7 +62,7 @@
               <tbody>
                 <tr>
                   <td bgcolor="#7F7F7F"><strong>TOTAL RISK</strong></td>
-                  <td align="center" style="padding-left: 0px;" bgcolor="#BFBFBF" width="25.5%"><strong>100</strong></td>
+                  <td align="center" style="padding-left: 0px;" bgcolor="#BFBFBF" width="25.5%"><strong id="intTotalRisk">>loading...</strong></td>
                 </tr>
               </tbody>
             </table>
@@ -242,7 +242,7 @@
           </button>
         </div>
         <div class="modal-body table-responsive">
-          <table class="table" id="tabelRisk">
+          <table class="table table-bordered table-hover" id="tabelRisk">
             <thead>
               <tr>
                 <th class="text-center">RISK RESOURCE IDENTIFICATION</th>
@@ -253,6 +253,10 @@
                 <th class="text-center">LAST STATUS</th>
               </tr>
             </thead>
+
+            <tbody id="tbodyRisk">
+
+            </tbody>
           </table>
         </div>
         <div class="modal-footer justify-content-between">
