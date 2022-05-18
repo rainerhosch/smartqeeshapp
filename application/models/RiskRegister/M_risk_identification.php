@@ -18,12 +18,12 @@ class M_risk_identification extends CI_Model
 
 	private function _get_datatables_query($intIdTrRiskContext)
 	{
-		$this->db->select('*');		
+		$this->db->select('*');
 		$this->db->from($this->table);
 		$this->db->where([
 			'intIdTrRiskContext' => $intIdTrRiskContext
 		]);
-				
+
 		// var_dump($this->db->last_query());exit;
 		$i = 0;
 
@@ -58,7 +58,7 @@ class M_risk_identification extends CI_Model
 	{
 		$this->_get_datatables_query($intIdTrRiskContext);
 		if ($_POST['length'] != -1)
-			$this->db->limit($_POST['length'], $_POST['start']);				
+			$this->db->limit($_POST['length'], $_POST['start']);
 		$query = $this->db->get();
 		$list = $query->result();
 		$data = array();
@@ -68,7 +68,6 @@ class M_risk_identification extends CI_Model
 			$row 									= array();
 			$row["no"] 								= $no;
 			$row["txtSourceRiskIden"] 				= $field->txtSourceRiskIden;
-			$row["txtStatusImplementation"] 		= $field->txtStatusImplementation;
 			$row["bitLastStatusRiskRegister"] 		= $field->bitLastStatusRiskRegister;
 			$row["txtLastRiskLevel"] 				= $field->txtLastRiskLevel;
 			$row["txtRiskLevel"] 					= $field->txtRiskLevel;
@@ -94,7 +93,7 @@ class M_risk_identification extends CI_Model
 	}
 
 	public function count_all($intIdTrRiskContext)
-	{		
+	{
 		$this->db->from($this->table);
 		$this->db->where([
 			'intIdTrRiskContext' => $intIdTrRiskContext
@@ -103,17 +102,55 @@ class M_risk_identification extends CI_Model
 	}
 
 	public function getById($where)
-	{		
+	{
+		$this->db->select('trRiskIdentification.intIdRiskSourceIdentification, trRiskIdentification.intIdTrRiskContext,	trRiskIdentification.txtSourceRiskIden,trRiskIdentification.txtRiskAnalysis, trRiskIdentification.txtRiskType, trRiskIdentification.txtRiskCategory, trRiskIdentification.txtRiskCondition, trRiskIdentification.bitStatusKepentingan, trRiskIdentification.intIdRiskAssessmentMatrix, vw_risk_assesment_matrix.txtRiskOwner, vw_risk_assesment_matrix.txtNamaResiko,vw_risk_assesment_matrix.txtNamaLikelihood, vw_risk_assesment_matrix.txtNamaTingkatKlasifikasi, vw_risk_assesment_matrix.txtTingkatKeparahan, vw_risk_assesment_matrix.txtSebaranResiko, vw_risk_assesment_matrix.txtLamaPemulihan, vw_risk_assesment_matrix.txtBiayaPemulihan, vw_risk_assesment_matrix.txtCitraPerusahaan, trRiskIdentification.intConsequence, trRiskIdentification.intLikelihood, trRiskIdentification.txtRiskLevel');
+		$this->db->join('vw_risk_assesment_matrix', 'trRiskIdentification.intIdRiskAssessmentMatrix = vw_risk_assesment_matrix.intIdRiskAssessmentMatrix');
 		return $this->db->get_where($this->table, $where);
 	}
 
-	public function simpan_tahapan_baru($data) {		
+	public function simpan_tahapan_baru($data)
+	{
 		$this->db->insert($this->table, $data);
 		$data = $this->db->get_where($this->table, [
-			"intTimePlantMonth" 			=> $data["intTimePlantMonth"],
-			"intTimePlantYear" 				=> $data["intTimePlantYear"],
-			"txtSourceRiskIden" 			=> $data["txtSourceRiskIden"],
+			"dtmInsertedDate" 			=> $data["dtmInsertedDate"],
+			"intInsertedBy" 			=> $data["intInsertedBy"],
+			"txtSourceRiskIden" 		=> $data["txtSourceRiskIden"],
 		])->row();
 		return $data;
-	}	
+	}
+
+	//RISK MANJ PERFORMANCE
+
+	public function countJenisRisk($jenisRisk)
+	{
+		$this->db->select("*");
+		$this->db->join("mRiskAssessmentMatrix", "mRiskAssessmentMatrix.txtRiskMatrix = trRiskIdentification.txtLastRiskLevel");
+		$this->db->from($this->table);
+		$this->db->where("txtTingkatResiko", $jenisRisk);
+		$this->db->group_by("intIdRiskSourceIdentification");
+
+		return $this->db->get()->num_rows();
+	}
+
+	public function getsDataByFilterRisk($filterData)
+	{
+		$this->db->select("txtSourceRiskIden, txtRiskAnalysis, txtRiskType, txtRiskCategory, txtRiskCondition, txtLastRiskLevel");
+		$this->db->join("mRiskAssessmentMatrix", "mRiskAssessmentMatrix.txtRiskMatrix = trRiskIdentification.txtLastRiskLevel");
+		$this->db->from($this->table);
+		$this->db->where("txtTingkatResiko", $filterData);
+		$this->db->group_by("intIdRiskSourceIdentification");
+
+		return $this->db->get()->result_array();
+	}
+
+	/* public function get_datatables_manaj_performance($draw, $start, $length, $search, $txtFilter)
+	{
+		$output = array(
+			"draw" => $_POST['draw'],
+			"recordsTotal" => $length,
+			"recordsFiltered" => $length,
+			"data" => $data,
+		);
+		return $output;
+	} */
 }
