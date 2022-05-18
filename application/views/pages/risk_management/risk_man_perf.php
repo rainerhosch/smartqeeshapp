@@ -1,3 +1,20 @@
+<!-- Style -->
+<style type="text/css">
+.label-box {
+  border: 1px solid white;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  min-height: 30px;
+  min-width: 30px;
+  width: 100%;
+}
+
+.label-text{
+  font-size: 10px;
+}
+</style>
+
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
