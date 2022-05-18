@@ -21,8 +21,9 @@ class TahapanProses extends CI_Controller
 
 	public function getDataTable()
 	{
-		$intIdActivityRisk = $this->input->post('intIdActivityRisk');		
-		echo json_encode($this->tahapan_proses->get_datatables($intIdActivityRisk));
+		$intIdActivityRisk 	= $this->input->post('intIdActivityRisk');		
+		$intIdActivity 		= $this->input->post('intIdActivity');		
+		echo json_encode($this->tahapan_proses->get_datatables($intIdActivityRisk, $intIdActivity));
 	}
 
 	public function simpan()

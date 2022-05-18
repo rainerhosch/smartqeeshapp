@@ -5,7 +5,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
  *  File Type             : Model
  *  File Package          : CI_Models
  ** * * * * * * * * * * * * * * * * * **
- *  Author                : Agung Kusaeri
+ *  Author                : Dimas Fauzan
  *  Date Created          : 30/03/2022
  *  Quots of the code     :
  */ 

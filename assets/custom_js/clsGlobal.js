@@ -223,7 +223,7 @@ clsGlobalClass.prototype.showPreloader = function () {
 
 clsGlobalClass.prototype.hidePreloader = function () {
 	setTimeout(() => {
-		$(".preloader").css('height', 0);	
+		$(".preloader").css('height', '0%');	
 		$(".preloader").children().hide();
 	}, 3000)
 }

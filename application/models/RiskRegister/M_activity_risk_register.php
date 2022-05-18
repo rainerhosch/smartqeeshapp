@@ -13,15 +13,17 @@ class M_activity_risk_register extends CI_Model
 {
 	var $table = 'trActivityRiskRegister'; //nama tabel dari database
 	var $column_order = array(null); //field yang ada di table user
-	var $column_search = array('txtNamaActivity'); //field yang diizin untuk pencarian 
+	var $column_search = array('mActivity.txtNamaActivity'); //field yang diizin untuk pencarian 
 	var $order = array('dtmInsertedBy' => 'desc'); // default order 
 
 	private function _get_datatables_query()
 	{
-		$this->db->select('trActivityRiskRegister.intIdActivityRisk, mActivity.txtNamaActivity');		
+		$this->db->select('trActivityRiskRegister.intIdActivityRisk, mActivity.txtNamaActivity, mActivity.intIdActivity');		
 		$this->db->from($this->table);
 		$this->db->join('mActivity', 'trActivityRiskRegister.intIdActivity=mActivity.intIdActivity');
-		$this->db->order_by('trActivityRiskRegister.intIdActivityRisk', 'desc');
+		$this->db->where('mActivity.intIdActivity', $this->session->userdata('id_departemen'));
+		
+		// $this->db->order_by('trActivityRiskRegister.intIdActivityRisk', 'desc');
 
 		$i = 0;
 
@@ -65,8 +67,9 @@ class M_activity_risk_register extends CI_Model
 			$no++;
 			$row = array();
 			$row["no"] = $no;
-			$row["txtNamaActivity"] = $field->txtNamaActivity;
-			$row["intIdActivityRisk"] = $field->intIdActivityRisk;
+			$row["txtNamaActivity"] 	= $field->txtNamaActivity;
+			$row["intIdActivityRisk"] 	= $field->intIdActivityRisk;
+			$row["intIdActivity"] 		= $field->intIdActivity;
 			$data[] = $row;
 		}
 

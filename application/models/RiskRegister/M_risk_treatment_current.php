@@ -10,13 +10,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
  *  Quots of the code     :
  */ 
 
-class M_risk_category extends CI_Model {
+class M_risk_treatment_current extends CI_Model {
 
-    
+    var $table = 'trRiskTreatmentCurrent'; //nama tabel dari database
 
-    public function getType()
+    public function simpan($data)
     {
-        return $this->db->get('risk_category')->result_array();
+        $this->db->insert($this->table, $data);	
     }
+
+	public function getData ($where)
+	{
+		return $this->db->get_where($this->table, $where);		
+	}
 
 }
