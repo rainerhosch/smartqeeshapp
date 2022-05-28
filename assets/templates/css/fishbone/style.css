@@ -4,6 +4,7 @@
     display: inline-block;
     font-size: 1rem;
     padding: 1rem;
+    text-align: center;
     text-align: -webkit-auto;
     border-radius: 30px;
     -webkit-box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.15);
@@ -11,7 +12,7 @@
     -webkit-transition: -webkit-transform .3s;
     transition: -webkit-transform .3s;
     transition: transform .3s;
-    /* width: 33%; */
+    width: 50%;
     /* of wrapper width */
     vertical-align: bottom;
     transition: transform .3s, -webkit-transform .3s
@@ -43,14 +44,14 @@
     /* background-image: -webkit-gradient(linear, left top, right bottom, from(rgba(255, 255, 255, 0.8)), to(rgb(245, 242, 242))); */
     font-size: 1rem;
     padding: 1rem;
-    text-align: -webkit-auto;
+    text-align: center;
     border-radius: 30px;
     -webkit-box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.15);
     box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.15);
     -webkit-transition: -webkit-transform .3s;
     transition: -webkit-transform .3s;
     transition: transform .3s;
-    /* width: 33%; */
+    width: 50%;
     /* of wrapper width */
     vertical-align: text-top;
     transition: transform .3s, -webkit-transform .3s

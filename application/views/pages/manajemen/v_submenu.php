@@ -134,12 +134,13 @@
                     <div class="form-group row">
                         <label for="menu_parent_edit" class="col-sm-2 col-form-label">Menu Parent</label>
                         <div class="col-sm-10">
-                            <select class="custom-select" id="menu_parent_edit" name="menu_parent_edit" disabled>
+                            <select class="custom-select menu_parent_edit" id="menu_parent_edit" name="select_menu_parent_edit" disabled>
                                 <option value="x">- Pilih Menu -</option>
                                 <?php $menu = $this->menu->get_all_menu()->result_array();
                                 foreach ($menu as $mn) : ?><option class="<?= $mn['id_menu'] ?>" value="<?= $mn['id_menu'] ?>"><?= $mn['nama_menu'] ?></option>
                                 <?php endforeach; ?>
                             </select>
+                            <input type="hidden" class="menu_parent_edit" name="menu_parent_edit" value="" />
                         </div>
                     </div>
                     <div class="form-group row">
@@ -247,7 +248,7 @@
                         data: form.serializeArray(),
                         dataType: "json",
                         success: function(response) {
-                            console.log(response);
+                            // console.log(response);
                             let icon = ``;
                             let title = ``;
                             let text = ``;
@@ -286,7 +287,8 @@
                             success: function(response) {
                                 // console.log(response)
                                 $('#modalEditSubmenu').modal("show");
-                                $("#menu_parent_edit").val(response.data.id_menu);
+                                $(".menu_parent_edit").val(response.data.id_menu);
+                                // $("#menu_parent_edit2").val(response.data.id_menu);
                                 $("#id_submenu_edit").val(response.data.id_submenu);
                                 $("#nama_submenu_edit").val(response.data.nama_submenu);
                                 $("#url_submenu_edit").val(response.data.url);
