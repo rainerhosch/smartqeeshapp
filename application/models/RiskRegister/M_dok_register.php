@@ -111,6 +111,6 @@ class M_dok_register extends CI_Model
 		$this->db->join('mSection', 'mDepartemen.intIdSection = mSection.intIdSection');				
 		$this->db->join('mPlant', 'mSection.intIdPlant = mPlant.intIdPlant');
 		$this->db->where('trDokRiskRegister.intIdDokRiskRegister', $id);
-		return $this->db->get()->row();								
+		return $this->db->get();								
 	}
 }

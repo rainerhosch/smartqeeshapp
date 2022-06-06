@@ -9,6 +9,9 @@ $db['live'] = array(
 	'hostname' => '45.130.230.220',
 	'username' => 'u1121502_smarqeesh_dev',
 	'password' => 'smarqeesh',
+	// DATABASE PRODUCTION
+	// 'database' => 'u1121502_smart_qeesh',
+	// DATABASE TESTING
 	'database' => 'u1121502_smart_qeesh_testing',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
