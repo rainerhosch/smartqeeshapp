@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-$active_group = 'live';
+$active_group = 'development';
 $query_builder = TRUE;
 
 $db['live'] = array(
@@ -33,9 +33,9 @@ $db['live'] = array(
 $db['development'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => '',
-	'database' => 'u1121502_smart_qeesh',
+	'username' => 'pmauser',
+	'password' => 'pmapass',
+	'database' => 'u1121502_smart_qeesh_testing',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

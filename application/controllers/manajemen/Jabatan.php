@@ -1,21 +1,21 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 /**
- *  File Name             : Likelihood.php
+ *  File Name             : Jabatan.php
  *  File Type             : Controller
  *  File Package          : CI_Controller
  ** * * * * * * * * * * * * * * * * * **
  *  Author                : Agung Kusaeri
- *  Date Created          : 04/04/2022
+ *  Date Created          : 06/06/2022
  *  Quots of the code     : 'sabar ya'
  */
-class Likelihood extends CI_Controller{
 
-    public function __construct()
+class Jabatan extends CI_Controller{
+	public function __construct()
     {
         parent::__construct();
         login_check();
-        $this->load->model('M_likelihood', 'likelihood');
+        $this->load->model('Manajemen/M_jabatan', 'jabatan');
     }
 
     public function index()
@@ -23,8 +23,8 @@ class Likelihood extends CI_Controller{
 
         $data['title'] = 'Smart Qeesh App';
         $data['page'] = 'Manajemen';
-        $data['subpage'] = 'Likelihood';
-        $data['content'] = 'pages/manajemen/v_likelihood';
+        $data['subpage'] = 'Jabatan';
+        $data['content'] = 'pages/manajemen/v_jabatan';
         $this->load->view('template', $data);
     }
 
@@ -36,51 +36,44 @@ class Likelihood extends CI_Controller{
                 'code' => 200,
                 'status' => true,
                 'msg' => 'Success',
-                'data' => $this->likelihood->get()->result_array()
+                'data' => $this->jabatan->get()->result()
             ];
         }
         echo json_encode($data);
     }
 
-    public function store()
+	public function store()
     {
         if($this->input->is_ajax_request())
         {
             $input = $this->input->post();
             
-            if($input['intIdLikelihood'])
+            if($input['intIdJabatan'])
             {
-                $id = $input['intIdLikelihood'];
+                $id = $input['intIdJabatan'];
                 $datainput = [
-                    'intUpdatedBy' => $this->session->userdata('user_id'),
-                    'dtmUpdatedDate' => date('Y-m-d'),
-                    'intLikelihoodNumber' => $this->input->post('intLikelihoodNumber'),
-                    'txtNamaLikelihood' => $this->input->post('txtNamaLikelihood'),
-                    'txtKeteranganLikelihood' => $this->input->post('txtKeteranganLikelihood')
+                    'txtNamaJabatan' => $this->input->post('txtNamaJabatan'),
+					'bitActive' => $this->input->post('bitActive')
                 ];
                 // proses update
-                $status =  $this->likelihood->update($id,$datainput);
+                $status =  $this->jabatan->update($id,$datainput);
                 $data = [
                     'code' => 200,
-                    'status' => 'OK',
-                    'msg' => 'Likelihood berhasil diupdate',
+                    'status' => 'success',
+                    'msg' => 'Jabatan berhasil diupdate',
                     'data' => NULL
                 ];
             }else{
+				$namaAgama = $this->input->post('txtNamaJabatan');
                 $datainput = [
-                    'intInsertedBy' => $this->session->userdata('user_id'),
-                    'dtmInsertedDate' => date('Y-m-d'),
-                    'intUpdatedBy' => $this->session->userdata('user_id'),
-                    'dtmUpdatedDate' => date('Y-m-d'),
-                    'intLikelihoodNumber' => $this->input->post('intLikelihoodNumber'),
-                    'txtNamaLikelihood' => $this->input->post('txtNamaLikelihood'),
-                    'txtKeteranganLikelihood' => $this->input->post('txtKeteranganLikelihood')
+                    'txtNamaJabatan' => $namaAgama,
+					'bitActive' => $this->input->post('bitActive')
                 ];
-                $status =  $this->likelihood->create($datainput);
+                $status =  $this->jabatan->create($datainput);
                 $data = [
                     'code' => 200,
                     'status' => $status,
-                    'msg' => 'Likelihood berhasil ditambahkan',
+                    'msg' => 'Jabatan berhasil ditambahkan',
                     'data' => NULL
                 ];
             }
@@ -89,18 +82,18 @@ class Likelihood extends CI_Controller{
         }
     }
 
-    public function destroy()
+	public function destroy()
     {
         if($this->input->is_ajax_request())
         {
             $id = $this->input->post('id');
             if($id)
             {
-                $this->likelihood->destroy($id);
+                $this->jabatan->destroy($id);
                 $data = [
                     'code' => 200,
                     'status' => true,
-                    'msg' => 'Likelihood berhasil dihapus',
+                    'msg' => 'Jabatan berhasil dihapus',
                     'data' => NULL
                 ];
             }else{
@@ -108,7 +101,7 @@ class Likelihood extends CI_Controller{
                 $data = [
                     'code' => 400,
                     'status' => false,
-                    'msg' => 'Likelihood tidak ditemukan',
+                    'msg' => 'agama tidak ditemukan',
                     'data' => NULL
                 ];
             }
@@ -122,7 +115,7 @@ class Likelihood extends CI_Controller{
         if($this->input->is_ajax_request())
         {
             $keyword = $this->input->post('keyword');
-            $result  = $this->likelihood->search($keyword);
+            $result  = $this->jabatan->search($keyword)->result();
             $data = [
                 'code' => 200,
                 'status' => true,
@@ -133,5 +126,4 @@ class Likelihood extends CI_Controller{
 
         echo json_encode($data);
     }
-
 }

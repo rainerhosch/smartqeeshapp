@@ -11,7 +11,7 @@
                     <div class="col-sm-12 py-2 mt-2" style="background-color: rgb(66, 66, 66);">
                         <ol class="breadcrumb  float-sm-left">
                             <li class="breadcrumb-item"><a href="#">RISK MANAGEMENT</a></li>
-                            <li class="breadcrumb-item text-white">MEDICAL CHECKUP</li>
+                            <li class="breadcrumb-item text-white">INTERNAL CLINIC</li>
                         </ol>
                     </div>
                 </div>
@@ -23,26 +23,23 @@
         <section class="content">
             <div class="card">
                 <!--TAB-->
-                <ul class="nav nav-tabs bg-secondary " id="custom-content-above-tab" role="tablist" style="margin-bottom: -1px;">
+                <ul class="nav nav-tabs bg-secondary" id="custom-content-above-tab" role="tablist" style="margin-bottom: -1px;">
                     <li class="nav-item">
-                        <a class="nav-link bg-secondary active-tab btn active" id="custom-content-above-home-tab" data-toggle="pill" href="#input-data-personal-mcu" role="tab" aria-controls="custom-content-above-home" aria-selected="true">INPUT DATA PERSONAL MCU</a>
+                        <a class="nav-link bg-secondary active-tab btn active" id="custom-content-above-home-tab" data-toggle="pill" href="#employee-visit-clinic" role="tab" aria-controls="custom-content-above-home" aria-selected="true">EMPLOYEE VISIT CLINIC</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link bg-secondary active-tab btn" id="custom-content-above-home-tab" data-toggle="pill" href="#personal-mcu-record" role="tab" aria-controls="custom-content-above-home" aria-selected="true">PERSONAL MCU RECORD</a>
+                        <a class="nav-link bg-secondary active-tab btn" id="custom-content-above-home-tab" data-toggle="pill" href="#clinic-visit-record" role="tab" aria-controls="custom-content-above-home" aria-selected="true">CLINIC VISIT RECORD</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link bg-secondary active-tab btn" id="custom-content-above-home-tab" data-toggle="pill" href="#mcu-performance" role="tab" aria-controls="custom-content-above-home" aria-selected="true">MCU PERFORMANCE</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link bg-secondary active-tab btn" id="custom-content-above-home-tab" data-toggle="pill" href="#unfit-followup" role="tab" aria-controls="custom-content-above-home" aria-selected="true">UNFIT FOLLOWUP</a>
+                        <a class="nav-link bg-secondary active-tab btn" id="custom-content-above-home-tab" data-toggle="pill" href="#clinic-visit-performance" role="tab" aria-controls="custom-content-above-home" aria-selected="true">CLINIC VISIT PERFORMANCE</a>
                     </li>
                 </ul>
                 <!--/.TAB-->
                 <!--TAB CONTENT-->
                 <div class="tab-content" id="custom-content-above-tabContent">
 
-                    <!--INPUT DATA PERSONAL MCU-->
-                    <div class="tab-pane fade show active" id="input-data-personal-mcu" role="tabpanel" aria-labelledby="custom-content-above-home-tab">
+                    <!-- EMPLOYEE VISIT CLINIC-->
+                    <div class="tab-pane fade show active" id="employee-visit-clinic" role="tabpanel" aria-labelledby="custom-content-above-home-tab">
                         <!-- form -->
                         <form class="form-horizontal" method="post">
                             <!--card body-->
@@ -84,120 +81,52 @@
                                 <br>
 
                                 <div class="form-group row">
-                                    <label for="input" class="col-sm-2 col-form-label" style="text-align:right">MCU PERIOD :</label>
+                                    <label for="input" class="col-sm-2 col-form-label" style="text-align:right">DATE :</i> </label>
                                     <div class="col-sm-2">
-                                        <select class="form-control" id="input" name="input" placeholder="TEXT">
-                                            <option>SELECT</option>
-                                            <option>option 1</option>
-                                            <option>option 2</option>
-                                            <option>option 3</option>
-                                            <option>option 4</option>
-                                            <option>option 5</option>
-                                        </select>
-                                    </div>
-
-                                    <label for="input" class="col-sm-2 col-form-label" style="text-align:right">MCU TYPE :</label>
-                                    <div class="col-sm-2">
-                                        <select class="form-control" id="input" name="input" placeholder="TEXT">
-                                            <option>SELECT</option>
-                                            <option>option 1</option>
-                                            <option>option 2</option>
-                                            <option>option 3</option>
-                                            <option>option 4</option>
-                                            <option>option 5</option>
-                                        </select>
+                                        <input type="text" class="form-control" id="input" name="input" placeholder="TEXT">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="input" class="col-sm-2 col-form-label" style="text-align:right">HOSPITAL :</label>
+                                    <label for="input" class="col-sm-2 col-form-label" style="text-align:right">PARAMEDIC NAME :</i> </label>
                                     <div class="col-sm-2">
-                                        <select class="form-control" id="input" name="input" placeholder="TEXT">
-                                            <option>SELECT</option>
-                                            <option>option 1</option>
-                                            <option>option 2</option>
-                                            <option>option 3</option>
-                                            <option>option 4</option>
-                                            <option>option 5</option>
-                                        </select>
+                                        <input type="text" class="form-control" id="input" name="input" placeholder="TEXT">
                                     </div>
-
-                                    <label for="input" class="col-sm-2 col-form-label" style="text-align:right">DATE OF MCU :</label>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="input" class="col-sm-2 col-form-label" style="text-align:right">COMPLAINT :</i> </label>
                                     <div class="col-sm-2">
-                                        <select class="form-control" id="input" name="input" placeholder="TEXT">
-                                            <option>SELECT</option>
-                                            <option>option 1</option>
-                                            <option>option 2</option>
-                                            <option>option 3</option>
-                                            <option>option 4</option>
-                                            <option>option 5</option>
-                                        </select>
+                                        <input type="text" class="form-control" id="input" name="input" placeholder="TEXT">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="input" class="col-sm-2 col-form-label" style="text-align:right">ACTION :</i> </label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control" id="input" name="input" placeholder="TEXT">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="input" class="col-sm-2 col-form-label" style="text-align:right">MEDICINE :</i> </label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control" id="input" name="input" placeholder="TEXT">
                                     </div>
                                 </div>
 
                                 <br>
 
                                 <div class="form-group row">
-                                    <label for="input" class="col-sm-2 col-form-label" style="text-align:right">HEALTH STATUS :</label>
-                                    <div class="col-sm-2">
-                                        <select class="form-control" id="input" name="input" placeholder="TEXT">
-                                            <option>SELECT</option>
-                                            <option>option 1</option>
-                                            <option>option 2</option>
-                                            <option>option 3</option>
-                                            <option>option 4</option>
-                                            <option>option 5</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="input" class="col-sm-2 col-form-label" style="text-align:right">IDENTIFIED DISEASE :</label>
-                                    <div class="col-sm-2">
-                                        <select class="form-control" id="input" name="input" placeholder="TEXT">
-                                            <option>SELECT</option>
-                                            <option>option 1</option>
-                                            <option>option 2</option>
-                                            <option>option 3</option>
-                                            <option>option 4</option>
-                                            <option>option 5</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="input" class="col-sm-2 col-form-label" style="text-align:right">TREATMENT RECOMMENDATION :</label>
-                                    <div class="col-sm-2">
-                                        <select class="form-control" id="input" name="input" placeholder="TEXT">
-                                            <option>SELECT</option>
-                                            <option>option 1</option>
-                                            <option>option 2</option>
-                                            <option>option 3</option>
-                                            <option>option 4</option>
-                                            <option>option 5</option>
-                                        </select>
-                                    </div>
+                                    <label for="input" class="col-sm-2 col-form-label" style="text-align:right"></label>
+                                    <button class="btn btn-flat btn-danger mt-2 col-sm-2" onClick="dynamicinput()">SAVE</button>
                                 </div>
 
-                                <br>
-
-                                <div class="form-group row">
-                                    <label for="input" class="col-sm-2 col-form-label" style="text-align:right">UPLOAD MCU REPORT :</label>
-                                    <button class="btn btn-flat btn-secondary mt-2 col-sm-1" onClick="dynamicinput()">BROWSE</button>
-                                </div>
-
-                                <!--Button-->
-                                <div class="card-footer">
-                                    <button type="submit" class="btn btn-primary float-right" style="margin-left: 20px;">Submit</button>
-                                    <button type="reset" class="btn btn-warning float-right">Reset</button>
-                                </div>
-                                <!--/.Button-->
                             </div>
                             <!-- /.card-body -->
                         </form>
                         <!--/.form-->
                     </div>
-                    <!--/.INPUT DATA PERSONAL MCU-->
+                    <!--/.EMPLOYEE VISIT CLINIC-->
 
-                    <!--PERSONAL MCU RECORD-->
-                    <div class="tab-pane fade " id="personal-mcu-record" role="tabpanel" aria-labelledby="custom-content-above-profile-tab">
+                    <!--CLINIC VISIT RECORD-->
+                    <div class="tab-pane fade" id="clinic-visit-record" role="tabpanel" aria-labelledby="custom-content-above-profile-tab">
                         <div class="card-body" style="background-color: #77a0e6;">
                             <div class="form-grup row mb-2 col-12">
                                 <label for="input" class="col-form-label col-2" style="text-align:right">MCU PERIOD :</label>
@@ -327,10 +256,10 @@
 
                         </div>
                     </div>
-                    <!--/.PERSONAL MCU RECORD-->
+                    <!--/.CLINIC VISIT RECORD-->
 
-                    <!--MCU PERFORMANCE-->
-                    <div class="tab-pane fade" id="mcu-performance" role="tabpanel" aria-labelledby="custom-content-above-home-tab">
+                    <!--CLINIC VISIT PERFOMANCE-->
+                    <div class="tab-pane fade" id="clinic-visit-performance" role="tabpanel" aria-labelledby="custom-content-above-home-tab">
                         <!-- form -->
                         <form class="form-horizontal" method="post">
                             <!--card body-->
@@ -376,19 +305,7 @@
                         </form>
                         <!--/.form-->
                     </div>
-                    <!--/.MCU PERFORMANCE-->
-
-                    <!--UNFIT FOLLOWUP-->
-                    <div class="tab-pane fade" id="unfit-followup" role="tabpanel" aria-labelledby="custom-content-above-home-tab">
-                        <!-- form -->
-                        <form class="form-horizontal" method="post">
-                            <!--card body-->
-
-                            <!-- /.card-body -->
-                        </form>
-                        <!--/.form-->
-                    </div>
-                    <!--/.UNFIT FOLLOWUP-->
+                    <!--/.CLINIC VISIT PERFORMANCE-->
 
                 </div>
                 <!--/.TAB CONTENT-->

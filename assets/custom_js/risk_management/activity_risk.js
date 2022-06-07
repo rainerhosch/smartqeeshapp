@@ -86,9 +86,29 @@ $(document).on('click', "#tombol_detail_activity", function (e) {
 	e.preventDefault()
 	let id = $(this).data('id');
 	let id_activity = $(this).data('id_activity');
-	$("#intIdActivityRisk").val(id);
+	let id_dok_register = $("#intIdDokRiskRegister").val()
+	if (id == null || id == "") {
+		$.ajax({
+			type: "post",
+			url: `${url}risk_register/Activity/simpan_activity_exist`,
+			data: {
+				intIdDokRiskRegister: id_dok_register,
+				intIdActivity: id_activity,
+			},
+			dataType: "json",
+			success: function (response) {
+				$("#intIdActivityRisk").val(response.data.intIdActivityRisk);
+			},
+			error: () => {
+				alert('Ups Tidak Dapat Memproses Data Activity !')
+				return
+			}
+		});
+	} else {
+		$("#intIdActivityRisk").val(id);
+	}
 	$("#intIdActivity").val(id_activity);
-	$("#txtNamaActivityShow").val($(this).data('nama'));	
+	$("#txtNamaActivityShow").val($(this).data('nama'));
 	showDetailActivity()		
 });
 
