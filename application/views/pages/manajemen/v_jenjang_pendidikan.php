@@ -36,12 +36,12 @@
 							</div>
 						</div>
 						<div class="card-body">
-							<a class="btn btn-sm btn-primary btnAdd mb-2" data-toggle="modal">Add Agama</a>
+							<a class="btn btn-sm btn-primary btnAdd mb-2" data-toggle="modal">Add Jenjang Pendidikan</a>
 							<table class="table table-sm">
 								<thead>
 									<tr>
 										<th class="text-center">#</th>
-										<th class="text-center">NAMA AGAMA</th>
+										<th class="text-center">NAMA JENJANG</th>
 										<th class="text-center">TOOL</th>
 									</tr>
 								</thead>
@@ -77,12 +77,12 @@
 			</div>
 			<div class="modal-body">
 				<form id="myForm">
-					<input type="number" name="intidAgama" id="intidAgama" hidden>
+					<input type="number" name="intIdJenjangPendidikan" id="intIdJenjangPendidikan" hidden>
 					<div class="form-group row">
-						<label for="txtNamaAgama" class="col-sm-3 col-form-label">Nama Agama</label>
+						<label for="txtNamaJenjangPendidikan" class="col-sm-3 col-form-label">Nama Jenjang</label>
 						<div class="col-sm-9">
-							<input type="text" class="form-control" id="txtNamaAgama" name="txtNamaAgama"
-								placeholder="Nama Agama" required>
+							<input type="text" class="form-control" id="txtNamaJenjangPendidikan" name="txtNamaJenjangPendidikan"
+								placeholder="Nama Jenjang" required>
 						</div>
 					</div>
 					<div class="row">
@@ -100,7 +100,7 @@
 	$(document).ready(function () {
 		$.ajax({
 			type: "POST",
-			url: "<?= base_url() ?>manajemen/agama/get_json",
+			url: "<?= base_url() ?>manajemen/jenjang_pendidikan/get_json",
 			dataType: "json",
 			success: function (response) {
 				var html_mn = ``;
@@ -109,37 +109,37 @@
 					no = key + 1;
 					html_mn += `<tr>`;
 					html_mn += `<td class="text-center">${no}</td>`;
-					html_mn += `<td class="text-center">${val.txtNamaAgama}</td>`;
+					html_mn += `<td class="text-center">${val.txtNamaJenjangPendidikan}</td>`;
 					html_mn +=
-						`<td class="text-center"><a class="btn btn-xs btn-warning btnEdit" data-id="${val.intidAgama}" data-nama="${val.txtNamaAgama}"><i class="fas fa-pen"></i></a> | <a class="btn btn-xs btn-danger btnDelete" data-id="${val.intidAgama}"><i class="fas fa-trash-alt"></i></a></td>`;
+						`<td class="text-center"><a class="btn btn-xs btn-warning btnEdit" data-id="${val.intIdJenjangPendidikan}" data-nama="${val.txtNamaJenjangPendidikan}"><i class="fas fa-pen"></i></a> | <a class="btn btn-xs btn-danger btnDelete" data-id="${val.intIdJenjangPendidikan}"><i class="fas fa-trash-alt"></i></a></td>`;
 					html_mn += `</tr>`;
 				});
 				$('#menu_tbody').html(html_mn);
 
 				// event Klik tombol add
 				$('.btnAdd').on('click', function () {
-					$('.modal-title').text('Tambah Agama');
-					$('#intIdAgama').val('');
-					$('#txtNamaAgama').val('');
+					$('.modal-title').text('Tambah Jenjang Pendidikan');
+					$('#intIdJenjangPendidikan').val('');
+					$('#txtNamaJenjangPendidikan').val('');
 					$('#myModal').modal('show');
 				})
 
 				$('body').on('click', '.btnEdit', function () {
 					var id = $(this).data('id');
 					var nama = $(this).data('nama');
-					$('.modal-title').text('Edit Agama');
-					$('#intidAgama').val(id);
-					$('#txtNamaAgama').val(nama);
+					$('.modal-title').text('Edit Jenjang Pendidikan');
+					$('#intIdJenjangPendidikan').val(id);
+					$('#txtNamaJenjangPendidikan').val(nama);
 					$('#myModal').modal('show');
 				})
 				// event submit
 				$('#myForm').on('submit', function (e) {
 					e.preventDefault();
-					var id = $('#intidAgama').val();
+					var id = $('#intIdJenjangPendidikan').val();
 					var form = $('#myForm');
 					$.ajax({
 						type: "POST",
-						url: "<?= base_url() ?>manajemen/agama/store",
+						url: "<?= base_url() ?>manajemen/jenjang_pendidikan/store",
 						data: form.serializeArray(),
 						dataType: "json",
 						success: function (response) {
@@ -180,7 +180,7 @@
 						if (result.isConfirmed) {
 							$.ajax({
 								type: "POST",
-								url: "<?= base_url() ?>manajemen/agama/destroy",
+								url: "<?= base_url() ?>manajemen/jenjang_pendidikan/destroy",
 								data: {
 									id: id
 								},
@@ -213,7 +213,7 @@
 					var keyword = $(this).val();
 					$.ajax({
 						type: "POST",
-						url: "<?= base_url() ?>manajemen/agama/search",
+						url: "<?= base_url() ?>manajemen/jenjang_pendidikan/search",
 						dataType: "json",
 						data: {
 							keyword: keyword
@@ -227,9 +227,9 @@
 								html_mn +=
 									`<td class="text-center">${no}</td>`;
 								html_mn +=
-									`<td class="text-center">${val.txtNamaAgama}</td>`;
+									`<td class="text-center">${val.txtNamaJenjangPendidikan}</td>`;
 								html_mn +=
-									`<td class="text-center"><a class="btn btn-xs btn-warning btnEdit" data-id="${val.intidAgama}" data-nama="${val.txtNamaAgama}"><i class="fas fa-pen"></i></a> | <a class="btn btn-xs btn-danger btnDelete" data-id="${val.intidAgama}"><i class="fas fa-trash-alt"></i></a></td>`;
+									`<td class="text-center"><a class="btn btn-xs btn-warning btnEdit" data-id="${val.intIdJenjangPendidikan}" data-nama="${val.txtNamaJenjangPendidikan}"><i class="fas fa-pen"></i></a> | <a class="btn btn-xs btn-danger btnDelete" data-id="${val.intIdJenjangPendidikan}"><i class="fas fa-trash-alt"></i></a></td>`;
 								html_mn += `</tr>`;
 							});
 							$('#menu_tbody').html(html_mn);

@@ -136,6 +136,8 @@
 				// event Klik tombol add
 				$('.btnAdd').on('click', function () {
 					$('.modal-title').text('Tambah Jabatan');
+					$('#intIdJabatan').val('');
+					$('#txtNamaJabatan').val('');
 					$('#myModal').modal('show');
 				})
 

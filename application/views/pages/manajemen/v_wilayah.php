@@ -136,7 +136,8 @@
 				// event Klik tombol add
 				$('.btnAdd').on('click', function () {
 					$('.modal-title').text('Tambah Wilayah');
-
+					$('#intIdWilayah').val('');
+					$('#txtNamaWilayah').val('');
 					// get negara
 					$.ajax({
 						type: 'POST',

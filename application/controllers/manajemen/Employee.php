@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 /**
- *  File Name             : Wilayah.php
+ *  File Name             : Employee.php
  *  File Type             : Controller
  *  File Package          : CI_Controller
  ** * * * * * * * * * * * * * * * * * **
@@ -10,12 +10,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
  *  Quots of the code     : 'sabar ya'
  */
 
-class Wilayah extends CI_Controller{
+class Employee extends CI_Controller{
 	public function __construct()
     {
         parent::__construct();
         login_check();
-        $this->load->model('Manajemen/M_wilayah', 'wilayah');
+        $this->load->model('Manajemen/M_employee', 'employee');
     }
 
     public function index()
@@ -23,9 +23,24 @@ class Wilayah extends CI_Controller{
 
         $data['title'] = 'Smart Qeesh App';
         $data['page'] = 'Manajemen';
-        $data['subpage'] = 'Wilayah';
-        $data['content'] = 'pages/manajemen/v_wilayah';
+        $data['subpage'] = 'Employee';
+        $data['content'] = 'pages/manajemen/v_employee';
         $this->load->view('template', $data);
+    }
+
+	public function getDepartments()
+    {
+		$this->load->model('Manajemen/M_department','department');
+        if($this->input->is_ajax_request())
+        {
+            $data = [
+                'code' => 200,
+                'status' => true,
+                'msg' => 'Success',
+                'data' => $this->department->getsDepartmentActive()
+            ];
+        }
+        echo json_encode($data);
     }
 
     public function get_json()
@@ -36,70 +51,57 @@ class Wilayah extends CI_Controller{
                 'code' => 200,
                 'status' => true,
                 'msg' => 'Success',
-                'data' => $this->wilayah->get()->result()
+                'data' => $this->employee->get()->result()
             ];
         }
         echo json_encode($data);
     }
 
-	public function getByKodeNegara()
-    {
-        if($this->input->is_ajax_request())
-        {
-			$kode_negara = $this->input->post('kode_negara');
-            $data = [
-                'code' => 200,
-                'status' => true,
-                'msg' => 'Success',
-                'data' => $this->wilayah->getByKodeNegara($kode_negara)->result()
-            ];
-        }
-        echo json_encode($data);
-    }
+	public function show($id)
+	{
+		$data['employee'] = $this->employee->find($id)->row();
+		$this->load->view('pages/manajemen/employee/show',$data);
+	}
 
 	public function store()
     {
-		if($this->input->is_ajax_request())
+        if($this->input->is_ajax_request())
         {
             $input = $this->input->post();
             
-            if($input['intIdWilayah'])
+            if($input['intIdEmployee'])
             {
-                $id = $input['intIdWilayah'];
-                $datainput = [
-					'txtKodeNegara' => $this->input->post('txtKodeNegara'),
-                    'txtNamaWilayah' => $this->input->post('txtNamaWilayah'),
-                ];
+                $id = $input['intIdEmployee'];
+                $datainput = $this->input->post();
                 // proses update
-                $status =  $this->wilayah->update($id,$datainput);
+                $status =  $this->employee->update($id,$datainput);
                 $data = [
                     'code' => 200,
                     'status' => 'success',
-                    'msg' => 'Wilayah berhasil diupdate',
+                    'msg' => 'Employee berhasil diupdate',
                     'data' => NULL
                 ];
             }else{
-                $datainput = [
-					'txtKodeNegara' => $this->input->post('txtKodeNegara'),
-                    'txtNamaWilayah' => $this->input->post('txtNamaWilayah')
-                ];
-                $status =  $this->wilayah->create($datainput);
-                if($status)
+				$datainput = $this->input->post();
+				$nikValid = $this->employee->findByNik($this->input->post('txtNikEmployee'))->num_rows();
+				if($nikValid > 1)
 				{
 					$data = [
-						'code' => 200,
-						'status' => $status,
-						'msg' => 'Wilayah berhasil ditambahkan',
-						'data' => NULL
-					];
-				}else{
-					$data = [
 						'code' => 400,
-						'status' => $status,
-						'msg' => 'Wilayah gagal ditambahkan',
+						'status' => 'error',
+						'msg' => 'NIK employee sudah ada.',
 						'data' => NULL
 					];
+					echo json_encode($data);
+					die();
 				}
+                $status =  $this->employee->create($datainput);
+                $data = [
+                    'code' => 200,
+                    'status' => $status,
+                    'msg' => 'Employee berhasil ditambahkan',
+                    'data' => NULL
+                ];
             }
 
             echo json_encode($data);
@@ -113,11 +115,11 @@ class Wilayah extends CI_Controller{
             $id = $this->input->post('id');
             if($id)
             {
-                $this->wilayah->destroy($id);
+                $this->employee->destroy($id);
                 $data = [
                     'code' => 200,
                     'status' => true,
-                    'msg' => 'Wilayah berhasil dihapus',
+                    'msg' => 'Employee berhasil dihapus',
                     'data' => NULL
                 ];
             }else{
@@ -139,7 +141,7 @@ class Wilayah extends CI_Controller{
         if($this->input->is_ajax_request())
         {
             $keyword = $this->input->post('keyword');
-            $result  = $this->wilayah->search($keyword)->result();
+            $result  = $this->employee->search($keyword)->result();
             $data = [
                 'code' => 200,
                 'status' => true,

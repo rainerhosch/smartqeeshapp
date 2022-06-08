@@ -128,6 +128,10 @@
 				// event Klik tombol add
 				$('.btnAdd').on('click', function () {
 					$('.modal-title').text('Tambah Negara');
+					$('#txtKodeNegara').val('');
+					$('#txtKodeNegara2').val('');
+					$('#txtNamaNegara').val('');
+					$('#txtKodeNegara').removeAttr('readonly');
 					$('#myModal').modal('show');
 				})
 

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 /**
- *  File Name             : Wilayah.php
+ *  File Name             : Jenjang_pendidikan.php
  *  File Type             : Controller
  *  File Package          : CI_Controller
  ** * * * * * * * * * * * * * * * * * **
@@ -10,12 +10,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
  *  Quots of the code     : 'sabar ya'
  */
 
-class Wilayah extends CI_Controller{
+class Jenjang_pendidikan extends CI_Controller{
 	public function __construct()
     {
         parent::__construct();
         login_check();
-        $this->load->model('Manajemen/M_wilayah', 'wilayah');
+        $this->load->model('Manajemen/M_jenjang_pendidikan', 'pendidikan');
     }
 
     public function index()
@@ -23,8 +23,8 @@ class Wilayah extends CI_Controller{
 
         $data['title'] = 'Smart Qeesh App';
         $data['page'] = 'Manajemen';
-        $data['subpage'] = 'Wilayah';
-        $data['content'] = 'pages/manajemen/v_wilayah';
+        $data['subpage'] = 'Jenjang Pendidikan';
+        $data['content'] = 'pages/manajemen/v_jenjang_pendidikan';
         $this->load->view('template', $data);
     }
 
@@ -36,22 +36,7 @@ class Wilayah extends CI_Controller{
                 'code' => 200,
                 'status' => true,
                 'msg' => 'Success',
-                'data' => $this->wilayah->get()->result()
-            ];
-        }
-        echo json_encode($data);
-    }
-
-	public function getByKodeNegara()
-    {
-        if($this->input->is_ajax_request())
-        {
-			$kode_negara = $this->input->post('kode_negara');
-            $data = [
-                'code' => 200,
-                'status' => true,
-                'msg' => 'Success',
-                'data' => $this->wilayah->getByKodeNegara($kode_negara)->result()
+                'data' => $this->pendidikan->get()->result()
             ];
         }
         echo json_encode($data);
@@ -59,47 +44,36 @@ class Wilayah extends CI_Controller{
 
 	public function store()
     {
-		if($this->input->is_ajax_request())
+        if($this->input->is_ajax_request())
         {
             $input = $this->input->post();
             
-            if($input['intIdWilayah'])
+            if($input['intIdJenjangPendidikan'])
             {
-                $id = $input['intIdWilayah'];
+                $id = $input['intIdJenjangPendidikan'];
                 $datainput = [
-					'txtKodeNegara' => $this->input->post('txtKodeNegara'),
-                    'txtNamaWilayah' => $this->input->post('txtNamaWilayah'),
+                    'txtNamaJenjangPendidikan' => $this->input->post('txtNamaJenjangPendidikan')
                 ];
                 // proses update
-                $status =  $this->wilayah->update($id,$datainput);
+                $status =  $this->pendidikan->update($id,$datainput);
                 $data = [
                     'code' => 200,
                     'status' => 'success',
-                    'msg' => 'Wilayah berhasil diupdate',
+                    'msg' => 'Jenjang Pendidikan berhasil diupdate',
                     'data' => NULL
                 ];
             }else{
+				$namaJenjang = $this->input->post('txtNamaJenjangPendidikan');
                 $datainput = [
-					'txtKodeNegara' => $this->input->post('txtKodeNegara'),
-                    'txtNamaWilayah' => $this->input->post('txtNamaWilayah')
+                    'txtNamaJenjangPendidikan' => $namaJenjang
                 ];
-                $status =  $this->wilayah->create($datainput);
-                if($status)
-				{
-					$data = [
-						'code' => 200,
-						'status' => $status,
-						'msg' => 'Wilayah berhasil ditambahkan',
-						'data' => NULL
-					];
-				}else{
-					$data = [
-						'code' => 400,
-						'status' => $status,
-						'msg' => 'Wilayah gagal ditambahkan',
-						'data' => NULL
-					];
-				}
+                $status =  $this->pendidikan->create($datainput);
+                $data = [
+                    'code' => 200,
+                    'status' => $status,
+                    'msg' => 'Jenjang Pendidikan berhasil ditambahkan',
+                    'data' => NULL
+                ];
             }
 
             echo json_encode($data);
@@ -113,11 +87,11 @@ class Wilayah extends CI_Controller{
             $id = $this->input->post('id');
             if($id)
             {
-                $this->wilayah->destroy($id);
+                $this->pendidikan->destroy($id);
                 $data = [
                     'code' => 200,
                     'status' => true,
-                    'msg' => 'Wilayah berhasil dihapus',
+                    'msg' => 'Jenjang Pendidikan berhasil dihapus',
                     'data' => NULL
                 ];
             }else{
@@ -139,7 +113,7 @@ class Wilayah extends CI_Controller{
         if($this->input->is_ajax_request())
         {
             $keyword = $this->input->post('keyword');
-            $result  = $this->wilayah->search($keyword)->result();
+            $result  = $this->pendidikan->search($keyword)->result();
             $data = [
                 'code' => 200,
                 'status' => true,

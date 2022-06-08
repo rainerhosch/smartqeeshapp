@@ -30,6 +30,12 @@ class M_wilayah extends CI_Model{
 		return $this->db->get($this->table);
 	}
 
+	public function getByKodeNegara($kode_negara)
+	{
+		$this->db->where('txtKodeNegara',$kode_negara);
+		return $this->db->get($this->table);
+	}
+
 	public function latest()
 	{
 		$this->db->order_by('intIdWilayah','DESC');
