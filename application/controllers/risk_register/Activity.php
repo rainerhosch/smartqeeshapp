@@ -31,9 +31,9 @@ class Activity extends CI_Controller
         $data['content'] 			= 'pages/risk_management/risk_register/activity';
 		$data["intIdDokRegister"] 	= $id;		
 		$data["user"]				= $this->user->getDataUserDept($this->session->userdata('user_id'));		
-		$data["dok"]				= $this->dokumen->getByID($id);		
-		$data["createBy"]			= $this->user->getDataUserDept($data["dok"]->intInsertedBy);				
-		$data["activity"]			= $this->activity_master->getActivityByDepartemen($this->session->userdata('id_departemen'));		
+		$data["dok"]				= $this->dokumen->getByID($id)->row();		
+		$data["createBy"]			= $this->user->getDataUserDept($data["dok"]->intInsertedBy);
+		var_dump($data);exit;	
         $this->load->view('template', $data);
     }
 
@@ -59,6 +59,25 @@ class Activity extends CI_Controller
 						'status' => $status,
 						'msg' => 'Berhasil disimpan.',
 						'data' => "-"
+					];
+		echo json_encode($response);
+	}
+
+	public function simpan_activity_exist()
+	{
+		$dateNow = date("Y-m-d");
+		$data = [
+			"intIdActivity" 			=> $this->input->post('intIdActivity'),
+			"intIdDokRiskRegister" 		=> $this->input->post('intIdDokRiskRegister'),
+			"intInsertedBy" 			=> $this->session->userdata('user_id'),
+			"dtmInsertedDate" 			=> $dateNow
+		];
+		$data = $this->activity->simpan_activity_exist($data)->row();
+		$response = [
+						'code' => 200,
+						'status' => 'OK',
+						'msg' => 'Berhasil disimpan.',
+						'data' => $data
 					];
 		echo json_encode($response);
 	}
