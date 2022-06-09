@@ -16,11 +16,11 @@ class Employee extends CI_Controller{
         parent::__construct();
         login_check();
         $this->load->model('Manajemen/M_employee', 'employee');
+		$this->load->model('M_user','user');
     }
 
     public function index()
     {
-
         $data['title'] = 'Smart Qeesh App';
         $data['page'] = 'Manajemen';
         $data['subpage'] = 'Employee';
@@ -63,6 +63,22 @@ class Employee extends CI_Controller{
 		$this->load->view('pages/manajemen/employee/show',$data);
 	}
 
+	public function getEmployeeById()
+	{
+		if($this->input->is_ajax_request())
+        {
+			$id = $this->input->post('id');
+            $data = [
+                'code' => 200,
+                'status' => true,
+                'msg' => 'Success',
+                'data' => $this->employee->find($id)->row()
+            ];
+        }
+        echo json_encode($data);
+
+	}
+
 	public function store()
     {
         if($this->input->is_ajax_request())
@@ -95,13 +111,27 @@ class Employee extends CI_Controller{
 					echo json_encode($data);
 					die();
 				}
-                $status =  $this->employee->create($datainput);
-                $data = [
-                    'code' => 200,
-                    'status' => $status,
-                    'msg' => 'Employee berhasil ditambahkan',
-                    'data' => NULL
-                ];
+                $idEmp =  $this->employee->create($datainput);
+				$emp = $this->employee->find($idEmp)->row();
+				$data = [
+					'code' => 200,
+					'status' => 'success',
+					'msg' => 'Employee beserta akunnya berhasil ditambahkan',
+					'data' => NULL
+				];
+				$roleEmployee = $this->user->getRole('Employee')->row();
+				$dataUser = [
+					'username' => strtolower(str_replace(' ', '', $emp->txtNameEmployee)) . rand(1,99),
+					'password' => md5($emp->txtNikEmployee),
+					'role_id' => $roleEmployee->role_id,
+					'user_detail_id' => 0,
+					'employee_id' => $idEmp,
+					'date_created' => time(),
+					'is_active' => 0,
+					'last_login' => 0,
+					'ip_address' => 0
+				];
+				$this->user->insert_data('user',$dataUser);
             }
 
             echo json_encode($data);
@@ -113,21 +143,24 @@ class Employee extends CI_Controller{
         if($this->input->is_ajax_request())
         {
             $id = $this->input->post('id');
+			$EmpId = $id;
             if($id)
             {
-                $this->employee->destroy($id);
+				$this->employee->destroy($id);
                 $data = [
                     'code' => 200,
                     'status' => true,
-                    'msg' => 'Employee berhasil dihapus',
+                    'msg' => 'Employee sekaligus akun berhasil dihapus',
                     'data' => NULL
                 ];
+				// hapus user yang bersangkutan
+				$this->user->hapus_user($EmpId);
             }else{
                 // jika id tidak ada
                 $data = [
                     'code' => 400,
                     'status' => false,
-                    'msg' => 'agama tidak ditemukan',
+                    'msg' => 'Employee tidak ditemukan',
                     'data' => NULL
                 ];
             }

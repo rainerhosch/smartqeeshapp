@@ -130,9 +130,19 @@
 				<td><?= $employee->txtAlamat2 ?></td>
 			</tr>
 			<tr>
-				<th>Wilayah</th>
+				<th>Negara</th>
 				<td> : </td>
-				<td><?= $employee->txtNamaWilayah ?></td>
+				<td><?= $employee->txtNamaNegara ?></td>
+			</tr>
+			<tr>
+				<th>Provinsi</th>
+				<td> : </td>
+				<td><?= $employee->txtNamaProvinsi ?></td>
+			</tr>
+			<tr>
+				<th>Kota</th>
+				<td> : </td>
+				<td><?= $employee->txtNamaKota ?></td>
 			</tr>
 			<tr>
 				<th>Jenjang Pendidikan</th>
