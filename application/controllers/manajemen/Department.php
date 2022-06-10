@@ -110,6 +110,29 @@ class Department extends CI_Controller
           }
      }
 
+
+     // code by rz oktan 19/05/2022
+     public function getData_v2()
+     {
+          if ($this->input->is_ajax_request()) {
+               $data = $this->department->getData_v2()->result_array();
+               $response = [
+                    'code'    => 200,
+                    'status'  => true,
+                    'msg'     => 'Berhasil',
+                    'data'    => $data
+               ];
+          } else {
+               $response = [
+                    'code'    => 500,
+                    'status'  => false,
+                    'msg'     => 'Internal Server Error',
+                    'data'    => null
+               ];
+          }
+          echo json_encode($response);
+     }
+
      private function validasiSaveData($data)
      {
           if ($data["intIdDepartement"] == null) {
