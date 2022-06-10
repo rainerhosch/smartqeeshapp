@@ -20,8 +20,8 @@ class M_activity_risk_register extends CI_Model
 	{
 		$this->db->select('trActivityRiskRegister.intIdActivityRisk, mActivity.txtNamaActivity, mActivity.intIdActivity');		
 		$this->db->from($this->table);
-		$this->db->join('mActivity', 'trActivityRiskRegister.intIdActivity=mActivity.intIdActivity');
-		$this->db->where('mActivity.intIdActivity', $this->session->userdata('id_departemen'));
+		$this->db->join('mActivity', 'trActivityRiskRegister.intIdActivity=mActivity.intIdActivity', 'right');
+		$this->db->where('mActivity.intIdDepartement', $this->session->userdata('id_departemen'));
 		
 		// $this->db->order_by('trActivityRiskRegister.intIdActivityRisk', 'desc');
 
@@ -92,7 +92,8 @@ class M_activity_risk_register extends CI_Model
 	public function count_all()
 	{
 		$this->db->from($this->table);
-		$this->db->join('mActivity', 'trActivityRiskRegister.intIdActivity=mActivity.intIdActivity');
+		$this->db->join('mActivity', 'trActivityRiskRegister.intIdActivity=mActivity.intIdActivity', 'right');
+		$this->db->where('mActivity.intIdDepartement', $this->session->userdata('id_departemen'));
 		return $this->db->count_all_results();
 	}
 
@@ -149,5 +150,13 @@ class M_activity_risk_register extends CI_Model
 		$this->db->join('mPlant', 'mDepartemen.intIdPlant = mPlant.intIdPlant');
 		$this->db->where('trDokRiskRegister.intIdDokRiskRegister', $id);
 		return $this->db->get()->row();								
+	}
+
+	public function simpan_activity_exist($data)
+	{
+		$this->db->insert($this->table, $data);
+		$this->db->order_by('intIdActivityRisk', 'desc');
+		return $this->db->get_where($this->table, $data);
+		
 	}
 }
