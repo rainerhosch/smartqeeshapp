@@ -37,8 +37,8 @@ class Auth extends CI_Controller
         if ($this->input->is_ajax_request()) {
             $email_or_username = $this->input->post('email_or_username');
             $password = $this->input->post('password');
-            $field = 'user.user_id,user.username, user.password, user.is_active, user_detail.*';
-            $contition = "user.username='" . $email_or_username . "' OR user_detail.email='" . $email_or_username . "'";
+            $field = '`user`.user_id, `user`.`password`, `user`.role_id, `user`.is_active, mEmployee.intIdEmployee, mEmployee.txtNameEmployee, mEmployee.txtNikEmployee, mEmployee.txtEmail, mEmployee.intIdDepartment, mEmployee.intIdJabatan';
+            $contition = "mEmployee.txtNikEmployee='" . $email_or_username . "'";
             $data_user = $this->user->get_user($field, $contition)->row_array();
             if ($data_user != null) {
                 // cek password
@@ -46,7 +46,10 @@ class Auth extends CI_Controller
                     if ($data_user['is_active'] > 0) {
                         $session_login = [
                             'user_id' => $data_user['user_id'],
-                            'id_departemen' => $data_user['id_departemen'],
+                            'id_departemen' => $data_user['intIdDepartment'],
+                            'id_jabatan' => $data_user['intIdJabatan'],
+                            'nama_employee' => $data_user['txtNameEmployee'],
+                            'id_employee' => $data_user['intIdEmployee'],
                         ];
                         $this->session->set_userdata($session_login);
                         $data_user = $session_login;

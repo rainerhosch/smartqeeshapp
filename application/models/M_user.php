@@ -14,9 +14,9 @@ class M_user extends CI_Model
     public function get_user($field, $where = null)
     {
         $this->db->select($field);
-        $this->db->from('user');
-        $this->db->join('user_detail', 'user_detail.user_detail_id=user.user_detail_id');
-        $this->db->join('user_role', 'user_role.role_id=user.role_id');        
+        $this->db->from('mEmployee');
+        $this->db->join('user', 'mEmployee.intIdEmployee = `user`.id_employee');
+        $this->db->join('user_role', 'user_role.role_id=user.role_id');
 
         if ($where != null) {
             $this->db->where($where);
@@ -72,13 +72,13 @@ class M_user extends CI_Model
     }
 
 	public function getDataUserDept($id) {
-		$this->db->select('user_detail.nama, mSection.txtNamaSection, mDepartemen.txtNamaDepartement, mPlant.txtSingkatan as txtCodePlant, mPlant.txtNamaPlant, mDepartemen.txtSingkatan as txtCodeDept, user.user_id');
+		$this->db->select('mEmployee.txtNameEmployee as nama, mSection.txtNamaSection, mDepartemen.txtNamaDepartement, mPlant.txtSingkatan as txtCodePlant, mPlant.txtNamaPlant, mDepartemen.txtSingkatan as txtCodeDept, user.user_id');
 		$this->db->from('user');
-		$this->db->join('user_detail', 'user.user_detail_id = user_detail.user_detail_id');
-		$this->db->join('mDepartemen', 'user_detail.id_departemen = mDepartemen.intIdDepartement');
+		$this->db->join('mEmployee', 'user.id_employee = mEmployee.intIdEmployee');
+		$this->db->join('mDepartemen', 'mEmployee.intIdDepartment = mDepartemen.intIdDepartement');
 		$this->db->join('mSection', 'mDepartemen.intIdSection = mSection.intIdSection');		
 		$this->db->join('mPlant', 'mSection.intIdPlant = mPlant.intIdPlant');
-		$this->db->where('user.user_id', $id);
+		$this->db->where('user.user_id', $id);		
 		return $this->db->get()->row();				
 	}
 }
