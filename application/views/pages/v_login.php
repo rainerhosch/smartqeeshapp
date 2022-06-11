@@ -141,7 +141,11 @@
               }
             } else {
               // 200
-              window.location = `<?= base_url('dashboard') ?>`
+							if (response.data.isDefaultPassword == 0) {
+								window.location = `<?= base_url('Auth/changePassword') ?>`
+							} else {
+								window.location = `<?= base_url('dashboard') ?>`
+							}              
             }
           }
         });

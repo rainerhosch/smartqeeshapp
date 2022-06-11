@@ -37,7 +37,7 @@ class Auth extends CI_Controller
         if ($this->input->is_ajax_request()) {
             $email_or_username = $this->input->post('email_or_username');
             $password = $this->input->post('password');
-            $field = '`user`.user_id, `user`.`password`, `user`.role_id, `user`.is_active, mEmployee.intIdEmployee, mEmployee.txtNameEmployee, mEmployee.txtNikEmployee, mEmployee.txtEmail, mEmployee.intIdDepartment, mEmployee.intIdJabatan';
+            $field = '`user`.user_id, `user`.`password`, `user`.role_id, `user`.is_active, mEmployee.intIdEmployee, mEmployee.txtNameEmployee, mEmployee.txtNikEmployee, mEmployee.txtEmail, mEmployee.intIdDepartment, mEmployee.intIdJabatan, isDefaultPassword';
             $contition = "mEmployee.txtNikEmployee='" . $email_or_username . "'";
             $data_user = $this->user->get_user($field, $contition)->row_array();
             if ($data_user != null) {
@@ -45,11 +45,12 @@ class Auth extends CI_Controller
                 if ($data_user['password'] === md5($password)) {
                     if ($data_user['is_active'] > 0) {
                         $session_login = [
-                            'user_id' => $data_user['user_id'],
-                            'id_departemen' => $data_user['intIdDepartment'],
-                            'id_jabatan' => $data_user['intIdJabatan'],
-                            'nama_employee' => $data_user['txtNameEmployee'],
-                            'id_employee' => $data_user['intIdEmployee'],
+                            'user_id' 			=> $data_user['user_id'],
+                            'id_departemen' 	=> $data_user['intIdDepartment'],
+                            'id_jabatan' 		=> $data_user['intIdJabatan'],
+                            'nama_employee' 	=> $data_user['txtNameEmployee'],
+                            'id_employee' 		=> $data_user['intIdEmployee'],
+                            'isDefaultPassword' => $data_user['isDefaultPassword'],
                         ];
                         $this->session->set_userdata($session_login);
                         $data_user = $session_login;
@@ -169,6 +170,53 @@ class Auth extends CI_Controller
         }
         echo json_encode($data);
     }
+
+	public function changePassword() {
+		$data['title'] = 'Smart Qeesh App';
+        $data['page'] = 'Auth';
+        $data['content'] = 'pages/v_change_pass';
+        $this->load->view('template', $data);
+	}
+
+	public function change_my_password()
+	{		
+		if ($this->input->is_ajax_request()) {
+			$password 	= $this->input->post('password');
+			$id_user 	= $this->session->userdata('user_id');
+			
+			$where = [
+				'user_id' => $id_user
+			];
+			$data_update = [
+				'password' => md5($password),
+				'isDefaultPassword' => 1
+			];
+			$update = $this->user->update_user_password($data_update, $where);
+			if ($update["status"]) {
+				$data = [
+					'code' => 200,
+					'status' => true,
+					'msg' => $update["message"],
+					'data' => null
+				];
+			} else {
+				$data = [
+					'code' => 500,
+					'status' => false,
+					'msg' => $update["message"],
+					'data' => null
+				];
+			}
+		} else {
+            $data = [
+                'code' => 500,
+                'status' => false,
+                'msg' => "Invalid Request",
+                'data' => null
+            ];
+        }
+        echo json_encode($data);
+	}
 
     public function logout()
     {
