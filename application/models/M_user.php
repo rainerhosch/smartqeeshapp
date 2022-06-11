@@ -34,6 +34,12 @@ class M_user extends CI_Model
         return $this->db->get();
     }
 
+	public function getRole($nama)
+	{
+		$this->db->where('role_type',$nama);
+		return $this->db->get('user_role');
+	}
+
     // insert data
     public function insert_data($table, $data)
     {
@@ -70,6 +76,12 @@ class M_user extends CI_Model
             return FALSE;
         }
     }
+
+	public function hapus_user($id_employee)
+	{
+		$this->db->where('employee_id',$id_employee);
+        $this->db->delete('user');
+	}
 
 	public function getDataUserDept($id) {
 		$this->db->select('mEmployee.txtNameEmployee as nama, mSection.txtNamaSection, mDepartemen.txtNamaDepartement, mPlant.txtSingkatan as txtCodePlant, mPlant.txtNamaPlant, mDepartemen.txtSingkatan as txtCodeDept, user.user_id');

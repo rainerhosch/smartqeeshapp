@@ -100,6 +100,13 @@
 									</div>
 								</div>
 								<div class="form-group row">
+									<label for="txtEmail" class="col-sm-3 col-form-label">Email</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control" id="txtEmail"
+											name="txtEmail" placeholder="Email" required>
+									</div>
+								</div>
+								<div class="form-group row">
 									<label for="intIdPlant" class="col-sm-3 col-form-label">Plant</label>
 									<div class="col-sm-9">
 										<select name="intIdPlant" id="intIdPlant" class="form-control select2">
@@ -226,9 +233,17 @@
 									</div>
 								</div>
 								<div class="form-group row">
-									<label for="intIdWilayah" class="col-sm-3 col-form-label">Wilayah</label>
+									<label for="intIdProvinsi" class="col-sm-3 col-form-label">Provinsi</label>
 									<div class="col-sm-9">
-										<select name="intIdWilayah" id="intIdWilayah" class="form-control select2">
+										<select name="intIdProvinsi" id="intIdProvinsi" class="form-control select2">
+											
+										</select>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="intIdKota" class="col-sm-3 col-form-label">Kota</label>
+									<div class="col-sm-9">
+										<select name="intIdKota" id="intIdKota" class="form-control select2">
 											
 										</select>
 									</div>
@@ -363,14 +378,14 @@
 			})
 			return jen;
 		}
-		function wilayahs(kode_negara)
+		function provinsis(kode_negara)
 		{
 			var wil;
 			$.ajax({
 				type: 'POST',
 				dataType: 'JSON',
 				async: false,
-				url: '<?= base_url('manajemen/wilayah/getByKodeNegara/') ?>',
+				url: '<?= base_url('manajemen/lokasi/getProvinsi/') ?>',
 				data: {
 					kode_negara:kode_negara
 				},
@@ -379,6 +394,42 @@
 				}
 			})
 			return wil;
+		}
+
+		function kotas(id_provinsi)
+		{
+			var kot;
+			$.ajax({
+				type: 'POST',
+				dataType: 'JSON',
+				async: false,
+				url: '<?= base_url('manajemen/lokasi/getKota/') ?>',
+				data: {
+					id_provinsi
+				},
+				success: function (res) {
+					kot = res.data;
+				}
+			})
+			return kot;
+		}
+
+		function getEmployeeById(id)
+		{
+			var kot;
+			$.ajax({
+				type: 'POST',
+				dataType: 'JSON',
+				async: false,
+				url: '<?= base_url('manajemen/employee/getEmployeeById/') ?>',
+				data: {
+					id
+				},
+				success: function (res) {
+					kot = res.data;
+				}
+			})
+			return kot;
 		}
 </script>
 <script>
@@ -470,15 +521,26 @@
 						$('#intIdJenjangPendidikan').append('<option value="'+value['intIdJenjangPendidikan']+'">'+ value['txtNamaJenjangPendidikan'] +'</option>');
 					})
 
-					// wilayah
+					// get provinsi
 					$('#txtKodeNegara').on('change', function(){
 						var kode = $(this).val();
-						wilayahs2 = wilayahs(kode);
+						provinsis2 = provinsis(kode);
 						
-						$('#intIdWilayah').empty();
-						$('#intIdWilayah').append('<option selected disabled>-Pilih-</option>');
-						$.each(wilayahs2, function(key,value){
-							$('#intIdWilayah').append('<option value="'+value['intIdWilayah']+'">'+ value['txtNamaWilayah'] +'</option>');
+						$('#intIdProvinsi').empty();
+						$('#intIdProvinsi').append('<option selected disabled>-Pilih-</option>');
+						$.each(provinsis2, function(key,value){
+							$('#intIdProvinsi').append('<option value="'+value['intIdProvinsi']+'">'+ value['txtNamaProvinsi'] +'</option>');
+						})
+					})
+
+					// get kota
+					$('#intIdProvinsi').on('change', function(){
+						var id_provinsi = $(this).val();
+						kota2 = kotas(id_provinsi);
+						$('#intIdKota').empty();
+						$('#intIdKota').append('<option selected disabled>-Pilih-</option>');
+						$.each(kota2, function(key,value){
+							$('#intIdKota').append('<option value="'+value['intIdKota']+'">'+ value['txtNamaKota'] +'</option>');
 						})
 					})
 						
@@ -491,10 +553,195 @@
 
 				$('body').on('click', '.btnEdit', function () {
 					var id = $(this).data('id');
-					var nama = $(this).data('nama');
+					employee = getEmployeeById(id);
 					$('.modal-title').text('Edit Employee');
 					$('#intIdEmployee').val(id);
-					$('#txtNameEmployee').val(nama);
+					$('#txtNameEmployee').val(employee.txtNameEmployee);
+					$('#txtNikEmployee').val(employee.txtNikEmployee);
+					$('#txtEmail').val(employee.txtEmail);
+					// plants = plants();
+					$('#intIdPlant').empty();
+					$('#intIdPlant').append('<option selected disabled>-Pilih-</option>');
+					$.each(plants2, function(key,value){
+						if(value['intIdPlant'] === employee.intIdPlant)
+						{
+							$('#intIdPlant').append('<option selected value="'+value['intIdPlant']+'">'+ value['txtNamaPlant'] +'</option>');
+						}else{
+							$('#intIdPlant').append('<option value="'+value['intIdPlant']+'">'+ value['txtNamaPlant'] +'</option>');
+						}
+					})
+
+					// departments
+					// departments = departments();
+					$('#intIdDepartment').empty();
+					$('#intIdDepartment').append('<option selected disabled>-Pilih-</option>');
+					$.each(departments2, function(key,value){
+						if(value['intIdDepartement'] === employee.intIdDepartment)
+						{
+							$('#intIdDepartment').append('<option selected value="'+value['intIdDepartement']+'">'+ value['txtNamaDepartement'] +'</option>');
+						}else{
+							$('#intIdDepartment').append('<option value="'+value['intIdDepartement']+'">'+ value['txtNamaDepartement'] +'</option>');
+						}
+					})
+
+					// jabatans
+					// jabatans = jabatans();
+					$('#intIdJabatan').empty();
+					$('#intIdJabatan').append('<option selected disabled>-Pilih-</option>');
+					$.each(jabatans2, function(key,value){
+						if(value['intIdJabatan'] === employee.intIdJabatan)
+						{
+							$('#intIdJabatan').append('<option selected value="'+value['intIdJabatan']+'">'+ value['txtNamaJabatan'] +'</option>');
+						}else{
+							$('#intIdJabatan').append('<option value="'+value['intIdJabatan']+'">'+ value['txtNamaJabatan'] +'</option>');
+						}
+					})
+
+
+					// agamas
+					// agamas = agamas();
+					$('#intIdAgama').empty();
+					$('#intIdAgama').append('<option selected disabled>-Pilih-</option>');
+					$.each(agamas2, function(key,value){
+						if(value['intidAgama'] === employee.intIdAgama)
+						{
+							$('#intIdAgama').append('<option selected value="'+value['intidAgama']+'">'+ value['txtNamaAgama'] +'</option>');
+						}else{
+							$('#intIdAgama').append('<option value="'+value['intidAgama']+'">'+ value['txtNamaAgama'] +'</option>');
+						}
+					})
+
+					// negaras
+					// negaras = negaras();
+					$('#txtKodeNegara').empty();
+					$('#txtKodeNegara').append('<option selected disabled>-Pilih-</option>');
+					$.each(negaras2, function(key,value){
+						if(value['txtKodeNegara'] === employee.txtKodeNegara)
+						{
+							$('#txtKodeNegara').append('<option selected value="'+value['txtKodeNegara']+'">'+ value['txtNamaNegara'] +'</option>');
+						}else{
+							$('#txtKodeNegara').append('<option value="'+value['txtKodeNegara']+'">'+ value['txtNamaNegara'] +'</option>');
+						}
+					})
+
+					// pendidikans
+					// pendidikans = pendidikans();
+					$('#intIdJenjangPendidikan').empty();
+					$('#intIdJenjangPendidikan').append('<option selected disabled>-Pilih-</option>');
+					$.each(pendidikans2, function(key,value){
+						if(value['intIdJenjangPendidikan'] === employee.intIdJenjangPendidikan)
+						{
+							$('#intIdJenjangPendidikan').append('<option selected value="'+value['intIdJenjangPendidikan']+'">'+ value['txtNamaJenjangPendidikan'] +'</option>');
+						}else{
+							$('#intIdJenjangPendidikan').append('<option value="'+value['intIdJenjangPendidikan']+'">'+ value['txtNamaJenjangPendidikan'] +'</option>');
+						}
+					})
+
+					// set provinsi
+					var kodenegara = $('#txtKodeNegara').val();;
+					provinsis2 = provinsis(kodenegara);
+					$('#intIdProvinsi').empty();
+					$('#intIdProvinsi').append('<option selected disabled>-Pilih-</option>');
+					$.each(provinsis2, function(key,value){
+						if(value['intIdProvinsi'] === employee.intIdProvinsi)
+						{
+							$('#intIdProvinsi').append('<option selected value="'+value['intIdProvinsi']+'">'+ value['txtNamaProvinsi'] +'</option>');
+						}else{
+							$('#intIdProvinsi').append('<option value="'+value['intIdProvinsi']+'">'+ value['txtNamaProvinsi'] +'</option>');
+						}
+					})
+
+					// get provinsi
+					$('#txtKodeNegara').on('change', function(){
+						var kode = $(this).val();;
+						provinsis2 = provinsis(kode);
+						$('#intIdProvinsi').empty();
+						$('#intIdProvinsi').append('<option selected disabled>-Pilih-</option>');
+						$.each(provinsis2, function(key,value){
+							if(value['intIdProvinsi'] === employee.intIdProvinsi)
+							{
+								$('#intIdProvinsi').append('<option selected value="'+value['intIdProvinsi']+'">'+ value['txtNamaProvinsi'] +'</option>');
+							}else{
+								$('#intIdProvinsi').append('<option value="'+value['intIdProvinsi']+'">'+ value['txtNamaProvinsi'] +'</option>');
+							}
+						})
+					})
+
+					// set kota
+					var idprov = $('#intIdProvinsi').val();;;
+					kota2 = kotas(idprov);
+					$('#intIdKota').empty();
+					$('#intIdKota').append('<option selected disabled>-Pilih-</option>');
+					$.each(kota2, function(key,value){
+						if(value['intIdKota'] === employee.intIdKota)
+						{
+							$('#intIdKota').append('<option selected value="'+value['intIdKota']+'">'+ value['txtNamaKota'] +'</option>');
+						}else{
+							$('#intIdKota').append('<option value="'+value['intIdKota']+'">'+ value['txtNamaKota'] +'</option>');
+						}
+					})
+
+					// get kota
+					$('#intIdProvinsi').on('change', function(){
+						var id_provinsi = $(this).val();
+						kota2 = kotas(id_provinsi);
+						$('#intIdKota').empty();
+						$('#intIdKota').append('<option selected disabled>-Pilih-</option>');
+						$.each(kota2, function(key,value){
+							if(value['intIdKota'] === employee.intIdKota)
+							{
+								$('#intIdKota').append('<option selected value="'+value['intIdKota']+'">'+ value['txtNamaKota'] +'</option>');
+							}else{
+								$('#intIdKota').append('<option value="'+value['intIdKota']+'">'+ value['txtNamaKota'] +'</option>');
+							}
+						})
+					})
+
+					// tpk
+					$('#intTpk').empty();
+					$('#intTpk').append('<option selected disabled>-Pilih-</option>');
+					if(employee.intTpk == 1)
+					{
+						$('#intTpk').append('<option selected value="1">Tetap</option>');
+						$('#intTpk').append('<option value="3">Kontrak</option>');
+					}else{
+						$('#intTpk').append('<option value="1">Tetap</option>');
+						$('#intTpk').append('<option selected value="3">Kontrak</option>');
+					}
+
+					// kpw
+					$('#intKpw').empty();
+					$('#intKpw').append('<option selected disabled>-Pilih-</option>');
+					if(employee.intKpw == 1)
+					{
+						$('#intKpw').append('<option selected value="1">Pria</option>');
+						$('#intKpw').append('<option value="2">Wanita</option>');
+					}else{
+						$('#intKpw').append('<option value="1">Pria</option>');
+						$('#intKpw').append('<option selected value="2">Wanita</option>');
+					}
+
+
+					// kpw
+					$('#intKtk').empty();
+					$('#intKtk').append('<option selected disabled>-Pilih-</option>');
+					if(employee.intKtk == 1)
+					{
+						$('#intKtk').append('<option selected value="1">Kawin</option>');
+						$('#intKtk').append('<option value="2">Tidak</option>');
+					}else{
+						$('#intKtk').append('<option value="1">Kawin</option>');
+						$('#intKtk').append('<option selected value="2">Tidak</option>');
+					}
+
+					$('#intJumlahAnak').val(employee.intJumlahAnak);
+					$('#dtmTanggalMasuk').val(employee.dtmTanggalMasuk);
+					$('#txtTempatLahir').val(employee.txtTempatLahir);
+					$('#dtmTanggalLahir').val(employee.dtmTanggalLahir);
+					$('#txtSuku').val(employee.txtSuku);
+					$('#txtGolonganDarah').val(employee.txtGolonganDarah);
+					$('#txtAlamat1').val(employee.txtAlamat1);
+					$('#txtAlamat2').val(employee.txtAlamat2);
 					$('#myModal').modal('show');
 				})
 
@@ -623,7 +870,29 @@
 		});
 
 		$('#myModal').on('hidden.bs.modal', function () {
-			
+			$('#intJumlahAnak').val('');
+			$('#dtmTanggalMasuk').val('');
+			$('#txtTempatLahir').val('');
+			$('#dtmTanggalLahir').val('');
+			$('#txtSuku').val('');
+			$('#txtGolonganDarah').val('');
+			$('#txtAlamat1').val('');
+			$('#txtAlamat2').val('');
+			$('#intIdEmployee').val('');
+			$('#txtNameEmployee').val('');
+			$('#txtNikEmployee').val('');
+			$('#txtEmail').val('');
+			$('#intIdPlant').empty();
+			$('#intIdDepartment').empty();
+			$('#intIdJabatan').empty();
+			$('#intTpk').empty();
+			$('#intKpw').empty();
+			$('#intKtk').empty();
+			$('#intIdAgama').empty();
+			$('#intIdNegara').empty();
+			$('#intIdProvinsi').empty();
+			$('#intIdKota').empty();
+			$('#intIdJenjangPendidikan').empty();
 		})
 	});
 
