@@ -21,6 +21,9 @@ class M_user extends CI_Model
 		if ($where != null) {
 			$this->db->where($where);
 		}
+		
+		// $data =  $this->db->get();
+		// var_dump($this->db->last_query());exit;
 		return $this->db->get();
 	}
 
