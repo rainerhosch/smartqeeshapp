@@ -16,12 +16,13 @@ class M_dok_register extends CI_Model
 	var $column_search = array('txtDocNumber'); //field yang diizin untuk pencarian 
 	var $order = array('dtmInsertedBy' => 'desc'); // default order 
 
-	private function _get_datatables_query()
+	private function _get_datatables_query($id_departemen)
 	{
 		$this->db->select('trDokRiskRegister.txtDocNumber, trDokRiskRegister.txtStatus, mEmployee.txtNameEmployee as nama, trDokRiskRegister.dtmInsertedBy, trDokRiskRegister.intIdDokRiskRegister');		
 		$this->db->from($this->table);
 		$this->db->join('user', 'trDokRiskRegister.intInsertedBy=user.user_id');
 		$this->db->join('mEmployee', 'user.employee_id=mEmployee.intIdEmployee');
+		$this->db->where(["intIdDepartement" => $id_departemen]);
 		
 
 		$i = 0;
@@ -54,9 +55,9 @@ class M_dok_register extends CI_Model
 	}
 
 	
-	function get_datatables()
+	function get_datatables($id_departemen)
 	{
-		$this->_get_datatables_query();
+		$this->_get_datatables_query($id_departemen);
 		if ($_POST['length'] != -1)
 			$this->db->limit($_POST['length'], $_POST['start']);
 		$query = $this->db->get();
@@ -78,25 +79,26 @@ class M_dok_register extends CI_Model
 
 		$output = array(
 			"draw" => $_POST['draw'],
-			"recordsTotal" => $this->count_all(),
-			"recordsFiltered" => $this->count_filtered(),
+			"recordsTotal" => $this->count_all($id_departemen),
+			"recordsFiltered" => $this->count_filtered($id_departemen),
 			"data" => $data,
 		);
 		return $output;
 	}
 
-	function count_filtered()
+	function count_filtered($id_departemen)
 	{
-		$this->_get_datatables_query();
+		$this->_get_datatables_query($id_departemen);
 		$query = $this->db->get();
 		return $query->num_rows();
 	}
 
-	public function count_all()
+	public function count_all($id_departemen)
 	{
 		$this->db->from($this->table);
 		$this->db->join('user', 'trDokRiskRegister.intInsertedBy=user.user_id');
 		$this->db->join('mEmployee', 'user.employee_id=mEmployee.intIdEmployee');
+		$this->db->where(["intIdDepartement" => $id_departemen]);
 		return $this->db->count_all_results();
 	}
 
