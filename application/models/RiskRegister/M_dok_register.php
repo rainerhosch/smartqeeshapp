@@ -18,10 +18,10 @@ class M_dok_register extends CI_Model
 
 	private function _get_datatables_query()
 	{
-		$this->db->select('trDokRiskRegister.txtDocNumber, trDokRiskRegister.txtStatus, user_detail.nama, trDokRiskRegister.dtmInsertedBy, trDokRiskRegister.intIdDokRiskRegister');		
+		$this->db->select('trDokRiskRegister.txtDocNumber, trDokRiskRegister.txtStatus, mEmployee.txtNameEmployee as nama, trDokRiskRegister.dtmInsertedBy, trDokRiskRegister.intIdDokRiskRegister');		
 		$this->db->from($this->table);
-		$this->db->join('user', 'trDokRiskRegister.intInsertedBy=user.user_detail_id');
-		$this->db->join('user_detail', 'user.user_detail_id=user_detail.user_detail_id');
+		$this->db->join('user', 'trDokRiskRegister.intInsertedBy=user.user_id');
+		$this->db->join('mEmployee', 'user.employee_id=mEmployee.intIdEmployee');
 		
 
 		$i = 0;
@@ -60,6 +60,7 @@ class M_dok_register extends CI_Model
 		if ($_POST['length'] != -1)
 			$this->db->limit($_POST['length'], $_POST['start']);
 		$query = $this->db->get();
+		//var_dump($this->db->last_query());exit;
 		$list = $query->result();
 		$data = array();
 		$no = $_POST['start'];
@@ -94,8 +95,8 @@ class M_dok_register extends CI_Model
 	public function count_all()
 	{
 		$this->db->from($this->table);
-		$this->db->join('user', 'trDokRiskRegister.intInsertedBy=user.user_detail_id');
-		$this->db->join('user_detail', 'user.user_detail_id=user_detail.user_detail_id');
+		$this->db->join('user', 'trDokRiskRegister.intInsertedBy=user.user_id');
+		$this->db->join('mEmployee', 'user.employee_id=mEmployee.intIdEmployee');
 		return $this->db->count_all_results();
 	}
 
