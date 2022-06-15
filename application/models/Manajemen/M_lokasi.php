@@ -15,7 +15,7 @@ class M_lokasi extends CI_Model{
 	
 	public function getProvinsiByKodeNegara($kode_negara)
 	{
-		$this->db->where('txtKodeNegara',$kode_negara);
+		$this->db->where('intIdNegara',$kode_negara);
 		return $this->db->get('mProvinsi');
 	}
 
@@ -23,6 +23,20 @@ class M_lokasi extends CI_Model{
 	{
 		$this->db->where('intIdProvinsi',$id_provinsi);
 		return $this->db->get('mKota');
+	}
+
+	public function createProvinsi($data)
+	{
+		$this->db->insert('mProvinsi',$data);
+		$insert_id = $this->db->insert_id();
+		return $insert_id;
+	}
+
+	public function createKota($data)
+	{
+		$this->db->insert('mKota',$data);
+		$insert_id = $this->db->insert_id();
+		return $insert_id;
 	}
 
 }

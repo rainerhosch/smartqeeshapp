@@ -34,6 +34,7 @@ class Lokasi extends CI_Controller{
 		echo json_encode($data);
 	}
 
+
 	public function getKota()
 	{
 		if($this->input->is_ajax_request())

@@ -20,6 +20,18 @@ class M_negara extends CI_Model{
 		return $this->db->get($this->table);
 	}
 
+	public function getByKewarganegaraan($kwn)
+	{
+		if($kwn === 'wni')
+		{
+			$data = $this->db->get_where($this->table,array('txtNamaNegara'=>'indonesia'));
+		}else{
+			$this->db->where_not_in('txtNamaNegara','indonesia');
+			$data = $this->db->get($this->table);
+		}
+		return $data;
+	}
+
 	public function find($where)
 	{
 		$this->db->where($where);
@@ -28,18 +40,20 @@ class M_negara extends CI_Model{
 
 	public function create($data)
     {
-        return $this->db->insert($this->table,$data);
+        $this->db->insert($this->table,$data);
+		$insert_id = $this->db->insert_id();
+		return $insert_id;
     }
 
-    public function update($kode,$data)
+    public function update($id,$data)
     {
-        $this->db->where('txtKodeNegara',$kode);
+        $this->db->where('intIdNegara',$id);
         $this->db->update($this->table,$data);
     }
 
-    public function destroy($kode)
+    public function destroy($id)
     {
-        $this->db->where('txtKodeNegara',$kode);
+        $this->db->where('intIdNegara',$id);
         $this->db->delete($this->table);
     }
 

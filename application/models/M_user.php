@@ -11,13 +11,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
  */
 class M_user extends CI_Model
 {
-	public function get_user($field, $where = null)
-	{
-		$this->db->select($field);
-		$this->db->from('mEmployee');
-		$this->db->join('user', 'mEmployee.intIdEmployee = `user`.id_employee');
-		$this->db->join('user_role', 'user_role.role_id=user.role_id');
-
+    public function get_user($field, $where = null)
+    {
+        $this->db->select($field);
+        $this->db->from('mEmployee');
+        $this->db->join('user', 'mEmployee.intIdEmployee=`user`.employee_id');
+        $this->db->join('user_role', 'user_role.role_id=user.role_id');        
 		if ($where != null) {
 			$this->db->where($where);
 		}
