@@ -40,6 +40,7 @@ class Auth extends CI_Controller
             $field = '`user`.user_id, `user`.`password`, `user`.role_id, `user`.is_active, mEmployee.intIdEmployee, mEmployee.txtNameEmployee as name, mEmployee.txtNikEmployee, mEmployee.txtEmail, mEmployee.intIdDepartment, mEmployee.intIdJabatan, isDefaultPassword';
             $contition = "user.username='" . $email_or_username . "'";
             $data_user = $this->user->get_user($field, $contition)->row_array();
+			// var_dump($data_user);exit;
             if ($data_user != null) {
                 // cek password
                 if ($data_user['password'] === md5($password)) {
