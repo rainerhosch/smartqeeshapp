@@ -78,7 +78,7 @@
 			</div>
 			<div class="modal-body">
 				<form id="myForm">
-					<input type="text" name="txtKodeNegara2" hidden id="txtKodeNegara2">
+					<input type="text" name="intIdNegara" hidden id="intIdNegara">
 					<div class="form-group row">
 						<label for="txtKodeNegara" class="col-sm-3 col-form-label">Kode Negara</label>
 						<div class="col-sm-9">
@@ -120,7 +120,7 @@
 					html_mn += `<td class="text-center">${val.txtKodeNegara}</td>`;
 					html_mn += `<td class="text-center">${val.txtNamaNegara}</td>`;
 					html_mn +=
-						`<td class="text-center"><a class="btn btn-xs btn-warning btnEdit" data-kode="${val.txtKodeNegara}" data-nama="${val.txtNamaNegara}"><i class="fas fa-pen"></i></a> | <a class="btn btn-xs btn-danger btnDelete" data-kode="${val.txtKodeNegara}"><i class="fas fa-trash-alt"></i></a></td>`;
+						`<td class="text-center"><a class="btn btn-xs btn-warning btnEdit" data-id="${val.intIdNegara}" data-kode="${val.txtKodeNegara}"  data-nama="${val.txtNamaNegara}"><i class="fas fa-pen"></i></a> | <a class="btn btn-xs btn-danger btnDelete" data-id="${val.intIdNegara}" data-kode="${val.txtKodeNegara}" data-name="${val.txtNamaNegara}"><i class="fas fa-trash-alt"></i></a></td>`;
 					html_mn += `</tr>`;
 				});
 				$('#menu_tbody').html(html_mn);
@@ -129,19 +129,19 @@
 				$('.btnAdd').on('click', function () {
 					$('.modal-title').text('Tambah Negara');
 					$('#txtKodeNegara').val('');
-					$('#txtKodeNegara2').val('');
+					$('#intIdNegara').val('');
 					$('#txtNamaNegara').val('');
 					$('#txtKodeNegara').removeAttr('readonly');
 					$('#myModal').modal('show');
 				})
 
 				$('body').on('click', '.btnEdit', function () {
-					var kode = $(this).data('kode');
+					var id = $(this).data('id');
 					var nama = $(this).data('nama');
+					var kode = $(this).data('kode');
 					$('.modal-title').text('Edit Negara');
 					$('#txtKodeNegara').val(kode);
-					$('#txtKodeNegara').attr('readonly', "");
-					$('#txtKodeNegara2').val(kode);
+					$('#intIdNegara').val(id);
 					$('#txtNamaNegara').val(nama);
 					$('#myModal').modal('show');
 				})
@@ -181,6 +181,7 @@
 				$('body').on('click', '.btnDelete', function () {
 					var kode = $(this).data('kode');
 					var name = $(this).data('name');
+					var id = $(this).data('id');
 					Swal.fire({
 						title: 'Are you sure?',
 						text: `The Type ${name}, will delete!`,
@@ -195,7 +196,7 @@
 								type: "POST",
 								url: "<?= base_url() ?>manajemen/negara/destroy",
 								data: {
-									kode: kode
+									id: id
 								},
 								dataType: "json",
 								success: function (response) {
@@ -244,7 +245,7 @@
 								html_mn +=
 									`<td class="text-center">${val.txtNamaNegara}</td>`;
 								html_mn +=
-									`<td class="text-center"><a class="btn btn-xs btn-warning btnEdit" data-kode="${val.txtKodeNegara}" data-nama="${val.txtNamaNegara}"><i class="fas fa-pen"></i></a> | <a class="btn btn-xs btn-danger btnDelete" data-kode="${val.txtKodeNegara}"><i class="fas fa-trash-alt"></i></a></td>`;
+									`<td class="text-center"><a class="btn btn-xs btn-warning btnEdit" data-id="${val.intIdNegara}" data-kode="${val.txtKodeNegara}"  data-nama="${val.txtNamaNegara}"><i class="fas fa-pen"></i></a> | <a class="btn btn-xs btn-danger btnDelete" data-id="${val.intIdNegara}" data-kode="${val.txtKodeNegara}" data-name="${val.txtNamaNegara}"><i class="fas fa-trash-alt"></i></a></td>`;
 								html_mn += `</tr>`;
 							});
 							$('#menu_tbody').html(html_mn);

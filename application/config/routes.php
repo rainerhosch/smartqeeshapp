@@ -56,5 +56,5 @@ $route['user/(:any)'] = 'manajemen/user/$1';
 $route['role_access/(:any)'] = 'manajemen/role_access/$1';
 $route['risk_management/(:any)'] = 'risk_management/$1';
 $route['legal_compliance/(:any)'] = 'legal_compliance/$1';
-$route['404_override'] = '';
+$route['404_override'] = 'pages_404';
 $route['translate_uri_dashes'] = FALSE;

@@ -43,7 +43,6 @@
 										<th class="text-center">#</th>
 										<th class="text-center">NAMA</th>
 										<th class="text-center">NIK</th>
-										<th class="text-center">PLANT</th>
 										<th class="text-center">DEPARTEMENT</th>
 										<th class="text-center">JABATAN</th>
 										<th class="text-center">TOOL</th>
@@ -89,22 +88,28 @@
 									<label for="txtNameEmployee" class="col-sm-3 col-form-label">Nama</label>
 									<div class="col-sm-9">
 										<input type="text" class="form-control" id="txtNameEmployee"
-											name="txtNameEmployee" placeholder="Nama" required>
+											name="txtNameEmployee" placeholder="Nama">
 									</div>
 								</div>
 								<div class="form-group row">
 									<label for="txtNikEmployee" class="col-sm-3 col-form-label">NIK</label>
 									<div class="col-sm-9">
 										<input type="text" class="form-control" id="txtNikEmployee"
-											name="txtNikEmployee" placeholder="NIK" required>
+											name="txtNikEmployee" placeholder="NIK">
 									</div>
 								</div>
 								<div class="form-group row">
-									<label for="intIdPlant" class="col-sm-3 col-form-label">Plant</label>
+									<label for="txtEmail" class="col-sm-3 col-form-label">Email</label>
 									<div class="col-sm-9">
-										<select name="intIdPlant" id="intIdPlant" class="form-control select2">
-											
-										</select>
+										<input type="text" class="form-control" id="txtEmail"
+											name="txtEmail" placeholder="Email">
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="txtNomorWa" class="col-sm-3 col-form-label">No. Wa</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control" id="txtNomorWa"
+											name="txtNomorWa" placeholder="Nomor Wa">
 									</div>
 								</div>
 								<div class="form-group row">
@@ -157,36 +162,36 @@
 									<label for="intJumlahAnak" class="col-sm-3 col-form-label">Jumlah Anak</label>
 									<div class="col-sm-9">
 										<input type="number" class="form-control" id="intJumlahAnak"
-											name="intJumlahAnak" placeholder="Jumlah Anak" required>
+											name="intJumlahAnak" placeholder="Jumlah Anak">
 									</div>
 								</div>
 								<div class="form-group row">
 									<label for="dtmTanggalMasuk" class="col-sm-3 col-form-label">Tanggal Masuk</label>
 									<div class="col-sm-9">
 										<input type="date" class="form-control" id="dtmTanggalMasuk"
-											name="dtmTanggalMasuk" required>
+											name="dtmTanggalMasuk">
 									</div>
 								</div>
 								<div class="form-group row">
 									<label for="txtTempatLahir" class="col-sm-3 col-form-label">Tempat Lahir</label>
 									<div class="col-sm-9">
 										<input type="text" class="form-control" id="txtTempatLahir"
-											name="txtTempatLahir" placeholder="Tempat Lahir" required>
+											name="txtTempatLahir" placeholder="Tempat Lahir">
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="dtmTanggalLahir" class="col-sm-3 col-form-label">Tanggal Lahir</label>
+									<div class="col-sm-9">
+										<input type="date" class="form-control" id="dtmTanggalLahir"
+											name="dtmTanggalLahir" placeholder="NIK">
 									</div>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group row">
-									<label for="dtmTanggalLahir" class="col-sm-3 col-form-label">Tanggal Lahir</label>
-									<div class="col-sm-9">
-										<input type="date" class="form-control" id="dtmTanggalLahir"
-											name="dtmTanggalLahir" placeholder="NIK" required>
-									</div>
-								</div>
-								<div class="form-group row">
 									<label for="intIdAgama" class="col-sm-3 col-form-label">Agama</label>
 									<div class="col-sm-9">
-										<select name="intidAgama" id="intIdAgama" class="form-control select2">
+										<select name="intIdAgama" id="intIdAgama" class="form-control select2">
 											
 										</select>
 									</div>
@@ -195,14 +200,14 @@
 									<label for="txtSuku" class="col-sm-3 col-form-label">Suku</label>
 									<div class="col-sm-9">
 										<input type="text" class="form-control" id="txtSuku"
-											name="txtSuku" placeholder="Suku" required>
+											name="txtSuku" placeholder="Suku">
 									</div>
 								</div>
 								<div class="form-group row">
 									<label for="txtGolonganDarah" class="col-sm-3 col-form-label">Golongan Darah</label>
 									<div class="col-sm-9">
 										<input type="text" class="form-control" id="txtGolonganDarah"
-											name="txtGolonganDarah" placeholder="Golongan Darah" required>
+											name="txtGolonganDarah" placeholder="Golongan Darah">
 									</div>
 								</div>
 								<div class="form-group row">
@@ -218,17 +223,35 @@
 									</div>
 								</div>
 								<div class="form-group row">
-									<label for="txtKodeNegara" class="col-sm-3 col-form-label">Negara</label>
+									<label for="kewarganegaraan" class="col-sm-3 col-form-label">Kewarganegaraan</label>
 									<div class="col-sm-9">
-										<select  id="txtKodeNegara" class="form-control select2">
+										<select id="kewarganegaraan" class="form-control" name="kewarganegaraan">
+											<option value="" selected disabled>- Pilih -</option>
+											<option value="wni">WNI</option>
+											<option value="wna">WNA</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="intIdNegara" class="col-sm-3 col-form-label">Negara</label>
+									<div class="col-sm-9">
+										<select name="intIdNegara" id="intIdNegara" class="form-control select2">
 											
 										</select>
 									</div>
 								</div>
 								<div class="form-group row">
-									<label for="intIdWilayah" class="col-sm-3 col-form-label">Wilayah</label>
+									<label for="intIdProvinsi" class="col-sm-3 col-form-label">Provinsi</label>
 									<div class="col-sm-9">
-										<select name="intIdWilayah" id="intIdWilayah" class="form-control select2">
+										<select name="intIdProvinsi" id="intIdProvinsi" class="form-control select2">
+											
+										</select>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="intIdKota" class="col-sm-3 col-form-label">Kota</label>
+									<div class="col-sm-9">
+										<select name="intIdKota" id="intIdKota" class="form-control select2">
 											
 										</select>
 									</div>
@@ -239,6 +262,24 @@
 										<select name="intIdJenjangPendidikan" id="intIdJenjangPendidikan" class="form-control select2">
 											
 										</select>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="buatAkunUser" class="col-sm-3 col-form-label">Buat Akun User</label>
+									<div class="col-md-9">
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" type="checkbox" id="buatAkunUser" name="buatAkunUser">
+											<label class="form-check-label" for="buatAkunUser">Ya</label>
+										</div>
+									</div>
+								</div>
+								<div class="form-group row fg-kirimNotifikasiWa d-none">
+									<label for="kirimNotifikasiWa" class="col-sm-3 col-form-label">Kirim Notifikasi</label>
+									<div class="col-md-9">
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" type="checkbox" id="kirimNotifikasiWa" name="KirimNotivikasiWa">
+											<label class="form-check-label" for="kirimNotifikasiWa">Ya</label>
+										</div>
 									</div>
 								</div>
 								<div class="form-group">
@@ -274,20 +315,6 @@
 	<link rel="stylesheet" href="<?= base_url('assets/templates/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') ?>">
 <script src="<?= base_url('assets/templates/plugins/select2/js/select2.min.js') ?>"></script>
 <script>
-	function plants()
-		{
-			var plantItem;
-			$.ajax({
-				type: 'POST',
-				dataType: 'JSON',
-				async: false,
-				url: '<?= base_url('manajemen/plant/getsPlant') ?>',
-				success: function (res) {
-					plantItem = res;
-				}
-			})
-			return plantItem;
-		}
 
 		function departments()
 		{
@@ -334,14 +361,17 @@
 			return aga;
 		}
 
-		function negaras()
+		function negaras(kwn)
 		{
 			var neg;
 			$.ajax({
 				type: 'POST',
 				dataType: 'JSON',
 				async: false,
-				url: '<?= base_url('manajemen/negara/get_json') ?>',
+				data:{
+					kwn
+				},
+				url: '<?= base_url('manajemen/negara/get') ?>',
 				success: function (res) {
 					neg = res.data;
 				}
@@ -363,14 +393,14 @@
 			})
 			return jen;
 		}
-		function wilayahs(kode_negara)
+		function provinsis(kode_negara)
 		{
 			var wil;
 			$.ajax({
 				type: 'POST',
 				dataType: 'JSON',
 				async: false,
-				url: '<?= base_url('manajemen/wilayah/getByKodeNegara/') ?>',
+				url: '<?= base_url('manajemen/lokasi/getProvinsi/') ?>',
 				data: {
 					kode_negara:kode_negara
 				},
@@ -380,18 +410,54 @@
 			})
 			return wil;
 		}
+
+		function kotas(id_provinsi)
+		{
+			var kot;
+			$.ajax({
+				type: 'POST',
+				dataType: 'JSON',
+				async: false,
+				url: '<?= base_url('manajemen/lokasi/getKota/') ?>',
+				data: {
+					id_provinsi
+				},
+				success: function (res) {
+					kot = res.data;
+				}
+			})
+			return kot;
+		}
+
+		function getEmployeeById(id)
+		{
+			var kot;
+			$.ajax({
+				type: 'POST',
+				dataType: 'JSON',
+				async: false,
+				url: '<?= base_url('manajemen/employee/getEmployeeById/') ?>',
+				data: {
+					id
+				},
+				success: function (res) {
+					kot = res.data;
+				}
+			})
+			return kot;
+		}
 </script>
 <script>
 	$(document).ready(function () {
-		let plants2 = plants();
+		
 		let departments2 = departments();
 		let jabatans2 = jabatans();
 		let agamas2 = agamas();
-		let negaras2 = negaras();
 		let pendidikans2 = pendidikans();
 		$('.select2').select2({
 			theme:'bootstrap4',
 			width: 'auto',
+			tags:true,
 			dropdownParent: $('#myModal')
 		});
 		$.ajax({
@@ -407,11 +473,11 @@
 					html_mn += `<td class="text-center">${no}</td>`;
 					html_mn += `<td class="text-center">${val.txtNameEmployee}</td>`;
 					html_mn += `<td class="text-center">${val.txtNikEmployee}</td>`;
-					html_mn += `<td class="text-center">${val.txtNamaPlant}</td>`;
+				
 					html_mn += `<td class="text-center">${val.txtNamaDepartement}</td>`;
 					html_mn += `<td class="text-center">${val.txtNamaJabatan}</td>`;
 					html_mn +=
-						`<td class="text-center"><a class="btn btn-xs btn-info btnShow" data-url="<?= base_url('manajemen/employee/show/') ?>${val.intIdEmployee}" data-id="${val.intIdEmployee}" data-nama="${val.txtNameEmployee}"><i class="fas fa-eye"></i></a> |<a class="btn btn-xs btn-warning btnEdit" data-id="${val.intIdEmployee}" data-nama="${val.txtNameEmployee}"><i class="fas fa-pen"></i></a> | <a class="btn btn-xs btn-danger btnDelete" data-id="${val.intIdEmployee}" data-name="${val.txtNameEmployee}"><i class="fas fa-trash-alt"></i></a></td>`;
+						`<td class="text-center"><a class="btn btn-xs btn-info btnShow" data-url="<?= base_url('manajemen/employee/show/') ?>${val.intIdEmployee}" data-nik="${val.txtNikEmployee}" data-nama="${val.txtNameEmployee}"><i class="fas fa-eye"></i></a> |<a class="btn btn-xs btn-warning btnEdit" data-id="${val.intIdEmployee}" data-negara="${val.txtNamaNegara}" data-nama="${val.txtNameEmployee}"><i class="fas fa-pen"></i></a> | <a class="btn btn-xs btn-danger btnDelete" data-id="${val.intIdEmployee}" data-name="${val.txtNameEmployee}"><i class="fas fa-trash-alt"></i></a></td>`;
 					html_mn += `</tr>`;
 				});
 				$('#menu_tbody').html(html_mn);
@@ -419,15 +485,9 @@
 				// event Klik tombol add
 				$('.btnAdd').on('click', function () {
 
-					
-
 					// plant
 					// plants = plants();
-					$('#intIdPlant').empty();
-					$('#intIdPlant').append('<option selected disabled>-Pilih-</option>');
-					$.each(plants2, function(key,value){
-						$('#intIdPlant').append('<option value="'+value['intIdPlant']+'">'+ value['txtNamaPlant'] +'</option>');
-					})
+				
 
 					// departments
 					// departments = departments();
@@ -454,13 +514,18 @@
 						$('#intIdAgama').append('<option value="'+value['intidAgama']+'">'+ value['txtNamaAgama'] +'</option>');
 					})
 
-					// negaras
-					// negaras = negaras();
-					$('#txtKodeNegara').empty();
-					$('#txtKodeNegara').append('<option selected disabled>-Pilih-</option>');
-					$.each(negaras2, function(key,value){
-						$('#txtKodeNegara').append('<option value="'+value['txtKodeNegara']+'">'+ value['txtNamaNegara'] +'</option>');
+					$('#kewarganegaraan').on('change', function(){
+						var kwn = $(this).val();
+						negaras2 = negaras(kwn)
+						// negaras = negaras();
+						$('#intIdNegara').empty();
+						$('#intIdNegara').append('<option selected disabled>-Pilih-</option>');
+						$.each(negaras2, function(key,value){
+							$('#intIdNegara').append('<option value="'+value['intIdNegara']+'">'+ value['txtNamaNegara'] +'</option>');
+						})
 					})
+
+					
 
 					// pendidikans
 					// pendidikans = pendidikans();
@@ -470,16 +535,36 @@
 						$('#intIdJenjangPendidikan').append('<option value="'+value['intIdJenjangPendidikan']+'">'+ value['txtNamaJenjangPendidikan'] +'</option>');
 					})
 
-					// wilayah
-					$('#txtKodeNegara').on('change', function(){
-						var kode = $(this).val();
-						wilayahs2 = wilayahs(kode);
-						
-						$('#intIdWilayah').empty();
-						$('#intIdWilayah').append('<option selected disabled>-Pilih-</option>');
-						$.each(wilayahs2, function(key,value){
-							$('#intIdWilayah').append('<option value="'+value['intIdWilayah']+'">'+ value['txtNamaWilayah'] +'</option>');
+					// get provinsi
+					$('#intIdNegara').on('change', function(){
+						var id = $(this).val();
+						provinsis2 = provinsis(id);
+						$('#intIdProvinsi').empty();
+						$('#intIdProvinsi').append('<option selected disabled>-Pilih-</option>');
+						$.each(provinsis2, function(key,value){
+							$('#intIdProvinsi').append('<option value="'+value['intIdProvinsi']+'">'+ value['txtNamaProvinsi'] +'</option>');
 						})
+					})
+
+					// get kota
+					$('#intIdProvinsi').on('change', function(){
+						var id_provinsi = $(this).val();
+						kota2 = kotas(id_provinsi);
+						$('#intIdKota').empty();
+						$('#intIdKota').append('<option selected disabled>-Pilih-</option>');
+						$.each(kota2, function(key,value){
+							$('#intIdKota').append('<option value="'+value['intIdKota']+'">'+ value['txtNamaKota'] +'</option>');
+						})
+					})
+
+					$('#txtNomorWa').on('keyup', function(){
+						var wa = $(this).val();
+						if(wa.length > 0)
+						{
+							$('.fg-kirimNotifikasiWa').removeClass('d-none');
+						}else{
+							$('.fg-kirimNotifikasiWa').addClass('d-none');
+						}
 					})
 						
 					$('.modal-title').text('Tambah Employee');
@@ -491,16 +576,220 @@
 
 				$('body').on('click', '.btnEdit', function () {
 					var id = $(this).data('id');
-					var nama = $(this).data('nama');
+					employee = getEmployeeById(id);
 					$('.modal-title').text('Edit Employee');
 					$('#intIdEmployee').val(id);
-					$('#txtNameEmployee').val(nama);
+					$('#txtNameEmployee').val(employee.txtNameEmployee);
+					$('#txtNikEmployee').val(employee.txtNikEmployee);
+					$('#txtEmail').val(employee.txtEmail);
+					// plants = plants();
+				
+
+					// departments
+					// departments = departments();
+					$('#intIdDepartment').empty();
+					$('#intIdDepartment').append('<option selected disabled>-Pilih-</option>');
+					$.each(departments2, function(key,value){
+						if(value['intIdDepartement'] === employee.intIdDepartment)
+						{
+							$('#intIdDepartment').append('<option selected value="'+value['intIdDepartement']+'">'+ value['txtNamaDepartement'] +'</option>');
+						}else{
+							$('#intIdDepartment').append('<option value="'+value['intIdDepartement']+'">'+ value['txtNamaDepartement'] +'</option>');
+						}
+					})
+
+					// jabatans
+					// jabatans = jabatans();
+					$('#intIdJabatan').empty();
+					$('#intIdJabatan').append('<option selected disabled>-Pilih-</option>');
+					$.each(jabatans2, function(key,value){
+						if(value['intIdJabatan'] === employee.intIdJabatan)
+						{
+							$('#intIdJabatan').append('<option selected value="'+value['intIdJabatan']+'">'+ value['txtNamaJabatan'] +'</option>');
+						}else{
+							$('#intIdJabatan').append('<option value="'+value['intIdJabatan']+'">'+ value['txtNamaJabatan'] +'</option>');
+						}
+					})
+
+
+					// agamas
+					// agamas = agamas();
+					$('#intIdAgama').empty();
+					$('#intIdAgama').append('<option selected disabled>-Pilih-</option>');
+					$.each(agamas2, function(key,value){
+						if(value['intidAgama'] === employee.intIdAgama)
+						{
+							$('#intIdAgama').append('<option selected value="'+value['intidAgama']+'">'+ value['txtNamaAgama'] +'</option>');
+						}else{
+							$('#intIdAgama').append('<option value="'+value['intidAgama']+'">'+ value['txtNamaAgama'] +'</option>');
+						}
+					})
+
+					
+					$('#kewarganegaraan').empty();
+					$('#kewarganegaraan').append('<option selected disabled>-Pilih-</option>');
+					var nmNegara = $(this).data('negara');
+					if(nmNegara === 'Indonesia' || nmNegara === 'indonesia')
+					{
+						$('#kewarganegaraan').append('<option selected value="wni">WNI</option>');
+						$('#kewarganegaraan').append('<option value="wna">WNA</option>');
+					}else{
+						$('#kewarganegaraan').append('<option value="wni">WNI</option>');
+						$('#kewarganegaraan').append('<option selected value="wna">WNA</option>');
+					}
+
+					$('#kewarganegaraan').on('change', function(){
+						var kwn = $(this).val();
+						negaras2 = negaras(kwn);
+						$('#intIdNegara').empty();
+						$('#intIdNegara').append('<option selected disabled>-Pilih-</option>');
+						$.each(negaras2, function(key,value){
+							if(value['intIdNegara'] === employee.intIdNegara)
+							{
+								$('#intIdNegara').append('<option selected value="'+value['intIdNegara']+'">'+ value['txtNamaNegara'] +'</option>');
+							}else{
+								$('#intIdNegara').append('<option value="'+value['intIdNegara']+'">'+ value['txtNamaNegara'] +'</option>');
+							}
+						})
+					})
+					var kwn = $('#kewarganegaraan').val();
+					negaras2 = negaras(kwn);
+					$('#intIdNegara').empty();
+					$('#intIdNegara').append('<option selected disabled>-Pilih-</option>');
+					$.each(negaras2, function(key,value){
+						if(value['intIdNegara'] === employee.intIdNegara)
+						{
+							$('#intIdNegara').append('<option selected value="'+value['intIdNegara']+'">'+ value['txtNamaNegara'] +'</option>');
+						}else{
+							$('#intIdNegara').append('<option value="'+value['intIdNegara']+'">'+ value['txtNamaNegara'] +'</option>');
+						}
+					})
+
+
+					// pendidikans
+					// pendidikans = pendidikans();
+					$('#intIdJenjangPendidikan').empty();
+					$('#intIdJenjangPendidikan').append('<option selected disabled>-Pilih-</option>');
+					$.each(pendidikans2, function(key,value){
+						if(value['intIdJenjangPendidikan'] === employee.intIdJenjangPendidikan)
+						{
+							$('#intIdJenjangPendidikan').append('<option selected value="'+value['intIdJenjangPendidikan']+'">'+ value['txtNamaJenjangPendidikan'] +'</option>');
+						}else{
+							$('#intIdJenjangPendidikan').append('<option value="'+value['intIdJenjangPendidikan']+'">'+ value['txtNamaJenjangPendidikan'] +'</option>');
+						}
+					})
+
+					// set provinsi
+					var kodenegara = $('#intIdNegara').val();;
+					provinsis2 = provinsis(kodenegara);
+					$('#intIdProvinsi').empty();
+					$('#intIdProvinsi').append('<option selected disabled>-Pilih-</option>');
+					$.each(provinsis2, function(key,value){
+						if(value['intIdProvinsi'] === employee.intIdProvinsi)
+						{
+							$('#intIdProvinsi').append('<option selected value="'+value['intIdProvinsi']+'">'+ value['txtNamaProvinsi'] +'</option>');
+						}else{
+							$('#intIdProvinsi').append('<option value="'+value['intIdProvinsi']+'">'+ value['txtNamaProvinsi'] +'</option>');
+						}
+					})
+
+					// get provinsi
+					$('#intIdNegara').on('change', function(){
+						var kode = $(this).val();;
+						provinsis2 = provinsis(kode);
+						$('#intIdProvinsi').empty();
+						$('#intIdProvinsi').append('<option selected disabled>-Pilih-</option>');
+						$.each(provinsis2, function(key,value){
+							if(value['intIdProvinsi'] === employee.intIdProvinsi)
+							{
+								$('#intIdProvinsi').append('<option selected value="'+value['intIdProvinsi']+'">'+ value['txtNamaProvinsi'] +'</option>');
+							}else{
+								$('#intIdProvinsi').append('<option value="'+value['intIdProvinsi']+'">'+ value['txtNamaProvinsi'] +'</option>');
+							}
+						})
+					})
+
+					// set kota
+					var idprov = $('#intIdProvinsi').val();;;
+					kota2 = kotas(idprov);
+					$('#intIdKota').empty();
+					$('#intIdKota').append('<option selected disabled>-Pilih-</option>');
+					$.each(kota2, function(key,value){
+						if(value['intIdKota'] === employee.intIdKota)
+						{
+							$('#intIdKota').append('<option selected value="'+value['intIdKota']+'">'+ value['txtNamaKota'] +'</option>');
+						}else{
+							$('#intIdKota').append('<option value="'+value['intIdKota']+'">'+ value['txtNamaKota'] +'</option>');
+						}
+					})
+
+					// get kota
+					$('#intIdProvinsi').on('change', function(){
+						var id_provinsi = $(this).val();
+						kota2 = kotas(id_provinsi);
+						$('#intIdKota').empty();
+						$('#intIdKota').append('<option selected disabled>-Pilih-</option>');
+						$.each(kota2, function(key,value){
+							if(value['intIdKota'] === employee.intIdKota)
+							{
+								$('#intIdKota').append('<option selected value="'+value['intIdKota']+'">'+ value['txtNamaKota'] +'</option>');
+							}else{
+								$('#intIdKota').append('<option value="'+value['intIdKota']+'">'+ value['txtNamaKota'] +'</option>');
+							}
+						})
+					})
+
+					// tpk
+					$('#intTpk').empty();
+					$('#intTpk').append('<option selected disabled>-Pilih-</option>');
+					if(employee.intTpk == 1)
+					{
+						$('#intTpk').append('<option selected value="1">Tetap</option>');
+						$('#intTpk').append('<option value="3">Kontrak</option>');
+					}else{
+						$('#intTpk').append('<option value="1">Tetap</option>');
+						$('#intTpk').append('<option selected value="3">Kontrak</option>');
+					}
+
+					// kpw
+					$('#intKpw').empty();
+					$('#intKpw').append('<option selected disabled>-Pilih-</option>');
+					if(employee.intKpw == 1)
+					{
+						$('#intKpw').append('<option selected value="1">Pria</option>');
+						$('#intKpw').append('<option value="2">Wanita</option>');
+					}else{
+						$('#intKpw').append('<option value="1">Pria</option>');
+						$('#intKpw').append('<option selected value="2">Wanita</option>');
+					}
+
+
+					// kpw
+					$('#intKtk').empty();
+					$('#intKtk').append('<option selected disabled>-Pilih-</option>');
+					if(employee.intKtk == 1)
+					{
+						$('#intKtk').append('<option selected value="1">Kawin</option>');
+						$('#intKtk').append('<option value="2">Tidak</option>');
+					}else{
+						$('#intKtk').append('<option value="1">Kawin</option>');
+						$('#intKtk').append('<option selected value="2">Tidak</option>');
+					}
+
+					$('#intJumlahAnak').val(employee.intJumlahAnak);
+					$('#dtmTanggalMasuk').val(employee.dtmTanggalMasuk);
+					$('#txtTempatLahir').val(employee.txtTempatLahir);
+					$('#dtmTanggalLahir').val(employee.dtmTanggalLahir);
+					$('#txtSuku').val(employee.txtSuku);
+					$('#txtGolonganDarah').val(employee.txtGolonganDarah);
+					$('#txtAlamat1').val(employee.txtAlamat1);
+					$('#txtAlamat2').val(employee.txtAlamat2);
 					$('#myModal').modal('show');
 				})
 
 				// button show
 				$('body').on('click', '.btnShow', function () {
-					var id = $(this).data('id');
+					var nik = $(this).data('nik');
 					var url = $(this).data('url');
 					$('#modalShow .modal-title').text('Detail Employee');
 					$('#modalShow').find('.modal-body').load(url);
@@ -527,6 +816,11 @@
 									title: title,
 									text: text
 								}).then(function (isConfirm) {
+									if(response.redirect)
+									{
+										var link = "https://wa.me/"+response.no_wa+'?text='+response.isiPesan; 
+										window.open(link, '_blank');
+									}
 									location.reload();
 								})
 							} else if (response.code == 400) {
@@ -608,7 +902,7 @@
 								html_mn += `<td class="text-center">${no}</td>`;
 								html_mn += `<td class="text-center">${val.txtNameEmployee}</td>`;
 								html_mn += `<td class="text-center">${val.txtNikEmployee}</td>`;
-								html_mn += `<td class="text-center">${val.txtNamaPlant}</td>`;
+							
 								html_mn += `<td class="text-center">${val.txtNamaDepartement}</td>`;
 								html_mn += `<td class="text-center">${val.txtNamaJabatan}</td>`;
 								html_mn +=
@@ -623,7 +917,29 @@
 		});
 
 		$('#myModal').on('hidden.bs.modal', function () {
-			
+			$('#intJumlahAnak').val('');
+			$('#dtmTanggalMasuk').val('');
+			$('#txtTempatLahir').val('');
+			$('#dtmTanggalLahir').val('');
+			$('#txtSuku').val('');
+			$('#txtGolonganDarah').val('');
+			$('#txtAlamat1').val('');
+			$('#txtAlamat2').val('');
+			$('#intIdEmployee').val('');
+			$('#txtNameEmployee').val('');
+			$('#txtNikEmployee').val('');
+			$('#txtEmail').val('');
+			$('#intIdPlant').empty();
+			$('#intIdDepartment').empty();
+			$('#intIdJabatan').empty();
+			$('#intTpk').empty();
+			$('#intKpw').empty();
+			$('#intKtk').empty();
+			$('#intIdAgama').empty();
+			$('#intIdNegara').empty();
+			$('#intIdProvinsi').empty();
+			$('#intIdKota').empty();
+			$('#intIdJenjangPendidikan').empty();
 		})
 	});
 

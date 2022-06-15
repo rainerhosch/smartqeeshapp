@@ -51,6 +51,17 @@ class M_department extends CI_Model
           return $this->db->get_where($this->table, ["intIdDepartement" => $id])->row_array();
      }
 
+     // code by rzoktan
+     public function getData_v2($where = null)
+     {
+          $this->db->select('*');
+          $this->db->from($this->table);
+          if ($where != null) {
+               $this->db->where($where);
+          }
+          return $this->db->get();
+     }
+
      public function updateData($data, $id)
      {
           $this->db->update($this->table, $data, ["intIdDepartement" => $id]);

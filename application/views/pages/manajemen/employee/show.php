@@ -12,19 +12,24 @@
 				<td><?= $employee->txtNikEmployee ?></td>
 			</tr>
 			<tr>
-				<th>Plant</th>
+				<th>Email</th>
 				<td> : </td>
-				<td><?= $employee->txtNamaPlant ?></td>
+				<td><?= $employee->txtEmail ?></td>
+			</tr>
+			<tr>
+				<th>No. Wa</th>
+				<td> : </td>
+				<td><?= $employee->txtNomorWa ?></td>
 			</tr>
 			<tr>
 				<th>Department</th>
 				<td> : </td>
-				<td><?= $employee->txtNamaDepartement ?></td>
+				<td><?= $employee->txtNamaDepartement ?? '-' ?></td>
 			</tr>
 			<tr>
 				<th>Jabatan</th>
 				<td> : </td>
-				<td><?= $employee->txtNamaJabatan ?></td>
+				<td><?= $employee->txtNamaJabatan ?? '-' ?></td>
 			</tr>
 			<tr>
 				<th>TPK</th>
@@ -107,7 +112,7 @@
 			<tr>
 				<th>Agama</th>
 				<td> : </td>
-				<td><?= $employee->txtNamaAgama ?></td>
+				<td><?= $employee->txtNamaAgama ?? '-' ?></td>
 			</tr>
 			<tr>
 				<th>Suku</th>
@@ -130,9 +135,19 @@
 				<td><?= $employee->txtAlamat2 ?></td>
 			</tr>
 			<tr>
-				<th>Wilayah</th>
+				<th>Negara</th>
 				<td> : </td>
-				<td><?= $employee->txtNamaWilayah ?></td>
+				<td><?= $employee->txtNamaNegara ?? '-' ?></td>
+			</tr>
+			<tr>
+				<th>Provinsi</th>
+				<td> : </td>
+				<td><?= $employee->txtNamaProvinsi ?? '-' ?></td>
+			</tr>
+			<tr>
+				<th>Kota</th>
+				<td> : </td>
+				<td><?= $employee->txtNamaKota ?? '-' ?></td>
 			</tr>
 			<tr>
 				<th>Jenjang Pendidikan</th>
@@ -140,5 +155,55 @@
 				<td><?= $employee->txtNamaJenjangPendidikan ?? '-' ?></td>
 			</tr>
 		</table>
+	</div>
+</div>
+<hr>
+<div class="row">
+	<div class="col-md-4">
+		<h6 style="font-size: 22px;font-weight:400">Informasi Akun</h6>
+		<?php if($employee->username) : ?>
+		<ul class="list-unstyled">
+			<li class="d-flex justify-content-between my-1">
+				<span class="font-weight-bold">Username</span>
+				<span><?= $employee->username ?></span>
+			</li>
+			<li class="d-flex justify-content-between my-1">
+				<span class="font-weight-bold">Password</span>
+				<span class="badge badge-secondary">
+					<?php 
+						if(md5($employee->username) === $employee->password)
+						{
+							$pass = 'Password Default';
+						}else{
+							$pass = 'Password Dirubah';
+						}
+						echo $pass;
+					?>
+				</span>
+			</li>
+			<li class="d-flex justify-content-between my-1">
+				<span class="font-weight-bold">Status</span>
+					<?php 
+						if($employee->is_active == 1)
+						{
+							$pass = '<span class="badge badge-success">Aktif</span>';
+						}else{
+							$pass = '<span class="badge badge-danger">Tidak Aktif</span>';
+						}
+						echo $pass;
+					?>
+			</li>
+			<li class="d-flex justify-content-between my-1">
+				<span class="font-weight-bold">Last Login</span>
+				<span><?= date('d/m/Y', $employee->last_login) ?></span>
+			</li>
+			<li class="d-flex justify-content-between my-1">
+				<span class="font-weight-bold">IP Address</span>
+				<span><?= $employee->ip_address ?></span>
+			</li>
+		</ul>
+		<?php else: ?>
+			<p class="text-left">Tidak Mempunyai Akun !</p>
+		<?php endif; ?>
 	</div>
 </div>

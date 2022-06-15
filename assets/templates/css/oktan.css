@@ -1,0 +1,44 @@
+.anim-text-area{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.typing-animation-text{
+    width: 22ch;
+    animation: typing 2s steps(22), blink .5s step-end infinite alternate;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 3px solid;
+    font-family: monospace;
+    font-size: 2em;
+}
+
+@keyframes typing {
+    from { width: 0 }
+}
+@keyframes blink{
+    50% { border-color: transparent }
+}
+
+/* body{
+    background: navajowhite;
+    background-size: cover;
+    font-family: 'Trebuchet MS', sans-serif; 
+  }
+  .container{
+    display: inline-block;
+  }
+  .typed-out{
+    overflow: hidden;
+    border-right: .15em solid orange;
+    white-space: nowrap;
+    animation: 
+      typing 1s forwards;
+    font-size: 1.6rem;
+    width: 0;
+  }
+  @keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+  }
+ */
