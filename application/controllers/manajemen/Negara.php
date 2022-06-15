@@ -42,20 +42,36 @@ class Negara extends CI_Controller{
         echo json_encode($data);
     }
 
+	public function get()
+    {
+        if($this->input->is_ajax_request())
+        {
+			$kwn = $this->input->post('kwn');
+			$data = $this->negara->getByKewarganegaraan($kwn)->result();
+            $data = [
+                'code' => 200,
+                'status' => true,
+                'msg' => 'Success',
+                'data' => $data
+            ];
+        }
+        echo json_encode($data);
+    }
+
 	public function store()
     {
         if($this->input->is_ajax_request())
         {
             $input = $this->input->post();
             
-            if($input['txtKodeNegara2'])
+            if($input['intIdNegara'])
             {
                 $datainput = [
                     'txtKodeNegara' => $this->input->post('txtKodeNegara'),
 					'txtNamaNegara' => $this->input->post('txtNamaNegara')
                 ];
                 // proses update
-                $status =  $this->negara->update($this->input->post('txtKodeNegara'),$datainput);
+                $status =  $this->negara->update($input['intIdNegara'],$datainput);
                 $data = [
                     'code' => 200,
                     'status' => 'success',
@@ -84,10 +100,10 @@ class Negara extends CI_Controller{
     {
         if($this->input->is_ajax_request())
         {
-            $kode = $this->input->post('kode');
-            if($kode)
+            $id = $this->input->post('id');
+            if($id)
             {
-                $this->negara->destroy($kode);
+                $this->negara->destroy($id);
                 $data = [
                     'code' => 200,
                     'status' => true,

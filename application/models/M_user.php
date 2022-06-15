@@ -14,8 +14,8 @@ class M_user extends CI_Model
     public function get_user($field, $where = null)
     {
         $this->db->select($field);
-        $this->db->from('user');
-        $this->db->join('user_detail', 'user_detail.user_detail_id=user.user_detail_id');
+        $this->db->from('mEmployee');
+        $this->db->join('user', 'mEmployee.intIdEmployee=`user`.employee_id');
         $this->db->join('user_role', 'user_role.role_id=user.role_id');        
 
         if ($where != null) {
