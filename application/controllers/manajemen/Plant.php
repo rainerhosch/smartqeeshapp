@@ -44,27 +44,27 @@ class Plant extends CI_Controller
 		echo json_encode($this->plant->get_datatables());
 	}
 
-	public function getById ()
+	public function getById()
 	{
 		$id 	= $this->input->get('intIdPlant');
-		$data 	= $this->plant->getById($id);		
+		$data 	= $this->plant->getById($id);
 		if ($data != null) {
-			echo json_encode ([
+			echo json_encode([
 				'code' 		=> 200,
 				'status' 	=> true,
 				'msg' 		=> 'Berhasil',
 				'data' 		=> $data
 			]);
 		} else {
-			echo json_encode ([
+			echo json_encode([
 				'code' 		=> 404,
 				'status' 	=> true,
 				'msg' 		=> 'Data Tidak Ditemukan !',
 				'data' 		=> null
 			]);
-		} 
-		
+		}
 	}
+
 
 	public function simpan()
 	{
@@ -78,18 +78,18 @@ class Plant extends CI_Controller
 		];
 		$this->plant->simpan($data);
 		$response = [
-						'code' 		=> 200,
-						'status' 	=> true,
-						'msg' 		=> 'Berhasil disimpan.',
-						'data' 		=> "-"
-					];
+			'code' 		=> 200,
+			'status' 	=> true,
+			'msg' 		=> 'Berhasil disimpan.',
+			'data' 		=> "-"
+		];
 		echo json_encode($response);
 	}
 
-	public function update ()
+	public function update()
 	{
 		$dateNow 	= date("Y-m-d");
-		$intIdPlant = $this->input->post('intIdPlant');		 
+		$intIdPlant = $this->input->post('intIdPlant');
 		$data = [
 			"txtNamaPlant" 		=> strtoupper($this->input->post('txtNamaPlant')),
 			"txtSingkatan" 		=> strtoupper($this->input->post('txtSingkatan')),
@@ -99,11 +99,33 @@ class Plant extends CI_Controller
 		];
 		$this->plant->update($data, $intIdPlant);
 		$response = [
-						'code' 		=> 200,
-						'status' 	=> true,
-						'msg' 		=> 'Berhasil disimpan.',
-						'data' 		=> "-"
-					];
+			'code' 		=> 200,
+			'status' 	=> true,
+			'msg' 		=> 'Berhasil disimpan.',
+			'data' 		=> "-"
+		];
+		echo json_encode($response);
+	}
+
+	// code by rz oktan 19/05/2022
+	public function getData_v2()
+	{
+		if ($this->input->is_ajax_request()) {
+			$data = $this->plant->getData_v2()->result_array();
+			$response = [
+				'code'    => 200,
+				'status'  => true,
+				'msg'     => 'Berhasil',
+				'data'    => $data
+			];
+		} else {
+			$response = [
+				'code'    => 500,
+				'status'  => false,
+				'msg'     => 'Internal Server Error',
+				'data'    => null
+			];
+		}
 		echo json_encode($response);
 	}
 }
