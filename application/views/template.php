@@ -45,7 +45,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 </head>
 <?php if ($page != 'Auth') : ?>
 
-	<body class="hold-transition layout-fixed layout-navbar-fixed layout-footer-fixed" style="height: auto;" id="mydiv">
+	<!-- <body class="hold-transition layout-fixed layout-navbar-fixed layout-footer-fixed" style="height: auto;" id="mydiv"> -->
+
+	<body class="layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-collapse" style="height: auto;" id="mydiv">
 		<div class="wrapper">
 			<!-- Preloader -->
 			<div class="preloader flex-column justify-content-center align-items-center">

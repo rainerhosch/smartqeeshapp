@@ -16,7 +16,7 @@
         <h6><strong>PT ASIA PACIFIC FIBERS TBK. UNIT KARAWANG</strong></h6>
       </a>
     </div>
-    <div class="card">
+    <div class="card mt-4">
       <div class="card-body login-card-body">
         <div class="row" id="alert_msg">
           <div class="col-12">
@@ -141,7 +141,11 @@
               }
             } else {
               // 200
-              window.location = `<?= base_url('dashboard') ?>`
+							if (response.data.isDefaultPassword == 0) {
+								window.location = `<?= base_url('Auth/changePassword') ?>`
+							} else {
+								window.location = `<?= base_url('dashboard') ?>`
+							}              
             }
           }
         });

@@ -37,16 +37,21 @@ class Auth extends CI_Controller
         if ($this->input->is_ajax_request()) {
             $email_or_username = $this->input->post('email_or_username');
             $password = $this->input->post('password');
-            $field = 'user.user_id,user.username, user.password, user.is_active, user_detail.*';
-            $contition = "user.username='" . $email_or_username . "' OR user_detail.email='" . $email_or_username . "'";
+            $field = '`user`.user_id, `user`.`password`, `user`.role_id, `user`.is_active, mEmployee.intIdEmployee, mEmployee.txtNameEmployee as name, mEmployee.txtNikEmployee, mEmployee.txtEmail, mEmployee.intIdDepartment, mEmployee.intIdJabatan, isDefaultPassword';
+            $contition = "user.username='" . $email_or_username . "'";
             $data_user = $this->user->get_user($field, $contition)->row_array();
+			// var_dump($data_user);exit;
             if ($data_user != null) {
                 // cek password
                 if ($data_user['password'] === md5($password)) {
                     if ($data_user['is_active'] > 0) {
                         $session_login = [
-                            'user_id' => $data_user['user_id'],
-                            'id_departemen' => $data_user['id_departemen'],
+                            'user_id' 			=> $data_user['user_id'],
+                            'id_departemen' 	=> $data_user['intIdDepartment'],
+                            'id_jabatan' 		=> $data_user['intIdJabatan'],
+                            'nama_employee' 	=> $data_user['name'],
+                            'id_employee' 		=> $data_user['intIdEmployee'],
+                            'isDefaultPassword' => $data_user['isDefaultPassword'],
                         ];
                         $this->session->set_userdata($session_login);
                         $data_user = $session_login;
@@ -166,6 +171,53 @@ class Auth extends CI_Controller
         }
         echo json_encode($data);
     }
+
+	public function changePassword() {
+		$data['title'] = 'Smart Qeesh App';
+        $data['page'] = 'Auth';
+        $data['content'] = 'pages/v_change_pass';
+        $this->load->view('template', $data);
+	}
+
+	public function change_my_password()
+	{		
+		if ($this->input->is_ajax_request()) {
+			$password 	= $this->input->post('password');
+			$id_user 	= $this->session->userdata('user_id');
+			
+			$where = [
+				'user_id' => $id_user
+			];
+			$data_update = [
+				'password' => md5($password),
+				'isDefaultPassword' => 1
+			];
+			$update = $this->user->update_user_password($data_update, $where);
+			if ($update["status"]) {
+				$data = [
+					'code' => 200,
+					'status' => true,
+					'msg' => $update["message"],
+					'data' => null
+				];
+			} else {
+				$data = [
+					'code' => 500,
+					'status' => false,
+					'msg' => $update["message"],
+					'data' => null
+				];
+			}
+		} else {
+            $data = [
+                'code' => 500,
+                'status' => false,
+                'msg' => "Invalid Request",
+                'data' => null
+            ];
+        }
+        echo json_encode($data);
+	}
 
     public function logout()
     {

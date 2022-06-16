@@ -48,13 +48,13 @@
 							<div class="col-lg-4 col-xs-12">
 								<div class="form-group">
 									<label for="">Plant / Departement</label>
-									<input type="text" name="" id="txtNamaDepartemen" class="form-control" value="<?= $dok->txtNamaPlant ?>" disabled>
+									<input type="text" name="" id="txtNamaDepartemen" class="form-control" value="<?= $dok->txtNamaPlant ." / ". $dok->txtNamaDepartement ?>" disabled>
 								</div>
 							</div>
 							<div class="col-lg-4 col-xs-12">
 								<div class="form-group">
 									<label for="">Section</label>
-									<input type="text" name="" id="txtNamaDepartemen" class="form-control" value="<?= $dok->txtNamaDepartement ?>" disabled>
+									<input type="text" name="" id="txtNamaDepartemen" class="form-control" value="<?= $dok->txtNamaSection ?>" disabled>
 								</div>
 							</div>
 						</div>

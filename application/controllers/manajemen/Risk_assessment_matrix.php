@@ -43,6 +43,32 @@ class Risk_assessment_matrix extends CI_Controller{
         echo json_encode($data);
     }
 
+    public function show()
+    {
+        if($this->input->is_ajax_request())
+        {
+            $id = $this->input->post('id');
+            $item = $this->risk_ass_matrix->get($id)->row_array();
+            if($item)
+            {
+                $data = [
+                    'code' => 200,
+                    'status' => true,
+                    'msg' => 'Success',
+                    'data' => $item
+                ];
+            }else{
+                $data = [
+                    'code' => 400,
+                    'status' => false,
+                    'msg' => 'Error!',
+                    'data' => NULL
+                ];
+            }
+        }
+        echo json_encode($data);
+    }
+
     public function store()
     {
         if($this->input->is_ajax_request())

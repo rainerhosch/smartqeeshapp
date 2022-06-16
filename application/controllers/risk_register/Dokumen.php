@@ -32,7 +32,8 @@ class Dokumen extends CI_Controller
 
 	public function getDataTable()
 	{
-		echo json_encode($this->dokumen->get_datatables());
+		$id_departemen = $this->session->userdata('id_departemen');
+		echo json_encode($this->dokumen->get_datatables($id_departemen));
 	}
 
 	public function simpan()
