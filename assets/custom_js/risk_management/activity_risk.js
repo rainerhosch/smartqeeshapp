@@ -42,17 +42,17 @@ function p_InitiateDataList() {
 	$("#dtList_paginate").parent().addClass("d-flex justify-content-end");
 }
 
-$("#tombol_add_activity").on('click', function (e) {
-	$("#txtActivityAdd").val("");
-	$.ajax({
-		type: "get",
-		url: `${url}manajemen/Activity/getActivityByDepartemen`,		
-		dataType: "json",
-		success: function (response) {
-			$(".actList").html(response.data);
-		}
-	});
-});
+// $("#tombol_add_activity").on('click', function (e) {
+// 	$("#txtActivityAdd").val("");
+// 	$.ajax({
+// 		type: "get",
+// 		url: `${url}manajemen/Activity/getActivityByDepartemen`,		
+// 		dataType: "json",
+// 		success: function (response) {
+// 			$(".actList").html(response.data);
+// 		}
+// 	});
+// });
 
 $("#tombol_simpan_add_activity").on('click', function (e) {
 	e.preventDefault();

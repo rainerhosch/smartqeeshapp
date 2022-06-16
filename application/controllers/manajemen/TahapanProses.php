@@ -18,7 +18,7 @@ class TahapanProses extends CI_Controller
 		login_check();
 		$this->load->model('/Manajemen/M_tahapan_proses', 'tahapan_proses');
 		$this->load->model('/Manajemen/M_section', 'section');
-		$this->load->model('/Manajemen/M_activity', 'activity');
+		$this->load->model('/Manajemen/M_Activity', 'activity');
 	}
 
 	public function getsPlant()

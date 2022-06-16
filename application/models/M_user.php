@@ -121,7 +121,7 @@ class M_user extends CI_Model
 	{
 		$this->db->select('mEmployee.txtNameEmployee as nama, mSection.txtNamaSection, mDepartemen.txtNamaDepartement, mPlant.txtSingkatan as txtCodePlant, mPlant.txtNamaPlant, mDepartemen.txtSingkatan as txtCodeDept, user.user_id');
 		$this->db->from('user');
-		$this->db->join('mEmployee', 'user.id_employee = mEmployee.intIdEmployee');
+		$this->db->join('mEmployee', 'user.employee_id = mEmployee.intIdEmployee');
 		$this->db->join('mDepartemen', 'mEmployee.intIdDepartment = mDepartemen.intIdDepartement');
 		$this->db->join('mSection', 'mDepartemen.intIdSection = mSection.intIdSection');
 		$this->db->join('mPlant', 'mSection.intIdPlant = mPlant.intIdPlant');

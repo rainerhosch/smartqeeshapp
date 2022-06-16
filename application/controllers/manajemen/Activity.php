@@ -16,7 +16,7 @@ class Activity extends CI_Controller
      {
           parent::__construct();
           login_check();
-          $this->load->model("Manajemen/M_activity", "activity");
+          $this->load->model("Manajemen/M_Activity", "activity");
           $this->load->model("Manajemen/M_department", "departemen");
      }
 
