@@ -93,3 +93,19 @@ $(".btnEditActivity").click(function(){
      $("#intIdActivity").val(id);
      getData();
 });
+
+$("#intIdSection").on('change', function (e) {
+	e.preventDefault()
+	$.ajax({
+		type: "get",
+		url: `${url}/manajemen/Organization/getDepartementListByIdSection`,
+		data: {intIdSection: $(this).val()},
+		dataType: "json",
+		success: function (response) {
+			$("#intIdDepartement").html(response);
+		},
+		error: () => {
+			alert('Error fetch data !')
+		}
+	});
+});

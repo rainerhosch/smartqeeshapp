@@ -138,5 +138,5 @@ class M_section extends CI_Model
 	public function getDataByIdPlant ($id)
 	{
 		return $this->db->get_where($this->table, ["intIdPlant" => $id, "bitActive" => true])->result_array();
-	}
+	}	
 }

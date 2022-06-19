@@ -27,12 +27,19 @@
 								<div class="col-lg-12">
 									<input type="hidden" name="" id="intIdTahapanProses">
 									<div class="form-group">
-										<label for="">Section</label>
+										<label for="">Function</label>
 										<select name="intIdSection" id="intIdSection" class="form-control">
 											<option value="">Pilih Section</option>
 											<?php foreach ($section as $item) { ?>
-												<option value="<?= $item->intIdSection ?>"><?= $item->txtNamaDepartement . " | " . $item->txtNamaSection ?></option>
+											<option value="<?= $item['intIdSection'] ?>"><?= $item['txtNamaSection'] ?>
+											</option>
 											<?php } ?>
+										</select>
+									</div>
+									<div class="form-group">
+										<label for="">Departement</label>
+										<select name="intIdDepartement" id="intIdDepartement" class="form-control">
+											<option value="">Pilih Departement</option>
 										</select>
 									</div>
 									<div class="form-group">
@@ -43,7 +50,8 @@
 									</div>
 									<div class="form-group">
 										<label for="">Nama Sub Activity</label>
-										<input type="text" name="txtNamaTahapan" id="txtNamaTahapan" class="form-control">
+										<input type="text" name="txtNamaTahapan" id="txtNamaTahapan"
+											class="form-control">
 									</div>
 									<div class="form-group">
 										<label for="">Aktif</label>
@@ -57,7 +65,8 @@
 									<div class="d-flex justify-content-end">
 										<div class="row">
 											<div class="col-xs-12 div col-lg-6">
-												<button class="btn btn-warning" onclick="window.location.reload()">Reset</button>
+												<button class="btn btn-warning"
+													onclick="window.location.reload()">Reset</button>
 											</div>
 											<div class="col-xs-12 div col-lg-6">
 												<button class="btn btn-info" id="tombol_simpan">Simpan</button>
@@ -77,17 +86,22 @@
 							<h3 class="card-title">Data</h3>
 						</div>
 						<div class="card-body">
-							<table class="table table-bordered" id="dtList">
-								<thead>
-									<tr>
-										<th class="text-center">Section</th>
-										<th class="text-center">Activity</th>
-										<th class="text-center">Sub Activity</th>
-										<th class="text-center">Status</th>
-										<th class="text-center">Option</th>
-									</tr>
-								</thead>
-							</table>
+							<div class="row">
+								<div class="col-lg-12">
+									<table class="table table-bordered" id="dtList">
+										<thead>
+											<tr>
+												<th class="text-center">Function</th>
+												<th class="text-center">Departement</th>
+												<th class="text-center">Activity</th>
+												<th class="text-center">Sub Activity</th>
+												<th class="text-center">Status</th>
+												<th class="text-center">Option</th>
+											</tr>
+										</thead>
+									</table>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -97,8 +111,10 @@
 </div>
 <script src="<?= base_url('assets/templates') ?>/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="<?= base_url('assets/templates') ?>/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-<script src="<?= base_url('assets/templates') ?>/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-<script src="<?= base_url('assets/templates') ?>/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="<?= base_url('assets/templates') ?>/plugins/datatables-responsive/js/dataTables.responsive.min.js">
+</script>
+<script src="<?= base_url('assets/templates') ?>/plugins/datatables-responsive/js/responsive.bootstrap4.min.js">
+</script>
 <script src="<?= base_url('assets/templates') ?>/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
 <script src="<?= base_url('assets/templates') ?>/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
 <script>

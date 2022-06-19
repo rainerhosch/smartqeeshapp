@@ -34,8 +34,8 @@
                 let htmlx = ``;
                 if (response.status === true) {
                     let user = response.data;
-                    htmlx += `<a href="#" class="d-block text-sm">${user.nama}</a>`;
-                    htmlx += `<small class="text-light text-center">${user.jabatan} - ${user.divisi}</small>`;
+                    htmlx += `<a href="#" class="d-block text-sm">${user.txtNameEmployee}</a>`;
+                    // htmlx += `<small class="text-light text-center">${user.jabatan} - ${user.divisi}</small>`;
                 }
                 $(".user_profile").html(htmlx);
             }

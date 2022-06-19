@@ -71,4 +71,9 @@ class M_department extends CI_Model
      {
           return $this->db->get_where($this->table, ["intIdPlant" => $id, "bitActive" => true])->result_array();
      }
+
+	public function getDataByIdDepartement ($id)
+	{
+		return $this->db->get_where($this->table, ["intIdDepartement" => $id])->row();
+	}
 }

@@ -43,7 +43,7 @@
 										</select>
 									</div> -->
 									<div class="form-group">
-										<label for="">Nama Section</label>
+										<label for="">Nama Function</label>
 										<input type="text" name="txtNamaSection" id="txtNamaSection" class="form-control">
 									</div>
 									<div class="form-group">

@@ -32,25 +32,34 @@
                                                   <input type="text" class="form-control" id="intIdActivity" readonly>
                                              </div>
                                         </div>
+								<div class="form-group row">
+                                             <label for="intIdSection" class="col-sm-2 col-form-label">Function<small class="text-danger">*</small></label>
+                                             <div class="col-sm-10">
+                                                  <select class="form-control" id="intIdSection" required>
+                                                       <option value="0">Pilih Function</option>
+											<?php foreach ($section as $item) : ?>
+                                                            <option value="<?= $item['intIdSection']; ?>"><?= $item['txtNamaSection']; ?></option>
+                                                       <?php endforeach; ?>
+                                                  </select>
+                                                  <small class="text-danger">*Wajib di Pilih</small>
+                                             </div>
+                                        </div>
+								<div class="form-group row">
+                                             <label for="intIdDepartement" class="col-sm-2 col-form-label">Departement<small class="text-danger">*</small></label>
+                                             <div class="col-sm-10">
+                                                  <select class="form-control" id="intIdDepartement" required>
+                                                       <option value="0">Pilih Departement</option>                                                       
+                                                  </select>
+                                                  <small class="text-danger">*Wajib di isi</small>
+                                             </div>
+                                        </div>
                                         <div class="form-group row">
                                              <label for="txtNamaActivity" class="col-sm-2 col-form-label">Activity<small class="text-danger">*</small></label>
                                              <div class="col-sm-10">
                                                   <input type="text" class="form-control" id="txtNamaActivity" placeholder="Aktifitas pekerjaan" required>
                                                   <small class="text-danger">*Wajib di isi</small>
                                              </div>
-                                        </div>
-                                        <div class="form-group row">
-                                             <label for="intIdDepartement" class="col-sm-2 col-form-label">Departement<small class="text-danger">*</small></label>
-                                             <div class="col-sm-10">
-                                                  <select class="form-control" id="intIdDepartement" required>
-                                                       <option value="0">Pilih Departement</option>
-                                                       <?php foreach ($department as $departemen) : ?>
-                                                            <option value="<?= $departemen->intIdDepartement; ?>"><?= $departemen->txtNamaDepartement; ?></option>
-                                                       <?php endforeach; ?>
-                                                  </select>
-                                                  <small class="text-danger">*Wajib di isi</small>
-                                             </div>
-                                        </div>
+                                        </div>                                        
                                         <div class="form-group row">
                                              <label for="bitActive" class="col-sm-2 col-form-label">Active<small class="text-danger">*</small></label>
                                              <div class="col-sm-10">

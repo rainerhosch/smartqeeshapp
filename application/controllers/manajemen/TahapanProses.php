@@ -19,6 +19,7 @@ class TahapanProses extends CI_Controller
 		$this->load->model('/Manajemen/M_tahapan_proses', 'tahapan_proses');
 		$this->load->model('/Manajemen/M_section', 'section');
 		$this->load->model('/Manajemen/M_Activity', 'activity');
+		$this->load->model('/Manajemen/M_department', 'departement');
 	}
 
 	public function getsPlant()
@@ -38,7 +39,7 @@ class TahapanProses extends CI_Controller
 		$data['page'] 		= 'Manajemen Tahapan Proses';
 		$data['subpage'] 	= 'Blank Page';
 		$data['content'] 	= 'pages/manajemen/v_tahapan_proses';
-		$data['section']	= $this->section->getSectionActiveWithDept();
+		$data['section']	= $this->section->getSectionActive();
 		$this->load->view('template', $data);
 	}
 
@@ -52,18 +53,19 @@ class TahapanProses extends CI_Controller
 		$id 				= $this->input->get('intIdTahapanProses');
 		$data["tahapan"] 	= $this->tahapan_proses->getById($id);
 		$data["activity"]	= $this->activity->getActivity($data["tahapan"]->intIdActivty); //row_Array
-		$option_activity 	= $this->activity->getActivityBySection($data["activity"]["intIdSection"]);
-		$res 				= '<option value="">Pilih Activity</option>';
+		$data["section"]	= $this->departement->getDataByIdDepartement($data["activity"]["intIdDepartement"]); //row_Array
+		// $option_activity 	= $this->activity->getActivityBySection($data["activity"]["intIdSection"]);
+		// $res 				= '<option value="">Pilih Activity</option>';
 		
-		foreach ($option_activity as $item) {
-			if ($item["intIdActivity"] == $data["tahapan"]->intIdActivty) {
-					$res .= '<option value="'.$item["intIdActivity"].'" selected>'.$item["txtNamaActivity"].'</option>';
-			} else {
-				$res .= '<option value="'.$item["intIdActivity"].'" selected>'.$item["txtNamaActivity"].'</option>';
-			}
+		// foreach ($option_activity as $item) {
+		// 	if ($item["intIdActivity"] == $data["tahapan"]->intIdActivty) {
+		// 			$res .= '<option value="'.$item["intIdActivity"].'" selected>'.$item["txtNamaActivity"].'</option>';
+		// 	} else {
+		// 		$res .= '<option value="'.$item["intIdActivity"].'" selected>'.$item["txtNamaActivity"].'</option>';
+		// 	}
 			
-		}
-		$data["option_activity"] = $res;
+		// }
+		// $data["option_activity"] = $res;
 		if ($data != null) {
 			echo json_encode ([
 				'code' 		=> 200,

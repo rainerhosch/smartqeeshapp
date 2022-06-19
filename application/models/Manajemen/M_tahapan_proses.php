@@ -18,10 +18,11 @@ class M_tahapan_proses extends CI_Model
 
 	private function _get_datatables_query()
 	{
-		$this->db->select('mDepartemen.txtNamaDepartement, mActivity.txtNamaActivity, mTahapanProses.txtNamaTahapan, mTahapanProses.bitActive,mTahapanProses.intIdTahapanProses');		
+		$this->db->select('mDepartemen.txtNamaDepartement, mActivity.txtNamaActivity, mTahapanProses.txtNamaTahapan, mTahapanProses.bitActive,mTahapanProses.intIdTahapanProses, mSection.txtNamaSection');		
 		$this->db->from($this->table);
 		$this->db->join('mActivity', 'mTahapanProses.intIdActivty = mActivity.intIdActivity');
 		$this->db->join('mDepartemen', 'mActivity.intIdDepartement = mDepartemen.intIdDepartement');		
+		$this->db->join('mSection', 'mDepartemen.intIdSection = mSection.intIdSection');		
 		
 		$i = 0;
 
@@ -65,6 +66,7 @@ class M_tahapan_proses extends CI_Model
 			$no++;
 			$row = array();
 			$row["txtNamaDepartement"] 		= $field->txtNamaDepartement;
+			$row["txtNamaSection"] 			= $field->txtNamaSection;
 			$row["txtNamaActivity"] 		= $field->txtNamaActivity;
 			$row["txtNamaTahapan"] 			= $field->txtNamaTahapan;
 			$row["bitActive"] 				= $field->bitActive;
@@ -92,7 +94,8 @@ class M_tahapan_proses extends CI_Model
 	{
 		$this->db->from($this->table);
 		$this->db->join('mActivity', 'mTahapanProses.intIdActivty = mActivity.intIdActivity');
-		$this->db->join('mDepartemen', 'mActivity.intIdDepartement = mDepartemen.intIdDepartement');	
+		$this->db->join('mDepartemen', 'mActivity.intIdDepartement = mDepartemen.intIdDepartement');
+		$this->db->join('mSection', 'mDepartemen.intIdSection = mSection.intIdSection');	
 		return $this->db->count_all_results();
 	}
 
