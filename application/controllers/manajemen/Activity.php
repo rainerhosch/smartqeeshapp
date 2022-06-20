@@ -28,10 +28,15 @@ class Activity extends CI_Controller
           $data['subpage']         = 'Manajemen Activity';
           $data['content']         = 'pages/manajemen/v_activity';
 
-          $data["activities"]     	= $this->activity->getsActivityDepartment();
+          // $data["activities"]     	= $this->activity->getsActivityDepartment();
           $data["section"]		= $this->section->getSectionActive();
           $this->load->view('template', $data);
      }
+
+	public function getDataTable()
+	{
+		echo json_encode($this->activity->get_datatables());
+	}
 
      public function initiateData()
      {
