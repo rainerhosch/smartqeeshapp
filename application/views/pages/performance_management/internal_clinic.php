@@ -6,11 +6,11 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-12 bg-warning py-2">
-                        <h1 style="color: white;">RISK MANAGEMENT</h1>
+                        <h1 style="color: white;">PERFORMANCE MANAGEMENT</h1>
                     </div>
                     <div class="col-sm-12 py-2 mt-2" style="background-color: rgb(66, 66, 66);">
                         <ol class="breadcrumb  float-sm-left">
-                            <li class="breadcrumb-item"><a href="#">RISK MANAGEMENT</a></li>
+                            <li class="breadcrumb-item"><a href="<?=base_url('performance_management/dashboard')?>">PERFORMANCE MANAGEMENT</a></li>
                             <li class="breadcrumb-item text-white">INTERNAL CLINIC</li>
                         </ol>
                     </div>

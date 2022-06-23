@@ -10,7 +10,7 @@
           <div class="col-sm-12 py-2 mt-2" style="background-color: rgb(66, 66, 66);">
             <ol class="breadcrumb  float-sm-left">
                 
-              <li class="breadcrumb-item"><a href="<?=base_url('dashboard/legal_compliance/index') ?>">LEGAL COMPLIANCE</a></li>
+              <li class="breadcrumb-item"><a href="<?=base_url('legal_compliance/legal_compliance_home') ?>">LEGAL COMPLIANCE</a></li>
               <li class="breadcrumb-item text-white"><a>ACTION PLAN PROGRAM</a></li>
             </ol>
           </div>
@@ -21,26 +21,26 @@
   <!-- Main content -->
     <section class="content">
       <div class="col-12">
-        <div class="card card-primary card-outline card-outline-tabs">
+        <div class="card card-primary">
           <div class="card-header p-0 border-bottom-0">
-            <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
+            <ul class="nav nav-tabs bg-secondary" id="custom-tabs-four-tab" role="tablist">
               <li class="nav-item">
-                <a class="nav-link active" id="custom-tabs-four-quality-tab" data-toggle="pill" href="#custom-tabs-four-quality" role="tab" aria-controls="custom-tabs-four-quality" aria-selected="true">QUALITY</a>
+                <a class="nav-link bg-secondary active-tab btn active" id="custom-tabs-four-quality-tab" data-toggle="pill" href="#custom-tabs-four-quality" role="tab" aria-controls="custom-tabs-four-quality" aria-selected="true">QUALITY</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" id="custom-tabs-four-health-tab" data-toggle="pill" href="#custom-tabs-four-health" role="tab" aria-controls="custom-tabs-four-health" aria-selected="false">HEALTH</a>
+                <a class="nav-link bg-secondary active-tab btn" id="custom-tabs-four-health-tab" data-toggle="pill" href="#custom-tabs-four-health" role="tab" aria-controls="custom-tabs-four-health" aria-selected="false">HEALTH</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" id="custom-tabs-four-safety-tab" data-toggle="pill" href="#custom-tabs-four-safety" role="tab" aria-controls="custom-tabs-four-safety" aria-selected="false">SAFETY AND FIRE</a>
+                <a class="nav-link bg-secondary active-tab btn" id="custom-tabs-four-safety-tab" data-toggle="pill" href="#custom-tabs-four-safety" role="tab" aria-controls="custom-tabs-four-safety" aria-selected="false">SAFETY AND FIRE</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" id="custom-tabs-four-environment-tab" data-toggle="pill" href="#custom-tabs-four-environment" role="tab" aria-controls="custom-tabs-four-environment" aria-selected="false">ENVIRONMENT</a>
+                <a class="nav-link bg-secondary active-tab btn" id="custom-tabs-four-environment-tab" data-toggle="pill" href="#custom-tabs-four-environment" role="tab" aria-controls="custom-tabs-four-environment" aria-selected="false">ENVIRONMENT</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" id="custom-tabs-four-energy-tab" data-toggle="pill" href="#custom-tabs-four-energy" role="tab" aria-controls="custom-tabs-four-energy" aria-selected="false">ENERGY</a>
+                <a class="nav-link bg-secondary active-tab btn" id="custom-tabs-four-energy-tab" data-toggle="pill" href="#custom-tabs-four-energy" role="tab" aria-controls="custom-tabs-four-energy" aria-selected="false">ENERGY</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" id="custom-tabs-four-all-tab" data-toggle="pill" href="#custom-tabs-four-all" role="tab" aria-controls="custom-tabs-four-all" aria-selected="false">ALL</a>
+                <a class="nav-link bg-secondary active-tab btn" id="custom-tabs-four-all-tab" data-toggle="pill" href="#custom-tabs-four-all" role="tab" aria-controls="custom-tabs-four-all" aria-selected="false">ALL</a>
               </li>
             </ul>
           </div>

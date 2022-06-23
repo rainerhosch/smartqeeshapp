@@ -160,7 +160,7 @@
                 </a>
               </div>
               <div class="col-1 mr-auto">
-                <a href="#" class="card text-center bg-warning btn-warning">
+                <a href="<?=base_url('performance_management/dashboard')?>" class="card text-center bg-warning btn-warning">
                   <div class="card-header py-1" style="font-weight: bold;">
                     PERFORMANCE MANAGEMENT
                   </div>
@@ -173,7 +173,7 @@
                 </a>
               </div>
               <div class="col-1 mr-auto">
-                <a href="dashboard.html" class="card text-center bg-warning btn-warning">
+                <a href="<?=base_url('ncr_ca/Incident_Investigation') ?>" class="card text-center bg-warning btn-warning">
                   <div class="card-header py-1 px-1" style="font-weight: bold;">
                     NONCOMFORMITY & CORRECTIVE ACTION
                   </div>

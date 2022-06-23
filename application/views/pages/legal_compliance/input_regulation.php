@@ -10,7 +10,7 @@
           <div class="col-sm-12 py-2 mt-2" style="background-color: rgb(66, 66, 66);">
             <ol class="breadcrumb  float-sm-left">
               
-            <li class="breadcrumb-item"><a href="<?=base_url('dashboard/Legal_compliance/index') ?>">LEGAL COMPLIANCE</a></li>
+            <li class="breadcrumb-item"><a href="<?=base_url('legal_compliance/legal_compliance_home') ?>">LEGAL COMPLIANCE</a></li>
             <li class="breadcrumb-item text-white">INPUT NEW REGULATION</li>
             </ol>
           </div>
