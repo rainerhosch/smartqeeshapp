@@ -80,6 +80,7 @@
                                 <div class="col-sm-2">
                                     <input type="text" class="form-control form-control-sm" id="input" name="input" placeholder="TEXT">
                                 </div>
+                                
                                 <label for="input" class="col-sm-2 col-form-label" style="text-align:right">DEPARTMENT :</i> </label>
                                 <div class="col-sm-2">
                                     <input type="text" class="form-control form-control-sm" id="input" name="input" placeholder="TEXT">
@@ -95,13 +96,18 @@
                                 <div class="col-sm-2">
                                     <input type="text" class="form-control form-control-sm" id="input" name="input" placeholder="TEXT">
                                 </div>
+
+                                <label for="input" class="col-sm-2 col-form-label" style="text-align:right">REPORTED BY :</i> </label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control form-control-sm" id="input" name="input" placeholder="TEXT">
+                                </div>
                             </div>
 
                             <!-- Incident Information -->
                             <div class="separator">Failure Description</div>
                             <div class="row">
                                 <!-- <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"> -->
-                                <label for="input" class="col-sm-2 col-form-label" style="text-align:right">INCIDENT DESC :</label>
+                                <label for="input" class="col-sm-2 col-form-label" style="text-align:right">FAILURE DESC :</label>
                                 <!-- </div> -->
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><textarea class="form-control" id="exampleFormControlTextarea1" rows="7"></textarea></div>
                                 <!-- <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="background-color:red;">Span 2</div> -->

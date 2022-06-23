@@ -299,11 +299,11 @@
     // Get context with jQuery - using jQuery's .get() method.
     var donutChartCanvas = $('#TPMChart').get(0).getContext('2d')
     var donutData = {
-      /*labels: [
+      labels: [
           'PROGRAM NOT STARTED',
           'PROGRAM IN PROGRESS',
           'PROGRAM COMPLETE',
-      ],*/
+      ],
       datasets: [{
         data: [31, 15, 54],
         backgroundColor: ['#FFC000', '#f39c12', '#70AD47'],
@@ -312,6 +312,10 @@
     var donutOptions = {
       maintainAspectRatio: false,
       responsive: true,
+      legend: {
+            display: false,
+            position: 'right'
+        },
     }
 
     //Create pie or douhnut chart
@@ -325,11 +329,11 @@
     //TPM APF PERFORMANCE
     var donutChartCanvas = $('#TPMChart2').get(0).getContext('2d')
     var donutData = {
-      /*labels: [
+      labels: [
           'PROGRAM NOT STARTED',
           'PROGRAM IN PROGRESS',
           'PROGRAM COMPLETE',
-      ],*/
+      ],
       datasets: [{
         data: [31, 15, 54],
         backgroundColor: ['#FFC000', '#f39c12', '#70AD47'],
@@ -338,6 +342,10 @@
     var donutOptions = {
       maintainAspectRatio: false,
       responsive: true,
+      legend: {
+            display: false,
+            position: 'right'
+        },
     }
 
     //Create pie or douhnut chart

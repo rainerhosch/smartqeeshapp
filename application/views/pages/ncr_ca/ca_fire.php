@@ -52,7 +52,7 @@
               </div>
               <!-- TABLE -->
               <div class="table-responsive" style="height: 300px;">
-                  <table class="table table-bordered table-head-fixed text-center" style="background-color: #dddddd;">
+                  <table class="table table-bordered table-head-fixed text-center" style="background-color: #ffffff;">
                       <thead>
                         <tr>
                           <th style="width: 10px; background-color: #999999;">No.</th>
