@@ -16,8 +16,9 @@ class Activity extends CI_Controller
      {
           parent::__construct();
           login_check();
-          $this->load->model("Manajemen/M_activity", "activity");
+          $this->load->model("Manajemen/M_Activity", "activity");
           $this->load->model("Manajemen/M_department", "departemen");
+          $this->load->model("Manajemen/M_section", "section");
      }
 
      public function index()
@@ -27,10 +28,15 @@ class Activity extends CI_Controller
           $data['subpage']         = 'Manajemen Activity';
           $data['content']         = 'pages/manajemen/v_activity';
 
-          $data["activities"]     = $this->activity->getsActivityDepartment();
-          $data["department"]     = $this->departemen->getsDepartmentActive();
+          // $data["activities"]     	= $this->activity->getsActivityDepartment();
+          $data["section"]		= $this->section->getSectionActive();
           $this->load->view('template', $data);
      }
+
+	public function getDataTable()
+	{
+		echo json_encode($this->activity->get_datatables());
+	}
 
      public function initiateData()
      {

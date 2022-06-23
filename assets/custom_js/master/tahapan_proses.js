@@ -20,6 +20,11 @@ function p_InitiateDataList() {
 			}
 		},
 		columns: [{
+				"data": "txtNamaSection",
+				"name": "txtNamaSection",
+				className: 'text-center'
+			},
+			{
 				"data": "txtNamaDepartement",
 				"name": "txtNamaDepartement",
 				className: 'text-center'
@@ -42,14 +47,14 @@ function p_InitiateDataList() {
 					} else {
 						return "Aktif"
 					}
-                },
+				},
 				className: 'text-center'
 			},
-			{				
+			{
 				"name": "option",
-				render: function (data, type, full, meta) {					
+				render: function (data, type, full, meta) {
 					return `<button class="btn btn-primary" id="tombol_edit" data-id="${full.intIdTahapanProses}"><i class="fa fa-edit"></i></button>`
-                },
+				},
 				className: 'text-center'
 			},
 		]
@@ -58,16 +63,67 @@ function p_InitiateDataList() {
 	$("#dtList_paginate").parent().addClass("d-flex justify-content-end");
 }
 
+async function get_departement(id_section, id_departemen = "") {
+	await $.ajax({
+		type: "get",
+		url: `${url}manajemen/Organization/getDepartementListByIdSection`,
+		data: {
+			intIdSection: id_section,
+			intIdDepartement: id_departemen
+		},
+		dataType: "json",
+		success: function (response) {
+			$("#intIdDepartement").html(response);
+		}
+	});
+}
+
+async function get_activity(id_departemen, id_activity) {
+	await $.ajax({
+		type: "get",
+		url: `${url}manajemen/Organization/getActivityListByIdDepartement`,
+		data: {
+			intIdDepartement: id_departemen,
+			intIdActivity: id_activity
+		},
+		dataType: "json",
+		success: function (response) {
+			$("#intIdActivity").html(response);
+		}
+	});
+}
+
 $("#intIdSection").on("change", function () {
 	let id = $(this).val();
 	if (id != "") {
 		$.ajax({
 			type: "get",
-			url: `${url}manajemen/Activity/getActivityBySection`,
-			data: {id: id},
+			url: `${url}manajemen/Organization/getDepartementListByIdSection`,
+			data: {
+				intIdSection: id
+			},
 			dataType: "json",
 			success: function (response) {
-				$("#intIdActivity").html(response.data);
+				$("#intIdDepartement").html(response);
+			}
+		});
+	} else {
+		$("#intIdDepartement").html(`<option value="">Pilih Departement</option>`);
+	}
+});
+
+$("#intIdDepartement").on("change", function () {
+	let id = $(this).val();
+	if (id != "") {
+		$.ajax({
+			type: "get",
+			url: `${url}manajemen/Organization/getActivityListByIdDepartement`,
+			data: {
+				intIdDepartement: id
+			},
+			dataType: "json",
+			success: function (response) {
+				$("#intIdActivity").html(response);
 			}
 		});
 	} else {
@@ -89,7 +145,12 @@ $(document).on('click', '#tombol_edit', function (e) {
 			console.log(response);
 			if (response.data != null) {
 				let data = response.data
-				$("#intIdSection").val(data.activity.intIdSection);
+				var id_section = data.section.intIdSection
+				var id_departemen = data.section.intIdDepartement
+				var id_activity = data.tahapan.intIdActivty
+				get_departement(id_section, id_departemen)
+				get_activity(id_departemen, id_activity)
+				$("#intIdSection").val(data.section.intIdSection);
 				$("#intIdActivity").html(data.option_activity);
 				$("#intIdTahapanProses").val(data.tahapan.intIdTahapanProses);
 				$("#txtNamaTahapan").val(data.tahapan.txtNamaTahapan);
@@ -105,8 +166,8 @@ $("#tombol_simpan").on('click', function (e) {
 	let data = {
 		intIdActivity: $("#intIdActivity").val(),
 		txtNamaTahapan: $("#txtNamaTahapan").val(),
-		bitActive: $("#bitActive").val(),		
-		intIdTahapanProses: $("#intIdTahapanProses").val(),		
+		bitActive: $("#bitActive").val(),
+		intIdTahapanProses: $("#intIdTahapanProses").val(),
 	}
 	if (id == "") {
 		$.ajax({
@@ -135,5 +196,5 @@ $("#tombol_simpan").on('click', function (e) {
 			}
 		});
 	}
-	
+
 });
