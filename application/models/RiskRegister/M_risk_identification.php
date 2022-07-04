@@ -63,7 +63,7 @@ class M_risk_identification extends CI_Model
 		$list = $query->result();
 		$data = array();
 		$no = $_POST['start'];
-		foreach ($list as $field) {
+		foreach ($list as $field) {						
 			$no++;
 			$row 									= array();
 			$row["no"] 								= $no;

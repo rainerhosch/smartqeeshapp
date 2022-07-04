@@ -65,12 +65,25 @@ class M_tahapan_proses_risk extends CI_Model
 		$data = array();
 		$no = $_POST['start'];
 		foreach ($list as $field) {
+			$data_count_context = 0;
+			$data_tahapan_risk = $this->db->get_where($this->table, [
+				"intIdTahapanProses" 	=>  $field->intIdTahapanProses,			
+				"intIdActivityRisk"		=> $intIdActivityRisk,
+			])->row();
+			if ($data_tahapan_risk != null) {
+				$data_count_context = $this->db->get_where('trRiskContext', [
+					"intIdTahapanProsesRisk" => $data_tahapan_risk->intIdTahapanProsesRisk
+				])->num_rows();
+			}
+			
 			$no++;
-			$row 						= array();
-			$row["no"] 					= $no;
-			$row["txtNamaTahapan"] 		= $field->txtNamaTahapan;
-			$row["intIdTahapanProses"] 	= $field->intIdTahapanProses;
-			$data[] 					= $row;
+			$row 							= array();
+			$row["no"] 						= $no;
+			$row["txtNamaTahapan"] 			= $field->txtNamaTahapan;
+			$row["intIdTahapanProses"] 		= $field->intIdTahapanProses;
+			$row["isInput"] 				= $data_count_context;
+			$row["intIdTahapanProsesRisk"]	= $field->intIdTahapanProsesRisk;
+			$data[] 						= $row;
 		}
 
 		$output = array(
@@ -108,11 +121,12 @@ class M_tahapan_proses_risk extends CI_Model
 		$this->db->from('mTahapanProses');
 		$this->db->join('mActivity', 'mTahapanProses.intIdActivty = mActivity.intIdActivity');
 		$this->db->where([
-			'txtNamaTahapan'			 => $data['txtTahapanProses'], 
-			'mActivity.intIdDepartement' => $data["intIdDepartemen"]
+			'txtNamaTahapan'			 => $data['txtTahapanProses'],
+			'mActivity.intIdDepartement' => $data["intIdDepartemen"],
+			'mActivity.intIdActivity' 	 => $data["intIdActivity"]
 		]);
 		$mTahapan 			= $this->db->get()->row();
-		
+
 		$dataNewTrTahapan 	= [];
 		if ($mTahapan == null) {
 			$dataTahapanBaru = [
@@ -163,5 +177,18 @@ class M_tahapan_proses_risk extends CI_Model
 		} else {
 			return $tahapan_proses_exist;
 		}
+	}
+
+	public function cek_tahapan_risk($where)
+	{
+		$data_tahapan_risk = $this->db->get_where($this->table, $where)->row();
+		if ($data_tahapan_risk == null) {
+			return 0;
+		}
+		$data_count_context = $this->db->get_where('trRiskContext', [
+			"intIdTahapanProsesRisk" => $data_tahapan_risk->intIdTahapanProsesRisk
+		])->num_rows();
+
+		return $data_count_context;
 	}
 }
