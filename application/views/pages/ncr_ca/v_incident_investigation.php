@@ -1,4 +1,12 @@
+<!-- <script src="<?= base_url('assets/templates'); ?>/libs/jquery/jquery-migrate.min.js"></script> -->
+<script src="<?= base_url('assets/templates'); ?>/libs/jquery-ui/jquery-ui.min.js"></script>
+<script src="<?= base_url('assets/templates'); ?>/libs/jquery-ui/jquery.ui.autocomplete.scroll.min.js"></script>
+<script src="<?= base_url('assets/templates'); ?>/js/autocomplete.js"></script>
 <style>
+    .ui-autocomplete {
+        z-index: 2147483647;
+    }
+
     .btn-circle {
         width: 30px;
         height: 30px;
@@ -45,6 +53,24 @@
     option:first {
         color: #999;
     }
+
+    .preloader2 {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background-color: #3e3e3b66;
+    }
+
+    .preloader2 .loading {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        font: 14px arial;
+    }
 </style>
 
 <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/css/bootstrap-multiselect.css">
@@ -72,7 +98,13 @@
     </section>
 
     <!-- Main content -->
-
+    <div class="preloader2" hidden>
+        <div class="loading">
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    </div>
     <section class="content">
         <div class="card">
             <!--TAB-->
@@ -120,35 +152,41 @@
                             </div>
                             <!-- victim information -->
                             <div class="separator">Victim Information</div>
-                            <div class="row">
-                                <label for="inputEmplodeeNumber" class="col-sm-2 col-form-label" style="text-align:right">EMPLOYEE NUMBER :</i> </label>
-                                <div class="col-sm-4">
-                                    <input type="text" class="form-control form-control-sm" id="inputEmplodeeNumber" name="inputEmplodeeNumber" placeholder="TEXT">
+                            <div class="row mb-3">
+                                <div class="col-sm-6">
+                                    <label for="inputVictimFunction" class="col-form-label" style="text-align:right">FUNCTION:</i> </label>
+                                    <select class="form-control form-control-sm" id="inputVictimFunction" name="inputVictimFunction" placeholder="TEXT" disabled>
+                                    </select>
                                 </div>
-                                <label for="inputVictimDepartment" class="col-sm-2 col-form-label" style="text-align:right">DEPARTEMENT :</i> </label>
-                                <div class="col-sm-4">
-                                    <select class="form-control form-control-sm" id="inputVictimDepartment" name="inputVictimDepartment" placeholder="TEXT">
+                                <div class="col-sm-6">
+                                    <label for="inputVictimDepartment" class="col-form-label" style="text-align:right">DEPARTEMENT :</i> </label>
+                                    <select class="form-control form-control-sm" id="inputVictimDepartment" name="inputVictimDepartment" placeholder="TEXT" disabled>
                                     </select>
                                 </div>
                             </div>
                             <div class="row">
-                                <label for="inputVictimServicePeriod" class="col-sm-2 col-form-label" style="text-align:right">SERVICE PERIOD :</i> </label>
-                                <div class="col-sm-4">
-                                    <input type="text" class="form-control form-control-sm" id="inputVictimServicePeriod" name="inputVictimServicePeriod" placeholder="TEXT">
+                                <div class="col-sm-6">
+                                    <label for="inputVictimName" class="col-form-label" style="text-align:right">NAME :</i> </label>
+                                    <input type="hidden" class="form-control form-control-sm" id="inputVictimId" name="inputVictimId" placeholder="Search Name">
+                                    <input type="text" class="form-control form-control-sm" id="inputVictimName" placeholder="TEXT" disabled>
                                 </div>
-                                <label for="inputVictimName" class="col-sm-2 col-form-label" style="text-align:right">NAME :</i> </label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control form-control-sm" id="inputVictimName" name="inputVictimName" placeholder="TEXT">
+                                    <label for="inputEmplodeeNumber" class="col-form-label" style="text-align:right">EMPLOYEE NUMBER :</i> </label>
+                                    <input type="text" class="form-control form-control-sm" id="inputEmplodeeNumber" name="inputEmplodeeNumber" placeholder="TEXT">
+                                </div>
+                                <div class="col-sm-2">
+                                    <label for="inputVictimAge" class="col-form-label" style="text-align:right">AGE :</i> </label>
+                                    <input type="text" class="form-control form-control-sm" id="inputVictimAge" name="inputVictimAge" placeholder="TEXT">
                                 </div>
                             </div>
                             <div class="row">
-                                <label for="inputVictimLevel" class="col-sm-2 col-form-label" style="text-align:right">LEVEL :</i> </label>
-                                <div class="col-sm-4">
+                                <div class="col-sm-6">
+                                    <label for="inputVictimLevel" class="col-form-label" style="text-align:right">LEVEL :</i> </label>
                                     <input type="text" class="form-control form-control-sm" id="inputVictimLevel" name="inputVictimLevel" placeholder="TEXT">
                                 </div>
-                                <label for="inputVictimAge" class="col-sm-2 col-form-label" style="text-align:right">AGE :</i> </label>
-                                <div class="col-sm-4">
-                                    <input type="text" class="form-control form-control-sm" id="inputVictimAge" name="inputVictimAge" placeholder="TEXT">
+                                <div class="col-sm-6">
+                                    <label for="inputVictimServicePeriod" class="col-form-label" style="text-align:right">SERVICE PERIOD :</i> </label>
+                                    <input type="text" class="form-control form-control-sm" id="inputVictimServicePeriod" name="inputVictimServicePeriod" placeholder="TEXT">
                                 </div>
                             </div>
 
@@ -340,7 +378,6 @@
                             <!-- Eof Fish bone diagram -->
                             <div class="separator">DOMINOS EFFECT IN ACCIDENT</div>
                             <div class="form-group row row_dominos_effect">
-                                <!-- from js -->
                             </div>
                             <div class="separator">PREVENTIVE AND CORECTIVE ACTION</div>
                             <div class="form-group row">
@@ -378,17 +415,12 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- end form -->
                         </div>
-                        <!--Button-->
                         <div class="card-footer">
                             <button type="button" class="btn btn-primary float-right btnSaveIncident" style="margin-left: 20px;">Submit</button>
                             <button type="reset" class="btn btn-warning float-right">Reset</button>
                         </div>
-                        <!--/.Button-->
-                        <!-- /.card-body -->
                     </form>
-                    <!--/.form-->
                 </div>
                 <!--/.INPUT DATA PERSONAL MCU-->
 
@@ -423,8 +455,6 @@
                                 <input type="text" class="form-control form-control-sm" id="input" name="input" placeholder="TEXT">
                             </div>
                         </div>
-
-
                         <div class="card" style="background-color: white;">
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered-sm ">
@@ -518,17 +548,12 @@
                                 </ul>
                             </div>
                         </div>
-
                         <button class="btn btn-danger mr-2 col-2">DOWNLOAD TO PDF</button>
-
                     </div>
                 </div>
-                <!--/.PERSONAL MCU RECORD-->
             </div>
-            <!--/.TAB CONTENT-->
         </div>
     </section>
-    <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
 <script src="<?= base_url('assets/templates') ?>/js/bootstrap-multiselect.js"></script>
@@ -537,21 +562,6 @@
 <script>
     $(document).ready(function() {
         $('select#multiple').selectpicker();
-        // get data selectbox for departement
-        $.ajax({
-            url: `<?= base_url() ?>manajemen/Department/getData_v2`,
-            type: "GET",
-            dataType: "json",
-            success: function(response) {
-                let html = ``;
-                html += `<option value="" disabled selected hidden style="font-size: inherit;">Nothing selected</option>`;
-                $.each(response.data, function(key, val) {
-                    html += `<option value="${val.intIdDepartement}">${val.txtNamaDepartement}</option>`;
-                });
-                $('#inputVictimDepartment').html(html);
-            }
-        });
-
         // get data selectbox for plant
         $.ajax({
             url: `<?= base_url() ?>manajemen/Plant/getData_v2`,
@@ -567,6 +577,107 @@
                 $('#inputIncidentPlant').html(html);
             }
         });
+        // get data selectbox for departement
+        $('select[name="inputIncidentPlant"]').on('change', function() {
+            let id_plant = $(this).val();
+            $.ajax({
+                url: `<?= base_url() ?>manajemen/Section/getDataByIdPlant`,
+                type: "GET",
+                data: {
+                    id: id_plant
+                },
+                dataType: "json",
+                beforeSend: function() {
+                    $('.preloader2').prop('hidden', false);
+                },
+                success: function(response) {
+                    $('.preloader2').prop('hidden', true);
+                    // console.log(response)
+                    if (response.code === 200) {
+                        let html = response.data;
+                        $('#inputVictimFunction').prop('disabled', false);
+                        $('#inputVictimFunction').html(html);
+                    } else {
+                        $('#inputVictimFunction').prop('disabled', true);
+                    }
+                }
+            });
+        });
+        $('select[name="inputVictimFunction"]').on('change', function() {
+            let id_section = $(this).val();
+            $.ajax({
+                url: `<?= base_url() ?>manajemen/Department/getData_v2`,
+                type: "POST",
+                data: {
+                    id_section: id_section
+                },
+                dataType: "json",
+                beforeSend: function() {
+                    $('.preloader2').prop('hidden', false);
+                },
+                success: function(response) {
+                    $('.preloader2').prop('hidden', true);
+                    // console.log(response)
+                    if (response.code === 200) {
+                        let html = ``;
+                        html += `<option value="" disabled selected hidden style="font-size: inherit;">Nothing selected</option>`;
+                        $.each(response.data, function(key, val) {
+                            html += `<option value="${val.intIdDepartement}">${val.txtNamaDepartement}</option>`;
+                        });
+                        $('#inputVictimDepartment').prop('disabled', false);
+                        $('#inputVictimDepartment').html(html);
+                    }
+                }
+            });
+        });
+
+        $('select[name="inputVictimDepartment"]').on('change', function() {
+            let id_dept = $(this).val();
+            $('#inputVictimName').prop('disabled', false);
+            // console.log(id_dept)
+            // inputVictimName
+            $('#inputVictimName').autocomplete({
+                maxShowItems: 5,
+                source: function(request, response) {
+                    // Fetch data
+                    $.ajax({
+                        url: '<?= base_url(); ?>manajemen/Employee/getDataForAutoComplete',
+                        type: 'post',
+                        dataType: "json",
+                        serverSide: true,
+                        data: {
+                            filterby: 'Department',
+                            id: id_dept,
+                            search: request.term
+                        },
+                        beforeSend: function() {
+                            $('.preloader2').prop('hidden', false);
+                        },
+                        success: function(res) {
+                            $('.preloader2').prop('hidden', true);
+                            // console.log(res)
+                            response(res.data);
+                        }
+                    });
+                },
+                select: function(event, ui) {
+                    // console.log(ui)
+                    // Set selection
+                    $('#inputVictimAge').val(ui.item.umur); // save selected id to input
+                    $('#inputVictimId').val(ui.item.intIdEmployee); // save selected id to input
+                    $('#inputVictimName').val(ui.item.txtNameEmployee); // save selected id to input
+                    $('#inputEmplodeeNumber').val(ui.item.txtNikEmployee); // save selected id to input
+                    return false;
+                },
+                focus: function(event, ui) {
+                    $('#inputVictimAge').val(ui.item.umur); // save selected id to input
+                    $('#inputVictimId').val(ui.item.intIdEmployee); // save selected id to input
+                    $('#inputVictimName').val(ui.item.txtNameEmployee); // save selected id to input
+                    $('#inputEmplodeeNumber').val(ui.item.txtNikEmployee); // save selected id to input
+                    return false;
+                },
+            });
+        })
 
         // get
 
