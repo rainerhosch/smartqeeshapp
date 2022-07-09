@@ -14,6 +14,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	<link rel="stylesheet" href="<?= base_url('assets/templates') ?>/plugins/fontawesome-free/css/all.min.css">
 	<link rel="stylesheet" href="<?= base_url('assets/templates') ?>/css/adminlte.min.css">
 	<link rel="stylesheet" href="<?= base_url('assets/templates') ?>/css/templates.css">
+	<link rel="stylesheet" href="<?= base_url('assets/templates') ?>/libs/jquery-ui/themes/base/jquery-ui.min.css">
 	<style>
 		/* HIDDEN ARROW IN INPUT NUMBER */
 		/* Chrome, Safari, Edge, Opera */
@@ -26,6 +27,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		/* Firefox */
 		input[type=number] {
 			-moz-appearance: textfield;
+		}
+
+		.ui-widget {
+			/* font-family: Arial,Helvetica,sans-serif; */
+			font-size: .875rem;
 		}
 	</style>
 	<?php if ($page != 'Auth') : ?>

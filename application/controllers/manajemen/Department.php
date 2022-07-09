@@ -115,7 +115,14 @@ class Department extends CI_Controller
      public function getData_v2()
      {
           if ($this->input->is_ajax_request()) {
-               $data = $this->department->getData_v2()->result_array();
+               $data_post = $this->input->post();
+               $filter = null;
+               if (isset($data_post['id_section'])) {
+                    $filter = [
+                         'intIdSection = ' => $data_post['id_section']
+                    ];
+               }
+               $data = $this->department->getData_v2($filter)->result_array();
                $response = [
                     'code'    => 200,
                     'status'  => true,

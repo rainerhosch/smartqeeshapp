@@ -19,7 +19,7 @@ class Section extends CI_Controller
 		login_check();
 		$this->load->model('/Manajemen/M_section', 'section');
 		$this->load->model('/Manajemen/M_department', 'departement');
-		$this->load->model('/Manajemen/M_plant', 'plant');		
+		$this->load->model('/Manajemen/M_plant', 'plant');
 	}
 
 	public function getsSection()
@@ -115,7 +115,7 @@ class Section extends CI_Controller
 	{
 		$id 		= $this->input->get('id');
 		$data_dept 	= $this->section->getDataByIdPlant($id);
-		$opt 		= '<option value ="">Silahkan Pilih Function</option>';
+		$opt 		= '<option value ="" disabled selected hidden style="font-size: inherit;">Silahkan Pilih Function</option>';
 		if (!empty($data_dept)) {
 			foreach ($data_dept as $item) {
 				$opt .= '<option value="' . $item["intIdSection"] . '"> ' . $item["txtNamaSection"] . '</option>';
