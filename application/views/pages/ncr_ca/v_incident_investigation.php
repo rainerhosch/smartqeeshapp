@@ -167,8 +167,8 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <label for="inputVictimName" class="col-form-label" style="text-align:right">NAME :</i> </label>
-                                    <input type="hidden" class="form-control form-control-sm" id="inputVictimId" name="inputVictimId" placeholder="Search Name">
-                                    <input type="text" class="form-control form-control-sm" id="inputVictimName" placeholder="TEXT" disabled>
+                                    <input type="hidden" class="form-control form-control-sm" id="inputVictimId" name="inputVictimId">
+                                    <input type="text" class="form-control form-control-sm" id="inputVictimName" name="inputVictimName" placeholder="Search Name" disabled>
                                 </div>
                                 <div class="col-sm-4">
                                     <label for="inputEmplodeeNumber" class="col-form-label" style="text-align:right">EMPLOYEE NUMBER :</i> </label>
@@ -181,8 +181,8 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <label for="inputVictimLevel" class="col-form-label" style="text-align:right">LEVEL :</i> </label>
-                                    <input type="text" class="form-control form-control-sm" id="inputVictimLevel" name="inputVictimLevel" placeholder="TEXT">
+                                    <label for="inputEmployeeLevel" class="col-form-label" style="text-align:right">EMPLOYEE LEVEL :</i> </label>
+                                    <input type="text" class="form-control form-control-sm" id="inputEmployeeLevel" name="inputEmployeeLevel" placeholder="TEXT">
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="inputVictimServicePeriod" class="col-form-label" style="text-align:right">SERVICE PERIOD :</i> </label>
@@ -193,72 +193,65 @@
                             <!-- Incident Information -->
                             <div class="separator">Incident Information</div>
                             <div class="row">
-                                <label for="inputIncidentDesc" class="col-sm-2 col-form-label" style="text-align:right">INCIDENT DESC :</label>
-                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><textarea class="form-control" id="inputIncidentDesc" rows="7" name="inputIncidentDesc"></textarea></div>
                                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="padding:0px">
                                     <div class="short-div"><label for="inputInjuriedBodyPart" class="col-form-label" style="text-align:right">INJURED BODY PART :</label></div>
-                                    <div class="short-div"><label for="inputConditionOfWound" class="col-form-label" style="text-align:right">CONDITION OF THE WOUND :</label></div>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="padding:0px">
+                                    <div class="short-div">
+
+                                        <!-- <input type="text" class="form-control form-control-sm" id="inputInjuriedBodyPart" name="inputInjuriedBodyPart" placeholder="Type for search..."> -->
+                                        <select multiple class="form-control form-control-sm selectpicker" id="inputInjuriedBodyPart" name="inputInjuriedBodyPart[]">
+                                            <!-- <option value="" disabled selected hidden style="font-size: inherit;">Nothing selected</option> -->
+                                            <!-- <option value='1'>option 1</option>
+                                            <option value='2'>option 2</option>
+                                            <option value='3'>option 3</option>
+                                            <option value='4'>option 4</option>
+                                            <option value='5'>option 5</option> -->
+                                        </select>
+                                    </div>
+                                </div>
+                                <label for="inputConditionOfWound" class="col-sm-2 col-form-label" style="text-align:right">CONDITION OF THE WOUND </label>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><textarea class="form-control" id="inputConditionOfWound" rows="1" name="inputConditionOfWound" placeholder="Describe the condition of the wound"></textarea></div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="padding:0px">
                                     <div class="short-div"><label for="inputIncidentLevel" class="col-form-label" style="text-align:right">INCIDENT LEVEL :</label></div>
                                     <div class="short-div"><label for="inputSeverityLevel" class="col-form-label" style="text-align:right">SEVERTY LEVEL :</label></div>
                                     <div class="short-div"><label for="inputReccurentProability" class="col-form-label" style="text-align:right">RECURRENCE PROABILITY :</label></div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="padding:0px">
-                                    <div class="short-div">
-                                        <select multiple class="form-control form-control-sm selectpicker" id="inputInjuriedBodyPart" name="inputInjuriedBodyPart[]" placeholder="TEXT">
-                                            <!-- <option value='0'>-- SELECT --</option> -->
-                                            <option value='1'>option 1</option>
-                                            <option value='2'>option 2</option>
-                                            <option value='3'>option 3</option>
-                                            <option value='4'>option 4</option>
-                                            <option value='5'>option 5</option>
-                                        </select>
-                                    </div>
-                                    <div class="short-div"><select class="form-control form-control-sm" id="inputConditionOfWound" name="inputConditionOfWound" placeholder="TEXT">
-                                            <option value='0'>-- SELECT --</option>
-                                            <option value='1'>option 1</option>
-                                            <option value='2'>option 2</option>
-                                            <option value='3'>option 3</option>
-                                            <option value='4'>option 4</option>
-                                            <option value='5'>option 5</option>
+                                    <div class="short-div"><select class="form-control form-control-sm" id="inputIncidentLevel" name="inputIncidentLevel">
+                                            <option value="" disabled selected hidden style="font-size: inherit;">Nothing selected</option>
+                                            <option value='MINOR'>MINOR</option>
+                                            <option value='MAYOR'>MAYOR</option>
                                         </select></div>
-                                    <div class="short-div"><select class="form-control form-control-sm" id="inputIncidentLevel" name="inputIncidentLevel" placeholder="TEXT">
-                                            <option value='0'>-- SELECT --</option>
-                                            <option value='1'>LOW</option>
-                                            <option value='2'>MEDIUM</option>
-                                            <option value='3'>HIGHT</option>
-                                            <!-- <option>option 4</option>
-                                            <option>option 5</option> -->
+                                    <div class="short-div"><select class="form-control form-control-sm" id="inputSeverityLevel" name="inputSeverityLevel">
+                                            <option value="" disabled selected hidden style="font-size: inherit;">Nothing selected</option>
+                                            <option value='LOW'>LOW</option>
+                                            <option value='MEDIUM'>MEDIUM</option>
+                                            <option value='HIGHT'>HIGHT</option>
                                         </select></div>
-                                    <div class="short-div"><select class="form-control form-control-sm" id="inputSeverityLevel" name="inputSeverityLevel" placeholder="TEXT">
-                                            <option value='0'>-- SELECT --</option>
-                                            <option value='1'>option 1</option>
-                                            <option value='2'>option 2</option>
-                                            <option value='3'>option 3</option>
-                                            <option value='4'>option 4</option>
-                                            <option value='5'>option 5</option>
-                                        </select></div>
-                                    <div class="short-div"><select class="form-control form-control-sm" id="inputReccurentProability" name="inputReccurentProability" placeholder="TEXT">
-                                            <option value='0'>-- SELECT --</option>
-                                            <option value='1'>option 1</option>
-                                            <option value='2'>option 2</option>
-                                            <option value='3'>option 3</option>
-                                            <option value='4'>option 4</option>
-                                            <option value='5'>option 5</option>
+                                    <div class="short-div"><select class="form-control form-control-sm" id="inputReccurentProability" name="inputReccurentProability">
+                                            <option value="" disabled selected hidden style="font-size: inherit;">Nothing selected</option>
+                                            <option value='POSSIBLE'>POSSIBLE</option>
+                                            <option value='IMPOSSIBLE'>IMPOSSIBLE</option>
                                         </select></div>
                                 </div>
+                                <label for="inputIncidentDesc" class="col-sm-2 col-form-label" style="text-align:right">INCIDENT DESC :</label>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><textarea class="form-control" id="inputIncidentDesc" rows="4" name="inputIncidentDesc" placeholder="Description Of Incident"></textarea></div>
                             </div>
 
                             <div class="form-group row">
-                                <label for="inputActionTaken" class="col-sm-2 col-form-label" style="text-align:right">ACTION TAKEN :</label>
-                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><textarea class="form-control" id="inputActionTaken" name="inputActionTaken" rows="2"></textarea></div>
                                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="padding:0px">
                                     <div class="short-div"> <label for="inputDateBackToWork" class="col-form-label" style="text-align:right">DATE BACK TO WORK :</label></div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="padding:0px">
                                     <div class="short-div">
-                                        <input type="date" class="form-control form-control-sm" id="inputDateBackToWork" name="inputDateBackToWork" placeholder="TEXT">
+                                        <input type="date" class="form-control form-control-sm" id="inputDateBackToWork" name="inputDateBackToWork">
                                     </div>
                                 </div>
+                                <label for="inputActionTaken" class="col-sm-2 col-form-label" style="text-align:right">ACTION TAKEN :</label>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><textarea class="form-control" id="inputActionTaken" name="inputActionTaken" rows="1"></textarea></div>
                             </div>
 
 
@@ -471,81 +464,9 @@
                                             <th scope="col">TOOLS</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td class="text-center">
-                                                <a class="btn btn-xs btn-secondary">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </a>
-                                                <a class="btn btn-xs btn-primary">
-                                                    <i class="fas fa-pen"></i>
-                                                </a>
-                                                <a class="btn btn-xs btn-success">
-                                                    <i class="fa fa-download"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">2</th>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td class="text-center">
-                                                <a class="btn btn-xs btn-secondary">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </a>
-                                                <a class="btn btn-xs btn-primary">
-                                                    <i class="fas fa-pen"></i>
-                                                </a>
-                                                <a class="btn btn-xs btn-success">
-                                                    <i class="fa fa-download"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">3</th>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td class="text-center">
-                                                <a class="btn btn-xs btn-secondary">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </a>
-                                                <a class="btn btn-xs btn-primary">
-                                                    <i class="fas fa-pen"></i>
-                                                </a>
-                                                <a class="btn btn-xs btn-success">
-                                                    <i class="fa fa-download"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
+                                    <tbody id="tbody_incident_record">
                                     </tbody>
                                 </table>
-                            </div>
-                            <div class="card-footer clearfix">
-                                <ul class="pagination pagination-sm m-0 float-right">
-                                    <li class="page-item"><a class="page-link" href="#">«</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">»</a></li>
-                                </ul>
                             </div>
                         </div>
                         <button class="btn btn-danger mr-2 col-2">DOWNLOAD TO PDF</button>
@@ -562,6 +483,55 @@
 <script>
     $(document).ready(function() {
         $('select#multiple').selectpicker();
+        $.ajax({
+            url: `<?= base_url() ?>ncr_ca/Incident_Investigation/getDataRecord`,
+            type: `POST`,
+            dataType: 'json',
+            success: function(response) {
+                console.log(response)
+                let html = ``;
+                let no = 1;
+                if (response.data.length > 0) {
+                    $.each(response.data, function(key, val) {
+                        html += `<tr>`;
+                        html += `<td class="text-center">${no}</td>`;
+                        html += `<td class="text-center">${val.txt_vi_victim_name}</td>`;
+                        html += `<td class="text-center">${val.victim_department_name}</td>`;
+                        html += `<td class="text-center">${val.int_vi_victim_age}</td>`;
+                        html += `<td class="text-center">${val.victim_alamat_1}<br>${val.victim_alamat_2}</td>`;
+                        html += `<td class="text-center">${val.txt_vi_victim_name}</td>`;
+                        html += `<td class="text-center">${val.txt_vi_victim_name}</td>`;
+                        html += `<td class="text-center">${val.txt_vi_victim_name}</td>`;
+                        html += `<td class="text-center">
+                        <a class="btn btn-xs btn-secondary">
+                        <i class="fas fa-trash-alt"></i>
+                        </a>
+                        <a class="btn btn-xs btn-primary">
+                        <i class="fas fa-pen"></i>
+                        </a>
+                        <a class="btn btn-xs btn-success">
+                        <i class="fa fa-download"></i>
+                        </a>
+                        </td>`;
+                        html += `</tr>`;
+                        no++;
+
+                    });
+
+                } else {
+                    html += `<tr>`;
+                    html += `<td colspan="12" class="text-center"><br>`;
+                    html += `<div class='col-md-12'>`;
+                    html += `<div class='alert alert-warning alert-dismissible'>`;
+                    html += `<h4><i class='icon fa fa-warning'></i>Tidak ada data!</h4>`;
+                    html += `</div>`;
+                    html += `</div>`;
+                    html += `</td>`;
+                    html += `</tr>`;
+                }
+                $('#tbody_incident_record').html(html);
+            }
+        });
         // get data selectbox for plant
         $.ajax({
             url: `<?= base_url() ?>manajemen/Plant/getData_v2`,
@@ -667,6 +637,8 @@
                     $('#inputVictimId').val(ui.item.intIdEmployee); // save selected id to input
                     $('#inputVictimName').val(ui.item.txtNameEmployee); // save selected id to input
                     $('#inputEmplodeeNumber').val(ui.item.txtNikEmployee); // save selected id to input
+                    $('#inputEmployeeLevel').val(ui.item.jabatan.txtNamaJabatan); // save selected id to input
+                    $('#inputVictimServicePeriod').val(ui.item.lama_bekerja); // save selected id to input
                     return false;
                 },
                 focus: function(event, ui) {
@@ -674,10 +646,27 @@
                     $('#inputVictimId').val(ui.item.intIdEmployee); // save selected id to input
                     $('#inputVictimName').val(ui.item.txtNameEmployee); // save selected id to input
                     $('#inputEmplodeeNumber').val(ui.item.txtNikEmployee); // save selected id to input
+                    $('#inputEmployeeLevel').val(ui.item.jabatan.txtNamaJabatan); // save selected id to input
+                    $('#inputVictimServicePeriod').val(ui.item.lama_bekerja); // save selected id to input
                     return false;
                 },
             });
-        })
+        });
+        $.ajax({
+            url: '<?= base_url(); ?>manajemen/Masterdata/get_body_part',
+            type: 'post',
+            dataType: "json",
+            serverSide: true,
+            success: function(response) {
+                let html = ``;
+                html += `<option value="" disabled hidden style="font-size: inherit;">Nothing selected</option>`;
+                $.each(response.data, function(key, item) {
+                    html += `<option value="${item.intIdBodyPart}">${item.txtNameBodyPart}</option>`;
+                });
+                $('select#inputInjuriedBodyPart').append(html);
+                $("select#inputInjuriedBodyPart").selectpicker("refresh");
+            }
+        });
 
         // get
 

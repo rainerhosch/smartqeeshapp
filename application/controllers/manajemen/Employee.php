@@ -20,6 +20,7 @@ class Employee extends CI_Controller
 		$this->load->model('Manajemen/M_negara', 'negara');
 		$this->load->model('Manajemen/M_lokasi', 'lokasi');
 		$this->load->model('M_user', 'user');
+		$this->load->model('Manajemen/M_jabatan', 'jabatan');
 	}
 
 	public function index()
@@ -363,7 +364,9 @@ class Employee extends CI_Controller
 				$dataEmployee[$key]['label'] = $value['txtNameEmployee'];
 				$dataEmployee[$key]['value'] = $value['txtNameEmployee'];
 				$dataEmployee[$key]['id'] = $value['intIdEmployee'];
+				$dataEmployee[$key]['jabatan'] = $this->jabatan->find(['intIdJabatan' => $value['intIdJabatan']])->row_array();
 				$dataEmployee[$key]['umur'] = date('Y') - substr($value['dtmTanggalLahir'], 0, 4);
+				$dataEmployee[$key]['lama_bekerja'] = date('Y') - substr($value['dtmTanggalMasuk'], 0, 4);
 			}
 			$data = [
 				'code' => 200,

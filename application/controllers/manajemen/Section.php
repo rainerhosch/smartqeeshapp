@@ -130,4 +130,24 @@ class Section extends CI_Controller
 
 		echo json_encode($response);
 	}
+
+	public function getDataByIdPlantForForm()
+	{
+		$id 		= $this->input->post('id');
+		$data_dept 	= $this->section->getDataByIdPlant($id);
+		$opt 		= '<option value ="" disabled selected hidden style="font-size: inherit;">Silahkan Pilih Function</option>';
+		if (!empty($data_dept)) {
+			foreach ($data_dept as $item) {
+				$opt .= '<option value="' . $item["intIdSection"] . '"> ' . $item["txtNamaSection"] . '</option>';
+			}
+		}
+		$response = [
+			'code'    => 200,
+			'status'  => "OK",
+			'msg'     => "OK",
+			'data'    => $opt
+		];
+
+		echo json_encode($response);
+	}
 }
