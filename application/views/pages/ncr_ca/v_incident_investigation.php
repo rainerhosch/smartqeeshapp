@@ -1,8 +1,15 @@
-<!-- <script src="<?= base_url('assets/templates'); ?>/libs/jquery/jquery-migrate.min.js"></script> -->
 <script src="<?= base_url('assets/templates'); ?>/libs/jquery-ui/jquery-ui.min.js"></script>
 <script src="<?= base_url('assets/templates'); ?>/libs/jquery-ui/jquery.ui.autocomplete.scroll.min.js"></script>
 <script src="<?= base_url('assets/templates'); ?>/js/autocomplete.js"></script>
 <style>
+    .dataTables_filter {
+        float: right !important;
+    }
+
+    .dataTables_paginate {
+        float: right !important;
+    }
+
     .ui-autocomplete {
         z-index: 2147483647;
     }
@@ -105,47 +112,48 @@
             </div>
         </div>
     </div>
+
     <section class="content">
+        <div class="row" id="alert_msg">
+            <div class="col-12">
+                <?= $this->session->flashdata('message'); ?>
+            </div>
+        </div>
         <div class="card">
-            <!--TAB-->
-            <ul class="nav nav-tabs bg-secondary" id="custom-content-above-tab" role="tablist" style="margin-bottom: -1px;">
+            <ul class="nav nav-tabs" id="custom-content-above-tab" role="tablist" style="margin-bottom: -1px;">
                 <li class="nav-item">
-                    <a class="nav-link bg-secondary active-tab btn" id="custom-content-above-home-tab" data-toggle="pill" href="#activity-list" role="tab" aria-controls="custom-content-above-home" aria-selected="true">INVESTIGATION FORM</a>
+                    <a class="nav-link btn" id="custom-content-above-home-tab" data-toggle="pill" href="#form_investigation" role="tab" aria-controls="custom-content-above-home" aria-selected="true">INVESTIGATION FORM</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link bg-secondary" id="custom-content-above-home-tab" data-toggle="pill" href="#tabel-data-activity" role="tab" aria-controls="custom-content-above-home" aria-selected="true">INCIDENT RECORD</a>
+                    <a class="nav-link active" id="custom-content-above-home-tab" data-toggle="pill" href="#tabel-data-activity" role="tab" aria-controls="custom-content-above-home" aria-selected="true">INCIDENT RECORD</a>
                 </li>
             </ul>
-            <!--/.TAB-->
-            <!--TAB CONTENT-->
             <div class="tab-content" id="custom-content-above-tabContent">
-
-                <!--INPUT DATA PERSONAL MCU-->
-                <div class="tab-pane fade show active" id="activity-list" role="tabpanel" aria-labelledby="custom-content-above-home-tab">
+                <div class="tab-pane  fade " id="form_investigation" role="tabpanel" aria-labelledby="custom-content-above-home-tab">
                     <!-- form -->
-                    <form class="form-horizontal" method="post" id="incidentForm">
+                    <form class="form-horizontal" method="post" action="<?= base_url() ?>ncr_ca/Incident_Investigation/save_data" id="incidentForm" enctype="multipart/form-data">
                         <!--card body-->
                         <div class="card-body" style="background-color: #a5c0d3;">
                             <div class="row">
                                 <label for="inputIncidentDate" class="col-sm-2 col-form-label" style="text-align:right">INCIDENT DATE:</i> </label>
                                 <div class="col-sm-4">
-                                    <input type="date" class="form-control form-control-sm" id="inputIncidentDate" name="inputIncidentDate" placeholder="TEXT">
+                                    <input type="date" class="form-control form-control-sm" id="inputIncidentDate" name="inputIncidentDate" required>
                                 </div>
 
                                 <label for="inputIncidentArea" class="col-sm-2 col-form-label" style="text-align:right">INCIDENT AREA :</i> </label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control form-control-sm" id="inputIncidentArea" name="inputIncidentArea" placeholder="TEXT">
+                                    <input type="text" class="form-control form-control-sm" id="inputIncidentArea" name="inputIncidentArea" placeholder="Insert area of incident" required>
                                 </div>
                             </div>
                             <div class="row">
                                 <label for="inputIncidentTime" class=" col-sm-2 col-form-label" style="text-align:right">INCIDENT TIME :</i> </label>
                                 <div class="col-sm-4">
-                                    <input type="time" class="form-control form-control-sm" id="inputIncidentTime" name="inputIncidentTime" placeholder="TEXT">
+                                    <input type="time" class="form-control form-control-sm" id="inputIncidentTime" name="inputIncidentTime" required>
                                 </div>
 
                                 <label for="inputIncidentPlant" class="col-sm-2 col-form-label" style="text-align:right">INCIDENT PLANT :</i> </label>
                                 <div class="col-sm-4">
-                                    <select class="form-control form-control-sm" id="inputIncidentPlant" name="inputIncidentPlant" placeholder="TEXT">
+                                    <select class="form-control form-control-sm" id="inputIncidentPlant" name="inputIncidentPlant" required>
                                     </select>
                                     <!-- <input type="text" class="form-control form-control-sm" id="inputIncidentPlant" name="inputIncidentPlant" placeholder="TEXT"> -->
                                 </div>
@@ -155,12 +163,12 @@
                             <div class="row mb-3">
                                 <div class="col-sm-6">
                                     <label for="inputVictimFunction" class="col-form-label" style="text-align:right">FUNCTION:</i> </label>
-                                    <select class="form-control form-control-sm" id="inputVictimFunction" name="inputVictimFunction" placeholder="TEXT" disabled>
+                                    <select class="form-control form-control-sm" id="inputVictimFunction" name="inputVictimFunction" placeholder="TEXT" required disabled>
                                     </select>
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="inputVictimDepartment" class="col-form-label" style="text-align:right">DEPARTEMENT :</i> </label>
-                                    <select class="form-control form-control-sm" id="inputVictimDepartment" name="inputVictimDepartment" placeholder="TEXT" disabled>
+                                    <select class="form-control form-control-sm" id="inputVictimDepartment" name="inputVictimDepartment" placeholder="TEXT" required disabled>
                                     </select>
                                 </div>
                             </div>
@@ -168,25 +176,25 @@
                                 <div class="col-sm-6">
                                     <label for="inputVictimName" class="col-form-label" style="text-align:right">NAME :</i> </label>
                                     <input type="hidden" class="form-control form-control-sm" id="inputVictimId" name="inputVictimId">
-                                    <input type="text" class="form-control form-control-sm" id="inputVictimName" name="inputVictimName" placeholder="Search Name" disabled>
+                                    <input type="text" class="form-control form-control-sm" id="inputVictimName" name="inputVictimName" placeholder="Search Name" required disabled>
                                 </div>
                                 <div class="col-sm-4">
                                     <label for="inputEmplodeeNumber" class="col-form-label" style="text-align:right">EMPLOYEE NUMBER :</i> </label>
-                                    <input type="text" class="form-control form-control-sm" id="inputEmplodeeNumber" name="inputEmplodeeNumber" placeholder="TEXT">
+                                    <input type="text" class="form-control form-control-sm" id="inputEmplodeeNumber" name="inputEmplodeeNumber" placeholder="Employee number" required>
                                 </div>
                                 <div class="col-sm-2">
                                     <label for="inputVictimAge" class="col-form-label" style="text-align:right">AGE :</i> </label>
-                                    <input type="text" class="form-control form-control-sm" id="inputVictimAge" name="inputVictimAge" placeholder="TEXT">
+                                    <input type="text" class="form-control form-control-sm" id="inputVictimAge" name="inputVictimAge" placeholder="Age of victim" required>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-6">
                                     <label for="inputEmployeeLevel" class="col-form-label" style="text-align:right">EMPLOYEE LEVEL :</i> </label>
-                                    <input type="text" class="form-control form-control-sm" id="inputEmployeeLevel" name="inputEmployeeLevel" placeholder="TEXT">
+                                    <input type="text" class="form-control form-control-sm" id="inputEmployeeLevel" name="inputEmployeeLevel" placeholder="Employee level" required>
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="inputVictimServicePeriod" class="col-form-label" style="text-align:right">SERVICE PERIOD :</i> </label>
-                                    <input type="text" class="form-control form-control-sm" id="inputVictimServicePeriod" name="inputVictimServicePeriod" placeholder="TEXT">
+                                    <input type="text" class="form-control form-control-sm" id="inputVictimServicePeriod" name="inputVictimServicePeriod" placeholder="Service period" required>
                                 </div>
                             </div>
 
@@ -198,20 +206,12 @@
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="padding:0px">
                                     <div class="short-div">
-
-                                        <!-- <input type="text" class="form-control form-control-sm" id="inputInjuriedBodyPart" name="inputInjuriedBodyPart" placeholder="Type for search..."> -->
-                                        <select multiple class="form-control form-control-sm selectpicker" id="inputInjuriedBodyPart" name="inputInjuriedBodyPart[]">
-                                            <!-- <option value="" disabled selected hidden style="font-size: inherit;">Nothing selected</option> -->
-                                            <!-- <option value='1'>option 1</option>
-                                            <option value='2'>option 2</option>
-                                            <option value='3'>option 3</option>
-                                            <option value='4'>option 4</option>
-                                            <option value='5'>option 5</option> -->
+                                        <select multiple class="form-control form-control-sm selectpicker" id="inputInjuriedBodyPart" name="inputInjuriedBodyPart[]" required>
                                         </select>
                                     </div>
                                 </div>
                                 <label for="inputConditionOfWound" class="col-sm-2 col-form-label" style="text-align:right">CONDITION OF THE WOUND </label>
-                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><textarea class="form-control" id="inputConditionOfWound" rows="1" name="inputConditionOfWound" placeholder="Describe the condition of the wound"></textarea></div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><textarea class="form-control" id="inputConditionOfWound" rows="1" name="inputConditionOfWound" placeholder="Describe the condition of the wound" required></textarea></div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="padding:0px">
@@ -220,25 +220,25 @@
                                     <div class="short-div"><label for="inputReccurentProability" class="col-form-label" style="text-align:right">RECURRENCE PROABILITY :</label></div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="padding:0px">
-                                    <div class="short-div"><select class="form-control form-control-sm" id="inputIncidentLevel" name="inputIncidentLevel">
+                                    <div class="short-div"><select class="form-control form-control-sm" id="inputIncidentLevel" name="inputIncidentLevel" required>
                                             <option value="" disabled selected hidden style="font-size: inherit;">Nothing selected</option>
                                             <option value='MINOR'>MINOR</option>
                                             <option value='MAYOR'>MAYOR</option>
                                         </select></div>
-                                    <div class="short-div"><select class="form-control form-control-sm" id="inputSeverityLevel" name="inputSeverityLevel">
+                                    <div class="short-div"><select class="form-control form-control-sm" id="inputSeverityLevel" name="inputSeverityLevel" required>
                                             <option value="" disabled selected hidden style="font-size: inherit;">Nothing selected</option>
                                             <option value='LOW'>LOW</option>
                                             <option value='MEDIUM'>MEDIUM</option>
                                             <option value='HIGHT'>HIGHT</option>
                                         </select></div>
-                                    <div class="short-div"><select class="form-control form-control-sm" id="inputReccurentProability" name="inputReccurentProability">
+                                    <div class="short-div"><select class="form-control form-control-sm" id="inputReccurentProability" name="inputReccurentProability" required>
                                             <option value="" disabled selected hidden style="font-size: inherit;">Nothing selected</option>
                                             <option value='POSSIBLE'>POSSIBLE</option>
                                             <option value='IMPOSSIBLE'>IMPOSSIBLE</option>
                                         </select></div>
                                 </div>
                                 <label for="inputIncidentDesc" class="col-sm-2 col-form-label" style="text-align:right">INCIDENT DESC :</label>
-                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><textarea class="form-control" id="inputIncidentDesc" rows="4" name="inputIncidentDesc" placeholder="Description Of Incident"></textarea></div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><textarea class="form-control" id="inputIncidentDesc" rows="4" name="inputIncidentDesc" placeholder="Description Of Incident" required></textarea></div>
                             </div>
 
                             <div class="form-group row">
@@ -251,7 +251,7 @@
                                     </div>
                                 </div>
                                 <label for="inputActionTaken" class="col-sm-2 col-form-label" style="text-align:right">ACTION TAKEN :</label>
-                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><textarea class="form-control" id="inputActionTaken" name="inputActionTaken" rows="1"></textarea></div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><textarea class="form-control" id="inputActionTaken" name="inputActionTaken" rows="1" required></textarea></div>
                             </div>
 
 
@@ -410,7 +410,7 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <button type="button" class="btn btn-primary float-right btnSaveIncident" style="margin-left: 20px;">Submit</button>
+                            <button type="submit" class="btn btn-primary float-right btnSaveIncident" style="margin-left: 20px;">Submit</button>
                             <button type="reset" class="btn btn-warning float-right">Reset</button>
                         </div>
                     </form>
@@ -418,7 +418,7 @@
                 <!--/.INPUT DATA PERSONAL MCU-->
 
                 <!--PERSONAL MCU RECORD-->
-                <div class="tab-pane fade " id="tabel-data-activity" role="tabpanel" aria-labelledby="custom-content-above-profile-tab">
+                <div class="tab-pane fade show active" id="tabel-data-activity" role="tabpanel" aria-labelledby="custom-content-above-profile-tab">
                     <div class="card-body" style="background-color: #77a0e6;">
                         <div class="form-grup row mb-2 col-12">
                             <label for="input" class="col-form-label col-2" style="text-align:right">MCU PERIOD :</label>
@@ -449,8 +449,8 @@
                             </div>
                         </div>
                         <div class="card" style="background-color: white;">
-                            <div class="table-responsive">
-                                <table class="table table-striped table-bordered-sm ">
+                            <div class="table-responsive p-3">
+                                <table class="table table-striped table-bordered-sm" id="table_incident_record">
                                     <thead class="align-middle">
                                         <tr class="table-primary align-middle" style="text-align: center;">
                                             <th scope="col">NO.</th>
@@ -482,13 +482,17 @@
 <script src="<?= base_url('assets/templates') ?>/plugins/bootstrap-select/js/bootstrap-select.min.js"></script>
 <script>
     $(document).ready(function() {
+        setTimeout(function() {
+            $("#alert_msg").html("");
+            <?php $this->session->unset_userdata('message'); ?>
+        }, 2000);
         $('select#multiple').selectpicker();
         $.ajax({
             url: `<?= base_url() ?>ncr_ca/Incident_Investigation/getDataRecord`,
             type: `POST`,
             dataType: 'json',
             success: function(response) {
-                console.log(response)
+                // console.log(response)
                 let html = ``;
                 let no = 1;
                 if (response.data.length > 0) {
@@ -530,6 +534,15 @@
                     html += `</tr>`;
                 }
                 $('#tbody_incident_record').html(html);
+                $('#table_incident_record').DataTable({
+                    lengthMenu: [
+                        [5, 10, 20, -1],
+                        [5, 10, 20, 'All'],
+                    ],
+                });
+                $('select[name="table_incident_record_length"').addClass('form-control form-control-sm');
+                $('select[name="table_incident_record_length"').removeClass('form-select form-select-sm');
+                // $('#table_incident_record_length label').remove();
             }
         });
         // get data selectbox for plant

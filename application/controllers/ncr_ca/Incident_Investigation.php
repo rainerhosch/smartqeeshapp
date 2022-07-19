@@ -287,13 +287,12 @@ class Incident_Investigation extends CI_Controller
         if ($insert) {
             // success
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil ditambahkan!</div>');
-            redirect('ncr_ca/Incidenct_Investigation');
+            redirect('ncr_ca/Incident_Investigation');
         } else {
             // error
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Gagal menambahkan data!</div>');
-            redirect('ncr_ca/Incidenct_Investigation');
+            redirect('ncr_ca/Incident_Investigation');
         }
-        // echo json_encode($data_insert);
     }
 
     // public function generateBodyPart()

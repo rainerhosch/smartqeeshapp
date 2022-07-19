@@ -35,13 +35,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		}
 	</style>
 	<?php if ($page != 'Auth') : ?>
-		<!-- <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> -->
-		<!-- <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
-        <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-        <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/plugins/jqvmap/jqvmap.min.css">
-        <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
-        <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/plugins/daterangepicker/daterangepicker.css">
-        <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/plugins/summernote/summernote-bs4.min.css"> -->
+		<!-- <link href="<?= base_url('assets/template') ?>/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" id="bs-default-stylesheet" /> -->
+		<link href="<?= base_url('assets/template') ?>/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
+		<link href="<?= base_url('assets/template') ?>/libs/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+		<link href="<?= base_url('assets/template') ?>/libs/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+		<link href="<?= base_url('assets/template') ?>/libs/datatables.net-select-bs5/css/select.bootstrap5.min.css" rel="stylesheet" type="text/css" />
 	<?php endif; ?>
 	<link rel="stylesheet" href="<?= base_url('assets/templates') ?>/css/main-bg-photo.css">
 	<link rel="stylesheet" href="<?= base_url('assets/templates') ?>/css/main.css">

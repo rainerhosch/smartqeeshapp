@@ -104,6 +104,7 @@
     $(document).ready(function() {
       setTimeout(function() {
         $("#alert_msg").html("");
+        <?php $this->session->unset_userdata('message'); ?>
       }, 2000);
       $('#eye_toggle').on('click', function() {
         let pass_filed = document.querySelector('#password');
@@ -141,11 +142,11 @@
               }
             } else {
               // 200
-							if (response.data.isDefaultPassword == 0) {
-								window.location = `<?= base_url('Auth/changePassword') ?>`
-							} else {
-								window.location = `<?= base_url('dashboard') ?>`
-							}              
+              if (response.data.isDefaultPassword == 0) {
+                window.location = `<?= base_url('Auth/changePassword') ?>`
+              } else {
+                window.location = `<?= base_url('dashboard') ?>`
+              }
             }
           }
         });
