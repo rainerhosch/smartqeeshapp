@@ -46,7 +46,7 @@ function p_InitiateDataList() {
 			},
 			{				
 				render: function (data, type, full, meta) {					
-					return `<a class="btn btn-primary" href="${url}risk_register/Activity/index?id=${full.intIdDokRiskRegister}"><i class="fa fa-eye"></i></a>`
+					return `<a class="btn btn-primary" href="${url}risk_register/Activity/index?id=${full.intIdDokRiskRegister}"><i class="fa fa-eye"></i></a>&nbsp;` + `<a class="btn btn-success" href="${url}risk_register/Dokumen/exportnew?id=${full.intIdDokRiskRegister}"><i class="fa fa-download"></i></a>`
                 },
 				className: 'text-center'
 			},
