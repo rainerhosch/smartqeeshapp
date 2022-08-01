@@ -69,16 +69,12 @@ class Dokumen extends CI_Controller
 			redirect(base_url('risk_register/dokumen'));
 		}
 
-		//Style excel
+		//Inisiasi Style excel
 		$styleArray = [
-			'font' => [
-				// 'bold' => true,
-			],
 			'alignment' => [
-				// 'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
 			],
 			'borders' => [
-				'outline' => array(
+				'allBorders' => array(
 					'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
 					'color' => array('rgb' => '0000'),
 				),
@@ -94,13 +90,58 @@ class Dokumen extends CI_Controller
 				'wrapText' => true
 			],
 			'borders' => [
-				'outline' => array(
+				'allBorders' => array(
+					'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+					'color' => array('rgb' => '0000'),
+				),
+			],
+		];
+		$styleTitleArray = [
+			'font' => [
+				'bold' => true,
+				'size' => 20
+			],
+			'alignment' => [
+				'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+				'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+				'wrapText' => true
+			],
+			'borders' => [
+				'allBorders' => array(
+					'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+					'color' => array('rgb' => '0000'),
+				),
+			],
+		];
+		$styleRegulerArray = [
+			'font' => [
+			],
+			'alignment' => [
+				'wrapText' => true
+			],
+			'borders' => [
+				'allBorders' => array(
+					'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+					'color' => array('rgb' => '0000'),
+				),
+			],
+		];
+		$styleTahapanArray = [
+			'font' => [
+			],
+			'alignment' => [				
+				'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+				'wrapText' => true
+			],
+			'borders' => [
+				'allBorders' => array(
 					'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
 					'color' => array('rgb' => '0000'),
 				),
 			],
 		];
 
+		//inisiasi sheet spread sheet
 		$spreadsheet = new Spreadsheet();
 		$sheet = $spreadsheet->getActiveSheet();
 		
@@ -125,44 +166,50 @@ class Dokumen extends CI_Controller
 		$sheet->getColumnDimensionByColumn(18)->setWidth(24);
 		$sheet->getColumnDimensionByColumn(19)->setWidth(23);
 
+		//create title
 		$row = 1;
-		$sheet->setCellValue("A$row", 'Risk Register');
+		$sheet->setCellValue("A$row", "Risk Register\nPT. Asia Pacific Fibers Tbk. Unit Karawang");
 		$row += 3;
-		$sheet->mergeCells('A1:X1');
+		$sheet->mergeCells('A1:R1');
+		$sheet->getStyle("A1:R1")->applyFromArray($styleTitleArray);
+		$sheet->getRowDimension('1')->setRowHeight(60);
 
-
+		//ambil data dokumen risk register
 		$data_dok = $this->report->getDataDokumen(["trDokRiskRegister.intIdDokRiskRegister" => $id_dok])->row();
 		if ($data_dok != null) {
 
+			//Data tanggal dokumen dibuat
 			$row_date = $row;
 			$sheet->setCellValue("A$row_date", 'Tanggal');			
 			$sheet->setCellValue("C$row_date", ": " . date("d F Y", strtotime($data_dok->dtmInsertedBy)));			
 			$sheet->mergeCells("A$row_date:B$row_date");
 			$row++;
 
+			//data departemen
 			$row_dept = $row;
 			$sheet->setCellValue("A$row_dept", 'Departemen');			
 			$sheet->setCellValue("C$row_dept", ": " . $data_dok->txtNamaDepartement);			
 			$sheet->mergeCells("A$row_dept:B$row_dept");
 			$row++;
 
+			//data function
 			$row_func = $row;
 			$sheet->setCellValue("A$row_func", 'Function');			
 			$sheet->setCellValue("C$row_func", ": " . $data_dok->txtNamaSection);
 			$sheet->mergeCells("A$row_func:B$row_func");
 
+			//loncat 2 bari untuk membuat header table
 			$row += 2;
 			$row_head_table = $row;
 			$sheet->setCellValue("A$row_head_table", '');			
 			$sheet->setCellValue("B$row_head_table", "ACTIVITY / PRODUCT / SERVICES \n (BASED ON PROCESS)");
 			$sheet->setCellValue("C$row_head_table", "RISK CONTEXT\n(INTERNAL / EXTERNAL)\n(Konteks Risiko di Organisasi)");
-			$sheet->setCellValue("D$row_head_table", "RISK CONTEXT\n(INTERNAL / EXTERNAL)\n(Konteks Risiko di Organisasi)");
-			$sheet->setCellValue("E$row_head_table", "RISK SOURCE IDENTIFICATION\n(Identifikasi Sumber Risiko)");
-			$sheet->setCellValue("F$row_head_table", "RISK ANALYSIS\n(Analisa Risiko)");
+			$sheet->setCellValue("D$row_head_table", "RISK SOURCE IDENTIFICATION\n(Identifikasi Sumber Risiko)");
+			$sheet->setCellValue("E$row_head_table", "RISK ANALYSIS\n(Analisa Risiko)");
+			$sheet->setCellValue("F$row_head_table", "RISK Category\n(Kategori Risiko)");
 			$sheet->setCellValue("G$row_head_table", "CONDITION (N/AN/E)");
 			$sheet->setCellValue("H$row_head_table", "RISK EVALUATION\n(Evaluasi Risiko)");
 			$sheet->setCellValue("J$row_head_table", "RISK LEVEL\n(0/H-M-L)\n(Tingkat Risiko)");
-			// $sheet->setCellValue("K$row_head_table", "LEGAL COMPLIANCES\n(Kepatuhan Persyaratan)");
 			$sheet->setCellValue("K$row_head_table", "SIGNIFICANT STATUS (ACCEPTED / NOT ACCEPTED)\n(Status Kepentingan) (Diterima/Tidak Diterima)");
 			$sheet->setCellValue("L$row_head_table", "RISK OWNER\n(Pemilik Risiko)");
 			$sheet->setCellValue("M$row_head_table", "RISK TREATMENT\n(Penanganan Risiko)");
@@ -171,13 +218,16 @@ class Dokumen extends CI_Controller
 			$sheet->setCellValue("P$row_head_table", "RE-EVALUATION OF RISK");
 			$sheet->setCellValue("R$row_head_table", "RISK LEVEL\n(Tingkat Resiko)");
 
+			//merge header table yang menggunakan 2 column
 			$sheet->mergeCells("H$row_head_table:I$row_head_table");
 			$sheet->mergeCells("M$row_head_table:N$row_head_table");
 			$sheet->mergeCells("P$row_head_table:Q$row_head_table");
 			// $sheet->mergeCells("V$row_head_table:W$row_head_table");
 
+			//styling col A-R menggunakan style header
 			$sheet->getStyle("A$row_head_table:R$row_head_table")->applyFromArray($styleHeaderArray);
 
+			//create header row yang ke dua
 			$row++;
 			$row_head_table = $row;			
 			$sheet->setCellValue("H$row_head_table", "CONSEQUENCES\n(Konsekuensi)");
@@ -188,6 +238,7 @@ class Dokumen extends CI_Controller
 			$sheet->setCellValue("Q$row_head_table", "LIKELIHOOD\n(Keseringan)");
 			$sheet->getStyle("A$row_head_table:R$row_head_table")->applyFromArray($styleHeaderArray);
 
+			//merge header table yang menggunakan 2 baris
 			$row_head_table_bef = $row_head_table - 1;
 			$sheet->mergeCells("A$row_head_table_bef:A$row_head_table");
 			$sheet->mergeCells("B$row_head_table_bef:B$row_head_table");
@@ -201,35 +252,34 @@ class Dokumen extends CI_Controller
 			$sheet->mergeCells("L$row_head_table_bef:L$row_head_table");
 			$sheet->mergeCells("O$row_head_table_bef:O$row_head_table");
 			$sheet->mergeCells("R$row_head_table_bef:R$row_head_table");
-			// $sheet->mergeCells("M$row_head_table_bef:M$row_head_table");
-			// $sheet->mergeCells("U$row_head_table_bef:U$row_head_table");
-			// $sheet->mergeCells("V$row_head_table_bef:V$row_head_table");
 
 			$row++;
 
+			//ambil data activity
 			$data_activity = $this->report->getActivity(["trActivityRiskRegister.intIdDokRiskRegister" => $id_dok])->result();
 			$no = 1;
+
+			//inisiasi data untuk perhitungan jumlah merge setiap row
 			$row_pertama_tahapan = 0;
 			$count_row_tahapan = 0;
-			$row_pertama_context = 0;
 			$count_row_context = 0;
 			$count_row_identification = 0;
-			$count_all_activity = 0;
 			$count_row_eval = 0;
-			$count_row_iden = 0;
 			$sum_evaluation = 0;
-			// var_dump($data_activity);
+			
 			if (!empty($data_activity)) {
-				// var_dump($data_activity);
-				foreach ($data_activity as $item) {	
-					// var_dump($row);
-					$sum_evaluation = 0;	
+				foreach ($data_activity as $item) {
+					//sum evaluation berguna untuk menyimpan jumlah seluruh baris child tahapan dan evaluation
+					$sum_evaluation = 0;
+
+					//create cell activity
 					$sheet->setCellValue("A$row", $no++);
-					$sheet->setCellValue("B$row", $item->txtNamaActivity);					
+					$sheet->setCellValue("B$row", $item->txtNamaActivity);
+					$sheet->getStyle("A$row:R$row")->applyFromArray($styleRegulerArray);	
+					$sheet->mergeCells("B$row:R$row");				
 					$row++;					
 					
-					$data_tahapan = $this->report->getTahapan(["trTahapanProsesRisk.intIdActivityRisk" => $item->intIdActivityRisk])->result();
-					// var_dump($this->db->last_query());				
+					$data_tahapan = $this->report->getTahapan(["trTahapanProsesRisk.intIdActivityRisk" => $item->intIdActivityRisk])->result();					
 					$row_tahapan = $row;					
 					if (!empty($data_tahapan)) {
 						$count_all_activity = 0;
@@ -239,6 +289,7 @@ class Dokumen extends CI_Controller
 
 						foreach ($data_tahapan as $item_tahapan) {
 							// var_dump($item_tahapan, $item);
+							$sum_ctx = 0;
 							$sheet->setCellValue("B$row_tahapan", $item_tahapan->txtNamaTahapan);
 							
 							$data_context = $this->report->getContext(["intIdTahapanProsesRisk" => $item_tahapan->intIdTahapanProsesRisk])->result();
@@ -247,8 +298,10 @@ class Dokumen extends CI_Controller
 								$row_pertama_context = $row_pertama_tahapan;
 								$count_row_context = 0;
 								$row_context = $row_tahapan;
+								
 
 								foreach ($data_context as $item_context) {
+									$sum_eval_context = 0;
 									$nama_context_temp = str_replace("<div>", "", $item_context->txtNamaContext);
 									$nama_context_temp = str_replace("</div>", "\n", $nama_context_temp);
 									$nama_context_temp = str_replace("<p>", "", $nama_context_temp);
@@ -263,6 +316,7 @@ class Dokumen extends CI_Controller
 									$row_pertama_identification = $row_context;
 									$count_row_identification = 0;
 									$row_identification = $row_context;
+									
 									if (!empty($data_identification)) {
 										foreach ($data_identification as $item_iden) {
 											$sheet->setCellValue("D$row_identification", $item_iden->txtSourceRiskIden);
@@ -327,20 +381,51 @@ class Dokumen extends CI_Controller
 
 										}
 										if ($count_row_eval > 0) {
+											$row_after = $row_identification + ($count_row_eval - 1);
+											// var_dump($row_after, $row_identification);exit;
+											
+											$sheet->mergeCells("D$row_identification:D$row_after");
+											$sheet->mergeCells("E$row_identification:E$row_after");
+											$sheet->mergeCells("F$row_identification:F$row_after");
+											$sheet->mergeCells("G$row_identification:G$row_after");
+											$sheet->mergeCells("H$row_identification:H$row_after");
+											$sheet->mergeCells("I$row_identification:I$row_after");
+											$sheet->mergeCells("J$row_identification:J$row_after");
+											$sheet->mergeCells("K$row_identification:K$row_after");
+											$sheet->mergeCells("L$row_identification:L$row_after");
+											$sheet->mergeCells("M$row_identification:M$row_after");
+											$sheet->mergeCells("N$row_identification:N$row_after");
+											$sheet->mergeCells("O$row_identification:O$row_after");
+											
+											$sheet->getStyle("A$row_identification:R$row_after")->applyFromArray($styleRegulerArray);
+											
 											$row_identification += $count_row_eval;
 											$sum_evaluation += $count_row_eval;
+											$sum_eval_context += ($count_row_eval);
+											
 										} else {
+											$sheet->getStyle("A$row_identification:R$row_identification")->applyFromArray($styleRegulerArray);
 											$row_identification += $count_row_identification;
+											$sum_eval_context += 1;
 										}
 									}
+									$sum_ctx += $sum_eval_context;									
+									$sum_eval_context = $row_context + ($sum_eval_context - 1);
+									// var_dump($row_context, $sum_eval_context);
+									$sheet->mergeCells("C$row_context:C$sum_eval_context");
 									$row_context++;
 									$count_row_context++;
+									
 									// $row_pertama_context++;
 								}
 							} else {
-								
+								$row_tahapan++;
 							}
-							
+							$ctx_row = $row_tahapan + ($sum_ctx - 1);
+									// var_dump($row_context, $sum_eval_context);
+							$sheet->mergeCells("B$row_tahapan:B$ctx_row");
+							$sheet->mergeCells("A$row_tahapan:A$ctx_row");
+							$sheet->getStyle("A$row_tahapan:B$ctx_row")->applyFromArray($styleTahapanArray);
 							$row_tahapan++;
 							$count_row_tahapan++;
 						}
@@ -353,7 +438,7 @@ class Dokumen extends CI_Controller
 					])->result();
 					$jumlah_row_act = count($jumlah_row_act);
 					// var_dump($row, $jumlah_row_act);
-					$row += $jumlah_row_act == 0 ? 1:$jumlah_row_act + $sum_evaluation - 1;
+					$row += $jumlah_row_act == 0 ? 1:$jumlah_row_act + $sum_evaluation - 2;
 					// var_dump($row);
 					//row harus ditambah oleh row pling terbesar
 				}
@@ -378,10 +463,9 @@ class Dokumen extends CI_Controller
 
 			$writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
 			$writer->save('php://output');
-			// redirect(base_url('risk_register/dokumen'));
+			redirect(base_url('risk_register/dokumen'));
 		} else {
 			redirect(base_url('risk_register/dokumen'));
 		}
-		// var_dump($data_dok);
 	}
 }
