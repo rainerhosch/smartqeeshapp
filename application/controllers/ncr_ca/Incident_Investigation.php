@@ -9,6 +9,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
  *  Date Created          : 20/04/2022
  *  Quots of the code     : 'rapihkan lah code mu, seperti halnya kau menata kehidupan'
  */
+
+use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\Writer\Word2007;
+
 class Incident_Investigation extends CI_Controller
 {
     public function __construct()
@@ -136,11 +140,131 @@ class Incident_Investigation extends CI_Controller
         echo json_encode($response);
     }
 
+    public function DownloadsToWord()
+    {
+        $data_param = $this->input->get();
+        $where = [
+            'int_id_investigation' => $data_param['id']
+        ];
+        $datareq = $this->investigation->get_data($where)->row_array();
+        // echo '<pre>';
+        // echo json_encode($datareq);
+        // echo '</pre>';
+        // die;
+        // Creating the new document...
+        $phpWord = new \PhpOffice\PhpWord\PhpWord();
+
+        /* Note: any element you append to a document must reside inside of a Section. */
+
+        // Adding an empty Section to the document...
+        $section = $phpWord->addSection();
+        // Adding Text element to the Section having font styled by default...
+        $section->addText(
+            '"Learn from yesterday, live for today, hope for tomorrow. '
+                . 'The important thing is not to stop questioning." '
+                . '(Albert Einstein)'
+        );
+
+        /*
+        * Note: it's possible to customize font style of the Text element you add in three ways:
+        * - inline;
+        * - using named font style (new font style object will be implicitly created);
+        * - using explicitly created font style object.
+        */
+
+        // Adding Text element with font customized inline...
+        $section->addText(
+            '"Great achievement is usually born of great sacrifice, '
+                . 'and is never the result of selfishness." '
+                . '(Napoleon Hill)',
+            array('name' => 'Tahoma', 'size' => 10)
+        );
+
+        // Adding Text element with font customized using named font style...
+        $fontStyleName = 'oneUserDefinedStyle';
+        $phpWord->addFontStyle(
+            $fontStyleName,
+            array('name' => 'Tahoma', 'size' => 10, 'color' => '1B2232', 'bold' => true)
+        );
+        $section->addText(
+            '"The greatest accomplishment is not in never falling, '
+                . 'but in rising again after you fall." '
+                . '(Vince Lombardi)',
+            $fontStyleName
+        );
+
+        // Adding Text element with font customized using explicitly created font style object...
+        $fontStyle = new \PhpOffice\PhpWord\Style\Font();
+        $fontStyle->setBold(true);
+        $fontStyle->setName('Tahoma');
+        $fontStyle->setSize(13);
+        $myTextElement = $section->addText('"Believe you can and you\'re halfway there." (Theodor Roosevelt)');
+        $myTextElement->setFontStyle($fontStyle);
+
+        // Saving the document as OOXML file...
+        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+        $filename = 'E-RCA-' . $datareq['int_id_investigation'] . '_' . $datareq['txt_vi_victim_name'];
+
+        header('Content-Type: application/msword');
+        header('Content-Disposition: attachment;filename="' . $filename . '.docx"');
+        header('Cache-Control: max-age=0');
+
+        $objWriter->save('php://output');
+
+
+        // $phpWord = new PhpWord();
+        // $section = $phpWord->addSection();
+        // $section->addText('Hello World !');
+
+        // $writer = new Word2007($phpWord);
+
+        // $filename = 'E-RCA-' . $datareq['int_id_investigation'] . '_' . $datareq['txt_vi_victim_name'];
+
+        // header('Content-Type: application/msword');
+        // header('Content-Disposition: attachment;filename="' . $filename . '.docx"');
+        // header('Cache-Control: max-age=0');
+
+        // $writer->save('php://output');
+    }
+
+    public function getDataById()
+    {
+        if ($this->input->is_ajax_request()) {
+            $data_post = $this->input->post();
+            $where = [
+                'int_id_investigation' => $data_post['id']
+            ];
+            $datareq = $this->investigation->get_data($where)->row_array();
+            $response = [
+                'code' => 200,
+                'status' => 'ok',
+                'data' => $datareq,
+                'message' => 'Success Request.',
+            ];
+        } else {
+            $response = [
+                'code' => 500,
+                'status' => 'error',
+                'data' => null,
+                'message' => 'Invalid Request Method.',
+            ];
+        }
+        echo json_encode($response);
+    }
+
     public function getDataRecord()
     {
         if ($this->input->is_ajax_request()) {
             $data_post = $this->input->post();
-            $datareq = $this->investigation->get_data()->result_array();
+            $where = null;
+            if (count($data_post) > 0) {
+                if (isset($data_post['type'])) {
+                    $where = [
+                        'txt_inv_type' => $data_post['type']
+                    ];
+                }
+            }
+            $datareq = $this->investigation->get_data($where)->result_array();
             foreach ($datareq as $i => $val) {
                 $department = $this->department->getData_v2(['intIdDepartement' => $val['txt_vi_victim_department']])->row_array();
                 $employee = $this->employee->getData(['intIdEmployee' => $val['int_vi_employee_id']])->row_array();
