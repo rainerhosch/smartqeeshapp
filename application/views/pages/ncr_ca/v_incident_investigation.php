@@ -456,6 +456,7 @@
                                             <th scope="col">NO.</th>
                                             <th scope="col">NAME</th>
                                             <th scope="col">DEPARTEMENT</th>
+                                            <th scope="col">JABATAN</th>
                                             <th scope="col">AGE</th>
                                             <th scope="col">ADDRESS</th>
                                             <th scope="col">HEALTH STATUS</th>
@@ -495,7 +496,7 @@
             },
             dataType: 'json',
             success: function(response) {
-                // console.log(response)
+                console.log(response)
                 let html = ``;
                 let no = 1;
                 if (response.data.length > 0) {
@@ -504,20 +505,21 @@
                         html += `<td class="text-center">${no}</td>`;
                         html += `<td class="text-center">${val.txt_vi_victim_name}</td>`;
                         html += `<td class="text-center">${val.victim_department_name}</td>`;
+                        html += `<td class="text-center">${val.txt_vi_employee_level}</td>`;
                         html += `<td class="text-center">${val.int_vi_victim_age}</td>`;
                         html += `<td class="text-center">${val.victim_alamat_1}<br>${val.victim_alamat_2}</td>`;
                         html += `<td class="text-center">${val.txt_vi_victim_name}</td>`;
                         html += `<td class="text-center">${val.txt_vi_victim_name}</td>`;
                         html += `<td class="text-center">${val.txt_vi_victim_name}</td>`;
                         html += `<td class="text-center">
-                        <a class="btn btn-xs btn-primary btnEdit" data-id="${val.int_id_investigation}">
+                        <a class="btn btn-xs btn-warning btnEdit" data-id="${val.int_id_investigation}">
                         <i class="fas fa-pen"></i>
                         </a>
                         <a class="btn btn-xs btn-danger btnDelete" data-id="${val.int_id_investigation}">
                         <i class="fas fa-trash-alt"></i>
                         </a>
-                        <a class="btn btn-xs btn-success btnDownloadsDoc" data-id="${val.int_id_investigation}">
-                        <i class="fa fa-download"></i>
+                        <a class="btn btn-xs btn-primary btnDownloadsDoc" data-id="${val.int_id_investigation}">
+                        Docs <i class="fa fa-download"></i>
                         </a>
                         </td>`;
                         html += `</tr>`;

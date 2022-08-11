@@ -11,7 +11,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
  */
 
 use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\Shared\Html;
 use PhpOffice\PhpWord\Writer\Word2007;
+
+use PhpOffice\PhpWord\Element\Field;
+use PhpOffice\PhpWord\Element\Table;
+use PhpOffice\PhpWord\Element\TextRun;
+use PhpOffice\PhpWord\SimpleType\TblWidth;
+
 
 class Incident_Investigation extends CI_Controller
 {
@@ -153,53 +160,126 @@ class Incident_Investigation extends CI_Controller
         // die;
         // Creating the new document...
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
-
-        /* Note: any element you append to a document must reside inside of a Section. */
-
-        // Adding an empty Section to the document...
-        $section = $phpWord->addSection();
-        // Adding Text element to the Section having font styled by default...
-        $section->addText(
-            '"Learn from yesterday, live for today, hope for tomorrow. '
-                . 'The important thing is not to stop questioning." '
-                . '(Albert Einstein)'
-        );
-
-        /*
-        * Note: it's possible to customize font style of the Text element you add in three ways:
-        * - inline;
-        * - using named font style (new font style object will be implicitly created);
-        * - using explicitly created font style object.
-        */
-
-        // Adding Text element with font customized inline...
-        $section->addText(
-            '"Great achievement is usually born of great sacrifice, '
-                . 'and is never the result of selfishness." '
-                . '(Napoleon Hill)',
-            array('name' => 'Tahoma', 'size' => 10)
-        );
-
-        // Adding Text element with font customized using named font style...
-        $fontStyleName = 'oneUserDefinedStyle';
-        $phpWord->addFontStyle(
-            $fontStyleName,
-            array('name' => 'Tahoma', 'size' => 10, 'color' => '1B2232', 'bold' => true)
-        );
-        $section->addText(
-            '"The greatest accomplishment is not in never falling, '
-                . 'but in rising again after you fall." '
-                . '(Vince Lombardi)',
-            $fontStyleName
-        );
-
-        // Adding Text element with font customized using explicitly created font style object...
         $fontStyle = new \PhpOffice\PhpWord\Style\Font();
-        $fontStyle->setBold(true);
-        $fontStyle->setName('Tahoma');
-        $fontStyle->setSize(13);
-        $myTextElement = $section->addText('"Believe you can and you\'re halfway there." (Theodor Roosevelt)');
-        $myTextElement->setFontStyle($fontStyle);
+        $dir_image = FCPATH . 'assets/images/';
+
+        // style
+        $sectionStyle = array(
+            'marginTop' => 600,
+            'marginBottom' => 350,
+            'marginRight' => 600,
+            'marginLeft' =>  600,
+        );
+
+        $section = $phpWord->addSection($sectionStyle);
+        // define bold style
+        $boldFontStyleName = 'BoldText';
+        $phpWord->addFontStyle($boldFontStyleName, array('bold' => true, 'size' => 14));
+
+        // Add first page header
+        $header = $section->addHeader();
+        $header->firstPage();
+        $styleTable = array('borderSize' => 3, 'borderColor' => '000');
+        $table = $header->addTable($styleTable);
+        $table->addRow();
+        $table->addCell(2000)->addImage($dir_image . 'apf-header.png', array('width' => 120, 'height' => 65, 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::BOTH));
+        $cell = $table->addCell(9000, ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::BOTH]);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('ANALISA AKAR PENYEBAB KECELAKAAN', $boldFontStyleName);
+        $textrun->addTextBreak();
+        $textrun->addText('ACCIDENT ROOT COUSE ANALYSIS', ['size' => 14]);
+        $cell = $table->addCell(2000);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('Form No. :', ['size' => 14]);
+
+        // Table 2
+        $section->addTextBreak();
+        $tableS = $section->addTable($styleTable);
+        $tableS->addRow();
+        $cell = $tableS->addCell(3500);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText('Nomor', ['size' => 11]);
+        $textrun->addTextBreak();
+        $textrun->addText('Number', ['italic' => true, 'size' => 11, 'color' => 'A6A6A6']);
+        $cell = $tableS->addCell(500);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText(':', ['size' => 11]);
+        $cell = $tableS->addCell(16000);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText('10/HSE/ACC/XI/2021', ['size' => 11]);
+
+        // Table Victim
+        // row 1
+        $section->addTextBreak();
+        $tableS = $section->addTable($styleTable);
+        $tableS->addRow();
+        $cell = $tableS->addCell(3500);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText('Tanggal', ['size' => 11]);
+        $textrun->addTextBreak();
+        $textrun->addText('Date', ['italic' => true, 'size' => 11, 'color' => 'A6A6A6']);
+        $cell = $tableS->addCell(500);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText(':', ['size' => 11]);
+        $cell = $tableS->addCell(6000);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText('November 9th, 2021', ['bold' => true, 'size' => 11]);
+        $cell = $tableS->addCell(500);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText(' ', ['size' => 11]);
+        $cell = $tableS->addCell(3500);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText('Nama Korban', ['size' => 11]);
+        $textrun->addTextBreak();
+        $textrun->addText('Name of Victim', ['italic' => true, 'size' => 11, 'color' => 'A6A6A6']);
+        $cell = $tableS->addCell(500);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText(':', ['size' => 11]);
+        $cell = $tableS->addCell(6000);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText('Reza Maulana', ['bold' => true, 'size' => 11]);
+
+        // row 1
+        $tableS = $section->addTable($styleTable);
+        $tableS->addRow();
+        $cell = $tableS->addCell(3500);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText('Waktu', ['size' => 11]);
+        $textrun->addTextBreak();
+        $textrun->addText('Time', ['italic' => true, 'size' => 11, 'color' => 'A6A6A6']);
+        $cell = $tableS->addCell(500);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText(':', ['size' => 11]);
+        $cell = $tableS->addCell(6000);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText('01.40 PM', ['bold' => true, 'size' => 11]);
+        $cell = $tableS->addCell(500);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText(' ', ['size' => 11]);
+        $cell = $tableS->addCell(3500);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText('Departement', ['size' => 11]);
+        $textrun->addTextBreak();
+        $textrun->addText('Departement', ['italic' => true, 'size' => 11, 'color' => 'A6A6A6']);
+        $cell = $tableS->addCell(500);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText(':', ['size' => 11]);
+        $cell = $tableS->addCell(6000);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText('Fiber Process', ['bold' => true, 'size' => 11]);
+
+        // $section->addTextBreak();
+        // $section->addText('Some text...');
+
+        // // New portrait section
+        // $section2 = $phpWord->addSection();
+
+        // $sec2Header = $section2->addHeader();
+        // $sec2Header->addText('All pages in Section 2 will Have this!');
+
+        // // Write some text
+        // $section2->addTextBreak();
+        // $section2->addText('Some text...');
 
         // Saving the document as OOXML file...
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
@@ -209,22 +289,8 @@ class Incident_Investigation extends CI_Controller
         header('Content-Disposition: attachment;filename="' . $filename . '.docx"');
         header('Cache-Control: max-age=0');
 
+        // $templateProcessor->saveAs('php://output');
         $objWriter->save('php://output');
-
-
-        // $phpWord = new PhpWord();
-        // $section = $phpWord->addSection();
-        // $section->addText('Hello World !');
-
-        // $writer = new Word2007($phpWord);
-
-        // $filename = 'E-RCA-' . $datareq['int_id_investigation'] . '_' . $datareq['txt_vi_victim_name'];
-
-        // header('Content-Type: application/msword');
-        // header('Content-Disposition: attachment;filename="' . $filename . '.docx"');
-        // header('Cache-Control: max-age=0');
-
-        // $writer->save('php://output');
     }
 
     public function getDataById()
