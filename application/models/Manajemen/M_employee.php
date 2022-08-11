@@ -29,14 +29,15 @@ class M_employee extends CI_Model
 		$this->db->order_by('txtNameEmployee', 'ASC');
 		return $this->db->get();
 	}
-	public function get($limit = 20)
+	public function get($limit = 50)
 	{
 
-		$this->db->select('me.*,md.txtNamaDepartement,mj.txtNamaJabatan,mng.txtNamaNegara');
+		$this->db->select('me.*,md.txtNamaDepartement,mj.txtNamaJabatan,mng.txtNamaNegara,usr.is_active');
 		$this->db->from('mEmployee me');
 		$this->db->join('mDepartemen md', 'md.intIdDepartement = me.intIdDepartment');
 		$this->db->join('mJabatan mj', 'mj.intIdJabatan = me.intIdJabatan');
 		$this->db->join('mNegara mng', 'mng.intIdNegara = me.intIdNegara');
+		$this->db->join('user usr','me.intIdEmployee=usr.employee_id','left');
 		$this->db->limit($limit);
 		$this->db->order_by('txtNameEmployee', 'ASC');
 		return $this->db->get();
@@ -119,11 +120,12 @@ class M_employee extends CI_Model
 	public function search($keyword)
 	{
 		$this->db->like('txtNameEmployee', $keyword);
-		$this->db->select('me.*,md.txtNamaDepartement,mj.txtNamaJabatan,mng.txtNamaNegara');
+		$this->db->select('me.*,md.txtNamaDepartement,mj.txtNamaJabatan,mng.txtNamaNegara,usr.is_active');
 		$this->db->from('mEmployee me');
 		$this->db->join('mDepartemen md', 'md.intIdDepartement = me.intIdDepartment');
 		$this->db->join('mJabatan mj', 'mj.intIdJabatan = me.intIdJabatan');
 		$this->db->join('mNegara mng', 'mng.intIdNegara = me.intIdNegara');
+		$this->db->join('user usr','me.intIdEmployee=usr.employee_id','left');
 		$this->db->order_by('txtNameEmployee', 'ASC');
 		return $this->db->get();
 	}

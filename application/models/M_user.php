@@ -16,7 +16,8 @@ class M_user extends CI_Model
         $this->db->select($field);
         $this->db->from('mEmployee');
         $this->db->join('user', 'mEmployee.intIdEmployee=`user`.employee_id');
-        $this->db->join('user_role', 'user_role.role_id=user.role_id');        
+        $this->db->join('user_role', 'user_role.role_id=user.role_id');   
+		$this->db->join('mjabatan jbt','jbt.intIdJabatan=mEmployee.intIdJabatan');     
 		if ($where != null) {
 			$this->db->where($where);
 		}

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 /**
- *  File Name             : Jabatan.php
+ *  File Name             : Provinsi.php
  *  File Type             : Controller
  *  File Package          : CI_Controller
  ** * * * * * * * * * * * * * * * * * **
@@ -10,12 +10,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
  *  Quots of the code     : 'sabar ya'
  */
 
-class Jabatan extends CI_Controller{
+class Provinsi extends CI_Controller{
 	public function __construct()
     {
         parent::__construct();
         login_check();
-        $this->load->model('Manajemen/M_jabatan', 'jabatan');
+        $this->load->model('Manajemen/M_provinsi', 'provinsi');
     }
 
     public function index()
@@ -23,8 +23,8 @@ class Jabatan extends CI_Controller{
 
         $data['title'] = 'Smart Qeesh App';
         $data['page'] = 'Manajemen';
-        $data['subpage'] = 'Jabatan';
-        $data['content'] = 'pages/manajemen/v_jabatan';
+        $data['subpage'] = 'provinsi';
+        $data['content'] = 'pages/manajemen/v_provinsi';
         $this->load->view('template', $data);
     }
 
@@ -36,7 +36,7 @@ class Jabatan extends CI_Controller{
                 'code' => 200,
                 'status' => true,
                 'msg' => 'Success',
-                'data' => $this->jabatan->get()->result()
+                'data' => $this->provinsi->get()->result()
             ];
         }
         echo json_encode($data);
@@ -48,32 +48,30 @@ class Jabatan extends CI_Controller{
         {
             $input = $this->input->post();
             
-            if($input['intIdJabatan'])
+            if($input['intIdProvinsi'])
             {
-                $id = $input['intIdJabatan'];
                 $datainput = [
-                    'txtNamaJabatan' => $this->input->post('txtNamaJabatan'),
-					'bitActive' => $this->input->post('bitActive')
+                    'intIdNegara' => $this->input->post('intIdNegara'),
+					'txtNamaProvinsi' => $this->input->post('txtNamaProvinsi')
                 ];
                 // proses update
-                $status =  $this->jabatan->update($id,$datainput);
+                $status =  $this->provinsi->update($input['intIdprovinsi'],$datainput);
                 $data = [
                     'code' => 200,
                     'status' => 'success',
-                    'msg' => 'Jabatan berhasil diupdate',
+                    'msg' => 'Provinsi berhasil diupdate',
                     'data' => NULL
                 ];
             }else{
-				$namaAgama = $this->input->post('txtNamaJabatan');
-                $datainput = [
-                    'txtNamaJabatan' => $namaAgama,
-					'bitActive' => $this->input->post('bitActive')
+				$datainput = [
+                    'intIdNegara' => $this->input->post('intIdNegara'),
+					'txtNamaProvinsi' => $this->input->post('txtNamaProvinsi')
                 ];
-                $status =  $this->jabatan->create($datainput);
+                $status =  $this->provinsi->create($datainput);
                 $data = [
                     'code' => 200,
-                    'status' => $status,
-                    'msg' => 'Jabatan berhasil ditambahkan',
+                    'status' => 'success',
+                    'msg' => 'provinsi berhasil ditambahkan',
                     'data' => NULL
                 ];
             }
@@ -89,22 +87,22 @@ class Jabatan extends CI_Controller{
             $id = $this->input->post('id');
             if($id)
             {
-				// cek apakah agama sudah dipake oleh table lain
-				$already = $this->jabatan->checkJabatan($id,'memployee','intIdJabatan')->num_rows();
+               // cek apakah agama sudah dipake oleh table lain
+				$already = $this->provinsi->checkProvinsi($id,'memployee','intIdProvinsi')->num_rows();
 				if($already > 0)
 				{
 					$data = [
 						'code' => 400,
 						'status' => false,
-						'msg' => 'Jabatan tidak boleh dihapus',
+						'msg' => 'Provinsi tidak boleh dihapus',
 						'data' => NULL
 					];
 				}else{
-					$this->jabatan->destroy($id);
+					$this->provinsi->destroy($id);
 					$data = [
 						'code' => 200,
 						'status' => true,
-						'msg' => 'Jabatan berhasil dihapus',
+						'msg' => 'Provinsi berhasil dihapus',
 						'data' => NULL
 					];
 				}
@@ -113,7 +111,7 @@ class Jabatan extends CI_Controller{
                 $data = [
                     'code' => 400,
                     'status' => false,
-                    'msg' => 'agama tidak ditemukan',
+                    'msg' => 'provinsi tidak ditemukan',
                     'data' => NULL
                 ];
             }
@@ -127,7 +125,7 @@ class Jabatan extends CI_Controller{
         if($this->input->is_ajax_request())
         {
             $keyword = $this->input->post('keyword');
-            $result  = $this->jabatan->search($keyword)->result();
+            $result  = $this->provinsi->search($keyword)->result();
             $data = [
                 'code' => 200,
                 'status' => true,
