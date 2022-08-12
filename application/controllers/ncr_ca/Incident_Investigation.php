@@ -154,8 +154,42 @@ class Incident_Investigation extends CI_Controller
             'int_id_investigation' => $data_param['id']
         ];
         $datareq = $this->investigation->get_data($where)->row_array();
+        $victim_table = [
+            0 => [
+                'label_1' => 'Tanggal',
+                'eng_label_1' => 'Date',
+                'data_1' => $datareq['dtm_date_incident'],
+                'label_2' => 'Nama Korban',
+                'eng_label_2' => 'Name of Victim',
+                'data_2' => $datareq['txt_vi_victim_name'],
+            ],
+            1 => [
+                'label_1' => 'Waktu',
+                'eng_label_1' => 'Time',
+                'data_1' => $datareq['dtm_time_incident'],
+                'label_2' => 'Departement',
+                'eng_label_2' => 'Departement',
+                'data_2' => $datareq['txt_vi_victim_department'],
+            ],
+            2 => [
+                'label_1' => 'Tempat',
+                'eng_label_1' => 'Place',
+                'data_1' => $datareq['txt_incident_area'],
+                'label_2' => 'Jabatan',
+                'eng_label_2' => 'Level',
+                'data_2' => $datareq['txt_vi_employee_level'],
+            ],
+            3 => [
+                'label_1' => 'Mesin/peralatan',
+                'eng_label_1' => 'Machine/Equipment',
+                'data_1' => '-',
+                'label_2' => 'Lama Bekerja/ Umur',
+                'eng_label_2' => 'Length of service/ Age',
+                'data_2' => $datareq['txt_vi_victim_service_period'] . ' Month / ' . $datareq['int_vi_victim_age'] . ' YO',
+            ],
+        ];
         // echo '<pre>';
-        // echo json_encode($datareq);
+        // echo json_encode($victim_table);
         // echo '</pre>';
         // die;
         // Creating the new document...
@@ -183,12 +217,12 @@ class Incident_Investigation extends CI_Controller
         $table = $header->addTable($styleTable);
         $table->addRow();
         $table->addCell(2000)->addImage($dir_image . 'apf-header.png', array('width' => 120, 'height' => 65, 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::BOTH));
-        $cell = $table->addCell(9000, ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::BOTH]);
+        $cell = $table->addCell(8000, ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::BOTH]);
         $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
         $textrun->addText('ANALISA AKAR PENYEBAB KECELAKAAN', $boldFontStyleName);
         $textrun->addTextBreak();
         $textrun->addText('ACCIDENT ROOT COUSE ANALYSIS', ['size' => 14]);
-        $cell = $table->addCell(2000);
+        $cell = $table->addCell(3000);
         $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
         $textrun->addText('Form No. :', ['size' => 14]);
 
@@ -209,64 +243,46 @@ class Incident_Investigation extends CI_Controller
         $textrun->addText('10/HSE/ACC/XI/2021', ['size' => 11]);
 
         // Table Victim
-        // row 1
         $section->addTextBreak();
         $tableS = $section->addTable($styleTable);
-        $tableS->addRow();
-        $cell = $tableS->addCell(3500);
-        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
-        $textrun->addText('Tanggal', ['size' => 11]);
-        $textrun->addTextBreak();
-        $textrun->addText('Date', ['italic' => true, 'size' => 11, 'color' => 'A6A6A6']);
-        $cell = $tableS->addCell(500);
-        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
-        $textrun->addText(':', ['size' => 11]);
-        $cell = $tableS->addCell(6000);
-        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
-        $textrun->addText('November 9th, 2021', ['bold' => true, 'size' => 11]);
-        $cell = $tableS->addCell(500);
-        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
-        $textrun->addText(' ', ['size' => 11]);
-        $cell = $tableS->addCell(3500);
-        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
-        $textrun->addText('Nama Korban', ['size' => 11]);
-        $textrun->addTextBreak();
-        $textrun->addText('Name of Victim', ['italic' => true, 'size' => 11, 'color' => 'A6A6A6']);
-        $cell = $tableS->addCell(500);
-        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
-        $textrun->addText(':', ['size' => 11]);
-        $cell = $tableS->addCell(6000);
-        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
-        $textrun->addText('Reza Maulana', ['bold' => true, 'size' => 11]);
+        foreach ($victim_table as $i => $val) {
+            $tableS->addRow();
+            $cell = $tableS->addCell(3500);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+            $textrun->addText($val['label_1'], ['size' => 11]);
+            $textrun->addTextBreak();
+            $textrun->addText($val['eng_label_1'], ['italic' => true, 'size' => 11, 'color' => 'A6A6A6']);
+            $cell = $tableS->addCell(500);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+            $textrun->addText(':', ['size' => 11]);
+            $cell = $tableS->addCell(6000);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+            $textrun->addText($val['data_1'], ['bold' => true, 'size' => 11]);
+            $cell = $tableS->addCell(500);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+            $textrun->addText(' ', ['size' => 11]);
+            $cell = $tableS->addCell(3500);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+            $textrun->addText($val['label_2'], ['size' => 11]);
+            $textrun->addTextBreak();
+            $textrun->addText($val['eng_label_2'], ['italic' => true, 'size' => 11, 'color' => 'A6A6A6']);
+            $cell = $tableS->addCell(500);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+            $textrun->addText(':', ['size' => 11]);
+            $cell = $tableS->addCell(6000);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+            $textrun->addText($val['data_2'], ['bold' => true, 'size' => 11]);
+        }
 
-        // row 1
-        $tableS = $section->addTable($styleTable);
+        // Judul
+        $section->addTextBreak();
+        $tableS = $section->addTable(['borderSize' => 3, 'borderColor' => '000', 'fillColor' => 'DBE5F1']);
         $tableS->addRow();
-        $cell = $tableS->addCell(3500);
+        $cell = $tableS->addCell(18000);
         $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
-        $textrun->addText('Waktu', ['size' => 11]);
+        $textrun->addText('URAIAN KEJADIAN', ['size' => 11]);
         $textrun->addTextBreak();
-        $textrun->addText('Time', ['italic' => true, 'size' => 11, 'color' => 'A6A6A6']);
-        $cell = $tableS->addCell(500);
-        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
-        $textrun->addText(':', ['size' => 11]);
-        $cell = $tableS->addCell(6000);
-        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
-        $textrun->addText('01.40 PM', ['bold' => true, 'size' => 11]);
-        $cell = $tableS->addCell(500);
-        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
-        $textrun->addText(' ', ['size' => 11]);
-        $cell = $tableS->addCell(3500);
-        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
-        $textrun->addText('Departement', ['size' => 11]);
-        $textrun->addTextBreak();
-        $textrun->addText('Departement', ['italic' => true, 'size' => 11, 'color' => 'A6A6A6']);
-        $cell = $tableS->addCell(500);
-        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
-        $textrun->addText(':', ['size' => 11]);
-        $cell = $tableS->addCell(6000);
-        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
-        $textrun->addText('Fiber Process', ['bold' => true, 'size' => 11]);
+        $textrun->addText('Description Of Incident', ['italic' => true, 'size' => 11, 'color' => 'A6A6A6']);
 
         // $section->addTextBreak();
         // $section->addText('Some text...');
