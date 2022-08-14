@@ -9,6 +9,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
  *  Date Created          : 20/04/2022
  *  Quots of the code     : 'rapihkan lah code mu, seperti halnya kau menata kehidupan'
  */
+
+use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\Shared\Html;
+use PhpOffice\PhpWord\Writer\Word2007;
+
+use PhpOffice\PhpWord\Element\Field;
+use PhpOffice\PhpWord\Element\Table;
+use PhpOffice\PhpWord\Element\TextRun;
+use PhpOffice\PhpWord\SimpleType\TblWidth;
+
+
 class Incident_Investigation extends CI_Controller
 {
     public function __construct()
@@ -136,11 +147,296 @@ class Incident_Investigation extends CI_Controller
         echo json_encode($response);
     }
 
+    public function DownloadsToWord()
+    {
+        $data_param = $this->input->get();
+        $where = [
+            'int_id_investigation' => $data_param['id']
+        ];
+        $datareq = $this->investigation->get_data($where)->row_array();
+        $data_departemen = $this->department->getDepartment($datareq['txt_vi_victim_department']);
+        $datareq['victim_department'] = $data_departemen['txtNamaDepartement'];
+        $victim_table = [
+            0 => [
+                'label_1' => 'Tanggal',
+                'eng_label_1' => 'Date',
+                'data_1' => $datareq['dtm_date_incident'],
+                'label_2' => 'Nama Korban',
+                'eng_label_2' => 'Name of Victim',
+                'data_2' => $datareq['txt_vi_victim_name'],
+            ],
+            1 => [
+                'label_1' => 'Waktu',
+                'eng_label_1' => 'Time',
+                'data_1' => $datareq['dtm_time_incident'],
+                'label_2' => 'Departement',
+                'eng_label_2' => 'Departement',
+                'data_2' => $datareq['victim_department'],
+            ],
+            2 => [
+                'label_1' => 'Tempat',
+                'eng_label_1' => 'Place',
+                'data_1' => $datareq['txt_incident_area'],
+                'label_2' => 'Jabatan',
+                'eng_label_2' => 'Level',
+                'data_2' => $datareq['txt_vi_employee_level'],
+            ],
+            3 => [
+                'label_1' => 'Mesin/peralatan',
+                'eng_label_1' => 'Machine/Equipment',
+                'data_1' => '-',
+                'label_2' => 'Lama Bekerja/ Umur',
+                'eng_label_2' => 'Length of service/ Age',
+                'data_2' => $datareq['txt_vi_victim_service_period'] . ' Month / ' . $datareq['int_vi_victim_age'] . ' YO',
+            ],
+        ];
+        // echo '<pre>';
+        // echo json_encode($datareq);
+        // echo '</pre>';
+        // die;
+        // Creating the new document...
+        $phpWord = new \PhpOffice\PhpWord\PhpWord();
+        $phpWord->setDefaultParagraphStyle(
+            array(
+                'alignment'  => \PhpOffice\PhpWord\SimpleType\Jc::BOTH,
+                'spaceAfter' => \PhpOffice\PhpWord\Shared\Converter::pointToTwip(1.5),
+                'spacing'    => 1.15,
+            )
+        );
+        $fontStyle = new \PhpOffice\PhpWord\Style\Font();
+        $dir_image = FCPATH . 'assets/images/';
+
+        // style
+        $sectionStyle = array(
+            'marginTop' => 600,
+            'marginBottom' => 350,
+            'marginRight' => 600,
+            'marginLeft' =>  600,
+        );
+        $section = $phpWord->addSection($sectionStyle);
+        // define bold style
+        $boldFontStyleName = 'BoldText';
+        $phpWord->addFontStyle($boldFontStyleName, array('bold' => true, 'size' => 14));
+
+
+
+        // Add page header
+        $header = $section->addHeader();
+        $styleTable = array('borderSize' => 3, 'borderColor' => '000');
+
+        $fancyTableStyle = array('borderSize' => 6, 'borderColor' => '999999');
+        $cellRowSpan = array('vMerge' => 'restart', 'valign' => 'center');
+        $cellRowContinue = array('vMerge' => 'continue');
+        $cellColSpan = array('gridSpan' => 3);
+        $cellHCentered = array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER);
+        $cellVCentered = array('valign' => 'center');
+
+        $table = $header->addTable($styleTable);
+        $table->addRow();
+        $table->addCell(2000, ['valign' => 'center'])->addImage($dir_image . 'apf-header.png', array('width' => 120, 'height' => 65, 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::BOTH));
+        $cell = $table->addCell(8000, ['valign' => 'center']);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('ANALISA AKAR PENYEBAB KECELAKAAN', $boldFontStyleName);
+        $textrun->addTextBreak();
+        $textrun->addText('ACCIDENT ROOT COUSE ANALYSIS', ['size' => 14]);
+        $cell = $table->addCell(3000, ['valign' => 'center']);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('Form No. :', ['size' => 14]);
+
+        // Add footer
+        $footer = $section->addFooter();
+        $footerText = 'THIS INFORMATION IS CONFIDENTIAL AND PROPRIETARY TO APF AND SHALL NOT BE REPRODUCED OR OTHERWISE DISCLOSED TO ANYONE OTHER THAN APF EMPLOYES WITHOUT WRITTEN PERMISSION FROM APF.';
+        $footer->addText($footerText, ['size' => 7, 'name' => 'Calibri'], ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::BOTH]);
+
+        // Label 1
+        $section->addTextBreak();
+        $tableS = $section->addTable($styleTable);
+        $tableS->addRow();
+        $cell = $tableS->addCell(3500);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText('Nomor', ['size' => 11], ['lineSpacing' => 50]);
+        $textrun->addTextBreak();
+        $textrun->addText('Number', ['italic' => true, 'size' => 11, 'color' => 'A6A6A6']);
+        $cell = $tableS->addCell(500);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText(':', ['size' => 11]);
+        $cell = $tableS->addCell(16000);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText('10/HSE/ACC/XI/2021', ['size' => 11]);
+
+        // Content Table Victim
+        $section->addTextBreak();
+        $tableS = $section->addTable($styleTable);
+        foreach ($victim_table as $i => $val) {
+            $tableS->addRow();
+            $cell = $tableS->addCell(3000);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+            $textrun->addText($val['label_1'], ['size' => 11]);
+            $textrun->addTextBreak();
+            $textrun->addText($val['eng_label_1'], ['italic' => true, 'size' => 11, 'color' => 'A6A6A6']);
+            $cell = $tableS->addCell(500);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+            $textrun->addText(':', ['size' => 11]);
+            $cell = $tableS->addCell(5500, ['valign' => 'center']);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+            $textrun->addText($val['data_1'], ['bold' => true, 'size' => 11]);
+            $cell = $tableS->addCell(500);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+            $textrun->addText(' ', ['size' => 11]);
+            $cell = $tableS->addCell(5000);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+            $textrun->addText($val['label_2'], ['size' => 11]);
+            $textrun->addTextBreak();
+            $textrun->addText($val['eng_label_2'], ['italic' => true, 'size' => 11, 'color' => 'A6A6A6']);
+            $cell = $tableS->addCell(500);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+            $textrun->addText(':', ['size' => 11]);
+            $cell = $tableS->addCell(5500, ['valign' => 'center']);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+            $textrun->addText($val['data_2'], ['bold' => true, 'size' => 11]);
+        }
+
+        // Judul
+        $section->addTextBreak();
+        $tableS = $section->addTable(['borderSize' => 3, 'borderColor' => '000']);
+        $tableS->addRow();
+        $cell = $tableS->addCell(18000, ['bgColor' => '#DBE5F1']);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText('URAIAN KEJADIAN', ['bold' => true, 'size' => 11]);
+        $textrun->addTextBreak();
+        $textrun->addText('Description Of Incident', ['italic' => true, 'size' => 11, 'color' => 'A6A6A6']);
+
+        // Content Table Desc
+        $section->addTextBreak();
+        $tableS = $section->addTable(['borderSize' => 3, 'borderColor' => '000']);
+        $tableS->addRow();
+        $cell = $tableS->addCell(11000, $cellColSpan);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText($datareq['txt_ii_incident_desc'], ['size' => 10]);
+        $cell = $tableS->addCell(7000);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText('Lingkari bagian tubuh yang terluka', ['bold' => true, 'size' => 11]);
+        $textrun->addTextBreak();
+        $textrun->addText('Circle the injured body part', ['italic' => true, 'size' => 10, 'color' => 'A6A6A6']);
+        $textrun->addTextBreak();
+        $textrun->addImage($dir_image . 'bodypartanatomy.jpg', array('width' => 100, 'height' => 200, 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::BOTH));
+
+        $tableS->addRow();
+        $spanTableStyleName = 'Colspan Rowspan';
+        $phpWord->addTableStyle($spanTableStyleName, $fancyTableStyle);
+        $cell = $tableS->addCell(5000, $cellVCentered);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText('Tingkat Kecelakaan', ['size' => 10], $cellHCentered);
+        $textrun->addTextBreak();
+        $textrun->addText('Accident Level', ['italic' => true, 'size' => 10, 'color' => 'A6A6A6']);
+        $tableS->addCell(500, $cellVCentered)->addText(':', null, $cellHCentered);
+        $tableS->addCell(3000, $cellVCentered)->addText($datareq['txt_ii_incident_level'], ['size' => 10, 'color' => 'FF0000'], $cellHCentered);
+        $cell = $tableS->addCell(7000, $cellRowSpan);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText('Jelaskan kondisi luka : ', ['bold' => true, 'size' => 11]);
+        $textrun->addTextBreak();
+        $textrun->addText('Describe the condition of the wound', ['italic' => true, 'size' => 10]);
+        $textrun->addTextBreak();
+        $textrun->addTextBreak();
+        $textrun->addText('A torn wound on the forefinger of his right hand, got 17 stitches', ['italic' => true, 'size' => 10]);
+
+        $tableS->addRow();
+        $cell = $tableS->addCell(5000, $cellVCentered);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText('Tingkat Keparahan', ['size' => 10], $cellHCentered);
+        $textrun->addTextBreak();
+        $textrun->addText('Severity Level', ['italic' => true, 'size' => 10, 'color' => 'A6A6A6']);
+        $tableS->addCell(500, $cellVCentered)->addText(':', null, $cellHCentered);
+        $tableS->addCell(3000, $cellVCentered)->addText($datareq['txt_ii_severity_level'], ['size' => 10, 'color' => 'FF0000'], $cellHCentered);
+        $tableS->addCell(null, $cellRowContinue);
+        $tableS->addRow();
+        $cell = $tableS->addCell(5000, $cellVCentered);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText('Kemungkinan Terulang', ['size' => 10], $cellHCentered);
+        $textrun->addTextBreak();
+        $textrun->addText('Recurrence Proability', ['italic' => true, 'size' => 10, 'color' => 'A6A6A6']);
+        $tableS->addCell(500, $cellVCentered)->addText(':', null, $cellHCentered);
+        $tableS->addCell(3000, $cellVCentered)->addText($datareq['txt_ii_reccurent_proability'], ['size' => 10, 'color' => 'FF0000'], $cellHCentered);
+        $tableS->addCell(null, $cellRowContinue);
+        // Judul
+        $section->addTextBreak();
+        $tableS = $section->addTable(['borderSize' => 3, 'borderColor' => '000']);
+        $tableS->addRow();
+        $cell = $tableS->addCell(18000);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText('Pengamatan / Tindakan Segera Diambil:', ['bold' => true, 'size' => 11]);
+        $textrun->addTextBreak();
+        $textrun->addText('Observation/Immediate Action Taken', ['italic' => true, 'size' => 11, 'color' => 'A6A6A6']);
+        $textrun->addTextBreak();
+        $textrun->addTextBreak();
+        $textrun->addText('Mr. ' . $datareq['txt_vi_victim_name'] . ' headed to the pratama clinic PT. Asia Pacific Fibers, the wound was cleaned and taken to the hospital', ['size' => 11]);
+
+
+
+        // Create a second page
+        $section->addPageBreak();
+
+        // Write some text
+        $section->addTextBreak();
+        $section->addText('Some text...');
+
+        // Create a third page
+        $section->addPageBreak();
+
+        // Write some text
+        $section->addTextBreak();
+        $section->addText('Some text...');
+
+        // Saving the document as OOXML file...
+        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+        $filename = 'E-RCA-' . $datareq['int_id_investigation'] . '_' . $datareq['txt_vi_victim_name'];
+
+        header('Content-Type: application/msword');
+        header('Content-Disposition: attachment;filename="' . $filename . '.docx"');
+        header('Cache-Control: max-age=0');
+
+        // $templateProcessor->saveAs('php://output');
+        $objWriter->save('php://output');
+    }
+
+    public function getDataById()
+    {
+        if ($this->input->is_ajax_request()) {
+            $data_post = $this->input->post();
+            $where = [
+                'int_id_investigation' => $data_post['id']
+            ];
+            $datareq = $this->investigation->get_data($where)->row_array();
+            $response = [
+                'code' => 200,
+                'status' => 'ok',
+                'data' => $datareq,
+                'message' => 'Success Request.',
+            ];
+        } else {
+            $response = [
+                'code' => 500,
+                'status' => 'error',
+                'data' => null,
+                'message' => 'Invalid Request Method.',
+            ];
+        }
+        echo json_encode($response);
+    }
+
     public function getDataRecord()
     {
         if ($this->input->is_ajax_request()) {
             $data_post = $this->input->post();
-            $datareq = $this->investigation->get_data()->result_array();
+            $where = null;
+            if (count($data_post) > 0) {
+                if (isset($data_post['type'])) {
+                    $where = [
+                        'txt_inv_type' => $data_post['type']
+                    ];
+                }
+            }
+            $datareq = $this->investigation->get_data($where)->result_array();
             foreach ($datareq as $i => $val) {
                 $department = $this->department->getData_v2(['intIdDepartement' => $val['txt_vi_victim_department']])->row_array();
                 $employee = $this->employee->getData(['intIdEmployee' => $val['int_vi_employee_id']])->row_array();

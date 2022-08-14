@@ -410,7 +410,7 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-primary float-right btnSaveIncident" style="margin-left: 20px;">Submit</button>
+                            <button type="submit" class="btn btn-primary btn-sm float-right btnSaveIncident" style="margin-left: 20px;">Submit</button>
                             <button type="reset" class="btn btn-warning float-right">Reset</button>
                         </div>
                     </form>
@@ -456,6 +456,7 @@
                                             <th scope="col">NO.</th>
                                             <th scope="col">NAME</th>
                                             <th scope="col">DEPARTEMENT</th>
+                                            <th scope="col">JABATAN</th>
                                             <th scope="col">AGE</th>
                                             <th scope="col">ADDRESS</th>
                                             <th scope="col">HEALTH STATUS</th>
@@ -469,7 +470,7 @@
                                 </table>
                             </div>
                         </div>
-                        <button class="btn btn-danger mr-2 col-2">DOWNLOAD TO PDF</button>
+                        <!-- <button class="btn btn-danger mr-2 col-2">DOWNLOAD TO PDF</button> -->
                     </div>
                 </div>
             </div>
@@ -490,9 +491,12 @@
         $.ajax({
             url: `<?= base_url() ?>ncr_ca/Incident_Investigation/getDataRecord`,
             type: `POST`,
+            data: {
+                type: 1
+            },
             dataType: 'json',
             success: function(response) {
-                // console.log(response)
+                console.log(response)
                 let html = ``;
                 let no = 1;
                 if (response.data.length > 0) {
@@ -501,20 +505,21 @@
                         html += `<td class="text-center">${no}</td>`;
                         html += `<td class="text-center">${val.txt_vi_victim_name}</td>`;
                         html += `<td class="text-center">${val.victim_department_name}</td>`;
+                        html += `<td class="text-center">${val.txt_vi_employee_level}</td>`;
                         html += `<td class="text-center">${val.int_vi_victim_age}</td>`;
                         html += `<td class="text-center">${val.victim_alamat_1}<br>${val.victim_alamat_2}</td>`;
                         html += `<td class="text-center">${val.txt_vi_victim_name}</td>`;
                         html += `<td class="text-center">${val.txt_vi_victim_name}</td>`;
                         html += `<td class="text-center">${val.txt_vi_victim_name}</td>`;
                         html += `<td class="text-center">
-                        <a class="btn btn-xs btn-secondary">
-                        <i class="fas fa-trash-alt"></i>
-                        </a>
-                        <a class="btn btn-xs btn-primary">
+                        <a class="btn btn-xs btn-warning btnEdit" data-id="${val.int_id_investigation}">
                         <i class="fas fa-pen"></i>
                         </a>
-                        <a class="btn btn-xs btn-success">
-                        <i class="fa fa-download"></i>
+                        <a class="btn btn-xs btn-danger btnDelete" data-id="${val.int_id_investigation}">
+                        <i class="fas fa-trash-alt"></i>
+                        </a>
+                        <a class="btn btn-xs btn-primary btnDownloadsDoc" data-id="${val.int_id_investigation}">
+                        Docs <i class="fa fa-download"></i>
                         </a>
                         </td>`;
                         html += `</tr>`;
@@ -534,6 +539,23 @@
                     html += `</tr>`;
                 }
                 $('#tbody_incident_record').html(html);
+                $('.btnDownloadsDoc').on('click', function() {
+                    let id = $(this).data('id');
+                    let url = `<?= base_url() ?>ncr_ca/Incident_Investigation/DownloadsToWord?id=` + id;
+                    // console.log(id)
+                    window.open(url).focus();
+                    // $.ajax({
+                    //     url: `<?= base_url() ?>ncr_ca/Incident_Investigation/DownloadsToWord`,
+                    //     type: "GET",
+                    //     data: {
+                    //         id: id
+                    //     },
+                    //     dataType: "json",
+                    //     success: function(response) {
+                    //         // console.log(response);
+                    //     }
+                    // });
+                });
                 $('#table_incident_record').DataTable({
                     lengthMenu: [
                         [5, 10, 20, -1],
