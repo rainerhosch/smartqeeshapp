@@ -66,15 +66,16 @@ function getsDataTableRisk(){
                     let html = ``;
                     if(response.length > 0){
                          $.each(response, function(i, val){
-                              html += `<tr>`;
-     
+                              html += `<tr>`;     
+                              html += `<td>${val.txtNamaActivity}</td>`;
+                              html += `<td>${val.txtNamaTahapan}</td>`;
+                              html += `<td>${val.txtNamaContext}</td>`;
                               html += `<td>${val.txtSourceRiskIden}</td>`;
                               html += `<td>${val.txtRiskAnalysis}</td>`;
                               html += `<td class="text-center">${val.txtRiskType}</td>`;
                               html += `<td class="text-center">${val.txtRiskCategory}</td>`;
                               html += `<td class="text-center">${val.txtRiskCondition}</td>`;
-                              html += `<td class="text-center">${val.txtLastRiskLevel}</td>`;
-     
+                              html += `<td class="text-center">${val.txtLastRiskLevel}</td>`;     
                               html += `</tr>`;
                          });
                     } else{

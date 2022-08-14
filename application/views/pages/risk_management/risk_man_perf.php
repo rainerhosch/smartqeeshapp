@@ -250,7 +250,7 @@
   <!-- /.content 2-->
 
   <div class="modal fade" id="modalTabelRisk">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-xl" style="width: 90%;">
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title" id="titleTabelRisk"></h4>
@@ -262,6 +262,9 @@
           <table class="table table-bordered table-hover" id="tabelRisk">
             <thead>
               <tr>
+                <th class="text-center">ACTIVITY</th>
+                <th class="text-center">TAHAPAN PROSES</th>
+                <th class="text-center">CONTEXT</th>
                 <th class="text-center">RISK RESOURCE IDENTIFICATION</th>
                 <th class="text-center">RISK ANALYSIS</th>
                 <th class="text-center">RISK TYPE</th>
