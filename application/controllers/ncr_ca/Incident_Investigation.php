@@ -648,7 +648,6 @@ class Incident_Investigation extends CI_Controller
         $textrun->addText('', ['bold' => true, 'size' => 11, 'color' => '000'], ['lineSpacing' => 20]);
 
         // line break tr
-        $section->addTextBreak();
         $tableS->addRow();
         $tableS->addCell(200, $cellVCentered);
         $cell = $tableS->addCell(17600, ['borderSize' => 3, 'gridSpan' => 4]);
@@ -698,37 +697,86 @@ class Incident_Investigation extends CI_Controller
             $textrun->addText('', ['name' => 'arial', 'size' => 9, 'color' => 'FF0000'], ['lineSpacing' => 50]);
             $tableS->addCell(200, $cellVCentered);
         }
-
-        $section->addTextBreak();
         $tableS->addRow();
         $cell = $tableS->addCell(18000, ['gridSpan' => 6]);
         $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
         $textrun->addText('', ['bold' => true, 'size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
+        // end table corrective
 
         // table Documentation
         $section->addTextBreak();
-        $cellColSpan2 = array('gridSpan' => 5);
+        $cellColSpan2 = array('gridSpan' => 3);
         $tableS = $section->addTable($styleTable);
         $tableS->addRow();
         $cell = $tableS->addCell(18000, $cellColSpan2);
         $textrun = $cell->addTextRun(['bgColor' => '#DBE5F1', 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
         $textrun->addText('', ['bold' => true, 'size' => 11, 'color' => '000'], ['lineSpacing' => 20]);
-
-        $section->addTextBreak();
         $tableS->addRow();
         $tableS->addCell(200, $cellVCentered);
-        $cell = $tableS->addCell(17600, ['borderSize' => 3, 'gridSpan' => 3]);
+        $cell = $tableS->addCell(17600, ['borderSize' => 3]);
         $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
         $textrun->addText('Dokumentasi', ['name' => 'calibri', 'bold' => true, 'size' => 10], ['lineSpacing' => 50]);
         $textrun->addTextBreak();
         $textrun->addText('Documentation', ['name' => 'calibri', 'italic' => true, 'size' => 10, 'color' => '000']);
         $tableS->addCell(200, $cellVCentered);
 
-
+        $tableS->addRow(5000);
+        $tableS->addCell(200, $cellVCentered);
+        $cell = $tableS->addCell(17600, ['borderSize' => 3]);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $tableS->addCell(200, $cellVCentered);
         // line break tr
-        $section->addTextBreak();
         $tableS->addRow();
-        $cell = $tableS->addCell(18000, ['gridSpan' => 5]);
+        $cell = $tableS->addCell(18000, ['gridSpan' => 3]);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('', ['bold' => true, 'size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
+        // end
+
+        // Table bootom
+        $section->addTextBreak();
+        $cellColSpan2 = array('gridSpan' => 6);
+        $tableS = $section->addTable($styleTable);
+        $tableS->addRow();
+        $cell = $tableS->addCell(18000, $cellColSpan2);
+        $textrun = $cell->addTextRun(['bgColor' => '#DBE5F1', 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('', ['bold' => true, 'size' => 11, 'color' => '000'], ['lineSpacing' => 20]);
+
+        $tableS->addRow();
+        $tableS->addCell(200, $cellVCentered);
+        $cell = $tableS->addCell(4400, $styleTableHeader);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText('Reporter', ['name' => 'calibri', 'bold' => true, 'size' => 10, 'color' => '000'], ['lineSpacing' => 50]);
+        $cell = $tableS->addCell(4400, $styleTableHeader);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText('Head Dept ', ['name' => 'calibri', 'bold' => true, 'size' => 10, 'color' => '000'], ['lineSpacing' => 50]);
+        $cell = $tableS->addCell(4400, $styleTableHeader);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText('Head of Function', ['name' => 'calibri', 'bold' => true, 'size' => 10, 'color' => '000'], ['lineSpacing' => 50]);
+        $cell = $tableS->addCell(4400, $styleTableHeader);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText('HSE Head Dept', ['name' => 'calibri', 'bold' => true, 'size' => 10, 'color' => '000'], ['lineSpacing' => 50]);
+        $tableS->addCell(200, $cellVCentered);
+        $section->addTextBreak();
+
+        $tableS->addRow(2000);
+        $tableS->addCell(200, $cellVCentered);
+        $cell = $tableS->addCell(4400, $styleTableHeader);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText('', ['name' => 'calibri', 'bold' => true, 'size' => 10, 'color' => '000'], ['lineSpacing' => 50]);
+        $cell = $tableS->addCell(4400, $styleTableHeader);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText('', ['name' => 'calibri', 'bold' => true, 'size' => 10, 'color' => '000'], ['lineSpacing' => 50]);
+        $cell = $tableS->addCell(4400, $styleTableHeader);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText('', ['name' => 'calibri', 'bold' => true, 'size' => 10, 'color' => '000'], ['lineSpacing' => 50]);
+        $cell = $tableS->addCell(4400, $styleTableHeader);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText('', ['name' => 'calibri', 'bold' => true, 'size' => 10, 'color' => '000'], ['lineSpacing' => 50]);
+        $tableS->addCell(200, $cellVCentered);
+        $section->addTextBreak();
+
+        $tableS->addRow();
+        $cell = $tableS->addCell(18000, ['gridSpan' => 6]);
         $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
         $textrun->addText('', ['bold' => true, 'size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
         // end
