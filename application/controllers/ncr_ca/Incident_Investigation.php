@@ -261,6 +261,48 @@ class Incident_Investigation extends CI_Controller
                 'material' => $material,
             ];
         }
+
+        // data dominos effect
+        $datareq['row_dominos_effect'] = 0;
+        $datareq['data_dominos_effect'] = [];
+        $datareq['basic_cause'] = explode(',', $datareq['txt_de_basic_cause']);
+        $jml_data_de[] = count($datareq['basic_cause']);
+        $datareq['indirect_cause'] = explode(',', $datareq['txt_de_indirect_cause']);
+        $jml_data_de[] = count($datareq['indirect_cause']);
+        $datareq['direct_cause'] = explode(',', $datareq['txt_de_direct_cause']);
+        $jml_data_de[] = count($datareq['direct_cause']);
+        $datareq['de_loses'] = explode(',', $datareq['txt_de_loses']);
+        $jml_data_de[] = count($datareq['de_loses']);
+        foreach ($jml_data_de as $i => $val) {
+            if ($datareq['row_dominos_effect'] < $val) {
+                $datareq['row_dominos_effect'] = $val;
+            }
+        }
+        for ($j = 0; $j < $datareq['row_dominos_effect']; $j++) {
+            $basic_cause = '';
+            $indirect_cause = '';
+            $direct_cause = '';
+            $de_loses = '';
+            if (isset($datareq['basic_cause'][$j])) {
+                $basic_cause = $datareq['basic_cause'][$j];
+            }
+            if (isset($datareq['indirect_cause'][$j])) {
+                $indirect_cause = $datareq['indirect_cause'][$j];
+            }
+            if (isset($datareq['direct_cause'][$j])) {
+                $direct_cause = $datareq['direct_cause'][$j];
+            }
+            if (isset($datareq['de_loses'][$j])) {
+                $de_loses = $datareq['de_loses'][$j];
+            }
+            $datareq['data_dominos_effect'][$j] = [
+                'basic_cause' => $basic_cause,
+                'indirect_cause' => $indirect_cause,
+                'direct_cause' => $direct_cause,
+                'de_loses' => $de_loses,
+            ];
+        }
+
         // echo '<pre>';
         // // var_dump($datareq);
         // echo json_encode($datareq);
@@ -451,11 +493,8 @@ class Incident_Investigation extends CI_Controller
 
         // Create a second page
         $section->addPageBreak();
-
         // Page 2
         $section->addTextBreak();
-        // $section->addText('Some text...');
-        // Label 1
         $tableS = $section->addTable($styleTable);
         $tableS->addRow();
         $cell = $tableS->addCell(18000);
@@ -466,52 +505,236 @@ class Incident_Investigation extends CI_Controller
 
         $cellColSpan2 = array('borderSize' => 3, 'gridSpan' => 6);
         $section->addTextBreak();
-        $tableS = $section->addTable($styleTableHeader);
+        $tableS = $section->addTable($styleTable);
         $tableS->addRow();
         $cell = $tableS->addCell(18000, $cellColSpan2);
         $textrun = $cell->addTextRun(['bgColor' => '#DBE5F1', 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
         $textrun->addText('FISH BOND METHODE', ['bold' => true, 'size' => 11], ['lineSpacing' => 50]);
+        // line break tr
         $section->addTextBreak();
         $tableS->addRow();
+        $cell = $tableS->addCell(18000, ['gridSpan' => 6]);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('', ['bold' => true, 'size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
+        // end
+        $tableS->addRow();
         $tableS->addCell(1000, $cellVCentered);
-        $cell = $tableS->addCell(4000, $cellVCentered);
+        $cell = $tableS->addCell(4000, $styleTableHeader);
         $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
         $textrun->addText('MANPOWER', ['bold' => true, 'size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
-        $cell = $tableS->addCell(4000, $cellVCentered);
+        $cell = $tableS->addCell(4000, $styleTableHeader);
         $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
         $textrun->addText('METHODE', ['bold' => true, 'size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
-        $cell = $tableS->addCell(4000, $cellVCentered);
+        $cell = $tableS->addCell(4000, $styleTableHeader);
         $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
         $textrun->addText('MATERIAL', ['bold' => true, 'size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
-        $cell = $tableS->addCell(4000, $cellVCentered);
+        $cell = $tableS->addCell(4000, $styleTableHeader);
         $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
         $textrun->addText('MACHINE', ['bold' => true, 'size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
         $tableS->addCell(1000, $cellVCentered);
-        $textrun->addTextBreak();
         for ($i = 0; $i < $datareq['row_fishbone']; $i++) {
             $tableS->addRow();
             $tableS->addCell(1000, $cellVCentered);
-            $cell = $tableS->addCell(4000, $cellVCentered);
+            $cell = $tableS->addCell(4000, $styleTableHeader);
             $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
             $textrun->addText($datareq['data_fishbone'][$i]['manpower'], ['size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
-            $cell = $tableS->addCell(4000, $cellVCentered);
+            $cell = $tableS->addCell(4000, $styleTableHeader);
             $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
             $textrun->addText($datareq['data_fishbone'][$i]['methode'], ['size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
-            $cell = $tableS->addCell(4000, $cellVCentered);
+            $cell = $tableS->addCell(4000, $styleTableHeader);
             $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
             $textrun->addText($datareq['data_fishbone'][$i]['material'], ['size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
-            $cell = $tableS->addCell(4000, $cellVCentered);
+            $cell = $tableS->addCell(4000, $styleTableHeader);
             $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
             $textrun->addText($datareq['data_fishbone'][$i]['machine'], ['size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
             $tableS->addCell(1000, $cellVCentered);
         }
+        // line break table tr
+        $tableS->addRow();
+        $cell = $tableS->addCell(18000, ['gridSpan' => 6]);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('', ['bold' => true, 'size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
+        // end
 
-        // Create a third page
-        $section->addPageBreak();
+        $cellColSpan2 = array('borderSize' => 3, 'gridSpan' => 8);
+        $tableS = $section->addTable($styleTable);
+        $tableS->addRow();
+        $cell = $tableS->addCell(18000, $cellColSpan2);
+        $textrun = $cell->addTextRun(['bgColor' => '#DBE5F1', 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText('Efek Domino dalam Kecelakaan :', ['bold' => true, 'size' => 11], ['lineSpacing' => 50]);
+        $textrun->addTextBreak();
+        $textrun->addText('Dominos Effect in Accident', ['italic' => true, 'size' => 11]);
 
-        // Write some text
+        // line break tr
         $section->addTextBreak();
-        $section->addText('Some text...');
+        $tableS->addRow();
+        $cell = $tableS->addCell(18000, ['gridSpan' => 8]);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('', ['bold' => true, 'size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
+        // end
+        $tableS->addRow();
+        $cell = $tableS->addCell(4500, ['borderSize' => 3, 'gridSpan' => 2]);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('Penyebab Dasar', ['name' => 'calibri', 'bold' => true, 'size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
+        $textrun->addTextBreak();
+        $textrun->addText('Basic Cause', ['name' => 'calibri', 'size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
+        $cell = $tableS->addCell(4500, ['borderSize' => 3, 'gridSpan' => 2]);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('Penyebab Tidak Langsung', ['name' => 'calibri', 'bold' => true, 'size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
+        $textrun->addTextBreak();
+        $textrun->addText('In Direct Cause', ['name' => 'calibri', 'size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
+        $cell = $tableS->addCell(4500, ['borderSize' => 3, 'gridSpan' => 2]);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('Penyebab Langsung', ['name' => 'calibri', 'bold' => true, 'size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
+        $textrun->addTextBreak();
+        $textrun->addText('Direct Cause', ['name' => 'calibri', 'size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
+        $cell = $tableS->addCell(4500, ['borderSize' => 3, 'gridSpan' => 2]);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('Kerugian/Kecelakaan', ['name' => 'calibri', 'bold' => true, 'size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
+        $textrun->addTextBreak();
+        $textrun->addText('Loses', ['name' => 'calibri', 'size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
+        for ($i = 0; $i < $datareq['row_dominos_effect']; $i++) {
+            $tableS->addRow();
+            $cell = $tableS->addCell(500, $styleTableHeader);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+            if ($datareq['data_dominos_effect'][$i]['basic_cause'] != '') {
+                $textrun->addText('', ['name' => 'Wingdings 2', 'size' => 10, 'color' => '000'], ['lineSpacing' => 50]);
+            }
+            $cell = $tableS->addCell(4000, $styleTableHeader);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+            $textrun->addText($datareq['data_dominos_effect'][$i]['basic_cause'], ['name' => 'calibri', 'size' => 10, 'color' => '000'], ['lineSpacing' => 50]);
+            $cell = $tableS->addCell(500, $styleTableHeader);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+            if ($datareq['data_dominos_effect'][$i]['indirect_cause'] != '') {
+                $textrun->addText('', ['name' => 'Wingdings 2', 'size' => 10, 'color' => '000'], ['lineSpacing' => 50]);
+            }
+            $cell = $tableS->addCell(4000, $styleTableHeader);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+            $textrun->addText($datareq['data_dominos_effect'][$i]['indirect_cause'], ['name' => 'calibri', 'size' => 10, 'color' => '000'], ['lineSpacing' => 50]);
+            $cell = $tableS->addCell(500, $styleTableHeader);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+            if ($datareq['data_dominos_effect'][$i]['direct_cause'] != '') {
+                $textrun->addText('', ['name' => 'Wingdings 2', 'size' => 10, 'color' => '000'], ['lineSpacing' => 50]);
+            }
+            $cell = $tableS->addCell(4000, $styleTableHeader);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+            $textrun->addText($datareq['data_dominos_effect'][$i]['direct_cause'], ['name' => 'calibri', 'size' => 10, 'color' => '000'], ['lineSpacing' => 50]);
+            $cell = $tableS->addCell(500, $styleTableHeader);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+            if ($datareq['data_dominos_effect'][$i]['de_loses'] != '') {
+                $textrun->addText('', ['name' => 'Wingdings 2', 'size' => 10, 'color' => '000'], ['lineSpacing' => 50]);
+            }
+            $cell = $tableS->addCell(4000, $styleTableHeader);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+            $textrun->addText($datareq['data_dominos_effect'][$i]['de_loses'], ['name' => 'calibri', 'size' => 10, 'color' => '000'], ['lineSpacing' => 50]);
+        }
+        // line break tr
+        $section->addTextBreak();
+        $tableS->addRow();
+        $cell = $tableS->addCell(18000, ['gridSpan' => 8]);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('', ['bold' => true, 'size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
+        // end
+
+
+        // Page 3
+        $section->addPageBreak();
+        $section->addTextBreak();
+        $cellColSpan2 = array('gridSpan' => 6);
+        $tableS = $section->addTable($styleTable);
+        $tableS->addRow();
+        $cell = $tableS->addCell(18000, $cellColSpan2);
+        $textrun = $cell->addTextRun(['bgColor' => '#DBE5F1', 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('', ['bold' => true, 'size' => 11, 'color' => '000'], ['lineSpacing' => 20]);
+
+        // line break tr
+        $section->addTextBreak();
+        $tableS->addRow();
+        $tableS->addCell(200, $cellVCentered);
+        $cell = $tableS->addCell(17600, ['borderSize' => 3, 'gridSpan' => 4]);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText('Tindakan Perbaikan dan Pencegahan', ['size' => 10], ['lineSpacing' => 50]);
+        $textrun->addTextBreak();
+        $textrun->addText('Corrective and Preventive Action', ['italic' => true, 'size' => 10, 'color' => '000']);
+        $tableS->addCell(200, $cellVCentered);
+        // end
+        $tableS->addRow();
+        $tableS->addCell(200, $cellVCentered);
+        $cell = $tableS->addCell(4400, $styleTableHeader);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('Tindakan', ['name' => 'calibri', 'bold' => true, 'size' => 9, 'color' => '000'], ['lineSpacing' => 50]);
+        $textrun->addTextBreak();
+        $textrun->addText('Action', ['name' => 'calibri', 'size' => 9, 'color' => '000'], ['lineSpacing' => 50]);
+        $cell = $tableS->addCell(4400, $styleTableHeader);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('Tanggung Jawab', ['name' => 'calibri', 'bold' => true, 'size' => 9, 'color' => '000'], ['lineSpacing' => 50]);
+        $textrun->addTextBreak();
+        $textrun->addText('Person in Charge', ['name' => 'calibri', 'size' => 9, 'color' => '000'], ['lineSpacing' => 50]);
+        $cell = $tableS->addCell(4400, $styleTableHeader);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('Batas Waktu Penyelesaian', ['name' => 'calibri', 'bold' => true, 'size' => 9, 'color' => '000'], ['lineSpacing' => 50]);
+        $textrun->addTextBreak();
+        $textrun->addText('Due Date Completion', ['name' => 'calibri', 'size' => 9, 'color' => '000'], ['lineSpacing' => 50]);
+        $cell = $tableS->addCell(4400, $styleTableHeader);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('Catatan', ['name' => 'calibri', 'bold' => true, 'size' => 9, 'color' => '000'], ['lineSpacing' => 50]);
+        $textrun->addTextBreak();
+        $textrun->addText('Notes', ['name' => 'calibri', 'size' => 9, 'color' => '000'], ['lineSpacing' => 50]);
+        $tableS->addCell(200, $cellVCentered);
+        for ($i = 0; $i < 4; $i++) {
+            $tableS->addRow();
+            $tableS->addCell(200, $cellVCentered);
+            $cell = $tableS->addCell(4400, $styleTableHeader);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+            $textrun->addText('', ['name' => 'arial', 'size' => 9, 'color' => 'FF0000'], ['lineSpacing' => 50]);
+            $cell = $tableS->addCell(4400, $styleTableHeader);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+            $textrun->addText('', ['name' => 'arial', 'size' => 9, 'color' => 'FF0000'], ['lineSpacing' => 50]);
+            $cell = $tableS->addCell(4400, $styleTableHeader);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+            $textrun->addText('', ['name' => 'arial', 'size' => 9, 'color' => 'FF0000'], ['lineSpacing' => 50]);
+            $cell = $tableS->addCell(4400, $styleTableHeader);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+            $textrun->addText('', ['name' => 'arial', 'size' => 9, 'color' => 'FF0000'], ['lineSpacing' => 50]);
+            $tableS->addCell(200, $cellVCentered);
+        }
+
+        $section->addTextBreak();
+        $tableS->addRow();
+        $cell = $tableS->addCell(18000, ['gridSpan' => 6]);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('', ['bold' => true, 'size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
+
+        // table Documentation
+        $section->addTextBreak();
+        $cellColSpan2 = array('gridSpan' => 5);
+        $tableS = $section->addTable($styleTable);
+        $tableS->addRow();
+        $cell = $tableS->addCell(18000, $cellColSpan2);
+        $textrun = $cell->addTextRun(['bgColor' => '#DBE5F1', 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('', ['bold' => true, 'size' => 11, 'color' => '000'], ['lineSpacing' => 20]);
+
+        $section->addTextBreak();
+        $tableS->addRow();
+        $tableS->addCell(200, $cellVCentered);
+        $cell = $tableS->addCell(17600, ['borderSize' => 3, 'gridSpan' => 3]);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText('Dokumentasi', ['name' => 'calibri', 'bold' => true, 'size' => 10], ['lineSpacing' => 50]);
+        $textrun->addTextBreak();
+        $textrun->addText('Documentation', ['name' => 'calibri', 'italic' => true, 'size' => 10, 'color' => '000']);
+        $tableS->addCell(200, $cellVCentered);
+
+
+        // line break tr
+        $section->addTextBreak();
+        $tableS->addRow();
+        $cell = $tableS->addCell(18000, ['gridSpan' => 5]);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('', ['bold' => true, 'size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
+        // end
+
+
+
 
         // Saving the document as OOXML file...
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');

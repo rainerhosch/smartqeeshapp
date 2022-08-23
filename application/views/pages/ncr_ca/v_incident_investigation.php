@@ -749,7 +749,7 @@
                                 </div>
                                 <div class="form-check" id="ckRadio${val.ds_id}">`;
                     $.each(val.ds_child, function(i, value) {
-                        html += `<input class="form-check-input" type="checkbox" value="${value.childid}" id="defaultCheck1" name="input${val.ds_label}[]">
+                        html += `<input class="form-check-input" type="checkbox" value="${value.child_name}" id="defaultCheck1" name="input${val.ds_label}[]">
                                     <label class="form-check-label" for="ckRadio${val.ds_id}">
                                         <strong>${value.child_name}</strong>
                                     </label></br>`;
