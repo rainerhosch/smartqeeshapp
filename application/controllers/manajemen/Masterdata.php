@@ -67,4 +67,26 @@ class Masterdata extends CI_Controller
         }
         echo json_encode($response);
     }
+
+    public function get_fire_facility()
+    {
+        if ($this->input->is_ajax_request()) {
+            $data_post = $this->input->post();
+            $where = null;
+            $search = null;
+            if (isset($data_post['search'])) {
+                $search = $data_post['search'];
+            }
+            $res = $this->masterdata->getData('*', 'mFireFacility', null, null, null, null)->result_array();
+            $response = [
+                'code' => 200,
+                'status' => 'ok',
+                'data' => $res,
+                'message' => 'Success Request.',
+            ];
+            echo json_encode($response);
+        } else {
+            show_404();
+        }
+    }
 }
