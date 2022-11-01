@@ -420,7 +420,7 @@
                 <!--PERSONAL MCU RECORD-->
                 <div class="tab-pane fade show active" id="tabel-data-activity" role="tabpanel" aria-labelledby="custom-content-above-profile-tab">
                     <div class="card-body" style="background-color: #77a0e6;">
-                        <div class="form-grup row mb-2 col-12">
+                        <!-- <div class="form-grup row mb-2 col-12">
                             <label for="input" class="col-form-label col-2" style="text-align:right">MCU PERIOD :</label>
                             <div class="col-sm-4">
                                 <input type="text" class="form-control form-control-sm" id="input" name="input" placeholder="TEXT">
@@ -447,21 +447,20 @@
                             <div class="col-sm-4">
                                 <input type="text" class="form-control form-control-sm" id="input" name="input" placeholder="TEXT">
                             </div>
-                        </div>
+                        </div> -->
+                        <h2>Tabel Data</h2>
                         <div class="card" style="background-color: white;">
                             <div class="table-responsive p-3">
                                 <table class="table table-striped table-bordered-sm" id="table_incident_record">
                                     <thead class="align-middle">
                                         <tr class="table-primary align-middle" style="text-align: center;">
                                             <th scope="col">NO.</th>
+                                            <th scope="col">INCIDEN TIME</th>
+                                            <th scope="col">INCIDENT AREA</th>
                                             <th scope="col">NAME</th>
                                             <th scope="col">DEPARTEMENT</th>
                                             <th scope="col">JABATAN</th>
                                             <th scope="col">AGE</th>
-                                            <th scope="col">ADDRESS</th>
-                                            <th scope="col">HEALTH STATUS</th>
-                                            <th scope="col">IDENTIFIED DISEASE</th>
-                                            <th scope="col">DOCTOR NOTE</th>
                                             <th scope="col">TOOLS</th>
                                         </tr>
                                     </thead>
@@ -496,32 +495,26 @@
             },
             dataType: 'json',
             success: function(response) {
-                console.log(response)
+                // console.log(response)
                 let html = ``;
                 let no = 1;
                 if (response.data.length > 0) {
                     $.each(response.data, function(key, val) {
                         html += `<tr>`;
                         html += `<td class="text-center">${no}</td>`;
+                        html += `<td class="text-center">${val.dtm_date_incident}<br>${val.dtm_time_incident}</td>`;
+                        html += `<td class="text-center">${val.txt_incident_area}</td>`;
                         html += `<td class="text-center">${val.txt_vi_victim_name}</td>`;
                         html += `<td class="text-center">${val.victim_department_name}</td>`;
                         html += `<td class="text-center">${val.txt_vi_employee_level}</td>`;
                         html += `<td class="text-center">${val.int_vi_victim_age}</td>`;
-                        html += `<td class="text-center">${val.victim_alamat_1}<br>${val.victim_alamat_2}</td>`;
-                        html += `<td class="text-center">${val.txt_vi_victim_name}</td>`;
-                        html += `<td class="text-center">${val.txt_vi_victim_name}</td>`;
-                        html += `<td class="text-center">${val.txt_vi_victim_name}</td>`;
-                        html += `<td class="text-center">
-                        <a class="btn btn-xs btn-warning btnEdit" data-id="${val.int_id_investigation}">
-                        <i class="fas fa-pen"></i>
-                        </a>
-                        <a class="btn btn-xs btn-danger btnDelete" data-id="${val.int_id_investigation}">
-                        <i class="fas fa-trash-alt"></i>
-                        </a>
-                        <a class="btn btn-xs btn-primary btnDownloadsDoc" data-id="${val.int_id_investigation}">
-                        Docs <i class="fa fa-download"></i>
-                        </a>
-                        </td>`;
+                        // html += `<td class="text-center">${val.txt_vi_victim_name}</td>`;
+                        // html += `<td class="text-center">${val.txt_vi_victim_name}</td>`;
+                        html += `<td class="text-center">`;
+                        // html += `<a class="btn btn-xs btn-warning btnEdit" data-id="${val.int_id_investigation}"><i class="fas fa-pen"></i></a>`;
+                        html += `<a class="btn btn-xs btn-danger btnDelete" data-id="${val.int_id_investigation}"><i class="fas fa-trash-alt"></i></a>`;
+                        html += `<a class="btn btn-xs btn-primary btnDownloadsDoc ml-1" data-id="${val.int_id_investigation}">Docs <i class="fa fa-download"></i></a>`;
+                        html += `</td>`;
                         html += `</tr>`;
                         no++;
 
@@ -542,8 +535,45 @@
                 $('.btnDownloadsDoc').on('click', function() {
                     let id = $(this).data('id');
                     let url = `<?= base_url() ?>ncr_ca/Incident_Investigation/DownloadsToWord?id=` + id;
-                    // console.log(id)
                     window.open(url).focus();
+                });
+                $('.btnDelete').on('click', function() {
+                    let id = $(this).data('id');
+                    console.log('Delete-' + id)
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Delete Data?',
+                        showCancelButton: true,
+                        confirmButtonText: 'Yes',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                type: "POST",
+                                url: "<?= base_url() ?>ncr_ca/Incident_Investigation/delete_data",
+                                data: {
+                                    id: id,
+                                },
+                                dataType: "json",
+                                success: function(response) {
+                                    if (response.status === true) {
+                                        Swal.fire({
+                                            icon: response.icon,
+                                            title: response.message,
+                                            showConfirmButton: false,
+                                            timer: 5000
+                                        });
+                                        setTimeout(function() {
+                                            location.reload();
+                                        }, 1000);
+                                    }
+                                }
+                            });
+                        }
+                    });
+                });
+                $('.btnEdit').on('click', function() {
+                    let id = $(this).data('id');
+                    console.log('Edit-' + id)
                     // $.ajax({
                     //     url: `<?= base_url() ?>ncr_ca/Incident_Investigation/DownloadsToWord`,
                     //     type: "GET",
@@ -719,7 +749,7 @@
                                 </div>
                                 <div class="form-check" id="ckRadio${val.ds_id}">`;
                     $.each(val.ds_child, function(i, value) {
-                        html += `<input class="form-check-input" type="checkbox" value="${value.childid}" id="defaultCheck1" name="input${val.ds_label}[]">
+                        html += `<input class="form-check-input" type="checkbox" value="${value.child_name}" id="defaultCheck1" name="input${val.ds_label}[]">
                                     <label class="form-check-label" for="ckRadio${val.ds_id}">
                                         <strong>${value.child_name}</strong>
                                     </label></br>`;
