@@ -113,8 +113,13 @@
     <!-- Main content -->
 
     <section class="content">
+        <div class="row" id="alert_msg">
+            <div class="col-12">
+                <?= $this->session->flashdata('message'); ?>
+            </div>
+        </div>
+
         <div class="card">
-            <!--TAB-->
             <ul class="nav nav-tabs bg-secondary" id="custom-content-above-tab" role="tablist"
                 style="margin-bottom: -1px;">
                 <li class="nav-item">
@@ -128,18 +133,14 @@
                         aria-controls="custom-content-above-home" aria-selected="true">INCIDENT RECORD</a>
                 </li>
             </ul>
-            <!--/.TAB-->
-            <!--TAB CONTENT-->
             <div class="tab-content" id="custom-content-above-tabContent">
-
                 <!--INPUT DATA PERSONAL MCU-->
-                <div class="tab-pane fade show active" id="activity-list" role="tabpanel"
+                <div class="tab-pane fade" id="activity-list" role="tabpanel"
                     aria-labelledby="custom-content-above-home-tab">
                     <!-- form -->
                     <form class="form-horizontal" method="post" id="formEnvAbnormality"
                         action="<?= base_url() ?>ncr_ca/Environment_abnormality/save_data"
                         enctype="multipart/form-data">
-                        <!--card body-->
                         <div class="card-body" style="background-color: #7fc9bf;">
                             <div class="row">
                                 <label for="input-ercaNo" class="col-sm-2 col-form-label" style="text-align:right">E-RCA
@@ -148,7 +149,6 @@
                                     <input type="text" class="form-control form-control-sm" id="input-ercaNo"
                                         name="input-ercaNo" placeholder="" value="<?= $erca_no; ?>" readonly>
                                 </div>
-
                                 <label for="input-incidentLocation" class="col-sm-2 col-form-label"
                                     style="text-align:right">LOCATION :</i> </label>
                                 <div class="col-sm-2">
@@ -187,16 +187,15 @@
                                         name="input-reportBy" placeholder="TEXT">
                                 </div>
                             </div>
-
                             <!-- Incident Information -->
                             <div class="separator">Failure Description</div>
                             <div class="row">
                                 <label for="input-failDesc" class="col-sm-2 col-form-label"
                                     style="text-align:right">FAILURE DESC :</label>
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                    <textarea class="form-control" id="input-failDesc" rows="7"></textarea>
+                                    <textarea class="form-control" id="input-failDesc" name="input-failDesc"
+                                        rows="7"></textarea>
                                 </div>
-                                <!-- <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="background-color:red;">Span 2</div> -->
                                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0px">
                                     <div class="short-div"><label for="input-materialPolluter" class="col-form-label"
                                             style="text-align:right">MATERIAL POLLUTER :</label></div>
@@ -212,14 +211,6 @@
                                         <input type="text" class="form-control form-control-sm"
                                             id="input-materialPolluter" name="input-materialPolluter"
                                             placeholder="TEXT">
-                                        <!-- <select class="form-control form-control-sm" id="input" name="input" placeholder="TEXT">
-                                            <option>-- SELECT --</option>
-                                            <option>option 1</option>
-                                            <option>option 2</option>
-                                            <option>option 3</option>
-                                            <option>option 4</option>
-                                            <option>option 5</option>
-                                        </select> -->
                                     </div>
                                     <div class="short-div">
                                         <select class="form-control form-control-sm" id="input-impactTo"
@@ -244,12 +235,16 @@
 
                             <div class="form-group row">
                                 <label for="input-actionTaken" class="col-sm-2 col-form-label"
-                                    style="text-align:right">ACTION TAKEN :</label>
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><textarea class="form-control"
-                                        id="input-actionTaken" name="input-actionTaken" rows="2"></textarea></div>
+                                    style="text-align:right">IMMEDIATE ACTION TAKEN :</label>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><textarea class="form-control"
+                                        id="input-actionTaken" name="input-actionTaken" rows="2"></textarea>
+                                </div>
+                                <label for="input-cnrAction" class="col-sm-2 col-form-label"
+                                    style="text-align:right">CNP ACTION :</label>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><textarea class="form-control"
+                                        id="input-cnpAction" name="input-cnpAction" rows="2"></textarea>
+                                </div>
                             </div>
-
-
                             <div class="separator">ROUTE COUSE ANALYSIS</div>
                             <!-- Fish bone diagram -->
                             <div class="container">
@@ -415,7 +410,7 @@
                                 <label for="input-pncAction" class="col-sm-2 col-form-label"
                                     style="text-align:right">ACTION :</label>
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><textarea class="form-control"
-                                        id="input-pncAction" rows="2"></textarea></div>
+                                        id="input-pncAction" name="input-pncAction" rows="2"></textarea></div>
                                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0px">
                                     <div class="short-div"><label for="input-person_responsibility"
                                             class="col-form-label" style="text-align:right">PERSON RESPONSIBILITY
@@ -463,168 +458,44 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- end form -->
                             <div class="separator"></div>
-                            <!-- <br> -->
                         </div>
-                        <!-- <div class="card-footer">
-                            <button type="button" class="btn btn-primary float-right btnSaveToPdf"
-                                style="margin-left: 20px;">SAVE and DOWNLOAD PDF</button>
-                            <button type="button" class="btn btn-success float-right btnSaveOnly"
-                                style="margin-left: 20px;">SAVE ONLY</button>
-                            <button type="button" class="btn btn-warning float-right btnResetForm">RESET</button>
-                        </div> -->
                         <div class="card-footer">
                             <button type="submit" class="btn btn-primary float-right btnSaveOnly"
                                 style="margin-left: 20px;">SAVE</button>
                             <button type="button" class="btn btn-warning float-right btnResetForm">RESET</button>
                         </div>
                     </form>
-                    <!--/.form-->
                 </div>
                 <!--/.INPUT DATA PERSONAL MCU-->
 
                 <!--PERSONAL MCU RECORD-->
-                <div class="tab-pane fade " id="tabel-data-activity" role="tabpanel"
+                <div class="tab-pane fade show active" id="tabel-data-activity" role="tabpanel"
                     aria-labelledby="custom-content-above-profile-tab">
-                    <div class="card-body" style="background-color: #7fc9bf;">
-                        <div class="form-grup row mb-2 col-12">
-                            <label for="input" class="col-form-label col-2" style="text-align:right">FILTER AS YEAR
-                                :</label>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control form-control-sm" id="input" name="input"
-                                    placeholder="TEXT">
-                            </div>
-                            <label for="input" class="col-form-label col-2" style="text-align:right">MONTH :</label>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control form-control-sm" id="input" name="input"
-                                    placeholder="TEXT">
-                            </div>
-                        </div>
-                        <div class="form-grup row mb-2 col-12">
-                            <label for="input" class="col-form-label col-2" style="text-align:right">FILTER AS
-                                DEPARTEMENT :</label>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control form-control-sm" id="input" name="input"
-                                    placeholder="TEXT">
-                            </div>
-                        </div>
-                        <div class="form-grup row mb-4 col-12">
-                            <label for="input" class="col-form-label col-2" style="text-align:right">FILTER AS NAME
-                                :</label>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control form-control-sm" id="input" name="input"
-                                    placeholder="TEXT">
-                            </div>
-                        </div>
-
+                    <div class="card-body" style="background-color: #77a0e6;">
+                        <h2>Tabel Data</h2>
                         <div class="card" style="background-color: white;">
-                            <div class="table-responsive">
-                                <table class="table table-striped table-bordered-sm mb-0">
+                            <div class="table-responsive p-3">
+                                <table class="table table-striped table-bordered-sm" id="table_incident_record">
                                     <thead class="align-middle">
-                                        <tr class="table-secondary align-middle" style="text-align: center;">
+                                        <tr class="table-primary align-middle" style="text-align: center;">
                                             <th scope="col">NO.</th>
-                                            <th scope="col">DATE</th>
-                                            <th scope="col">DEPARTEMENT</th>
+                                            <th scope="col">CAUSE DATE</th>
+                                            <th scope="col">PLAN</th>
+                                            <th scope="col">DEPT</th>
                                             <th scope="col">LOCATION</th>
                                             <th scope="col">MATERIAL POLLUTER</th>
-                                            <th scope="col">IMPACT TO</th>
-                                            <th scope="col">TOOLS</th>
+                                            <th scope="col">IMPACT</th>
+                                            <th scope="col">EST QTY</th>
+                                            <th scope="col">REPORT BY</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td class="text-center">
-                                                <a class="btn btn-xs btn-secondary">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </a>
-                                                <a class="btn btn-xs btn-primary">
-                                                    <i class="fas fa-pen"></i>
-                                                </a>
-                                                <a class="btn btn-xs btn-success">
-                                                    <i class="fa fa-download"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">2</th>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td class="text-center">
-                                                <a class="btn btn-xs btn-secondary">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </a>
-                                                <a class="btn btn-xs btn-primary">
-                                                    <i class="fas fa-pen"></i>
-                                                </a>
-                                                <a class="btn btn-xs btn-success">
-                                                    <i class="fa fa-download"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">3</th>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td class="text-center">
-                                                <a class="btn btn-xs btn-secondary">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </a>
-                                                <a class="btn btn-xs btn-primary">
-                                                    <i class="fas fa-pen"></i>
-                                                </a>
-                                                <a class="btn btn-xs btn-success">
-                                                    <i class="fa fa-download"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">4</th>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td class="text-center">
-                                                <a class="btn btn-xs btn-secondary">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </a>
-                                                <a class="btn btn-xs btn-primary">
-                                                    <i class="fas fa-pen"></i>
-                                                </a>
-                                                <a class="btn btn-xs btn-success">
-                                                    <i class="fa fa-download"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
+                                    <tbody id="tbody_incident_record">
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="card-footer clearfix">
-                                <ul class="pagination pagination-sm m-0 float-right">
-                                    <li class="page-item"><a class="page-link" href="#">«</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">»</a></li>
-                                </ul>
-                            </div>
                         </div>
-
-                        <button class="btn btn-danger mr-2 col-2">DOWNLOAD TO PDF</button>
-
+                        <!-- <button class="btn btn-danger mr-2 col-2">DOWNLOAD TO PDF</button> -->
                     </div>
                 </div>
                 <!--/.PERSONAL MCU RECORD-->
@@ -643,112 +514,115 @@
     $(document).ready(function () {
         setTimeout(function () {
             $("#alert_msg").html("");
-            <?php $this -> session -> unset_userdata('message '); ?>
+            <?php $this->session->unset_userdata('message '); ?>
         }, 2000);
-        // $.ajax({
-        //     url: `<?= base_url() ?>ncr_ca/Fire_Investigation/getDataRecord`,
-        //     type: `POST`,
-        //     dataType: 'json',
-        //     success: function(response) {
-        //         console.log(response)
-        //         let html = ``;
-        //         let no = 1;
-        //         if (response.data.length > 0) {
-        //             $.each(response.data, function(key, val) {
-        //                 html += `<tr>`;
-        //                 html += `<td class="text-center">${no}</td>`;
-        //                 html += `<td class="text-center">${val.dtm_date_incident}<br>${val.dtm_time_incident}</td>`;
-        //                 html += `<td class="text-center">${val.txt_incident_area}</td>`;
-        //                 html += `<td class="text-center">${val.txt_incident_machine}</td>`;
-        //                 html += `<td class="text-center">${val.txt_ii_fire_level}</td>`;
-        //                 html += `<td class="text-center">${val.txt_ii_incident_desc}</td>`;
-        //                 html += `<td class="text-center">`;
-        //                 // html += `<a class="btn btn-xs btn-warning btnEdit" data-id="${val.int_id_Fireinvestigation}"><i class="fas fa-pen"></i></a>`;
-        //                 html += `<a class="btn btn-xs btn-danger btnDelete" data-id="${val.int_id_Fireinvestigation}"><i class="fas fa-trash-alt"></i></a>`;
-        //                 html += `<a class="btn btn-xs btn-primary btnDownloadsDoc ml-1" data-id="${val.int_id_Fireinvestigation}">Docs <i class="fa fa-download"></i></a>`;
-        //                 html += `</td>`;
-        //                 html += `</tr>`;
-        //                 no++;
+        $.ajax({
+            url: `<?= base_url() ?>ncr_ca/Environment_abnormality/getDataRecord`,
+            type: `POST`,
+            dataType: 'json',
+            success: function (response) {
+                console.log(response)
+                let html = ``;
+                let no = 1;
+                if (response.data.length > 0) {
+                    $.each(response.data, function (key, val) {
+                        html += `<tr>`;
+                        html += `<td class="text-center">${no}</td>`;
+                        html += `<td class="text-center">${val.dtm_date_incident}<br>${val.dtm_time_incident}</td>`;
+                        html += `<td class="text-center">${val.plant_name}</td>`;
+                        html += `<td class="text-center">${val.department_name}</td>`;
+                        html += `<td class="text-center">${val.txt_incident_location}</td>`;
+                        html += `<td class="text-center">${val.txt_fd_material_polluter}</td>`;
+                        html += `<td class="text-center">${val.txt_fd_env_inpact_to}</td>`;
+                        html += `<td class="text-center">${val.txt_fd_estimate_quantity}</td>`;
+                        html += `<td class="text-center">`;
+                        // html += `<a class="btn btn-xs btn-warning btnEdit" data-id="${val.int_id_Fireinvestigation}"><i class="fas fa-pen"></i></a>`;
+                        html += `<a class="btn btn-xs btn-danger btnDelete" data-id="${val.int_id_Fireinvestigation}"><i class="fas fa-trash-alt"></i></a>`;
+                        html += `<a class="btn btn-xs btn-primary btnDownloadsDoc ml-1" data-id="${val.int_id_Fireinvestigation}">Docs <i class="fa fa-download"></i></a>`;
+                        html += `</td>`;
+                        html += `</tr>`;
+                        no++;
 
-        //             });
+                    });
 
-        //         } else {
-        //             html += `<tr>`;
-        //             html += `<td colspan="12" class="text-center"><br>`;
-        //             html += `<div class='col-md-12'>`;
-        //             html += `<div class='alert alert-warning alert-dismissible'>`;
-        //             html += `<h4><i class='icon fa fa-warning'></i>Tidak ada data!</h4>`;
-        //             html += `</div>`;
-        //             html += `</div>`;
-        //             html += `</td>`;
-        //             html += `</tr>`;
-        //         }
-        //         $('#tbody_fire_investigation').html(html);
-        //         $('.btnDownloadsDoc').on('click', function() {
-        //             let id = $(this).data('id');
-        //             let url = `<?= base_url() ?>ncr_ca/Fire_Investigation/DownloadsToWord?id=` + id;
-        //             window.open(url).focus();
-        //         });
-        //         $('.btnDelete').on('click', function() {
-        //             let id = $(this).data('id');
-        //             console.log('Delete-' + id)
-        //             Swal.fire({
-        //                 icon: 'warning',
-        //                 title: 'Delete Data?',
-        //                 showCancelButton: true,
-        //                 confirmButtonText: 'Yes',
-        //             }).then((result) => {
-        //                 if (result.isConfirmed) {
-        //                     $.ajax({
-        //                         type: "POST",
-        //                         url: "<?= base_url() ?>ncr_ca/Fire_Investigation/delete_data",
-        //                         data: {
-        //                             id: id,
-        //                         },
-        //                         dataType: "json",
-        //                         success: function(response) {
-        //                             if (response.status === true) {
-        //                                 Swal.fire({
-        //                                     icon: response.icon,
-        //                                     title: response.message,
-        //                                     showConfirmButton: false,
-        //                                     timer: 5000
-        //                                 });
-        //                                 setTimeout(function() {
-        //                                     location.reload();
-        //                                 }, 1000);
-        //                             }
-        //                         }
-        //                     });
-        //                 }
-        //             });
-        //         });
-        //         $('.btnEdit').on('click', function() {
-        //             let id = $(this).data('id');
-        //             console.log('Edit-' + id)
-        //             // $.ajax({
-        //             //     url: `<?= base_url() ?>ncr_ca/Incident_Investigation/DownloadsToWord`,
-        //             //     type: "GET",
-        //             //     data: {
-        //             //         id: id
-        //             //     },
-        //             //     dataType: "json",
-        //             //     success: function(response) {
-        //             //         // console.log(response);
-        //             //     }
-        //             // });
-        //         });
-        //         $('#table_fire_investigation').DataTable({
-        //             lengthMenu: [
-        //                 [5, 10, 20, -1],
-        //                 [5, 10, 20, 'All'],
-        //             ],
-        //         });
-        //         $('select[name="table_fire_investigation_length"').addClass('form-control form-control-sm');
-        //         $('select[name="table_fire_investigation_length"').removeClass('form-select form-select-sm');
-        //         // $('#table_incident_record_length label').remove();
-        //     }
-        // });
+                } else {
+                    html += `<tr>`;
+                    html += `<td colspan="12" class="text-center"><br>`;
+                    html += `<div class='col-md-12'>`;
+                    html += `<div class='alert alert-warning alert-dismissible'>`;
+                    html += `<h4><i class='icon fa fa-warning'></i>Tidak ada data!</h4>`;
+                    html += `</div>`;
+                    html += `</div>`;
+                    html += `</td>`;
+                    html += `</tr>`;
+                }
+                $('#tbody_incident_record').html(html);
+                $('.btnDownloadsDoc').on('click', function () {
+                    alert('Not Active');
+                    // let id = $(this).data('id');
+                    // let url = `<?= base_url() ?>ncr_ca/Fire_Investigation/DownloadsToWord?id=` + id;
+                    // window.open(url).focus();
+                });
+                $('.btnDelete').on('click', function () {
+                    let id = $(this).data('id');
+                    console.log('Delete-' + id)
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Delete Data?',
+                        showCancelButton: true,
+                        confirmButtonText: 'Yes',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                type: "POST",
+                                url: "<?= base_url() ?>ncr_ca/Fire_Investigation/delete_data",
+                                data: {
+                                    id: id,
+                                },
+                                dataType: "json",
+                                success: function (response) {
+                                    if (response.status === true) {
+                                        Swal.fire({
+                                            icon: response.icon,
+                                            title: response.message,
+                                            showConfirmButton: false,
+                                            timer: 5000
+                                        });
+                                        setTimeout(function () {
+                                            location.reload();
+                                        }, 1000);
+                                    }
+                                }
+                            });
+                        }
+                    });
+                });
+                $('.btnEdit').on('click', function () {
+                    let id = $(this).data('id');
+                    console.log('Edit-' + id)
+                    // $.ajax({
+                    //     url: `<?= base_url() ?>ncr_ca/Incident_Investigation/DownloadsToWord`,
+                    //     type: "GET",
+                    //     data: {
+                    //         id: id
+                    //     },
+                    //     dataType: "json",
+                    //     success: function(response) {
+                    //         // console.log(response);
+                    //     }
+                    // });
+                });
+                $('#table_fire_investigation').DataTable({
+                    lengthMenu: [
+                        [5, 10, 20, -1],
+                        [5, 10, 20, 'All'],
+                    ],
+                });
+                $('select[name="table_fire_investigation_length"').addClass('form-control form-control-sm');
+                $('select[name="table_fire_investigation_length"').removeClass('form-select form-select-sm');
+                // $('#table_incident_record_length label').remove();
+            }
+        });
 
         $.ajax({
             url: `<?= base_url() ?>manajemen/Plant/getData_v2`,
