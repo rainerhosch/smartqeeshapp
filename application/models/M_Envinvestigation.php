@@ -11,6 +11,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
  */
 class M_Envinvestigation extends CI_Model
 {
+    public function getMaxId()
+    {
+        $this->db->select_max('int_id_Envinvestigation', 'max_id');
+        return $this->db->get('trEnvinvestigation');
+    }
     public function get_data($where = null)
     {
         $this->db->select('*');

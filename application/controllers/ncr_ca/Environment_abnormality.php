@@ -46,6 +46,60 @@ class Environment_Abnormality extends CI_Controller
     public function save_data()
     {
         $post = $this->input->post();
+        $file_uploads = $_FILES['accident_photo'];
+        echo '<pre>';
+        var_dump($file_uploads);
+        echo '</pre>';
+        die;
+        $jml = $this->envinvestigation->getMaxId()->row_array();
+
+        // config folder
+        $dir = FCPATH . 'assets/images/accident/envabnormal/' . $jml['max_id'] + 1;
+        // JIKA DIREKTORI TIDAK ADA
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+
+        foreach ($file_uploads['name'] as $i => $val) {
+            $no_rand[$i] = rand(1, 1000000);
+        }
+
+        $config['upload_path'] = $dir . '/';
+        $config['allowed_types'] = 'jpg|jpeg|png|gif';
+        $config['max_size'] = '50000';
+        $config['overwrite'] = 1;
+
+        $this->load->library('upload', $config);
+
+        foreach ($file_uploads['name'] as $i => $file) {
+            // $date = date('Y-m-d H:i:s');
+            // $timestamp = strtotime($date);
+            // $file_ext = pathinfo($file, PATHINFO_EXTENSION);
+
+            if (!empty($file_uploads['name'][$i])) {
+                $_FILES['file']['name'] = $file_uploads['name'][$i];
+                $_FILES['file']['type'] = $file_uploads['type'][$i];
+                $_FILES['file']['tmp_name'] = $file_uploads['tmp_name'][$i];
+                $_FILES['file']['error'] = $file_uploads['error'][$i];
+                $_FILES['file']['size'] = $file_uploads['size'][$i];
+
+                $fileName = 'Pic_' . $no_rand[$i];
+                $config['file_name'] = $fileName;
+                $this->upload->initialize($config);
+
+                if ($this->upload->do_upload('file')) {
+                    $uploadData = $this->upload->data();
+                    $filename[] = $uploadData['file_name'];
+                } else {
+                    print_r($this->upload->display_errors());
+                }
+            }
+        }
+        // $incident_img = implode(',', $filename);
+        // echo '<pre>';
+        // var_dump($incident_img);
+        // echo '</pre>';
+        // die;
 
         $created_by = $this->session->userdata('user_id');
         $created_date = date('Y-m-d');
@@ -86,7 +140,8 @@ class Environment_Abnormality extends CI_Controller
         $time_target = $post['input-time_target'];
         // $corrective_action = $post['inputCorrectiveAction'];
         // =================== Incident Photo =============================
-        $incident_img = 'default.jpg';
+        $incident_img = implode(',', $filename);
+        // $incident_img = 'default.jpg';
         // $incident_img = $post['inputIncidentImg'];
         // ================== Investigation Team ==========================
         $lead_investigation = $post['input-leadInvestigation'];
