@@ -312,9 +312,9 @@ class Incident_Investigation extends CI_Controller
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
         $phpWord->setDefaultParagraphStyle(
             array(
-                'alignment'  => \PhpOffice\PhpWord\SimpleType\Jc::BOTH,
+                'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::BOTH,
                 'spaceAfter' => \PhpOffice\PhpWord\Shared\Converter::pointToTwip(1.5),
-                'spacing'    => 1.15,
+                'spacing' => 1.15,
             )
         );
         $fontStyle = new \PhpOffice\PhpWord\Style\Font();
@@ -325,7 +325,7 @@ class Incident_Investigation extends CI_Controller
             'marginTop' => 600,
             'marginBottom' => 350,
             'marginRight' => 600,
-            'marginLeft' =>  600,
+            'marginLeft' => 600,
         );
         $section = $phpWord->addSection($sectionStyle);
         // define bold style
@@ -430,7 +430,13 @@ class Incident_Investigation extends CI_Controller
         $tableS->addRow();
         $cell = $tableS->addCell(11000, $cellColSpan);
         $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
-        $textrun->addText($datareq['txt_ii_incident_desc'], ['size' => 10]);
+        // $textrun->addText($datareq['txt_ii_incident_desc'], ['size' => 10]);
+        $ii_incident_desc = explode('/', $datareq['txt_ii_incident_desc']);
+        foreach ($ii_incident_desc as $i => $val) {
+            $textrun->addText('• ' . $val, ['size' => 10]);
+            $textrun->addTextBreak(1);
+        }
+
         $cell = $tableS->addCell(7000);
         $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
         $textrun->addText('Lingkari bagian tubuh yang terluka', ['bold' => true, 'size' => 11]);
@@ -988,190 +994,190 @@ class Incident_Investigation extends CI_Controller
         }
     }
 
-    // public function generateBodyPart()
-    // {
-    //     $dataBodyPart = [
-    //         'Forehead',
-    //         'Eye',
-    //         'Nose',
-    //         'Mouth',
-    //         'Lip',
-    //         'Chin',
-    //         'Head',
-    //         'Ear',
-    //         'Neck',
-    //         'Shoulder',
-    //         'Chest',
-    //         'Nipple',
-    //         'Arm',
-    //         'Armpit',
-    //         'Elbow',
-    //         'Navel',
-    //         'Wrist',
-    //         'Buttocks',
-    //         'Forearm',
-    //         'Hand',
-    //         'Thumb',
-    //         'Finger',
-    //         'Hip',
-    //         'Groin',
-    //         'Leg',
-    //         'Thigh',
-    //         'Knee',
-    //         'Calf',
-    //         'Foot',
-    //         'Ankle',
-    //         'Instep',
-    //         'Heal',
-    //         'Toenail'
-    //     ];
-    //     foreach ($dataBodyPart as $i => $val) {
-    //         $this->db->insert('mBodyPart', ['txtNameBodyPart' => $val]);
-    //     }
-    // }
+// public function generateBodyPart()
+// {
+//     $dataBodyPart = [
+//         'Forehead',
+//         'Eye',
+//         'Nose',
+//         'Mouth',
+//         'Lip',
+//         'Chin',
+//         'Head',
+//         'Ear',
+//         'Neck',
+//         'Shoulder',
+//         'Chest',
+//         'Nipple',
+//         'Arm',
+//         'Armpit',
+//         'Elbow',
+//         'Navel',
+//         'Wrist',
+//         'Buttocks',
+//         'Forearm',
+//         'Hand',
+//         'Thumb',
+//         'Finger',
+//         'Hip',
+//         'Groin',
+//         'Leg',
+//         'Thigh',
+//         'Knee',
+//         'Calf',
+//         'Foot',
+//         'Ankle',
+//         'Instep',
+//         'Heal',
+//         'Toenail'
+//     ];
+//     foreach ($dataBodyPart as $i => $val) {
+//         $this->db->insert('mBodyPart', ['txtNameBodyPart' => $val]);
+//     }
+// }
 
 
 
-    // public function createTable()
-    // {
-    //     // $this->load->db();
-    //     $this->load->dbforge();
-    //     // switch over to Library DB
-    //     $this->db->query('use Library');
+// public function createTable()
+// {
+//     // $this->load->db();
+//     $this->load->dbforge();
+//     // switch over to Library DB
+//     $this->db->query('use Library');
 
-    //     $data_insert = [
-    //         'int_id_investigation' => [
-    //             'type' => 'INT',
-    //             'constraint' => 50,
-    //             'auto_increment' => TRUE
-    //         ],
-    //         'txt_inv_type' => [
-    //             'type' => 'TEXT',
-    //         ],
-    //         'dtm_date_incident date default current_timestamp',
-    //         'dtm_time_incident time default current_timestamp',
-    //         'txt_incident_area' => [
-    //             'type' => 'TEXT',
-    //         ],
-    //         'txt_incident_plant' => [
-    //             'type' => 'TEXT',
-    //         ],
-    //         // ===================== victim information ======================
-    //         'txt_vi_employee_number' => [
-    //             'type' => 'TEXT',
-    //         ],
-    //         'txt_vi_victim_name' => [
-    //             'type' => 'TEXT',
-    //         ],
-    //         // 'vi_victim_position' => $victim_position,
-    //         'txt_vi_victim_department' => [
-    //             'type' => 'TEXT',
-    //         ],
-    //         'int_vi_victim_age' => [
-    //             'type' => 'INT',
-    //             'constraint' => 11,
-    //         ],
-    //         'txt_vi_employee_level' => [
-    //             'type' => 'TEXT',
-    //         ],
-    //         'txt_vi_victim_service_period' => [
-    //             'type' => 'TEXT',
-    //         ],
-    //         // =================== incident information ======================
-    //         'txt_ii_incident_desc' => [
-    //             'type' => 'TEXT',
-    //         ],
-    //         'txt_ii_injuried_body_part' => [
-    //             'type' => 'TEXT',
-    //         ],
-    //         'txt_ii_condition_of_wound' => [
-    //             'type' => 'TEXT'
-    //         ],
-    //         'txt_ii_incident_level' => [
-    //             'type' => 'TEXT'
-    //         ],
-    //         'txt_ii_severity_level' => [
-    //             'type' => 'TEXT'
-    //         ],
-    //         'txt_ii_reccurent_proability' => [
-    //             'type' => 'TEXT'
-    //         ],
-    //         'txt_ii_action_taken' => [
-    //             'type' => 'TEXT',
-    //         ],
-    //         'dtm_ii_date_back_to_work date',
-    //         // ============ route couse analysis ==============================
-    //         'txt_rca_manpower' => [
-    //             'type' => 'TEXT',
-    //         ],
-    //         'txt_rca_methode' => [
-    //             'type' => 'TEXT',
-    //         ],
-    //         'txt_rca_machine' => [
-    //             'type' => 'TEXT',
-    //         ],
-    //         'txt_rca_material' => [
-    //             'type' => 'TEXT',
-    //         ],
-    //         // =============== Dominos Effect Accident ========================
-    //         'txt_de_basic_cause' => [
-    //             'type' => 'TEXT',
-    //         ],
-    //         'txt_de_indirect_cause' => [
-    //             'type' => 'TEXT',
-    //         ],
-    //         'txt_de_direct_cause' => [
-    //             'type' => 'TEXT',
-    //         ],
-    //         'txt_de_loses' => [
-    //             'type' => 'TEXT',
-    //         ],
-    //         // ============== Preventive And Corrective Action ================
-    //         'txt_pca_preventive_action' => [
-    //             'type' => 'TEXT',
-    //         ],
-    //         'txt_pca_person_responsibility' => [
-    //             'type' => 'TEXT',
-    //         ],
-    //         'txt_pca_time_target' => [
-    //             'type' => 'TEXT',
-    //         ],
-    //         // =================== Incident Photo =============================
-    //         'txt_incident_image' => [
-    //             'type' => 'TEXT'
-    //         ],
-    //         // ================== Investigation Team ==========================
-    //         'txt_investigation_lead' => [
-    //             'type' => 'TEXT'
-    //         ],
-    //         'txt_investigation_member' => [
-    //             'type' => 'TEXT'
-    //         ],
-    //         // =================== Created By ================================
-    //         'int_create_by' => [
-    //             'type' => 'INT',
-    //             'constraint' => 11,
-    //             'unique' => TRUE
-    //         ],
-    //         'dtm_create_date date default current_timestamp',
-    //         'dtm_create_time time default current_timestamp',
-    //         // =================== Updated By ================================
-    //         'int_update_by' => [
-    //             'type' => 'INT',
-    //             'constraint' => 11,
-    //             'unique' => TRUE
-    //         ],
-    //         'dtm_update_date date default current_timestamp',
-    //         'dtm_update_time time default current_timestamp'
+//     $data_insert = [
+//         'int_id_investigation' => [
+//             'type' => 'INT',
+//             'constraint' => 50,
+//             'auto_increment' => TRUE
+//         ],
+//         'txt_inv_type' => [
+//             'type' => 'TEXT',
+//         ],
+//         'dtm_date_incident date default current_timestamp',
+//         'dtm_time_incident time default current_timestamp',
+//         'txt_incident_area' => [
+//             'type' => 'TEXT',
+//         ],
+//         'txt_incident_plant' => [
+//             'type' => 'TEXT',
+//         ],
+//         // ===================== victim information ======================
+//         'txt_vi_employee_number' => [
+//             'type' => 'TEXT',
+//         ],
+//         'txt_vi_victim_name' => [
+//             'type' => 'TEXT',
+//         ],
+//         // 'vi_victim_position' => $victim_position,
+//         'txt_vi_victim_department' => [
+//             'type' => 'TEXT',
+//         ],
+//         'int_vi_victim_age' => [
+//             'type' => 'INT',
+//             'constraint' => 11,
+//         ],
+//         'txt_vi_employee_level' => [
+//             'type' => 'TEXT',
+//         ],
+//         'txt_vi_victim_service_period' => [
+//             'type' => 'TEXT',
+//         ],
+//         // =================== incident information ======================
+//         'txt_ii_incident_desc' => [
+//             'type' => 'TEXT',
+//         ],
+//         'txt_ii_injuried_body_part' => [
+//             'type' => 'TEXT',
+//         ],
+//         'txt_ii_condition_of_wound' => [
+//             'type' => 'TEXT'
+//         ],
+//         'txt_ii_incident_level' => [
+//             'type' => 'TEXT'
+//         ],
+//         'txt_ii_severity_level' => [
+//             'type' => 'TEXT'
+//         ],
+//         'txt_ii_reccurent_proability' => [
+//             'type' => 'TEXT'
+//         ],
+//         'txt_ii_action_taken' => [
+//             'type' => 'TEXT',
+//         ],
+//         'dtm_ii_date_back_to_work date',
+//         // ============ route couse analysis ==============================
+//         'txt_rca_manpower' => [
+//             'type' => 'TEXT',
+//         ],
+//         'txt_rca_methode' => [
+//             'type' => 'TEXT',
+//         ],
+//         'txt_rca_machine' => [
+//             'type' => 'TEXT',
+//         ],
+//         'txt_rca_material' => [
+//             'type' => 'TEXT',
+//         ],
+//         // =============== Dominos Effect Accident ========================
+//         'txt_de_basic_cause' => [
+//             'type' => 'TEXT',
+//         ],
+//         'txt_de_indirect_cause' => [
+//             'type' => 'TEXT',
+//         ],
+//         'txt_de_direct_cause' => [
+//             'type' => 'TEXT',
+//         ],
+//         'txt_de_loses' => [
+//             'type' => 'TEXT',
+//         ],
+//         // ============== Preventive And Corrective Action ================
+//         'txt_pca_preventive_action' => [
+//             'type' => 'TEXT',
+//         ],
+//         'txt_pca_person_responsibility' => [
+//             'type' => 'TEXT',
+//         ],
+//         'txt_pca_time_target' => [
+//             'type' => 'TEXT',
+//         ],
+//         // =================== Incident Photo =============================
+//         'txt_incident_image' => [
+//             'type' => 'TEXT'
+//         ],
+//         // ================== Investigation Team ==========================
+//         'txt_investigation_lead' => [
+//             'type' => 'TEXT'
+//         ],
+//         'txt_investigation_member' => [
+//             'type' => 'TEXT'
+//         ],
+//         // =================== Created By ================================
+//         'int_create_by' => [
+//             'type' => 'INT',
+//             'constraint' => 11,
+//             'unique' => TRUE
+//         ],
+//         'dtm_create_date date default current_timestamp',
+//         'dtm_create_time time default current_timestamp',
+//         // =================== Updated By ================================
+//         'int_update_by' => [
+//             'type' => 'INT',
+//             'constraint' => 11,
+//             'unique' => TRUE
+//         ],
+//         'dtm_update_date date default current_timestamp',
+//         'dtm_update_time time default current_timestamp'
 
-    //     ];
+//     ];
 
-    //     $this->dbforge->add_field($data_insert);
+//     $this->dbforge->add_field($data_insert);
 
-    //     // define primary key
-    //     $this->dbforge->add_key('int_id_investigation', TRUE);
+//     // define primary key
+//     $this->dbforge->add_key('int_id_investigation', TRUE);
 
-    //     // create table
-    //     $this->dbforge->create_table('trInvestigation');
-    // }
+//     // create table
+//     $this->dbforge->create_table('trInvestigation');
+// }
 }

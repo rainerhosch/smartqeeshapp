@@ -196,7 +196,9 @@
                                 <label for="inputIncidentDesc" class="col-sm-2 col-form-label"
                                     style="text-align:right">INCIDENT DESC :</label>
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><textarea class="form-control"
-                                        id="inputIncidentDesc" name="inputIncidentDesc" rows="7"></textarea></div>
+                                        id="inputIncidentDesc" name="inputIncidentDesc"
+                                        placeholder="Use (/) to separate, more than one input." rows="7"></textarea>
+                                </div>
                                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0px">
                                     <div class="short-div"><label for="inputFireLevel" class="col-form-label"
                                             style="text-align:right">FIRE LEVEL :</label></div>
@@ -248,7 +250,8 @@
                                 <label for="input" class="col-sm-2 col-form-label" style="text-align:right">ACTION TAKEN
                                     :</label>
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><textarea class="form-control"
-                                        id="inputActionTaken" name="inputActionTaken" rows="2"></textarea></div>
+                                        id="inputActionTaken" name="inputActionTaken" rows="2"
+                                        placeholder="Use (/) to separate, more than one input."></textarea></div>
                             </div>
 
                             <div class="separator">ROUTE COUSE ANALYSIS</div>
@@ -414,7 +417,8 @@
                                 <label for="inputPreventiveAction" class="col-sm-2 col-form-label"
                                     style="text-align:right">ACTION :</label>
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><textarea class="form-control"
-                                        id="inputPreventiveAction" name="inputPreventiveAction" rows="2"></textarea>
+                                        id="inputPreventiveAction" name="inputPreventiveAction" rows="2"
+                                        placeholder="Use (/) to separate, more than one input."></textarea>
                                 </div>
                                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0px">
                                     <div class="short-div"><label for="input_person_responsibility"
@@ -539,7 +543,7 @@
     $(document).ready(function () {
         setTimeout(function () {
             $("#alert_msg").html("");
-            <?php $this -> session -> unset_userdata('message '); ?>
+            <?php $this->session->unset_userdata('message '); ?>
         }, 2000);
         $.ajax({
             url: `<?= base_url() ?>ncr_ca/Fire_Investigation/getDataRecord`,

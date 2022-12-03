@@ -411,8 +411,10 @@
                             <div class="form-group row">
                                 <label for="input-pncAction" class="col-sm-2 col-form-label"
                                     style="text-align:right">ACTION :</label>
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><textarea class="form-control"
-                                        id="input-pncAction" name="input-pncAction" rows="2"></textarea></div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <textarea class="form-control" id="input-pncAction" name="input-pncAction" rows="2"
+                                        placeholder="Use (/) to separate, more than one input."></textarea>
+                                </div>
                                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0px">
                                     <div class="short-div"><label for="input-person_responsibility"
                                             class="col-form-label" style="text-align:right">PERSON RESPONSIBILITY
@@ -527,7 +529,7 @@
     $(document).ready(function () {
         setTimeout(function () {
             $("#alert_msg").html("");
-            <?php $this -> session -> unset_userdata('message '); ?>
+            <?php $this->session->unset_userdata('message '); ?>
         }, 2000);
         $.ajax({
             url: `<?= base_url() ?>ncr_ca/Environment_abnormality/getDataRecord`,
