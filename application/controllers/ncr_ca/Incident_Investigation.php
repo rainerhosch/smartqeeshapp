@@ -730,7 +730,13 @@ class Incident_Investigation extends CI_Controller
         $tableS->addCell(200, $cellVCentered);
         $cell = $tableS->addCell(17600, ['borderSize' => 3]);
         $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $path_accident_photos = $dir_image . 'accident/employee/' . $datareq['int_vi_employee_id'];
+        $incident_img = explode(',', $datareq['txt_incident_image']);
+        foreach ($incident_img as $i => $val) {
+            $textrun->addImage($path_accident_photos . '/' . $val, array('width' => 100, 'height' => 200, 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::BOTH));
+        }
         $tableS->addCell(200, $cellVCentered);
+
         // line break tr
         $tableS->addRow();
         $cell = $tableS->addCell(18000, ['gridSpan' => 3]);
