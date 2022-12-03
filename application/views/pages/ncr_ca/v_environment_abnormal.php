@@ -123,14 +123,14 @@
             <ul class="nav nav-tabs bg-secondary" id="custom-content-above-tab" role="tablist"
                 style="margin-bottom: -1px;">
                 <li class="nav-item">
-                    <a class="nav-link bg-secondary active-tab btn active" id="custom-content-above-home-tab"
-                        data-toggle="pill" href="#activity-list" role="tab" aria-controls="custom-content-above-home"
+                    <a class="nav-link bg-secondary" id="custom-content-above-home-tab" data-toggle="pill"
+                        href="#activity-list" role="tab" aria-controls="custom-content-above-home"
                         aria-selected="true">INVESTIGATION FORM</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link bg-secondary active-tab btn" id="custom-content-above-home-tab"
-                        data-toggle="pill" href="#tabel-data-activity" role="tab"
-                        aria-controls="custom-content-above-home" aria-selected="true">INCIDENT RECORD</a>
+                    <a class="nav-link bg-secondary active" id="custom-content-above-home-tab" data-toggle="pill"
+                        href="#tabel-data-activity" role="tab" aria-controls="custom-content-above-home"
+                        aria-selected="true">INCIDENT RECORD</a>
                 </li>
             </ul>
             <div class="tab-content" id="custom-content-above-tabContent">
@@ -193,8 +193,8 @@
                                 <label for="input-failDesc" class="col-sm-2 col-form-label"
                                     style="text-align:right">FAILURE DESC :</label>
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                    <textarea class="form-control" id="input-failDesc" name="input-failDesc"
-                                        rows="7"></textarea>
+                                    <textarea class="form-control" id="input-failDesc" name="input-failDesc" rows="7"
+                                        placeholder="Use (/) to separate, more than one input."></textarea>
                                 </div>
                                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0px">
                                     <div class="short-div"><label for="input-materialPolluter" class="col-form-label"
@@ -237,12 +237,14 @@
                                 <label for="input-actionTaken" class="col-sm-2 col-form-label"
                                     style="text-align:right">IMMEDIATE ACTION TAKEN :</label>
                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><textarea class="form-control"
-                                        id="input-actionTaken" name="input-actionTaken" rows="2"></textarea>
+                                        id="input-actionTaken" name="input-actionTaken" rows="2"
+                                        placeholder="Use (/) to separate, more than one input."></textarea>
                                 </div>
                                 <label for="input-cnrAction" class="col-sm-2 col-form-label"
                                     style="text-align:right">CNP ACTION :</label>
                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><textarea class="form-control"
-                                        id="input-cnpAction" name="input-cnpAction" rows="2"></textarea>
+                                        id="input-cnpAction" name="input-cnpAction" rows="2"
+                                        placeholder="Use (/) to separate, more than one input."></textarea>
                                 </div>
                             </div>
                             <div class="separator">ROUTE COUSE ANALYSIS</div>
@@ -439,7 +441,7 @@
                             </div>
 
                             <div class="separator">INVESTIGATION TEAM</div>
-                            <div class="form-group row">
+                            <!-- <div class="form-group row">
                                 <label for="input-leadInvestigation" class="col-sm-2 col-form-label"
                                     style="text-align:right">LEAD INVESTIGATOR :</label>
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><input type="text"
@@ -452,13 +454,29 @@
                                         style="text-align:right">MEMBER INVESTIGATOR :</label>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><input type="text"
                                             class="form-control form-control-sm" id="input-memberInvestigation"
-                                            name="input-memberInvestigation" placeholder="TEXT"></div>
+                                            name="input-memberInvestigation[]" placeholder="TEXT"></div>
                                     <div class="col-lg-1">
                                         <a class="btn btn-sm btn-primary btnAddInvMember"><small>Add</small></a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="separator"></div>
+                            <div class="separator"></div> -->
+
+                            <div class="div_mem_investig">
+                                <div class="form-group row">
+                                    <label for="input-leadInvestigation" class="col-sm-2 col-form-label"
+                                        style="text-align:right">LEAD INVESTIGATOR :</label>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><input type="text"
+                                            class="form-control form-control-sm" id="input-leadInvestigation"
+                                            name="input-leadInvestigation" placeholder="TEXT"></div>
+                                    <div class="col-lg-2">
+                                        <a class="btn btn-sm btn-primary btnadd_mem_investig"
+                                            data-target="mem_investig">Add Member</a>
+                                        <a class="btn btn-sm btn-danger btnremove_mem_investig"
+                                            data-target="mem_investig"><i class="fa fa-minus"></i></a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="card-footer">
                             <button type="submit" class="btn btn-primary float-right btnSaveOnly"
@@ -476,7 +494,7 @@
                         <h2>Tabel Data</h2>
                         <div class="card" style="background-color: white;">
                             <div class="table-responsive p-3">
-                                <table class="table table-striped table-bordered-sm" id="table_incident_record">
+                                <table class="table table-striped table-bordered-sm" id="table_envabnormal">
                                     <thead class="align-middle">
                                         <tr class="table-primary align-middle" style="text-align: center;">
                                             <th scope="col">NO.</th>
@@ -495,17 +513,12 @@
                                 </table>
                             </div>
                         </div>
-                        <!-- <button class="btn btn-danger mr-2 col-2">DOWNLOAD TO PDF</button> -->
                     </div>
                 </div>
-                <!--/.PERSONAL MCU RECORD-->
             </div>
-            <!--/.TAB CONTENT-->
         </div>
     </section>
-    <!-- /.content -->
 </div>
-<!-- /.content-wrapper -->
 
 <script src="<?= base_url('assets/templates') ?>/js/bootstrap-multiselect.js"></script>
 <script src="<?= base_url('assets/templates') ?>/js/fishbone/custom_form.js"></script>
@@ -514,7 +527,7 @@
     $(document).ready(function () {
         setTimeout(function () {
             $("#alert_msg").html("");
-            <?php $this->session->unset_userdata('message '); ?>
+            <?php $this -> session -> unset_userdata('message '); ?>
         }, 2000);
         $.ajax({
             url: `<?= base_url() ?>ncr_ca/Environment_abnormality/getDataRecord`,
@@ -528,7 +541,7 @@
                     $.each(response.data, function (key, val) {
                         html += `<tr>`;
                         html += `<td class="text-center">${no}</td>`;
-                        html += `<td class="text-center">${val.dtm_date_incident}<br>${val.dtm_time_incident}</td>`;
+                        html += `<td class="text-center">${val.dtm_date_incident}</td>`;
                         html += `<td class="text-center">${val.plant_name}</td>`;
                         html += `<td class="text-center">${val.department_name}</td>`;
                         html += `<td class="text-center">${val.txt_incident_location}</td>`;
@@ -536,9 +549,9 @@
                         html += `<td class="text-center">${val.txt_fd_env_inpact_to}</td>`;
                         html += `<td class="text-center">${val.txt_fd_estimate_quantity}</td>`;
                         html += `<td class="text-center">`;
-                        // html += `<a class="btn btn-xs btn-warning btnEdit" data-id="${val.int_id_Fireinvestigation}"><i class="fas fa-pen"></i></a>`;
-                        html += `<a class="btn btn-xs btn-danger btnDelete" data-id="${val.int_id_Fireinvestigation}"><i class="fas fa-trash-alt"></i></a>`;
-                        html += `<a class="btn btn-xs btn-primary btnDownloadsDoc ml-1" data-id="${val.int_id_Fireinvestigation}">Docs <i class="fa fa-download"></i></a>`;
+                        // html += `<a class="btn btn-xs btn-warning btnEdit" data-id="${val.int_id_Envinvestigation}"><i class="fas fa-pen"></i></a>`;
+                        html += `<a class="btn btn-xs btn-danger btnDelete" data-id="${val.int_id_Envinvestigation}"><i class="fas fa-trash-alt"></i></a>`;
+                        html += `<a class="btn btn-xs btn-primary btnDownloadsDoc ml-1" data-id="${val.int_id_Envinvestigation}">Docs <i class="fa fa-download"></i></a>`;
                         html += `</td>`;
                         html += `</tr>`;
                         no++;
@@ -558,10 +571,9 @@
                 }
                 $('#tbody_incident_record').html(html);
                 $('.btnDownloadsDoc').on('click', function () {
-                    alert('Not Active');
-                    // let id = $(this).data('id');
-                    // let url = `<?= base_url() ?>ncr_ca/Fire_Investigation/DownloadsToWord?id=` + id;
-                    // window.open(url).focus();
+                    let id = $(this).data('id');
+                    let url = `<?= base_url() ?>ncr_ca/Environment_abnormality/DownloadsToWord?id=` + id;
+                    window.open(url).focus();
                 });
                 $('.btnDelete').on('click', function () {
                     let id = $(this).data('id');
@@ -575,7 +587,7 @@
                         if (result.isConfirmed) {
                             $.ajax({
                                 type: "POST",
-                                url: "<?= base_url() ?>ncr_ca/Fire_Investigation/delete_data",
+                                url: "<?= base_url() ?>ncr_ca/Environment_abnormality/delete_data",
                                 data: {
                                     id: id,
                                 },
@@ -612,14 +624,14 @@
                     //     }
                     // });
                 });
-                $('#table_fire_investigation').DataTable({
+                $('#table_envabnormal').DataTable({
                     lengthMenu: [
                         [5, 10, 20, -1],
                         [5, 10, 20, 'All'],
                     ],
                 });
-                $('select[name="table_fire_investigation_length"').addClass('form-control form-control-sm');
-                $('select[name="table_fire_investigation_length"').removeClass('form-select form-select-sm');
+                $('select[name="table_envabnormal_length"').addClass('form-control form-control-sm');
+                $('select[name="table_envabnormal_length"').removeClass('form-select form-select-sm');
                 // $('#table_incident_record_length label').remove();
             }
         });
