@@ -46,9 +46,16 @@
         margin-left: .25em;
     }
 
-    .short-div {
+    .short-div-end {
         margin-left: 1rem;
         text-align: end;
+        height: 25px;
+        margin-bottom: 10px;
+    }
+
+    .short-div {
+        margin-left: 1rem;
+        text-align: ;
         height: 25px;
         margin-bottom: 10px;
     }
@@ -197,22 +204,23 @@
                                         placeholder="Use (/) to separate, more than one input."></textarea>
                                 </div>
                                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0px">
-                                    <div class="short-div"><label for="input-materialPolluter" class="col-form-label"
-                                            style="text-align:right">MATERIAL POLLUTER :</label></div>
-                                    <div class="short-div"><label for="input-impactTo" class="col-form-label"
+                                    <div class="short-div-end"><label for="input-materialPolluter"
+                                            class="col-form-label" style="text-align:right">MATERIAL POLLUTER :</label>
+                                    </div>
+                                    <div class="short-div-end"><label for="input-impactTo" class="col-form-label"
                                             style="text-align:right">IMPACT TO :</label></div>
-                                    <div class="short-div"><label for="input-estQty" class="col-form-label"
+                                    <div class="short-div-end"><label for="input-estQty" class="col-form-label"
                                             style="text-align:right">ESTIMATE QUANTITY :</label></div>
-                                    <div class="short-div"><label for="input-probReason" class="col-form-label"
+                                    <div class="short-div-end"><label for="input-probReason" class="col-form-label"
                                             style="text-align:right">PROBABLE REASON :</label></div>
                                 </div>
                                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0px">
-                                    <div class="short-div">
+                                    <div class="short-div-end">
                                         <input type="text" class="form-control form-control-sm"
                                             id="input-materialPolluter" name="input-materialPolluter"
                                             placeholder="TEXT">
                                     </div>
-                                    <div class="short-div">
+                                    <div class="short-div-end">
                                         <select class="form-control form-control-sm" id="input-impactTo"
                                             name="input-impactTo" placeholder="TEXT">
                                             <option>-- SELECT --</option>
@@ -222,11 +230,11 @@
                                             <option value="human">Human</option>
                                         </select>
                                     </div>
-                                    <div class="short-div">
+                                    <div class="short-div-end">
                                         <input type="text" class="form-control form-control-sm" id="input-estQty"
                                             name="input-estQty" placeholder="TEXT">
                                     </div>
-                                    <div class="short-div">
+                                    <div class="short-div-end">
                                         <input type="text" class="form-control form-control-sm" id="input-probReason"
                                             name="input-probReason" placeholder="TEXT">
                                     </div>
@@ -416,14 +424,14 @@
                                         placeholder="Use (/) to separate, more than one input."></textarea>
                                 </div>
                                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0px">
-                                    <div class="short-div"><label for="input-person_responsibility"
+                                    <div class="short-div-end"><label for="input-person_responsibility"
                                             class="col-form-label" style="text-align:right">PERSON RESPONSIBILITY
                                             :</label></div>
-                                    <div class="short-div"><label for="input-time_target" class="col-form-label"
+                                    <div class="short-div-end"><label for="input-time_target" class="col-form-label"
                                             style="text-align:right">TIME TARGET :</label></div>
                                 </div>
                                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0px">
-                                    <div class="short-div">
+                                    <div class="short-div-end">
                                         <input type="text" class="form-control form-control-sm"
                                             id="input-person_responsibility" name="input-person_responsibility"
                                             placeholder="TEXT">
@@ -433,36 +441,25 @@
                                 </div>
                             </div>
                             <div class="separator">UPLOAD PHOTO</div>
-                            <div class="form-group row">
-                                <label class="col-sm-2 col-form-label" style="text-align:right">SELECT PHOTO :</label>
-                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0px">
-                                    <div class="short-div">
-                                        <input type="file" name="accident_photo" />
+                            <div class="div_img_doc">
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label" style="text-align:right">SELECT PHOTO
+                                        :</label>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding:0px">
+                                        <div class="short-div-start">
+                                            <input type="file" name="accident_photo[]" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                        <a class="btn btn-sm btn-primary btnadd_img_doc" data-target="img_doc">Add
+                                            Img</a>
+                                        <a class="btn btn-sm btn-danger btnremove_img_doc" data-target="img_doc"><i
+                                                class="fa fa-minus"></i></a>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="separator">INVESTIGATION TEAM</div>
-                            <!-- <div class="form-group row">
-                                <label for="input-leadInvestigation" class="col-sm-2 col-form-label"
-                                    style="text-align:right">LEAD INVESTIGATOR :</label>
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><input type="text"
-                                        class="form-control form-control-sm" id="input-leadInvestigation"
-                                        name="input-leadInvestigation" placeholder="TEXT"></div>
-                            </div>
-                            <div class="container-invMember">
-                                <div class="form-group row rowInvMember">
-                                    <label for="input-memberInvestigation" class="col-sm-2 col-form-label"
-                                        style="text-align:right">MEMBER INVESTIGATOR :</label>
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><input type="text"
-                                            class="form-control form-control-sm" id="input-memberInvestigation"
-                                            name="input-memberInvestigation[]" placeholder="TEXT"></div>
-                                    <div class="col-lg-1">
-                                        <a class="btn btn-sm btn-primary btnAddInvMember"><small>Add</small></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="separator"></div> -->
 
                             <div class="div_mem_investig">
                                 <div class="form-group row">
@@ -614,17 +611,6 @@
                 $('.btnEdit').on('click', function () {
                     let id = $(this).data('id');
                     console.log('Edit-' + id)
-                    // $.ajax({
-                    //     url: `<?= base_url() ?>ncr_ca/Incident_Investigation/DownloadsToWord`,
-                    //     type: "GET",
-                    //     data: {
-                    //         id: id
-                    //     },
-                    //     dataType: "json",
-                    //     success: function(response) {
-                    //         // console.log(response);
-                    //     }
-                    // });
                 });
                 $('#table_envabnormal').DataTable({
                     lengthMenu: [
@@ -678,21 +664,6 @@
                 }
             });
         });
-        // $.ajax({
-        //     url: `<?= base_url() ?>manajemen/Masterdata/get_fire_facility`,
-        //     type: "GET",
-        //     dataType: "json",
-        //     success: function(response) {
-        //         // console.log(response);
-        //         let html = ``;
-        //         html += `<option value="" disabled selected hidden style="font-size: inherit;">Nothing selected</option>`;
-        //         $.each(response.data, function(key, val) {
-        //             html += `<option value="${val.intId}">${val.txtNama}</option>`;
-        //         });
-        //         $('#inputFireFacilityUsed').html(html);
-        //     }
-        // });
-
 
         $('.btnResetForm').click(function () {
             $(':input', '#formEnvAbnormality')
