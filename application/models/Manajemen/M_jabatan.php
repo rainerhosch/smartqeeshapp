@@ -51,4 +51,12 @@ class M_jabatan extends CI_Model{
         return $this->db->get();
     }
 
+	public function checkJabatan($id,$table,$column)
+	{
+		$this->db->select('*');
+		$this->db->from($table);
+		$this->db->where($column, $id);
+		return $this->db->get();
+	}
+
 }

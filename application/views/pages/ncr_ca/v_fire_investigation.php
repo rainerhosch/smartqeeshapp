@@ -1,4 +1,29 @@
+<script src="<?= base_url('assets/templates'); ?>/libs/jquery-ui/jquery-ui.min.js"></script>
+<script src="<?= base_url('assets/templates'); ?>/libs/jquery-ui/jquery.ui.autocomplete.scroll.min.js"></script>
+<script src="<?= base_url('assets/templates'); ?>/js/autocomplete.js"></script>
 <style>
+    .dataTables_filter {
+        float: right !important;
+    }
+
+    .dataTables_paginate {
+        float: right !important;
+    }
+
+    .ui-autocomplete {
+        z-index: 2147483647;
+    }
+
+    .btn-circle {
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        padding: 6px 0;
+        font-size: 12px;
+        line-height: 1.42;
+        border-radius: 15px;
+    }
+
     .separator {
         display: flex;
         align-items: center;
@@ -22,13 +47,42 @@
     }
 
     .short-div {
+        margin-left: 1rem;
+        text-align: end;
         height: 25px;
         margin-bottom: 10px;
+    }
+
+    select:invalid {
+        color: gray;
+    }
+
+    option:first {
+        color: #999;
+    }
+
+    .preloader2 {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background-color: #3e3e3b66;
+    }
+
+    .preloader2 .loading {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        font: 14px arial;
     }
 </style>
 
 <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/css/bootstrap-multiselect.css">
 <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/css/fishbone/style.css">
+<link rel="stylesheet" href="<?= base_url('assets/templates') ?>/plugins/bootstrap-select/css/bootstrap-select.css">
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper" style="z-index: -999 !important;">
 
@@ -46,10 +100,17 @@
                     </ol>
                 </div>
             </div>
-        </div><!-- /.container-fluid -->
+        </div>
     </section>
 
     <!-- Main content -->
+    <div class="preloader2" hidden>
+        <div class="loading">
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    </div>
 
     <section class="content">
         <div class="card">
@@ -69,63 +130,59 @@
                 <!--INPUT DATA PERSONAL MCU-->
                 <div class="tab-pane fade show active" id="activity-list" role="tabpanel" aria-labelledby="custom-content-above-home-tab">
                     <!-- form -->
-                    <form class="form-horizontal" method="post" id="formInvestigationFire">
+                    <form class="form-horizontal" id="formInvestigationFire" method="post" action="#<?= base_url() ?>ncr_ca/Incident_Investigation/save_data" enctype="multipart/form-data">
                         <!--card body-->
                         <div class="card-body" style="background-color: #ff000054;">
                             <div class="row">
-                                <label for="input" class="col-sm-2 col-form-label" style="text-align:right">DATE :</i> </label>
+                                <label for="inputIncidentDate" class="col-sm-2 col-form-label" style="text-align:right">INCIDENT DATE :</i> </label>
                                 <div class="col-sm-2">
-                                    <input type="date" class="form-control form-control-sm" id="input" name="input" placeholder="TEXT">
+                                    <input type="date" class="form-control form-control-sm" id="inputIncidentDate" name="inputIncidentDate" required>
+                                </div>
+                                <label for="inputIncidentPlant" class="col-sm-2 col-form-label" style="text-align:right">INCIDENT PLANT :</i> </label>
+                                <div class="col-sm-2">
+                                    <select class="form-control form-control-sm" id="inputIncidentPlant" name="inputIncidentPlant" required>
+                                    </select>
                                 </div>
 
-                                <label for="input" class="col-sm-2 col-form-label" style="text-align:right">AREA :</i> </label>
+                                <label for="inputIncidentFunction" class="col-sm-2 col-form-label" style="text-align:right">FUNCTION:</i> </label>
                                 <div class="col-sm-2">
-                                    <input type="text" class="form-control form-control-sm" id="input" name="input" placeholder="TEXT">
-                                </div>
-                                <label for="input" class="col-sm-2 col-form-label" style="text-align:right">MACHINE :</i> </label>
-                                <div class="col-sm-2">
-                                    <input type="text" class="form-control form-control-sm" id="input" name="input" placeholder="TEXT">
+                                    <select class="form-control form-control-sm" id="inputIncidentFunction" name="inputIncidentFunction" placeholder="TEXT" required disabled>
+                                    </select>
                                 </div>
                             </div>
                             <div class="row">
-                                <label for="input" class="col-sm-2 col-form-label" style="text-align:right">TIME :</i> </label>
+                                <label for="inputIncidentTime" class="col-sm-2 col-form-label" style="text-align:right">INCIDENT TIME :</i> </label>
                                 <div class="col-sm-2">
-                                    <input type="time" class="form-control form-control-sm" id="input" name="input" placeholder="TEXT">
+                                    <input type="time" class="form-control form-control-sm" id="inputIncidentTime" name="inputIncidentTime" required>
+                                </div>
+                                <label for="inputIncidentArea" class="col-sm-2 col-form-label" style="text-align:right">INCIDENT AREA :</i> </label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control form-control-sm" id="inputIncidentArea" name="inputIncidentArea" required>
                                 </div>
 
-                                <label for="input" class="col-sm-2 col-form-label" style="text-align:right">PLANT :</i> </label>
+                                <label for="inputIncidentDepartment" class="col-sm-2 col-form-label" style="text-align:right">DEPARTEMENT :</i> </label>
                                 <div class="col-sm-2">
-                                    <input type="text" class="form-control form-control-sm" id="input" name="input" placeholder="TEXT">
-                                </div>
-                                <label for="input" class="col-sm-2 col-form-label" style="text-align:right">MACHINE :</i> </label>
-                                <div class="col-sm-2">
-                                    <input type="text" class="form-control form-control-sm" id="input" name="input" placeholder="TEXT">
+                                    <select class="form-control form-control-sm" id="inputIncidentDepartment" name="inputIncidentDepartment" required disabled>
+                                    </select>
                                 </div>
                             </div>
 
                             <!-- Incident Information -->
                             <div class="separator">Incident Information</div>
                             <div class="row">
-                                <!-- <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"> -->
-                                <label for="input" class="col-sm-2 col-form-label" style="text-align:right">INCIDENT DESC :</label>
-                                <!-- </div> -->
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><textarea class="form-control" id="exampleFormControlTextarea1" rows="7"></textarea></div>
-                                <!-- <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="background-color:red;">Span 2</div> -->
+                                <label for="inputIncidentDesc" class="col-sm-2 col-form-label" style="text-align:right">INCIDENT DESC :</label>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><textarea class="form-control" id="inputIncidentDesc" name="inputIncidentDesc" rows="7"></textarea></div>
                                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0px">
+                                    <div class="short-div"><label for="inputIncidentMachine" class="col-form-label" style="text-align:right">INCIDENT MACHINE :</label></div>
                                     <div class="short-div"><label for="input" class="col-form-label" style="text-align:right">FIRE LEVEL :</label></div>
                                     <div class="short-div"><label for="input" class="col-form-label" style="text-align:right">SEVERITY LEVEL :</label></div>
                                     <div class="short-div"><label for="input" class="col-form-label" style="text-align:right">RECURRENCE PROABILITY :</label></div>
                                     <div class="short-div"><label for="input" class="col-form-label" style="text-align:right">FIRE FACILITY USED :</label></div>
                                 </div>
                                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0px">
-                                    <div class="short-div"><select class="form-control form-control-sm" id="input" name="input" placeholder="TEXT">
-                                            <option>-- SELECT --</option>
-                                            <option>option 1</option>
-                                            <option>option 2</option>
-                                            <option>option 3</option>
-                                            <option>option 4</option>
-                                            <option>option 5</option>
-                                        </select></div>
+                                    <div class="short-div">
+                                        <input type="text" class="form-control form-control-sm" id="inputIncidentMachine" name="inputIncidentMachine" placeholder="TEXT" required>
+                                    </div>
                                     <div class="short-div"><select class="form-control form-control-sm" id="input" name="input" placeholder="TEXT">
                                             <option>-- SELECT --</option>
                                             <option>option 1</option>
@@ -166,46 +223,55 @@
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><textarea class="form-control" id="exampleFormControlTextarea1" rows="2"></textarea></div>
                             </div>
 
-
                             <div class="separator">ROUTE COUSE ANALYSIS</div>
                             <!-- Fish bone diagram -->
                             <div class="container">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="feature-box">
-                                            <strong class=""> MANPOWER : </strong>
-                                            <select class="form-control form-control-sm multiple-checkboxes" multiple="multiple" id="input_manpower" name="input_manpower" position="top">
-                                                <option value="MANPOWER_1">option 1</option>
-                                                <option value="MANPOWER_2">option 2</option>
-                                                <option value="MANPOWER_3">option 3</option>
-                                                <option value="MANPOWER_4">option 4</option>
-                                                <option value="MANPOWER_5">option 5</option>
-                                            </select>
+                                            <strong class=""> MANPOWER </strong>
                                         </div>
-                                        <div class="row" style="margin-right:-10% !important; margin-left:17% !important;">
-                                            <svg>
-                                                <line x1="0" y1="0" x2="200" y2="200" style="stroke:rgb(120,120,120);stroke-width:3.5" />
-                                                <g id="g_input_manpower" font-size="12" transform="translate(5)">
-                                                </g>
+                                        <div class="row" style="margin-right:-10% !important; margin-left:0px !important;">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+                                                <line x1="100" y1="0" x2="300" y2="200" style="stroke:rgb(120,120,120);stroke-width:3.5" />
+                                                <foreignObject x="50" y="2" width="200" height="150">
+
+                                                    <body xmlns="http://www.w3.org/1999/xhtml">
+                                                        <div class="div_input_manpower">
+                                                            <div class="row">
+                                                                <div class="col-sm-2"><a class="btn btn-sm btn-primary btn-circle btn_add_input" data-target="input_manpower" position="top"><i class="fa fa-plus"></i></a>
+                                                                </div>
+                                                                <div class="col-sm-2"><a class="btn btn-sm btn-danger btn-circle btn_remove_input" data-target="input_manpower" position="top"><i class="fa fa-minus"></i></a>
+                                                                </div>
+                                                                <div class="col-sm-8"><input type="text" class="form-control form-control-sm input_manpower" name="input_manpower[]" /></div>
+                                                            </div>
+                                                        </div>
+                                                    </body>
+                                                </foreignObject>
                                             </svg>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="feature-box">
-                                            <strong class=""> METHODE : </strong>
-                                            <select class="form-control form-control-sm multiple-checkboxes" multiple="multiple" id="input_method" name="input_method" position="top">
-                                                <option value="METHODE_1">option 1</option>
-                                                <option value="METHODE_2">option 2</option>
-                                                <option value="METHODE_3">option 3</option>
-                                                <option value="METHODE_4">option 4</option>
-                                                <option value="METHODE_5">option 5</option>
-                                            </select>
+                                            <strong class=""> METHODE </strong>
                                         </div>
-                                        <div class="row" style="margin-right:-10% !important; margin-left:17% !important;">
-                                            <svg>
-                                                <line x1="0" y1="0" x2="200" y2="200" style="stroke:rgb(120,120,120);stroke-width:3.5" />
-                                                <g id="g_input_method" font-size="12" transform="translate(5)">
-                                                </g>
+                                        <div class="row" style="margin-right:-10% !important; margin-left:0% !important;">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+                                                <line x1="100" y1="0" x2="300" y2="200" style="stroke:rgb(120,120,120);stroke-width:3.5" />
+                                                <foreignObject x="50" y="2" width="200" height="150">
+
+                                                    <body xmlns="http://www.w3.org/1999/xhtml">
+                                                        <div class="div_input_methode">
+                                                            <div class="row">
+                                                                <div class="col-sm-2"><a class="btn btn-sm btn-primary btn-circle btn_add_input" data-target="input_methode" position="top"><i class="fa fa-plus"></i></a>
+                                                                </div>
+                                                                <div class="col-sm-2"><a class="btn btn-sm btn-danger btn-circle btn_remove_input" data-target="input_methode" position="top"><i class="fa fa-minus"></i></a>
+                                                                </div>
+                                                                <div class="col-sm-8"><input type="text" class="form-control form-control-sm input_methode" name="input_methode[]" /></div>
+                                                            </div>
+                                                        </div>
+                                                    </body>
+                                                </foreignObject>
                                             </svg>
                                         </div>
                                     </div>
@@ -222,89 +288,57 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="row" style="margin-right: 10% !important; margin-left: 17% !important;">
-                                            <svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
                                                 <line x1="0 " y1="150 " x2="150 " y2="0 " style="stroke:rgb(120,120,120);stroke-width:3.5 " />
-                                                <g id="g_input_material" font-size="12" transform="translate(10) ">
-                                                </g>
+                                                <foreignObject x="50" y="2" width="200" height="150">
+
+                                                    <body xmlns="http://www.w3.org/1999/xhtml">
+                                                        <div class="div_input_material">
+                                                            <div class="row">
+                                                                <div class="col-sm-2"><a class="btn btn-sm btn-primary btn-circle btn_add_input" data-target="input_material" position="bottom"><i class="fa fa-plus"></i></a>
+                                                                </div>
+                                                                <div class="col-sm-2"><a class="btn btn-sm btn-danger btn-circle btn_remove_input" data-target="input_material" position="bottom"><i class="fa fa-minus"></i></a>
+                                                                </div>
+                                                                <div class="col-sm-8"><input type="text" class="form-control form-control-sm input_material" name="input_material[]" /></div>
+                                                            </div>
+                                                        </div>
+                                                    </body>
+                                                </foreignObject>
                                             </svg>
                                         </div>
                                         <div class="feature-box-bottom">
-                                            <strong>MATERIAL : </strong>
-                                            <select class="form-control form-control-sm multiple-checkboxes" multiple="multiple" id="input_material" name="input_material" position="bottom">
-                                                <option value="MATERIAL_1">option 1</option>
-                                                <option value="MATERIAL_2">option 2</option>
-                                                <option value="MATERIAL_3">option 3</option>
-                                                <option value="MATERIAL_4">option 4</option>
-                                                <option value="MATERIAL_5">option 5</option>
-                                            </select>
+                                            <strong>MATERIAL </strong>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="row" style="margin-right: 10% !important; margin-left: 17% !important;">
-                                            <svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
                                                 <line x1="0 " y1="150 " x2="150 " y2="0 " style="stroke:rgb(120,120,120);stroke-width:3.5 " />
-                                                <g id="g_input_machine" font-size="12" transform="translate(10) ">
-                                                </g>
+                                                <foreignObject x="50" y="2" width="200" height="150">
+
+                                                    <body xmlns="http://www.w3.org/1999/xhtml">
+                                                        <div class="div_input_machine">
+                                                            <div class="row">
+                                                                <div class="col-sm-2"><a class="btn btn-sm btn-primary btn-circle btn_add_input" data-target="input_machine" position="bottom"><i class="fa fa-plus"></i></a>
+                                                                </div>
+                                                                <div class="col-sm-2"><a class="btn btn-sm btn-danger btn-circle btn_remove_input" data-target="input_machine" position="bottom"><i class="fa fa-minus"></i></a>
+                                                                </div>
+                                                                <div class="col-sm-8"><input type="text" class="form-control form-control-sm input_machine" name="input_machine[]" /></div>
+                                                            </div>
+                                                        </div>
+                                                    </body>
+                                                </foreignObject>
                                             </svg>
                                         </div>
                                         <div class="feature-box-bottom ">
-                                            <strong>MACHINE : </strong>
-                                            <select class="form-control form-control-sm multiple-checkboxes" multiple="multiple" id="input_machine" name="input_machine" position="bottom">
-                                                <option value="MACHINE_1">option 1</option>
-                                                <option value="MACHINE_2">option 2</option>
-                                                <option value="MACHINE_3">option 3</option>
-                                                <option value="MACHINE_4">option 4</option>
-                                                <option value="MACHINE_5">option 5</option>
-                                            </select>
+                                            <strong>MACHINE </strong>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <!-- Eof Fish bone diagram -->
                             <div class="separator">DOMINOS EFFECT IN ACCIDENT</div>
-
-                            <div class="form-group row">
-                                <div class="col-md-3">
-                                    <div class="feature-box-heading">
-                                        <strong>BASIC CAUSE</strong>
-                                    </div>
-                                    <form id="bcRadio">
-                                        <input type="radio" name="input_bc" value="1" /> <strong>No or Lake Of Procedure</strong><br />
-                                        <input type="radio" name="input_bc" value="2" /> <strong>No or Lake Of Tools</strong><br />
-                                        <input type="radio" name="input_bc" value="3" /> <strong>No or Lake Of Awareness</strong><br />
-                                        <input type="radio" name="input_bc" value="4" /> <strong>No or Lake Of Obidience</strong><br />
-                                        <input type="radio" name="input_bc" value="5" /> <strong>No Of Cooperation</strong><br />
-                                    </form>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="feature-box-heading">
-                                        <strong>IN DERECT CAUSE</strong>
-                                    </div>
-                                    <form id="idcRadio">
-                                        <input type="radio" name="input_idc" value="1" /> <strong>Work </strong><br />
-                                        <input type="radio" name="input_idc" value="2" /> <strong>Personal Factor</strong><br />
-                                    </form>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="feature-box-heading">
-                                        <strong>DERECT CAUSE</strong>
-                                    </div>
-                                    <form id="dcRadio">
-                                        <input type="radio" name="input_dc" value="1" /> <strong>Unsafe </strong><br />
-                                        <input type="radio" name="input_dc" value="2" /> <strong>Unsafe Condition</strong><br />
-                                    </form>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="feature-box-heading">
-                                        <strong>LOSES</strong>
-                                    </div>
-                                    <form id="losesRadio">
-                                        <input type="radio" name="input_loses" value="1" /> <strong>Human</strong><br />
-                                        <input type="radio" name="input_loses" value="2" /> <strong>Machine</strong><br />
-                                        <input type="radio" name="input_loses" value="3" /> <strong>Material</strong><br />
-                                        <input type="radio" name="input_loses" value="4" /> <strong>Environment</strong><br />
-                                    </form>
-                                </div>
+                            <div class="form-group row row_dominos_effect">
                             </div>
                             <div class="separator">PREVENTIVE AND CORECTIVE ACTION</div>
                             <div class="form-group row">
@@ -332,31 +366,21 @@
                             </div>
 
                             <div class="separator">INVESTIGATION TEAM</div>
-                            <div class="form-group row">
-                                <label for="input" class="col-sm-2 col-form-label" style="text-align:right">LEAD INVESTIGATOR :</label>
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><input type="text" class="form-control form-control-sm" id="input" name="input" placeholder="TEXT"></div>
-                            </div>
-                            <div class="container-invMember">
-                                <div class="form-group row rowInvMember">
-                                    <label for="input" class="col-sm-2 col-form-label" style="text-align:right">MEMBER INVESTIGATOR :</label>
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><input type="text" class="form-control form-control-sm" id="input" name="input" placeholder="TEXT"></div>
-                                    <div class="col-lg-1">
-                                        <a class="btn btn-sm btn-primary btnAddInvMember"><small>Add</small></a>
+                            <div class="div_mem_investig">
+                                <div class="form-group row">
+                                    <label for="inputLeadInvestigation" class="col-sm-2 col-form-label" style="text-align:right">LEAD INVESTIGATOR :</label>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><input type="text" class="form-control form-control-sm" id="inputLeadInvestigation" name="inputLeadInvestigation" placeholder="TEXT"></div>
+                                    <div class="col-lg-2">
+                                        <a class="btn btn-sm btn-primary btnadd_mem_investig" data-target="mem_investig">Add Member</a>
+                                        <a class="btn btn-sm btn-danger btnremove_mem_investig" data-target="mem_investig"><i class="fa fa-minus"></i></a>
                                     </div>
                                 </div>
                             </div>
-                            <!-- end form -->
-                            <div class="separator"></div>
-                            <!-- <br> -->
                         </div>
-                        <!--Button-->
                         <div class="card-footer">
-                            <button type="button" class="btn btn-primary float-right btnSaveToPdf" style="margin-left: 20px;">SAVE and DOWNLOAD PDF</button>
-                            <button type="button" class="btn btn-success float-right btnSaveOnly" style="margin-left: 20px;">SAVE ONLY</button>
+                            <button type="submit" class="btn btn-primary float-right btnSaveOnly" style="margin-left: 20px;">SAVE</button>
                             <button type="button" class="btn btn-warning float-right btnResetForm">RESET</button>
                         </div>
-                        <!--/.Button-->
-                        <!-- /.card-body -->
                     </form>
                     <!--/.form-->
                 </div>
@@ -397,95 +421,20 @@
 
                         <div class="card" style="background-color: white;">
                             <div class="table-responsive">
-                                <table class="table table-striped table-bordered-sm ">
+                                <table class="table table-striped table-bordered-sm" id="table_fire_investigation">
                                     <thead class="align-middle">
                                         <tr class="table-danger align-middle" style="text-align: center;">
                                             <th scope="col">NO.</th>
-                                            <th scope="col">NAME</th>
+                                            <th scope="col">DATE</th>
                                             <th scope="col">DEPARTEMENT</th>
-                                            <th scope="col">AGE</th>
-                                            <th scope="col">ADDRESS</th>
-                                            <th scope="col">HEALTH STATUS</th>
-                                            <th scope="col">IDENTIFIED DISEASE</th>
-                                            <th scope="col">DOCTOR NOTE</th>
+                                            <th scope="col">LOCATION</th>
+                                            <th scope="col">FIRE LEVEL</th>
                                             <th scope="col">TOOLS</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td class="text-center">
-                                                <a class="btn btn-xs btn-secondary">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </a>
-                                                <a class="btn btn-xs btn-primary">
-                                                    <i class="fas fa-pen"></i>
-                                                </a>
-                                                <a class="btn btn-xs btn-success">
-                                                    <i class="fa fa-download"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">2</th>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td class="text-center">
-                                                <a class="btn btn-xs btn-secondary">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </a>
-                                                <a class="btn btn-xs btn-primary">
-                                                    <i class="fas fa-pen"></i>
-                                                </a>
-                                                <a class="btn btn-xs btn-success">
-                                                    <i class="fa fa-download"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">3</th>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td class="text-center">
-                                                <a class="btn btn-xs btn-secondary">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </a>
-                                                <a class="btn btn-xs btn-primary">
-                                                    <i class="fas fa-pen"></i>
-                                                </a>
-                                                <a class="btn btn-xs btn-success">
-                                                    <i class="fa fa-download"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
+                                    <tbody id="tbody_fire_investigation">
                                     </tbody>
                                 </table>
-                            </div>
-                            <div class="card-footer clearfix">
-                                <ul class="pagination pagination-sm m-0 float-right">
-                                    <li class="page-item"><a class="page-link" href="#">«</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">»</a></li>
-                                </ul>
                             </div>
                         </div>
 
@@ -493,86 +442,79 @@
 
                     </div>
                 </div>
-                <!--/.PERSONAL MCU RECORD-->
             </div>
-            <!--/.TAB CONTENT-->
         </div>
     </section>
-    <!-- /.content -->
 </div>
-<!-- /.content-wrapper -->
 <script src="<?= base_url('assets/templates') ?>/js/bootstrap-multiselect.js"></script>
+<script src="<?= base_url('assets/templates') ?>/js/fishbone/custom_form.js"></script>
+<script src="<?= base_url('assets/templates') ?>/plugins/bootstrap-select/js/bootstrap-select.min.js"></script>
 <script>
     $(document).ready(function() {
-
-        $('.container-invMember').on('click', '.btnAddInvMember:last-child', function() {
-            let copylast = $(this).parents('.rowInvMember')[0].outerHTML;
-            $(this)
-                .parents('.rowInvMember:last-child')
-                .after(copylast);
-
-            console.log(copylast);
-        });
-        $('.multiple-checkboxes').multiselect({
-            includeSelectAllOption: true,
-        });
-
-        $('.multiple-checkboxes').on('change', function() {
-            let elementId = $(this).attr('name');
-            let position = $(this).attr('position');
-            let x = ``;
-            let y = ``;
-            let x_range = ``;
-            let y_range = ``;
-            if (position == 'top') {
-                x = 15;
-                y = 15;
-                x_range = 55;
-                y_range = 55;
-            } else {
-                x = 15;
-                y = 140;
-                x_range = 55;
-                y_range = 55;
-            }
-
-            const selected = document.querySelectorAll('.multiple-checkboxes#' + elementId + ' option:checked');
-            const dataSelect = Array.from(selected).map(el => el.value);
-            console.log(dataSelect.length);
-            let html = ``;
-            if (dataSelect.length > 0) {
-                if (dataSelect.length > 3) {
-                    x_range = x_range - 25;
-                    y_range = y_range - 25;
-                }
-                $.each(dataSelect, function(i, value) {
-                    html += `<text y="${x}px" x="${y}px" letter-spacing=".5px" text-anchor="bottom" style="font-weight: bold;">${value}</text>`;
-                    if (position == 'top') {
-                        x += x_range;
-                        y += y_range;
-                        console.log(x);
-                        console.log(y);
-                    } else {
-                        x += x_range;
-                        y -= y_range;
-                    }
+        $.ajax({
+            url: `<?= base_url() ?>manajemen/Plant/getData_v2`,
+            type: "GET",
+            dataType: "json",
+            success: function(response) {
+                // console.log(response);
+                let html = ``;
+                html += `<option value="" disabled selected hidden style="font-size: inherit;">Nothing selected</option>`;
+                $.each(response.data, function(key, val) {
+                    html += `<option value="${val.intIdPlant}">${val.txtNamaPlant}</option>`;
                 });
-                $('#g_' + elementId).html(html);
-            } else {
-                $('#g_' + elementId).html(html);
+                $('#inputIncidentPlant').html(html);
             }
         });
-
-        $("#linesTop").fadeIn(1000);
-        $("#arrow").fadeIn(1500);
-        $("#linesBottom").fadeIn(2000);
-
-        $(function() {
-            $(".diradd").click(function(event) {
-                event.preventDefault();
-                $(this)
-                    .next(".diraddform")
-                    .slideToggle(500);
+        $('select[name="inputIncidentPlant"]').on('change', function() {
+            let id_plant = $(this).val();
+            $.ajax({
+                url: `<?= base_url() ?>manajemen/Section/getDataByIdPlant`,
+                type: "GET",
+                data: {
+                    id: id_plant
+                },
+                dataType: "json",
+                beforeSend: function() {
+                    $('.preloader2').prop('hidden', false);
+                },
+                success: function(response) {
+                    $('.preloader2').prop('hidden', true);
+                    // console.log(response)
+                    if (response.code === 200) {
+                        let html = response.data;
+                        $('#inputIncidentFunction').prop('disabled', false);
+                        $('#inputIncidentFunction').html(html);
+                    } else {
+                        $('#inputIncidentFunction').prop('disabled', true);
+                    }
+                }
+            });
+        });
+        $('select[name="inputIncidentFunction"]').on('change', function() {
+            let id_section = $(this).val();
+            $.ajax({
+                url: `<?= base_url() ?>manajemen/Department/getData_v2`,
+                type: "POST",
+                data: {
+                    id_section: id_section
+                },
+                dataType: "json",
+                beforeSend: function() {
+                    $('.preloader2').prop('hidden', false);
+                },
+                success: function(response) {
+                    $('.preloader2').prop('hidden', true);
+                    // console.log(response)
+                    if (response.code === 200) {
+                        let html = ``;
+                        html += `<option value="" disabled selected hidden style="font-size: inherit;">Select Department</option>`;
+                        $.each(response.data, function(key, val) {
+                            html += `<option value="${val.intIdDepartement}">${val.txtNamaDepartement}</option>`;
+                        });
+                        $('#inputIncidentDepartment').prop('disabled', false);
+                        $('#inputIncidentDepartment').html(html);
+                    }
+                }
             });
         });
 
@@ -586,6 +528,33 @@
 
             document.getElementById('formInvestigationFire').reset();
             $(".multiple-checkboxes option:selected").removeAttr("selected");
+        });
+
+        $.ajax({
+            url: `Incident_Investigation/get_data_dominos_effect`,
+            type: "POST",
+            dataType: "json",
+            success: function(response) {
+                let html = ``;
+                // console.log(response);
+                $.each(response.data, function(key, val) {
+                    html += `<div class="col-md-3">
+                                <div class="feature-box-heading">
+                                    <strong>${val.ds_type}</strong>
+                                </div>
+                                <div class="form-check" id="ckRadio${val.ds_id}">`;
+                    $.each(val.ds_child, function(i, value) {
+                        html += `<input class="form-check-input" type="checkbox" value="${value.childid}" id="defaultCheck1" name="input${val.ds_label}[]">
+                                    <label class="form-check-label" for="ckRadio${val.ds_id}">
+                                        <strong>${value.child_name}</strong>
+                                    </label></br>`;
+                    });
+                    html += `
+                                </div>
+                            </div>`;
+                });
+                $('.row_dominos_effect').html(html);
+            }
         });
 
     });

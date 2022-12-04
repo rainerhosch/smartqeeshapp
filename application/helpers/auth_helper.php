@@ -18,3 +18,13 @@ function login_check()
         redirect('auth');
     }
 }
+
+// function password_default()
+// {
+// 	$ci = get_instance();
+//     $user_id = $ci->session->userdata('user_id');
+// 	$field = 'mEmployee.nik,user.id,user.password';
+//     $user = $ci->user->get_user($field, array('user.id' => $user_id));
+// 	var_dump($user);
+// 	die();
+// }

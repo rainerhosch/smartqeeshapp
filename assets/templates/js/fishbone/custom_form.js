@@ -1,16 +1,4 @@
 $(document).ready(function () {
-	$(".btnSaveIncident").click(function () {
-		$.ajax({
-			url: `Incident_Investigation/save_data`,
-			type: "post",
-			dataType: "json",
-			data: $("form#incidentForm").serialize(),
-			success: function (data) {
-				console.log(data);
-			},
-		});
-	});
-
 	$(".container-invMember").on(
 		"click",
 		".btnAddInvMember:last-child",

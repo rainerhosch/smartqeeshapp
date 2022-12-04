@@ -15,6 +15,7 @@ class Masterdata extends CI_Controller
     {
         parent::__construct();
         $this->load->model('M_masterdata', 'masterdata');
+        $this->load->model('Manajemen/M_bodypart', 'bodypart');
     }
 
     public function getData()
@@ -37,5 +38,33 @@ class Masterdata extends CI_Controller
         $res = $this->masterdata->getData($field, $table, $tableJoin)->result_array();
         var_dump($res);
         die;
+    }
+
+
+    public function get_body_part()
+    {
+        if ($this->input->is_ajax_request()) {
+            $data_post = $this->input->post();
+            $where = null;
+            $search = null;
+            if (isset($data_post['search'])) {
+                $search = $data_post['search'];
+            }
+            $res = $this->bodypart->get_data($where, $search)->result_array();
+            $response = [
+                'code' => 200,
+                'status' => 'ok',
+                'data' => $res,
+                'message' => 'Success Request.',
+            ];
+        } else {
+            $response = [
+                'code' => 500,
+                'status' => 'error',
+                'data' => null,
+                'message' => 'Invalid Request Method.',
+            ];
+        }
+        echo json_encode($response);
     }
 }

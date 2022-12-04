@@ -87,13 +87,25 @@ class Jenjang_pendidikan extends CI_Controller{
             $id = $this->input->post('id');
             if($id)
             {
-                $this->pendidikan->destroy($id);
-                $data = [
-                    'code' => 200,
-                    'status' => true,
-                    'msg' => 'Jenjang Pendidikan berhasil dihapus',
-                    'data' => NULL
-                ];
+               // cek apakah agama sudah dipake oleh table lain
+				$already = $this->pendidikan->checkJenjangPendidikan($id,'memployee','intIdJenjangPendidikan')->num_rows();
+				if($already > 0)
+				{
+					$data = [
+						'code' => 400,
+						'status' => false,
+						'msg' => 'Jenjang Pendidikan tidak boleh dihapus',
+						'data' => NULL
+					];
+				}else{
+					$this->pendidikan->destroy($id);
+					$data = [
+						'code' => 200,
+						'status' => true,
+						'msg' => 'Jenjang Pendidikan berhasil dihapus',
+						'data' => NULL
+					];
+				}
             }else{
                 // jika id tidak ada
                 $data = [

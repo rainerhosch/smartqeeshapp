@@ -2,7 +2,25 @@ $(document).ready(function () {
 	p_InitiateDataList();
 });
 
-function p_InitiateDataList() {
+function cekActivityHasInput(intIdActivityRisk)
+{
+	let status = ''
+	$.ajax({
+		type: "get",
+		url: `${url}risk_register/Activity/cekActivityHasInput`,
+		data: {intIdActivityRisk: intIdActivityRisk},
+		dataType: "json",		
+		success: function (response) {
+			status = response.data
+		},
+		error: () => {
+			status = 0
+		}
+	});
+	return status
+}
+
+function  p_InitiateDataList() {
 	var oTableDokumen = $('#dtList').DataTable({
 		"bPaginate": true,
 		"bSort": false,
@@ -31,7 +49,11 @@ function p_InitiateDataList() {
 			},			
 			{				
 				render: function (data, type, full, meta) {					
-					return `<a class="btn btn-primary" data-id="${full.intIdActivityRisk}" data-nama="${full.txtNamaActivity}" data-id_activity = ${full.intIdActivity} id="tombol_detail_activity"><i class="fa fa-eye"></i></a>`
+					if (full.isInput > 0) {
+						return `<a class="btn btn-success" data-id="${full.intIdActivityRisk}" data-nama="${full.txtNamaActivity}" data-id_activity = ${full.intIdActivity} id="tombol_detail_activity"><i class="fa fa-eye"></i></a>`
+					} else {
+						return `<a class="btn btn-primary" data-id="${full.intIdActivityRisk}" data-nama="${full.txtNamaActivity}" data-id_activity = ${full.intIdActivity} id="tombol_detail_activity"><i class="fa fa-eye"></i></a>`
+					}					
                 },
 				className: 'text-center'
 			},

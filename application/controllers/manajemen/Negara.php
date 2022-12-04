@@ -103,13 +103,25 @@ class Negara extends CI_Controller{
             $id = $this->input->post('id');
             if($id)
             {
-                $this->negara->destroy($id);
-                $data = [
-                    'code' => 200,
-                    'status' => true,
-                    'msg' => 'Negara berhasil dihapus',
-                    'data' => NULL
-                ];
+				// cek apakah agama sudah dipake oleh table lain
+				$already = $this->negara->checkNegara($id,'memployee','intIdNegara')->num_rows();
+				if($already > 0)
+				{
+					$data = [
+						'code' => 400,
+						'status' => false,
+						'msg' => 'Negara tidak boleh dihapus',
+						'data' => NULL
+					];
+				}else{
+					$this->negara->destroy($id);
+					$data = [
+						'code' => 200,
+						'status' => true,
+						'msg' => 'Negara berhasil dihapus',
+						'data' => NULL
+					];
+				}
             }else{
                 // jika id tidak ada
                 $data = [
