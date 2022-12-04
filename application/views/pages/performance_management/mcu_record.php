@@ -26,14 +26,13 @@ function getNumberToName($employee, $disease, $deptlist, $employ, $dises, $depar
 }
 ?>
 <style type="text/css">
-.truncate {
-    max-width:150px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    .select2 {
+    width:100%!important;
     }
 </style>
 <!-- Content Wrapper. Contains page content -->
+<div class="flash-data" data-flashdata="<?= $this->session->flashdata('flash-success'); ?>"></div>
+<div class="flash-dataError" data-flashdatax="<?= $this->session->flashdata('flash-error'); ?>"></div>
 <div class="content-wrapper" style="z-index: -999 !important;">
 
     <!-- Content Header (Page header) -->
@@ -46,7 +45,8 @@ function getNumberToName($employee, $disease, $deptlist, $employ, $dises, $depar
                 <div class="col-sm-12 py-2 mt-2" style="background-color: rgb(66, 66, 66);">
                     <ol class="breadcrumb  float-sm-left">
                         <li class="breadcrumb-item"><a href="<?=base_url('performance_management/dashboard')?>">PERFORMANCE MANAGEMENT</a></li>
-                        <li class="breadcrumb-item text-white">DOCTOR HEALTH FOLLOWUP</li>
+                        <li class="breadcrumb-item text-white">MEDICAL CHECKUP</li>
+                        <li class="breadcrumb-item text-white">MCU RECORD</li>
                     </ol>
                 </div>
             </div>
@@ -54,26 +54,31 @@ function getNumberToName($employee, $disease, $deptlist, $employ, $dises, $depar
     </section>
 
     <!-- Main content -->
-
     <section class="content">
         <div class="card">
             <!--TAB-->
-            <ul class="nav nav-tabs bg-secondary" id="custom-content-above-tab" role="tablist" style="margin-bottom: -1px;">
+            <ul class="nav nav-tabs bg-secondary " id="custom-content-above-tab" role="tablist" style="margin-bottom: -1px;">
                 <li class="nav-item">
-                    <a class="nav-link bg-secondary active-tab btn active" id="custom-content-above-home-tab" href="<?=base_url('performance_management/Doctor_health_followup')?>">LIST OF EMPLOYEES UNDER CONTROL BY DOCTOR</a>
+                    <a class="nav-link bg-secondary active-tab btn" id="custom-content-above-home-tab" href="<?=base_url('performance_management/Medical_checkup')?>">INPUT DATA PERSONAL MCU</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link bg-secondary active-tab btn" id="custom-content-above-home-tab" href="<?=base_url('performance_management/Doctor_health_followup/followup_perf')?>">DOCTOR CONTROL PERFORMANCE</a>
+                    <a class="nav-link bg-secondary active-tab btn active" id="custom-content-above-home-tab" href="<?=base_url('performance_management/Medical_checkup/mcu_record')?>">PERSONAL MCU RECORD</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link bg-secondary active-tab btn" id="custom-content-above-home-tab" href="<?=base_url('performance_management/Medical_checkup/mcu_perf')?>">MCU PERFORMANCE</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link bg-secondary active-tab btn" id="custom-content-above-home-tab" href="<?=base_url('performance_management/Medical_checkup/unfit_followup')?>">UNFIT FOLLOWUP</a>
                 </li>
             </ul>
             <!--/.TAB-->
+
             <!--TAB CONTENT-->
             <div class="tab-content">
-
-                <!--LIST OF EMPLOYEES UNDER CONTROL BY DOCTOR-->
                 <div>
-                    <div class="card-body" style="background-color: #77a0e6;">
-                        <form action="<?=base_url('performance_management/Doctor_health_followup')?>" method="post">
+                    <div class="card-body" style="background-color: #77a0e6;" id="tablerecord">
+                        <form action="<?=base_url('performance_management/Medical_checkup/mcu_record')?>" method="post">
+
                             <div class="form-grup row mb-2 col-12">
                                 <label for="input" class="col-form-label col-2" style="text-align:right">MCU PERIOD :</label>
                                 <div class="col-sm-4">
@@ -110,6 +115,18 @@ function getNumberToName($employee, $disease, $deptlist, $employ, $dises, $depar
                                     </select>
                                 </div>
 
+                                <label for="input" class="col-form-label col-2" style="text-align:right">FILTER AS H. STATUS :</label>
+                                <div class="col-sm-4">
+                                    <select class="form-control" id="filterstatus" name="filterstatus" placeholder="TEXT">
+                                        <option value="" selected disabled>Select</option>
+                                        <option value="Fit with Note">Fit with Note</option>
+                                        <option value="Unfit">Unfit</option>
+                                        <option value="Fit for Work">Fit for Work</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group row mb-4 col-12">
                                 <label for="input" class="col-form-label col-2" style="text-align:right">FILTER AS DISEASE :</label>
                                 <div class="col-sm-4">
                                     <select class="form-control" id="filterdisease" name="filterdisease">
@@ -119,11 +136,6 @@ function getNumberToName($employee, $disease, $deptlist, $employ, $dises, $depar
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
-                            </div>
-
-                            <div class="form-group row mb-4 col-12">
-                                <div class="col-6">
-                                </div>
 
                                 <div class="col-6">
                                     <button class="btn btn-warning col-sm-4 float-right" name="searchVal" value="1">SEARCH</button>
@@ -132,30 +144,35 @@ function getNumberToName($employee, $disease, $deptlist, $employ, $dises, $depar
                             </div>
                             <?php if($search != NULL):?>
                                 <?php 
-                                $GET_FIND = getNumberToName($employee, $disease, $deptlist, $search[1], $search[2], $search[3]);
+                                $GET_FIND = getNumberToName($employee, $disease, $deptlist, $search[2], $search[3], $search[4]);
                                 if(empty($search[0])){
                                     $period = '-';
                                 }else{
                                     $period = $search[0];
                                 }
+                                if(empty($search[1])){
+                                    $status = '-';
+                                }else{
+                                    $status = $search[1];
+                                }
                                 ?>
                                 <div class="form-grup row mb-2 col-12">
                                     <div class="col-9">
                                         <div class="card ml-3" style="background-color: white;">
-                                            <h6 class="m-2"><b>Filtered by: &nbsp; MCU Period: <span class="text-success"><?=$period?></span> &nbsp;NIK: <span class="text-success"><?= $GET_FIND[0]?></span> &nbsp;Dept: <span class="text-success"><?= $GET_FIND[2]?></span> &nbsp;Disease: <span class="text-success"><?= $GET_FIND[1]?></span> &nbsp;</b></h6>
+                                            <h6 class="m-2"><b>Filtered by: &nbsp; MCU Period: <span class="text-success"><?=$period?></span> &nbsp;NIK: <span class="text-success"><?= $GET_FIND[0]?></span> &nbsp;Dept: <span class="text-success"><?= $GET_FIND[2]?></span> &nbsp;Disease: <span class="text-success"><?= $GET_FIND[1]?></span> &nbsp;Status: <span class="text-success"><?=$status?></span></b></h6>
                                         </div>
                                     </div>
                                     <div class="col-3">
-                                        <a href="<?=base_url('performance_management/Doctor_health_followup')?>" class="btn btn-danger float-right">Reset to Default</a>
+                                        <a href="<?=base_url('performance_management/Medical_checkup/mcu_record')?>" class="btn btn-danger float-right">Reset to Default</a>
                                     </div>
                                 </div>
                             <?php endif;?>
                         </form>
 
-
                         <div class="card" style="background-color: white;">
+                        
                             <div class="card-body">
-                                <table id="follupdata" class="table table-striped table-bordered table-hover">
+                                <table id="mcudata" class="table table-striped table-bordered table-hover">
                                     <thead class="align-middle">
                                         <tr class="table-primary align-middle" style="text-align: center;">
                                             <th scope="col">NO.</th>
@@ -165,14 +182,15 @@ function getNumberToName($employee, $disease, $deptlist, $employ, $dises, $depar
                                             <th scope="col">ADDRESS</th>
                                             <th scope="col">HEALTH STATUS</th>
                                             <th scope="col">IDENTIFIED DISEASE</th>
-                                            <th scope="col">DOCTOR NOTE</th>
+                                            <!-- <th scope="col">DOCTOR NOTE</th> -->
                                             <th scope="col">ACTION</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-
-                                    <?php $no = 1; foreach($unfit_followup as $lm) : ?>
+                                    <?php $alertX = 0;?>
+                                    <?php $no = 1; foreach($listmcu as $lm) : ?>
                                         <?php if($struk == NULL):?>
+                                            <?php $alertX = 1;?>
                                             <tr>
                                                 <th class="text-center" style="width: 2%;"><?php echo $no++ ?></th>
                                                 <th class="text-center"><?php echo $lm->txtNameEmployee ?></th>
@@ -181,23 +199,22 @@ function getNumberToName($employee, $disease, $deptlist, $employ, $dises, $depar
                                                 <td class="text-center"><?php echo $lm->txtAlamat1 ?> <?php echo $lm->txtAlamat2 ?></td> 
                                                 <td class="text-center"><?php echo $lm->health_status ?></td>
                                                 <td class="text-center">
-                                                    <?php 
-                                                        
-                                                        $data_array = explode(",",$lm->identified_disease);
-                                                        foreach ($data_array as $i=>$value){
-                                                            if($i > 0){
-                                                                echo ", ";
+                                                        <?php 
+                                                            
+                                                            $data_array = explode(",",$lm->identified_disease);
+                                                            foreach ($data_array as $i=>$value){
+                                                                if($i > 0){
+                                                                    echo ", ";
+                                                                }
+                                                                echo $penyakit[$value];
                                                             }
-                                                            echo $penyakit[$value];
-                                                        }
 
-                                                    ?>
+                                                        ?>
                                                 </td>
-                                                <td class="text-center"><?php echo $lm->doctor_note ?></td>
                                                 <td class="text-center">
                                                     <div class="btn-group">
                                                     <a class="btn btn-xs btn-danger btnDelete mx-1" data-id="<?= $lm->id?>"><i class="fas fa-trash-alt"></i></a>
-                                                    <a class="btn btn-xs btn-warning btnEdit mx-1" title="Update" data-toggle="modal" data-target="#modaledit<?php echo $lm->id ?>"><i class="fas fa-pen"></i></a>
+                                                    <a class="btn btn-xs btn-warning btnEdit mx-1" href="<?= base_url('performance_management/medical_checkup/edit/'.$lm->id)?>"><i class="fas fa-pen"></i></a>
                                                     <a href="<?= base_url('upload_file/mcuReport/').$lm->mcu_report ?>" target="_blank()" class="btn btn-xs btn-success mx-1"><i class="fa fa-download"></i></a>
                                                     </div>
                                                 </td>
@@ -206,6 +223,7 @@ function getNumberToName($employee, $disease, $deptlist, $employ, $dises, $depar
                                             <?php $data_array = explode(",",$lm->identified_disease);?>
                                             <?php $x = in_array($struk['intidDisease'], $data_array);?>
                                             <?php if($x):?>
+                                                <?php $alertX = 1;?>
                                                 <tr>
                                                     <th class="text-center" style="width: 2%;"><?php echo $no++ ?></th>
                                                     <th class="text-center"><?php echo $lm->txtNameEmployee ?></th>
@@ -214,20 +232,19 @@ function getNumberToName($employee, $disease, $deptlist, $employ, $dises, $depar
                                                     <td class="text-center"><?php echo $lm->txtAlamat1 ?> <?php echo $lm->txtAlamat2 ?></td> 
                                                     <td class="text-center"><?php echo $lm->health_status ?></td>
                                                     <td class="text-center">
-                                                        <?php 
-                                                            
-                                                            
-                                                            foreach ($data_array as $i=>$value){
+                                                            <?php 
                                                                 
-                                                                        if($i > 0){
-                                                                            echo ", ";
-                                                                        }
-                                                                        echo $penyakit[$value];
-                                                            }
+                                                                
+                                                                foreach ($data_array as $i=>$value){
+                                                                    
+                                                                            if($i > 0){
+                                                                                echo ", ";
+                                                                            }
+                                                                            echo $penyakit[$value];
+                                                                }
 
-                                                        ?>
+                                                            ?>
                                                     </td>
-                                                    <td class="text-center"><?php echo $lm->doctor_note ?></td>
                                                     <td class="text-center">
                                                         <div class="btn-group">
                                                         <a class="btn btn-xs btn-danger btnDelete mx-1" data-id="<?= $lm->id?>"><i class="fas fa-trash-alt"></i></a>
@@ -236,133 +253,118 @@ function getNumberToName($employee, $disease, $deptlist, $employ, $dises, $depar
                                                         </div>
                                                     </td>
                                                 </tr>
-                                            <?php endif ?>
-                                        <?php endif ?>
+                                            <?php endif;?>
+                                        <?php endif;?>
                                     <?php endforeach; ?>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
 
-                        <button class="btn btn-danger mr-2 col-2">DOWNLOAD TO PDF</button>
+                        <button class="btn btn-danger mr-2 col-2" onclick="pdf()">DOWNLOAD TO PDF</button>
 
                     </div>
+                <!--PERSONAL MCU RECORD-->
+                
                 </div>
-                <!--/.CLINIC VISIT PERFORMANCE-->
-
-                <!-- DOCTOR CONTROL PERFORMANCE-->
-                <div class="tab-pane fade" id="doctor-control-performance" role="tabpanel" aria-labelledby="custom-content-above-home-tab">
-                    <!-- form -->
-                    <form class="form-horizontal" method="post">
-                        <!--card body-->
-
-                        <!-- /.card-body -->
-                    </form>
-                    <!--/.form-->
-                </div>
-                <!--/.DOCTOR CONTROL PERFORMANCE-->
-
+                <!--/.PERSONAL MCU RECORD-->
             </div>
-            <!--/.TAB CONTENT-->
         </div>
-
     </section>
-    <!-- /.content -->
-
 </div>
-<!-- /.content-wrapper -->
-
-<!-- Modal -->
-<?php $no = 1; foreach($unfit_followup as $lm) : $no++;?>
-<div class="modal fade" id="modaledit<?php echo $lm->id ?>">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Action for Unfit Employee</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <br>
-                <table>
-                    <thead class="align-middle">
-                        <tr class="table-primary table-bordered align-middle" style="text-align: center;">
-                            <th scope="col" style="width: 15%">NAME</th>
-                            <th scope="col" style="width: 20%">DEPARTEMENT</th>
-                            <th scope="col">AGE</th>
-                            <th scope="col" style="width: 30%">ADDRESS</th>
-                            <th scope="col">HEALTH STATUS</th>
-                            <th scope="col">IDENTIFIED DISEASE</th>
-                        </tr>
-                    </thead>
-                    <tbody class="table-bordered">
-                        <tr>
-                            <th class="text-center"><?php echo $lm->txtNameEmployee ?></th>
-                            <td class="text-center"><?php echo $lm->txtNamaDepartement ?></td>  
-                            <td class="text-center"><?php echo $lm->age ?></td> 
-                            <td class="text-center"><?php echo $lm->txtAlamat1 ?> <?php echo $lm->txtAlamat2 ?></td> 
-                            <td class="text-center"><?php echo $lm->health_status ?></td>
-                            <td class="text-center"><?php echo $lm->txtNamaDisease ?></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>    
-                <h5><b>DOCTOR NOTE:</b></h5>
-                <form class="form-horizontal" method="post" action="<?php echo base_url().'performance_management/doctor_health_followup/action_followup'; ?>">
-                    <input type="hidden" name="id" class="form-control" value="<?php echo $lm->id ?>">
-                    <textarea class="col-12 form-control" type="text" name="doctor_note" id="doctor_note" placeholder="Add Action/Treatment to do.."><?= $lm->doctor_note ?></textarea>
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="submit" id="savenote" class="btn btn-primary" onclick="funcClick()">Save changes</button>
-                    </div>
-                </form> 
-            </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
-<?php endforeach; ?>
-<!-- /.modal -->
 
 <!-- Page specific script -->
-<!-- <script src="https://cdn.datatables.net/plug-ins/1.12.1/dataRender/ellipsis.js"></script>
+
+<script src="<?= base_url('assets/templates') ?>/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="<?= base_url('assets/templates') ?>/plugins/pdfmake/vfs_fonts.js"></script>
+
+<script src="<?= base_url('assets/templates') ?>/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="<?= base_url('assets/templates') ?>/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="<?= base_url('assets/templates') ?>/plugins/jszip/jszip.min.js"></script>
+
+<script src="<?= base_url('assets/templates') ?>/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="<?= base_url('assets/templates') ?>/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="<?= base_url('assets/templates') ?>/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 <script>
-    $('#follupdata').DataTable( {
-    paging: true,
-    lengthChange: false,
-    searching: false,
-    ordering: true,
-    info: true,
-    autoWidth: false,
-    responsive: true,
-    columnDefs: [ {
-    targets: [1,4],
-    render: $.fn.dataTable.render.ellipsis( 10 )
-    } ]
-} );
-</script> -->
-<script>
-$(document).ready( function () {
-  var table = $('#follupdata').DataTable({
-        paging: true,
-        lengthChange: false,
-        searching: false,
-        ordering: true,
-        info: true,
-        autoWidth: false,
-        responsive: true
-        // columnDefs:[{targets:[1,4],className:"truncate"}],
-        // createdRow: function(row){
-        // var td = $(row).find(".truncate");
-        // td.attr("title", td.html());
-        // }
-    });
+$(function () {
+$('#mcudata').DataTable({
+    "paging": true,
+    "lengthChange": false,
+    "searching": false,
+    "ordering": true,
+    "info": true,
+    "autoWidth": false,
+    "responsive": true,
+    "buttons": ["pdf", "print"]
+}).buttons().container().appendTo('#mcudata_wrapper .col-md-6:eq(0)');
 });
 </script>
 
+<script>
+    $(document).ready(function() {
+        //Initialize Select2 Elements
+    $('.js-example-basic-single').select2({
+    theme: 'bootstrap4'
+    })
+    });
+</script>
 
-<!-- <script type="text/javascript">
-    function getdata()
-</script> -->
+<script>
+// event klik delete
+$('body').on('click', '.btnDelete', function () {
+    var id = $(this).data('id');
+    var name = $(this).data('name');
+    Swal.fire({
+        title: 'Are you sure?',
+        text: `The Type ${name}, will delete!`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "POST",
+                url: "<?= base_url() ?>performance_management/medical_checkup/destroy",
+                data: {
+                    id: id
+                },
+                dataType: "json",
+                success: function (response) {
+                    if (response.code == 200) {
+                        var icon = 'success';
+                        var title = 'Deleted';
+                        var text = response.msg;
+                    } else if (response.code == 400) {
+                        var icon = 'error';
+                        var title = 'Error';
+                        var text = response.msg;
+                    }
+                    Swal.fire({
+                        icon: icon,
+                        title: title,
+                        text: text
+                    }).then(function (isConfirm) {
+                        location.reload();
+                    })
+                }
+            })
+        }
+    })
+})
+</script>
+
+<script>
+    $(document).ready(function(){
+        var search = "<?php echo json_encode($alertX)?>";
+        if(search < 1){
+            Swal.fire({
+            icon: 'error',
+            title: 'Sorry',
+            text: 'Data not found!',
+            })
+        }
+        
+    })
+</script>
