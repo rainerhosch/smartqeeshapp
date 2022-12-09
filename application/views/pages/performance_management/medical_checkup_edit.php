@@ -11,8 +11,8 @@
                 <div class="col-sm-12 py-2 mt-2" style="background-color: rgb(66, 66, 66);">
                     <ol class="breadcrumb  float-sm-left">
                         <li class="breadcrumb-item"><a href="<?=base_url('performance_management/dashboard')?>">PERFORMANCE MANAGEMENT</a></li>
-                        <li class="breadcrumb-item text-white">MEDICAL CHECKUP</li>
-                        <li class="breadcrumb-item text-white">INPUT DATA MCU</li>
+                        <li class="breadcrumb-item"><a href="<?=base_url('performance_management/medical_checkup/mcu_record')?>">MCU RECORD</a></li>
+                        <li class="breadcrumb-item text-white">EDIT DATA</li>
                     </ol>
                 </div>
             </div>
@@ -25,16 +25,7 @@
             <!--TAB-->
             <ul class="nav nav-tabs bg-secondary " id="custom-content-above-tab" role="tablist" style="margin-bottom: -1px;">
                 <li class="nav-item">
-                    <a class="nav-link bg-secondary active-tab btn btn-flat active" id="custom-content-above-home-tab" href="<?=base_url('performance_management/Medical_checkup')?>">INPUT DATA PERSONAL MCU</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link bg-secondary active-tab btn btn-flat" id="custom-content-above-home-tab" href="<?=base_url('performance_management/Medical_checkup/mcu_record')?>">PERSONAL MCU RECORD</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link bg-secondary active-tab btn btn-flat" id="custom-content-above-home-tab" href="<?=base_url('performance_management/Medical_checkup/mcu_perf')?>">MCU PERFORMANCE</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link bg-secondary active-tab btn btn-flat" id="custom-content-above-home-tab" href="<?=base_url('performance_management/Medical_checkup/unfit_followup')?>">UNFIT FOLLOWUP</a>
+                    <a class="nav-link bg-secondary active-tab btn btn-flat active" id="custom-content-above-home-tab" href="#">EDIT DATA PERSONAL MCU</a>
                 </li>
             </ul>
             <!--/.TAB-->
@@ -42,18 +33,22 @@
             <div class="tab-content" id="custom-content-above-tabContent">
 
                 <!--INPUT DATA PERSONAL MCU-->
-                <div class="tab-pane fade show active" id="input-data-personal-mcu" role="tabpanel" aria-labelledby="custom-content-above-home-tab">
+                <div class="tab-pane fade show active" id="edit-data-personal-mcu" role="tabpanel" aria-labelledby="custom-content-above-home-tab">
                     <!-- form -->
-                    <form class="form-horizontal" method="post" action="<?php echo base_url().'performance_management/medical_checkup/input_data'; ?>" enctype="multipart/form-data">
+                    <form class="form-horizontal" method="post" action="<?php echo base_url().'performance_management/Medical_checkup/update'; ?>" enctype="multipart/form-data">
                         <!--card body-->
                         <div class="card-body" style="background-color: #77a0e6;">
                             <div class="form-group row">
                                 <label for="input" class="col-sm-2 col-form-label" style="text-align:right">EMPLOYEE NUMBER :</i> </label>
+                                <input type="hidden" name="id" class="form-control" value="<?php echo $mcup->id ?>">
                                 <div class="col-sm-2">
-                                    <select class="form-control js-example-basic-single" id="nik" name="nik" placeholder="" style="width:100%" onchange="myFunction()" required>
-                                        <option value="" selected disabled>Select</option>
-                                        <?php foreach($employee as $em):?>
-                                        <option value="<?php echo $em['intIdEmployee'] ?>"><?php echo $em['txtNikEmployee'] ?></option>
+                                    <select class="form-control js-example-basic-single" id="nik" name="nik" placeholder="TEXT" style="width: 100%" onchange="myFunction()" required>
+                                        <?php foreach($employe as $em):?>
+                                            <?php if($em['intIdEmployee'] == $mcup->intIdEmployee):?>
+                                                <option value="<?php echo $em['intIdEmployee'] ?>" selected><?php echo $em['txtNikEmployee'] ?></option>
+                                            <?php else:?>
+                                                <option value="<?php echo $em['intIdEmployee'] ?>"><?php echo $em['txtNikEmployee'] ?></option>
+                                            <?php endif;?>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
@@ -61,29 +56,29 @@
                             <div class="form-group row">
                                 <label for="input" class="col-sm-2 col-form-label" style="text-align:right">NAME :</i> </label>
                                 <div class="col-sm-2">
-                                    <input type="text" class="form-control" id="name" name="employee_name" placeholder="" readonly>
+                                    <input type="text" class="form-control" id="name" name="employee_name" placeholder="TEXT" readonly>
                                 </div>
 
                                 <label for="input" class="col-sm-2 col-form-label" style="text-align:right">DEPARTEMENT :</i> </label>
                                 <div class="col-sm-2">
-                                    <input type="text" class="form-control" id="department" name="department" placeholder="" readonly>
+                                    <input type="text" class="form-control" id="department" name="department" placeholder="TEXT" readonly>
                                 </div>
 
                                 <label for="input" class="col-sm-2 col-form-label" style="text-align:right">AGE :</i> </label>
                                 <div class="col-sm-2">
-                                    <input type="text" class="form-control" id="age" name="age" placeholder="" readonly>
+                                    <input type="text" class="form-control" id="age" name="age" placeholder="TEXT" readonly>
                                     <input type="hidden" id="datenow" value="<?php echo date('Y-m-d')?>">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="input" class="col-sm-2 col-form-label" style="text-align:right">ADDRESS :</i> </label>
                                 <div class="col-sm-2">
-                                    <textarea rows="3" class="form-control" id="address" name="address" placeholder="" readonly></textarea>
+                                    <textarea rows="3" class="form-control" id="address" name="address" placeholder="TEXT" readonly></textarea>
                                 </div>
 
                                 <label for="input" class="col-sm-2 col-form-label" style="text-align:right">SERVICE PERIOD :</i> </label>
                                 <div class="col-sm-2">
-                                    <input type="text" class="form-control" id="serviceperiod" name="service_period" placeholder="" readonly>
+                                    <input type="text" class="form-control" id="serviceperiod" name="service_period" placeholder="TEXT" value="<?= $mcup->service_period?>" required>
                                 </div>
                             </div>
 
@@ -92,15 +87,18 @@
                             <div class="form-group row">
                                 <label for="input" class="col-sm-2 col-form-label" style="text-align:right">MCU PERIOD :</label>
                                 <div class="col-sm-2">
-                                    <input type="text" class="form-control" id="mcuperiod" name="mcu_period" placeholder="Select Date of Mcu first" readonly required>
+                                    <input type="text" class="form-control" id="mcuperiod" name="mcu_period" placeholder="Select Date of Mcu first" value="<?= $mcup->mcu_period ?>" readonly required>
                                 </div>
 
                                 <label for="input" class="col-sm-2 col-form-label" style="text-align:right">MCU TYPE :</label>
                                 <div class="col-sm-2">
-                                    <select class="form-control" id="mcutype" name="mcu_type" placeholder="TEXT" required>
-                                        <option value="" selected disabled>Select</option>
-                                        <?php foreach($type as $type):?>
-                                        <option value="<?php echo $type['idMcuType'] ?>"><?php echo $type['type'] ?></option>
+                                    <select class="form-control js-example-basic-single" id="mcutype" name="mcu_type" style="width: 100%" required>
+                                    <?php foreach($type as $type):?>
+                                        <?php if($type['idMcuType'] == $mcup->mcu_type):?>
+                                            <option value="<?php echo $type['idMcuType'] ?>" selected><?php echo $type['type'] ?></option>
+                                        <?php else:?>
+                                            <option value="<?php echo $type['idMcuType'] ?>"><?php echo $type['type'] ?></option>
+                                        <?php endif;?>
                                     <?php endforeach; ?>
                                     </select>
                                 </div>
@@ -109,16 +107,19 @@
                                 <label for="input" class="col-sm-2 col-form-label" style="text-align:right">HOSPITAL :</label>
                                 <div class="col-sm-2">
                                     <select class="form-control js-example-basic-single" id="hospital" name="hospital" style="width: 100%" required>
-                                    <option value="" selected disabled>Select</option>
                                     <?php foreach($hospital as $hpt):?>
-                                        <option value="<?php echo $hpt['IdHospital'] ?>"><?php echo $hpt['HospitalName'] ?></option>
+                                        <?php if($hpt['IdHospital'] == $mcup->hospital):?>
+                                            <option value="<?php echo $hpt['IdHospital'] ?>" selected><?php echo $hpt['HospitalName'] ?></option>
+                                        <?php else:?>
+                                            <option value="<?php echo $hpt['IdHospital'] ?>"><?php echo $hpt['HospitalName'] ?></option>
+                                        <?php endif;?>
                                     <?php endforeach; ?>
                                     </select>
                                 </div>
 
                                 <label for="input" class="col-sm-2 col-form-label" style="text-align:right">DATE OF MCU :</label>
                                 <div class="col-sm-2">
-                                    <input type="date" name="mcu_date" class="form-control" id="datemcu" onchange="yearperiod()" required>
+                                    <input type="date" name="mcu_date" class="form-control" id="datemcu" onchange="yearperiod()" value="<?= $mcup->mcu_date?>"required>
                                 </div>
                             </div>
 
@@ -128,30 +129,43 @@
                                 <label for="input" class="col-sm-2 col-form-label" style="text-align:right">HEALTH STATUS :</label>
                                 <div class="col-sm-2">
                                     <select class="form-control" id="healthstatus" name="health_status" placeholder="TEXT" required>
-                                    <option value="" selected disabled>Select</option>
-                                        <option value="Fit with Note">Fit with Note</option>
-                                        <option value="Unfit">Unfit</option>
-                                        <option value="Fit for Work">Fit for Work</option>
+                                        <?php if($mcup->health_status=='Fit with Note'):?>
+                                            <option value="Fit with Note" selected>Fit with Note</option>
+                                            <option value="Unfit">Unfit</option>
+                                            <option value="Fit for Work">Fit for Work</option>
+                                        <?php elseif($mcup->health_status=='Unfit'):?>
+                                            <option value="Fit with Note">Fit with Note</option>
+                                            <option value="Unfit" selected>Unfit</option>
+                                            <option value="Fit for Work">Fit for Work</option>
+                                        <?php elseif($mcup->health_status=='Fit for Work'):?>
+                                            <option value="Fit with Note">Fit with Note</option>
+                                            <option value="Unfit">Unfit</option>
+                                            <option value="Fit for Work" selected>Fit for Work</option>
+                                        <?php endif;?>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="input" class="col-sm-2 col-form-label" style="text-align:right">IDENTIFIED DISEASE :</label>
                                 <div class="col-sm-2">
-                                    <select class="form-control js-example-basic-single" id="identified_disease" multiple="multiple" name="identified_disease[]" style="width:100%" data-placeholder="Select Disease" required>
+                                    <select class="form-control js-example-basic-single" multiple="multiple"  id="identified_disease" name="identified_disease[]" style="width: 100%" required>
                                         <?php foreach($disease as $dis):?>
-                                        <option value="<?php echo $dis['intidDisease'] ?>"><?php echo $dis['txtNamaDisease'] ?></option>
+                                            <?php if($dis['intidDisease'] == $mcup->identified_disease):?>
+                                                <option value="<?php echo $dis['intidDisease'] ?>" selected><?php echo $dis['txtNamaDisease'] ?></option>
+                                            <?php else:?>
+                                                <option value="<?php echo $dis['intidDisease'] ?>"><?php echo $dis['txtNamaDisease'] ?></option>
+                                            <?php endif;?>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
                                 <div class="col-sm-2">
-                                    <a class="btn btn-md btn-warning btnAdd" title="Add Disease" data-toggle="modal"><i class="fa fa-plus"></i></a> 
+                                <a class="btn btn-md btn-warning btnAdd" title="Add Disease" data-toggle="modal"><i class="fa fa-plus"></i></a> 
                                 </div> 
                             </div>
                             <div class="form-group row">
                                 <label for="input" class="col-sm-2 col-form-label" style="text-align:right">TREATMENT:</label>
                                 <div class="col-sm-2">
-                                    <textarea rows="3" class="form-control" id="treatment" name="treatment" placeholder="Input Treatment Recomendation" required></textarea>
+                                    <textarea rows="3" class="form-control" id="treatment" name="treatment" placeholder="TEXT" required><?= $mcup->treatment?></textarea>
                                 </div>
                             </div>
 
@@ -172,6 +186,7 @@
                                 <button type="reset" class="btn btn-warning float-right">Reset</button>
                             </div>
                             <!--/.Button-->
+                            
                         </div>
                         <!-- /.card-body -->
                     </form>
@@ -199,7 +214,6 @@
     <!-- /.content -->
 
 </div>
-
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="modalAddMenuTitle" aria-hidden="true">
 	<div class="modal-dialog" role="document">
@@ -239,11 +253,50 @@
 		</div>
 	</div>
 </div>
-
 <!-- /.content-wrapper -->
+<script>
+    window.onload = (event) =>{
+        y = nik.value;
+    z = y.length;
+    
+    
+        $.ajax({
 
-<!-- script -->
+            url: base,
+            type: 'POST',
+            dataType:'json',
+            data: {kode: y},
+            success: function(data) {
+                if(data == ''){
+                    nik.value = '';
+                }else{
+                    document.getElementById('name').value = data.txtNameEmployee;
+                    document.getElementById('address').value = data.txtAlamat1+data.txtAlamat2;
+                    document.getElementById('department').value = data.txtNamaDepartement;
+                    var date = data.dtmTanggalLahir;
+                    var age = document.getElementById('datenow').value;
+                    var yearDb = date.substring(0,4);
+                    var yearNow = age.substring(0,4);
+                    var monthDb = date.substring(5,7);
+                    var monthNow = age.substring(5,7);
+                    var dayDb = date.substring(8,10);
+                    var dayNow = age.substring(8,10);
+                    if(monthNow >= monthDb){
+                        if(dayNow >= dayDb){
+                            var agenow = yearNow - yearDb;
+                        }else{
+                            var agenow = yearNow - yearDb - 1;
+                        }
+                    }else{
+                        var agenow = yearNow - yearDb - 1;
+                    }
+                    document.getElementById('age').value = agenow;
+                }
+            }
 
+        });
+};
+</script>
 <script>
     $(document).ready(function() {
         //Initialize Select2 Elements
@@ -252,15 +305,16 @@ $('.js-example-basic-single').select2({
 })
     });
 </script>
-
 <script type="text/javascript">
+
 
     var base = '<?php echo base_url('performance_management/Medical_checkup/getIdEmployee') ?>';
 
     function myFunction() {
     y = nik.value;
     z = y.length;
-        
+    
+    
         $.ajax({
 
             url: base,
@@ -326,65 +380,58 @@ $('.js-example-basic-single').select2({
 
         document.getElementById("mcuperiod").value = datearray[0];
     }
-
 </script>
 
 <script>
-$(document).ready(function () {
-    $.ajax({
-        type: "POST",
-        url: "<?= base_url() ?>manajemen/disease/get_json",
-        dataType: "json",
-        success: function (response) {
-            
-            // event Klik tombol add
-            $('.btnAdd').on('click', function () {
-                $('.modal-title').text('Tambah Penyakit');
-                $('#intidDisease').val('');
-                $('#txtNamaDisease').val('');
-                $('#txtMedicalTerm').val('');
-                $('#myModal').modal('show');
-            })
+	$(document).ready(function () {
+		$.ajax({
+			type: "POST",
+			url: "<?= base_url() ?>manajemen/disease/get_json",
+			dataType: "json",
+			success: function (response) {
+				
+				// event Klik tombol add
+				$('.btnAdd').on('click', function () {
+					$('.modal-title').text('Tambah Penyakit');
+					$('#intidDisease').val('');
+					$('#txtNamaDisease').val('');
+					$('#txtMedicalTerm').val('');
+					$('#myModal').modal('show');
+				})
 
-            // event submit
-            $('#myForm').on('submit', function (e) {
-                e.preventDefault();
-                var id = $('#intidDisease').val();
-                var form = $('#myForm');
-                $.ajax({
-                    type: "POST",
-                    url: "<?= base_url() ?>manajemen/disease/store",
-                    data: form.serializeArray(),
-                    dataType: "json",
-                    success: function (response) {
-                        if (response.code == 200) {
-                            var icon = 'success';
-                            var title = 'Success';
-                            var text = response.msg;
-                        } else if (response.code == 400) {
-                            var icon = 'error';
-                            var title = 'Error';
-                            var text = response.msg;
-                        }
-                        Swal.fire({
-                            icon: icon,
-                            title: title,
-                            text: text
-                        }).then(function (isConfirm) {
-                            location.reload();
-                        })
-                    }
-                })
+				// event submit
+				$('#myForm').on('submit', function (e) {
+					e.preventDefault();
+					var id = $('#intidDisease').val();
+					var form = $('#myForm');
+					$.ajax({
+						type: "POST",
+						url: "<?= base_url() ?>manajemen/disease/store",
+						data: form.serializeArray(),
+						dataType: "json",
+						success: function (response) {
+							if (response.code == 200) {
+								var icon = 'success';
+								var title = 'Success';
+								var text = response.msg;
+							} else if (response.code == 400) {
+								var icon = 'error';
+								var title = 'Error';
+								var text = response.msg;
+							}
+							Swal.fire({
+								icon: icon,
+								title: title,
+								text: text
+							}).then(function (isConfirm) {
+								location.reload();
+							})
+						}
+					})
 
-            })
-        }
-    });
-});
+				})
+			}
+		});
+	});
 
-</script>
-
-<script>
-$(function () {
-  bsCustomFileInput.init();
-});
 </script>

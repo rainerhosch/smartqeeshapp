@@ -11,8 +11,8 @@
                 <div class="col-sm-12 py-2 mt-2" style="background-color: rgb(66, 66, 66);">
                     <ol class="breadcrumb  float-sm-left">
                         <li class="breadcrumb-item"><a href="<?= base_url('performance_management/dashboard') ?>">PERFORMANCE MANAGEMENT</a></li>
-                        <li class="breadcrumb-item text-white">INTERNAL CLINIC</li>
-                        <li class="breadcrumb-item text-white">EMPLOYEE VISIT</li>
+                        <li class="breadcrumb-item text-white"><a href="<?= base_url('performance_management/internal_clinic/visit_record') ?>">CLINIC VISIT RECORD</a></li>
+                        <li class="breadcrumb-item text-white">EDIT DATA</li>
                     </ol>
                 </div>
             </div>
@@ -32,7 +32,7 @@
                     <a class="nav-link bg-secondary active-tab btn" id="custom-content-above-home-tab" href="<?=base_url('performance_management/Internal_clinic/visit_record')?>">CLINIC VISIT RECORD</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link bg-secondary active-tab btn " id="custom-content-above-home-tab" href="<?=base_url('performance_management/Internal_clinic/visit_perf')?>">CLINIC VISIT PERFORMANCE</a>
+                    <a class="nav-link bg-secondary active-tab btn" id="custom-content-above-home-tab" href="<?=base_url('performance_management/Internal_clinic/visit_perf')?>">CLINIC VISIT PERFORMANCE</a>
                 </li>
             </ul>
             <!--/.TAB-->
@@ -42,19 +42,23 @@
                 <!-- EMPLOYEE VISIT CLINIC-->
                 <div class="tab-pane fade show active" id="employee-visit-clinic" role="tabpanel" aria-labelledby="custom-content-above-home-tab">
                     <!-- form -->
-                    <form class="form-horizontal" method="post" action="<?php echo base_url().'performance_management/internal_clinic/input_data'; ?>" enctype="multipart/form-data">
+                    <form class="form-horizontal" method="post" action="<?php echo base_url().'performance_management/internal_clinic/update_data'; ?>" enctype="multipart/form-data">
                     <!--card body-->
                     <div class="card-body" style="background-color: #77a0e6;">
 
                         <div class="form-group row">
                             <label for="input" class="col-sm-2 col-form-label" style="text-align:right">EMPLOYEE NUMBER :</i> </label>
+                            <input type="hidden" name="internalclinic_id" class="form-control" value="<?php echo $clinicedit->internalclinic_id ?>">
                             <div class="col-sm-2">
                                 <select class="form-control js-example-basic-single" id="nik" name="nik" placeholder="TEXT" onchange="myFunction()" required>
-                                    <option>SELECT</option>
                                     <?php foreach ($employee as $em) : ?>
-                                        <option value="<?php echo $em['intIdEmployee'] ?>">
+                                        <?php if($em['intIdEmployee'] == $clinicedit->intIdEmployee):?>
+                                        <option value="<?php echo $em['intIdEmployee'] ?>" selected>
                                             <?php echo $em['txtNikEmployee'] ?>
                                         </option>
+                                        <?php else:?>
+                                                <option value="<?php echo $em['intIdEmployee'] ?>"><?php echo $em['txtNikEmployee'] ?></option>
+                                            <?php endif;?>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
@@ -158,6 +162,49 @@
 <!-- /.content-wrapper -->
 
 <!-- Page Specific Script -->
+<script>
+    window.onload = (event) =>{
+    y = nik.value;
+    z = y.length;
+    
+    
+        $.ajax({
+
+            url: base,
+            type: 'POST',
+            dataType:'json',
+            data: {kode: y},
+            success: function(data) {
+                if(data == ''){
+                    nik.value = '';
+                }else{
+                    document.getElementById('name').value = data.txtNameEmployee;
+                    document.getElementById('address').value = data.txtAlamat1+data.txtAlamat2;
+                    document.getElementById('department').value = data.txtNamaDepartement;
+                    var date = data.dtmTanggalLahir;
+                    var age = document.getElementById('datenow').value;
+                    var yearDb = date.substring(0,4);
+                    var yearNow = age.substring(0,4);
+                    var monthDb = date.substring(5,7);
+                    var monthNow = age.substring(5,7);
+                    var dayDb = date.substring(8,10);
+                    var dayNow = age.substring(8,10);
+                    if(monthNow >= monthDb){
+                        if(dayNow >= dayDb){
+                            var agenow = yearNow - yearDb;
+                        }else{
+                            var agenow = yearNow - yearDb - 1;
+                        }
+                    }else{
+                        var agenow = yearNow - yearDb - 1;
+                    }
+                    document.getElementById('age').value = agenow;
+                }
+            }
+
+        });
+};
+</script>
 <script>
     $(document).ready(function() {
         //Initialize Select2 Elements

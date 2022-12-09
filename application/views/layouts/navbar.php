@@ -3,6 +3,9 @@
         <li class="nav-item">
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link btn" href=<?= base_url('Dashboard')?> role="button"><b>DASHBOARD</b></a>
+        </li>
     </ul>
     <!-- <h3 style="margin-bottom: 0px; color: #767171;"><?= $page; ?></h3> -->
     <ul class="navbar-nav ml-auto">
