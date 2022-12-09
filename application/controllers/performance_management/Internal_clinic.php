@@ -41,10 +41,62 @@ class Internal_clinic extends CI_Controller
 
     public function visit_record()
     {
-        $data['listintclinic'] = $this->M_internal_clinic->get_list_intclinic();
         $data['employee'] = $this->M_internal_clinic->get_employeenik();
         $data['deptlist'] = $this->M_internal_clinic->get_deptlist();
         $data['disease'] = $this->M_internal_clinic->get_disease();
+
+        $buttonSRCH = $this->input->post('searchVal', true);
+        if ($buttonSRCH != '1') {
+            $data['disease'] = $this->M_internal_clinic->get_disease();
+            $array_penyakit = array();
+            foreach ($data['disease'] as $i => $penyakit) {
+                $array_penyakit[$penyakit['intidDisease']] = $penyakit['txtNamaDisease'];
+            }
+            $data['listintclinic'] = $this->M_internal_clinic->get_list_intclinic();
+            $data['penyakit'] = $array_penyakit;
+            $data['struk'] = NULL;
+            $data['search'] = NULL;
+        } else {
+            $idDate = $this->input->post('filterdate', true);
+            $idDept = $this->input->post('dept', true);
+            $idNik = $this->input->post('nik', true);
+            $idDisease = $this->input->post('filterdisease', true);
+
+            $data['search'] = [$idDate, $idNik, $idDisease, $idDept];
+            $data['struk'] = $this->M_internal_clinic->getWhere_disease($idDisease);
+            $data['disease'] = $this->M_internal_clinic->get_disease();
+
+            $array_penyakit = array();
+            foreach ($data['disease'] as $i => $penyakit) {
+                $array_penyakit[$penyakit['intidDisease']] = $penyakit['txtNamaDisease'];
+            }
+            $data['penyakit'] = $array_penyakit;
+            $this->db->select('*');
+            $this->db->from('trinternalclinic m');
+            $this->db->join('mEmployee e', 'm.intIdEmployee = e.intIdEmployee');
+            $this->db->join('mDepartemen d', 'e.intIdDepartment = d.intIdDepartement');
+            $this->db->join('mDisease f', 'm.idcomplaint = f.intidDisease');
+            $this->db->join('mMedicine o', 'm.idMedicine = o.idObat');
+
+            if (!empty($idStatus)) {
+                $this->db->where('m.health_status', $idStatus);
+            }
+            // if(!empty($idDisease)) {
+            //     $this->db->where('m.idcomplaint', $idDisease);
+            // }
+            if (!empty($idDate)) {
+                // $ymd = explode("-", $idPeriod);
+                // $RESULTEXPL = $ymd[0];
+                $this->db->where('m.date', $$idDate);
+            }
+            if (!empty($idDept)) {
+                $this->db->where('e.intIdDepartment', $idDept);
+            }
+            if (!empty($idNik)) {
+                $this->db->where('e.intIdEmployee', $idNik);
+            }
+            $data['listintclinic'] = $this->db->get()->result();
+        }
 
         $data['title'] = 'Smart Qeesh App';
         $data['page'] = 'Home';
@@ -63,31 +115,27 @@ class Internal_clinic extends CI_Controller
         $data['listintclinic'] = $this->M_internal_clinic->get_list_intclinic();
         $data['paramedic'] = $this->M_internal_clinic->get_paramedic();
 
+        $data['actionperf'] = $this->M_internal_clinic->get_actionperf();
+        $array_action = array();
+        $array_actiontotal = array();
+        foreach ($data['actionperf'] as $i => $action) {
+            $array_action[$i] = $action['txtNamaDepartement'];
+
+            $array_actiontotal[$i] = $this->db->get_where('trMcu', ['intIdEmployee' => $action['intIdEmployee']])->num_rows();
+        }
+        $data['action'] = json_encode($array_action);
+        $data['actiontotal'] = json_encode($array_actiontotal);
+
         $array_penyakit = array();
         $array_total = array();
-        foreach ($data['intclinic'] as $i=>$penyakit)
-        {
+        foreach ($data['intclinic'] as $i => $penyakit) {
             $array_penyakit[$i] = $penyakit['txtNamaDisease'];
 
             $array_total[$i] = $this->db->get_where('trinternalclinic', ['idcomplaint' => $penyakit['intidDisease']])->num_rows();
-
-            
         }
         $data['penyakit'] = json_encode($array_penyakit);
         $data['total'] = json_encode($array_total);
 
-        foreach ($data['intclinic'] as $i=>$penyakit)
-        {
-            $array_penyakit[$i] = $penyakit['txtNamaDisease'];
-
-            $array_total[$i] = $this->db->get_where('trinternalclinic', ['idcomplaint' => $penyakit['intidDisease']])->num_rows();
-
-            
-        }
-        $data['penyakit'] = json_encode($array_penyakit);
-        $data['total'] = json_encode($array_total);
-        
-        
         $data['title'] = 'Smart Qeesh App';
         $data['page'] = 'Home';
         $data['subpage'] = 'Blank Page';
@@ -111,9 +159,34 @@ class Internal_clinic extends CI_Controller
         redirect('performance_management/Internal_clinic');
     }
 
+    public function destroy()
+    {
+        if ($this->input->is_ajax_request()) {
+            $id = $this->input->post('internalclinic_id');
+            if ($id) {
+                $this->M_internal_clinic->destroy($id);
+                $data = [
+                    'code' => 200,
+                    'status' => true,
+                    'msg' => 'Data berhasil dihapus',
+                    'data' => NULL
+                ];
+            } else {
+                // jika id tidak ada
+                $data = [
+                    'code' => 400,
+                    'status' => false,
+                    'msg' => 'Data tidak ditemukan',
+                    'data' => NULL
+                ];
+            }
+            echo json_encode($data);
+        }
+    }
+
     public function edit($internalclinic_id)
     {
-        $where = array('internalclinic_id' =>$internalclinic_id); 
+        $where = array('internalclinic_id' => $internalclinic_id);
 
         $data['clinicedit'] = $this->M_internal_clinic->edit_data($where, $this->table)->row();
 

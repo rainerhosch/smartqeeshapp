@@ -25,16 +25,16 @@
             <!--TAB-->
             <ul class="nav nav-tabs bg-secondary " id="custom-content-above-tab" role="tablist" style="margin-bottom: -1px;">
                 <li class="nav-item">
-                    <a class="nav-link bg-secondary active-tab btn btn-flat active" id="custom-content-above-home-tab" href="<?=base_url('performance_management/Medical_checkup')?>">INPUT DATA PERSONAL MCU</a>
+                    <a class="nav-link bg-secondary active-tab btn active" id="custom-content-above-home-tab" href="<?=base_url('performance_management/Medical_checkup')?>">INPUT DATA PERSONAL MCU</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link bg-secondary active-tab btn btn-flat" id="custom-content-above-home-tab" href="<?=base_url('performance_management/Medical_checkup/mcu_record')?>">PERSONAL MCU RECORD</a>
+                    <a class="nav-link bg-secondary active-tab btn" id="custom-content-above-home-tab" href="<?=base_url('performance_management/Medical_checkup/mcu_record')?>">PERSONAL MCU RECORD</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link bg-secondary active-tab btn btn-flat" id="custom-content-above-home-tab" href="<?=base_url('performance_management/Medical_checkup/mcu_perf')?>">MCU PERFORMANCE</a>
+                    <a class="nav-link bg-secondary active-tab btn " id="custom-content-above-home-tab" href="<?=base_url('performance_management/Medical_checkup/mcu_perf')?>">MCU PERFORMANCE</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link bg-secondary active-tab btn btn-flat" id="custom-content-above-home-tab" href="<?=base_url('performance_management/Medical_checkup/unfit_followup')?>">UNFIT FOLLOWUP</a>
+                    <a class="nav-link bg-secondary active-tab btn" id="custom-content-above-home-tab" href="<?=base_url('performance_management/Medical_checkup/unfit_followup')?>">UNFIT FOLLOWUP</a>
                 </li>
             </ul>
             <!--/.TAB-->
@@ -50,7 +50,7 @@
                             <div class="form-group row">
                                 <label for="input" class="col-sm-2 col-form-label" style="text-align:right">EMPLOYEE NUMBER :</i> </label>
                                 <div class="col-sm-2">
-                                    <select class="form-control js-example-basic-single" id="nik" name="nik" placeholder="" style="width:100%" onchange="myFunction()" required>
+                                    <select class="form-control js-example-basic-single" id="nik" name="nik" placeholder="" onchange="myFunction()" required>
                                         <option value="" selected disabled>Select</option>
                                         <?php foreach($employee as $em):?>
                                         <option value="<?php echo $em['intIdEmployee'] ?>"><?php echo $em['txtNikEmployee'] ?></option>
@@ -108,7 +108,7 @@
                             <div class="form-group row">
                                 <label for="input" class="col-sm-2 col-form-label" style="text-align:right">HOSPITAL :</label>
                                 <div class="col-sm-2">
-                                    <select class="form-control js-example-basic-single" id="hospital" name="hospital" style="width: 100%" required>
+                                    <select class="form-control js-example-basic-single" id="hospital" name="hospital" required>
                                     <option value="" selected disabled>Select</option>
                                     <?php foreach($hospital as $hpt):?>
                                         <option value="<?php echo $hpt['IdHospital'] ?>"><?php echo $hpt['HospitalName'] ?></option>
@@ -138,7 +138,7 @@
                             <div class="form-group row">
                                 <label for="input" class="col-sm-2 col-form-label" style="text-align:right">IDENTIFIED DISEASE :</label>
                                 <div class="col-sm-2">
-                                    <select class="form-control js-example-basic-single" id="identified_disease" multiple="multiple" name="identified_disease[]" style="width:100%" data-placeholder="Select Disease" required>
+                                    <select class="form-control js-example-basic-single" id="identified_disease" multiple="multiple" name="identified_disease[]" data-placeholder="Select Disease" required>
                                         <?php foreach($disease as $dis):?>
                                         <option value="<?php echo $dis['intidDisease'] ?>"><?php echo $dis['txtNamaDisease'] ?></option>
                                         <?php endforeach; ?>

@@ -81,4 +81,18 @@ class Activity extends CI_Controller
 					];
 		echo json_encode($response);
 	}
+
+	public function cekActivityHasInput()
+	{
+		$where = [
+			"intIdActivityRisk" => $this->input->get('intIdActivityRisk'),			
+		];
+		$response = [
+						'code' => 200,
+						'status' => '',
+						'msg' => 'Berhasil disimpan.',
+						'data' => $this->activity->cek_activity_risk($where)->num_rows()
+					];
+		echo json_encode($response);
+	}
 }

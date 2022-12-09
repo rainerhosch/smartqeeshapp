@@ -287,8 +287,8 @@ class Medical_checkup extends CI_Controller
             'age'                => $age
         );
         $where = array( 'id' => $id ); 
-        $this->M_mcu->update_data($where,$data,'trMcu'); 
-        $this->session->set_flashdata('flash', 'diupdate');
+        $this->M_mcu->update_data($where,$data,'trMcu');
+        $this->session->set_flashdata('flash', 'diupdate'); 
         redirect('performance_management/medical_checkup/mcu_record');
     }
 

@@ -32,7 +32,11 @@
                     <a class="nav-link bg-secondary active-tab btn" id="custom-content-above-home-tab" href="<?=base_url('performance_management/Internal_clinic/visit_record')?>">CLINIC VISIT RECORD</a>
                 </li>
                 <li class="nav-item">
+<<<<<<< HEAD
                     <a class="nav-link bg-secondary active-tab btn" id="custom-content-above-home-tab" href="<?=base_url('performance_management/Internal_clinic/visit_perf')?>">CLINIC VISIT PERFORMANCE</a>
+=======
+                    <a class="nav-link bg-secondary active-tab btn " id="custom-content-above-home-tab" href="<?=base_url('performance_management/Internal_clinic/visit_perf')?>">CLINIC VISIT PERFORMANCE</a>
+>>>>>>> bca37a622ebfd82a2afa783f54460924ea57b1b8
                 </li>
             </ul>
             <!--/.TAB-->

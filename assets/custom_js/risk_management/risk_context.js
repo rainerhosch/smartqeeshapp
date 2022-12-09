@@ -33,7 +33,11 @@ function p_InitiateDataListContext() {
 					},
 					{
 						render: function (data, type, full, meta) {
-							return `<a class="btn btn-primary" data-id="${full.intIdTrRiskContext}" data-nama="${full.txtNamaContext}" id="tombol_detail_context"><i class="fa fa-eye"></i></a>`
+							if (full.isInput > 0) {
+								return `<a class="btn btn-success" data-id="${full.intIdTrRiskContext}" data-nama="${full.txtNamaContext}" id="tombol_detail_context"><i class="fa fa-eye"></i></a>`
+							} else {
+								return `<a class="btn btn-primary" data-id="${full.intIdTrRiskContext}" data-nama="${full.txtNamaContext}" id="tombol_detail_context"><i class="fa fa-eye"></i></a>`
+							}							
 						},
 						className: 'text-center'
 					},

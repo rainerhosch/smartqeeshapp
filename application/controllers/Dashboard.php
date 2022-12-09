@@ -16,6 +16,7 @@ class Dashboard extends CI_Controller
         parent::__construct();
         login_check();
         $this->load->model('M_user', 'user');
+		// password_default();
     }
 
     public function index()

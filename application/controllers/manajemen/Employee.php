@@ -10,81 +10,81 @@ defined('BASEPATH') or exit('No direct script access allowed');
  *  Quots of the code     : 'sabar ya'
  */
 
-class Employee extends CI_Controller{
+class Employee extends CI_Controller
+{
 	public function __construct()
-    {
-        parent::__construct();
-        login_check();
-        $this->load->model('Manajemen/M_employee', 'employee');
+	{
+		parent::__construct();
+		login_check();
+		$this->load->model('Manajemen/M_employee', 'employee');
 		$this->load->model('Manajemen/M_negara', 'negara');
 		$this->load->model('Manajemen/M_lokasi', 'lokasi');
-		$this->load->model('M_user','user');
-    }
+		$this->load->model('M_user', 'user');
+		$this->load->model('Manajemen/M_jabatan', 'jabatan');
+	}
 
-    public function index()
-    {
-        $data['title'] = 'Smart Qeesh App';
-        $data['page'] = 'Manajemen';
-        $data['subpage'] = 'Employee';
-        $data['content'] = 'pages/manajemen/v_employee';
-        $this->load->view('template', $data);
-    }
+	public function index()
+	{
+
+		$this->load->helper('my');
+		kirimNotifikasiTeks('081919956872','Hello');
+		$data['title'] = 'Smart Qeesh App';
+		$data['page'] = 'Manajemen';
+		$data['subpage'] = 'Employee';
+		$data['content'] = 'pages/manajemen/v_employee';
+		$this->load->view('template', $data);
+	}
 
 	public function getDepartments()
-    {
-		$this->load->model('Manajemen/M_department','department');
-        if($this->input->is_ajax_request())
-        {
-            $data = [
-                'code' => 200,
-                'status' => true,
-                'msg' => 'Success',
-                'data' => $this->department->getsDepartmentActive()
-            ];
-        }
-        echo json_encode($data);
-    }
+	{
+		$this->load->model('Manajemen/M_department', 'department');
+		if ($this->input->is_ajax_request()) {
+			$data = [
+				'code' => 200,
+				'status' => true,
+				'msg' => 'Success',
+				'data' => $this->department->getsDepartmentActive()
+			];
+		}
+		echo json_encode($data);
+	}
 
-    public function get_json()
-    {
-        if($this->input->is_ajax_request())
-        {
-            $data = [
-                'code' => 200,
-                'status' => true,
-                'msg' => 'Success',
-                'data' => $this->employee->get()->result()
-            ];
-        }
-        echo json_encode($data);
-    }
+	public function get_json()
+	{
+		if ($this->input->is_ajax_request()) {
+			$data = [
+				'code' => 200,
+				'status' => true,
+				'msg' => 'Success',
+				'data' => $this->employee->get()->result()
+			];
+		}
+		echo json_encode($data);
+	}
 
 	public function show($id)
 	{
 		$data['employee'] = $this->employee->find(array('intIdEmployee' => $id))->row();
-		$this->load->view('pages/manajemen/employee/show',$data);
+		$this->load->view('pages/manajemen/employee/show', $data);
 	}
 
 	public function getEmployeeById()
 	{
-		if($this->input->is_ajax_request())
-        {
-			$id = $this->input->post('id');
-            $data = [
-                'code' => 200,
-                'status' => true,
-                'msg' => 'Success',
-                'data' => $this->employee->find($id)->row()
-            ];
-        }
-        echo json_encode($data);
-
+		if ($this->input->is_ajax_request()) {
+			$id = 258;
+			$data = [
+				'code' => 200,
+				'status' => true,
+				'msg' => 'Success',
+				'data' => $this->employee->find(array('intIdEmployee' => $id))->row()
+			];
+		}
+		echo json_encode($data);
 	}
 
 	public function store()
-    {
-        if($this->input->is_ajax_request())
-        {
+	{
+		if ($this->input->is_ajax_request()) {
 			$buatAkunUser = $this->input->post('buatAkunUser');
 			$KirimNotivikasiWa = $this->input->post('KirimNotivikasiWa');
 			$data = [
@@ -111,88 +111,82 @@ class Employee extends CI_Controller{
 				'intIdKota' => $this->input->post('intIdKota'),
 				'intIdJenjangPendidikan' => $this->input->post('intIdJenjangPendidikan')
 			];
-			if($KirimNotivikasiWa)
-			{
+			if ($KirimNotivikasiWa) {
 				$redirect = true;
-			}else{
+			} else {
 				$redirect = false;
 			}
 
 			//jika inputan negara adalah huruf, create
-			if(!is_numeric($data['intIdNegara']))
-			{
+			if (!is_numeric($data['intIdNegara'])) {
 				// create Negara
-				$kodeNegara = strtoupper(substr($data['intIdNegara'],0,2)) . rand(1,999);
+				$kodeNegara = strtoupper(substr($data['intIdNegara'], 0, 2)) . rand(1, 999);
 				$dataCreateNegara = [
-                    'txtKodeNegara' => $kodeNegara,
+					'txtKodeNegara' => $kodeNegara,
 					'txtNamaNegara' => $this->input->post('intIdNegara')
-                ];
-                $idNegara = $this->negara->create($dataCreateNegara);
-				if(!$idNegara)
-				$response = [
-					'code' => 400,
-					'status' => 'error',
-					'msg' => 'Negara gagal ditambahkan.',
-					'data' => NULL
 				];
+				$idNegara = $this->negara->create($dataCreateNegara);
+				if (!$idNegara)
+					$response = [
+						'code' => 400,
+						'status' => 'error',
+						'msg' => 'Negara gagal ditambahkan.',
+						'data' => NULL
+					];
 				$data['intIdNegara'] = $idNegara;
-			}else{
+			} else {
 				$data['intIdNegara'] = intval($this->input->post('intIdNegara'));
 			}
 
 			//jika inputan provinsi adalah huruf, create
-			if(!is_numeric($data['intIdProvinsi']))
-			{
+			if (!is_numeric($data['intIdProvinsi'])) {
 				// create Provinsi
 				$dataCreateProvinsi = [
-                    'intIdNegara' => $data['intIdNegara'],
+					'intIdNegara' => $data['intIdNegara'],
 					'txtNamaProvinsi' => $this->input->post('intIdProvinsi')
-                ];
-                $idProvinsi = $this->lokasi->createProvinsi($dataCreateProvinsi);
-				if(!$idProvinsi)
-				$response = [
-					'code' => 400,
-					'status' => 'error',
-					'msg' => 'Provinsi gagal ditambahkan.',
-					'data' => NULL
 				];
+				$idProvinsi = $this->lokasi->createProvinsi($dataCreateProvinsi);
+				if (!$idProvinsi)
+					$response = [
+						'code' => 400,
+						'status' => 'error',
+						'msg' => 'Provinsi gagal ditambahkan.',
+						'data' => NULL
+					];
 				$data['intIdProvinsi'] = $idProvinsi;
-			}else{
+			} else {
 				$data['intIdProvinsi'] = intval($this->input->post('intIdProvinsi'));
 			}
 
 
-			if(!is_numeric($data['intIdKota']))
-			{
+			if (!is_numeric($data['intIdKota'])) {
 				// create kota
 				$dataCreateKota = [
-                    'intIdProvinsi' => $data['intIdProvinsi'],
+					'intIdProvinsi' => $data['intIdProvinsi'],
 					'txtNamaKota' => $this->input->post('intIdKota')
-                ];
-                $idkota = $this->lokasi->createKota($dataCreateKota);
-				if(!$idkota)
-				$response = [
-					'code' => 400,
-					'status' => 'error',
-					'msg' => 'Kota gagal ditambahkan.',
-					'data' => NULL
 				];
+				$idkota = $this->lokasi->createKota($dataCreateKota);
+				if (!$idkota)
+					$response = [
+						'code' => 400,
+						'status' => 'error',
+						'msg' => 'Kota gagal ditambahkan.',
+						'data' => NULL
+					];
 				$data['intIdKota'] = $idkota;
-			}else{
+			} else {
 				$data['intIdKota'] = intval($this->input->post('intIdKota'));
 			}
 
-			
+
 			// echo json_encode($data);
 			// 	die();
-			
-            if($this->input->post('intIdEmployee'))
-            {
-                $id = $data['intIdEmployee'];
-                // proses update
-                $update =  $this->employee->update($id,$data);
-				if(!$update)
-				{
+
+			if ($this->input->post('intIdEmployee')) {
+				$id = $data['intIdEmployee'];
+				// proses update
+				$update =  $this->employee->update($id, $data);
+				if (!$update) {
 					$response = [
 						'code' => 400,
 						'status' => 'error',
@@ -202,17 +196,16 @@ class Employee extends CI_Controller{
 					echo json_encode($response);
 					die();
 				}
-                $response = [
-                    'code' => 200,
-                    'status' => 'success',
-                    'msg' => 'Employee berhasil diupdate',
-                    'data' => NULL
-                ];
-            }else{
-				
+				$response = [
+					'code' => 200,
+					'status' => 'success',
+					'msg' => 'Employee berhasil diupdate',
+					'data' => NULL
+				];
+			} else {
+
 				$nikValid = $this->employee->findByNik($this->input->post('txtNikEmployee'))->num_rows();
-				if($nikValid > 1)
-				{
+				if ($nikValid > 1) {
 					$response = [
 						'code' => 400,
 						'status' => 'error',
@@ -223,12 +216,11 @@ class Employee extends CI_Controller{
 					die();
 				}
 
-				
-				
-                $idEmp =  $this->employee->create($data);
+
+
+				$idEmp =  $this->employee->create($data);
 				$emp = $this->employee->find(array('intIdEmployee' => $idEmp))->row();
-				if(!$idEmp || !$emp)
-				{
+				if (!$idEmp || !$emp) {
 					$response = [
 						'code' => 400,
 						'status' => 'error',
@@ -238,15 +230,14 @@ class Employee extends CI_Controller{
 					echo json_encode($response);
 					die();
 				}
-				if($buatAkunUser)
-				{
+				if ($buatAkunUser) {
 					$explode = explode(" ", $emp->txtNameEmployee);
-					if(count($explode) > 2){
-						$username = strtolower($explode[0].$explode[1]) . rand(1,99);
-					}elseif(count($explode) == 2){
-						$username = strtolower($explode[0].$explode[1]) . rand(1,99);
-					}elseif(count($explode) == 1){
-						$username = strtolower($explode[0]) . rand(1,99);
+					if (count($explode) > 2) {
+						$username = strtolower($explode[0] . $explode[1]) . rand(1, 99);
+					} elseif (count($explode) == 2) {
+						$username = strtolower($explode[0] . $explode[1]) . rand(1, 99);
+					} elseif (count($explode) == 1) {
+						$username = strtolower($explode[0]) . rand(1, 99);
 					}
 
 					$dataUser = [
@@ -259,10 +250,10 @@ class Employee extends CI_Controller{
 						'last_login' => 0,
 						'ip_address' => 0
 					];
-				
-					$this->user->insert_data('user',$dataUser);
+
+					$this->user->insert_data('user', $dataUser);
 					$msg = 'Employee beserta akunnya berhasil ditambahkan.';
-				}else{
+				} else {
 					$msg = 'Employee berhasil ditambahkan.';
 				}
 				$response = [
@@ -273,57 +264,181 @@ class Employee extends CI_Controller{
 					'no_wa' => $emp->txtNomorWa,
 					'isiPesan' => 'Isi Pesan Wa'
 				];
-            }
+			}
 
-            echo json_encode($response);
-        }
-    }
+			echo json_encode($response);
+		}
+	}
 
 	public function destroy()
-    {
-        if($this->input->is_ajax_request())
-        {
-            $id = $this->input->post('id');
+	{
+		if ($this->input->is_ajax_request()) {
+			$id = $this->input->post('id');
 			$EmpId = $id;
-            if($id)
-            {
+			if ($id) {
 				$this->employee->destroy($id);
-                $data = [
-                    'code' => 200,
-                    'status' => true,
-                    'msg' => 'Employee sekaligus akun berhasil dihapus',
-                    'data' => NULL
-                ];
+				$data = [
+					'code' => 200,
+					'status' => true,
+					'msg' => 'Employee sekaligus akun berhasil dihapus',
+					'data' => NULL
+				];
 				// hapus user yang bersangkutan
 				$this->user->hapus_user($EmpId);
-            }else{
-                // jika id tidak ada
-                $data = [
-                    'code' => 400,
-                    'status' => false,
-                    'msg' => 'Employee tidak ditemukan',
-                    'data' => NULL
-                ];
-            }
-            echo json_encode($data);
-        }
+			} else {
+				// jika id tidak ada
+				$data = [
+					'code' => 400,
+					'status' => false,
+					'msg' => 'Employee tidak ditemukan',
+					'data' => NULL
+				];
+			}
+			echo json_encode($data);
+		}
+	}
 
-    }
+	public function search()
+	{
+		if ($this->input->is_ajax_request()) {
+			$keyword = $this->input->post('keyword');
+			$result  = $this->employee->search($keyword)->result();
+			$data = [
+				'code' => 200,
+				'status' => true,
+				'msg' => '',
+				'data' => $result
+			];
+			echo json_encode($data);
+		} else {
+			// add by oktan
+			$message_403 = "You don't have access to the url you where trying to reach.";
+			show_error($message_403, 403);
+		}
+	}
 
-    public function search()
-    {
-        if($this->input->is_ajax_request())
-        {
-            $keyword = $this->input->post('keyword');
-            $result  = $this->employee->search($keyword)->result();
-            $data = [
-                'code' => 200,
-                'status' => true,
-                'msg' => '',
-                'data' => $result
-            ];
-        }
+	// add by oktan
+	public function getData()
+	{
+		if ($this->input->is_ajax_request()) {
+			$data_post = $this->input->post();
+			$filter = null;
 
-        echo json_encode($data);
-    }
+			if (isset($data_post['filterby'])) {
+				$field_filter = 'intId' . $data_post['filterby'];
+				$filter = [
+					$field_filter => $data_post['id']
+				];
+			}
+			$result  = $this->employee->getData($filter)->result_array();
+			$data = [
+				'code' => 200,
+				'status' => true,
+				'msg' => '',
+				'data' => $result
+			];
+			echo json_encode($data);
+		} else {
+			$message_403 = "You don't have access to the url you where trying to reach.";
+			show_error($message_403, 403);
+		}
+	}
+
+	// add by oktan
+	public function getDataForAutoComplete()
+	{
+		if ($this->input->is_ajax_request()) {
+			$data_post = $this->input->post();
+			$filter = null;
+			$search = null;
+
+			if (isset($data_post['filterby'])) {
+				$field_filter = 'intId' . $data_post['filterby'];
+				$filter = [
+					$field_filter => $data_post['id']
+				];
+			}
+			if (isset($data_post['search'])) {
+				$search =  $data_post['search'];
+			}
+			$dataEmployee  = $this->employee->getData($filter, $search)->result_array();
+			foreach ($dataEmployee as $key => $value) {
+
+				$dataEmployee[$key]['label'] = $value['txtNameEmployee'];
+				$dataEmployee[$key]['value'] = $value['txtNameEmployee'];
+				$dataEmployee[$key]['id'] = $value['intIdEmployee'];
+				$dataEmployee[$key]['jabatan'] = $this->jabatan->find(['intIdJabatan' => $value['intIdJabatan']])->row_array();
+				$dataEmployee[$key]['umur'] = date('Y') - substr($value['dtmTanggalLahir'], 0, 4);
+				$dataEmployee[$key]['lama_bekerja'] = date('Y') - substr($value['dtmTanggalMasuk'], 0, 4);
+			}
+			$data = [
+				'code' => 200,
+				'status' => true,
+				'msg' => '',
+				'data' => $dataEmployee,
+			];
+			echo json_encode($data);
+		} else {
+			$message_403 = "You don't have access to the url you where trying to reach.";
+			show_error($message_403, 403);
+		}
+	}
+
+	public function create_user()
+	{
+		if($this->input->is_ajax_request())
+		{
+			$intIdEmployee = $this->input->post('intIdEmployee');
+			$username = $this->input->post('username');
+			$password = $this->input->post('password');
+			$is_active = $this->input->post('is_active');
+
+			// cek password apakah lebih dari 6 karakter
+			if(strlen($password) < 6)
+			{
+				$data = [
+					'code' => 400,
+					'status' => true,
+					'msg' => '',
+					'data' => NULL,
+				];
+
+				echo json_encode($data);
+			}
+			// cek password apakah default atau tidak
+			if($username === $password)
+			{
+				$isDefaultPassword = 1;
+			}else{
+				$isDefaultPassword = 0;
+			}
+			$data = [
+				'employee_id' => $intIdEmployee,
+				'username' => $username,
+				'password' => md5($password),
+				'is_active' => $is_active,
+				'role_id' => 3,
+				'date_created' => time(),
+				'isDefaultPassword' => $isDefaultPassword
+			];
+			$usr = $this->user->insert_data('user',$data);
+			if($usr)
+			{
+				$data = [
+					'code' => 200,
+					'status' => true,
+					'msg' => 'User has been created!',
+					'data' => NULL,
+				];
+			}else{
+				$data = [
+					'code' => 400,
+					'status' => false,
+					'msg' => 'User failed to created!',
+					'data' => NULL,
+				];
+			}
+			echo json_encode($data);
+		}
+	}
 }

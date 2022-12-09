@@ -327,6 +327,42 @@ function getNumberToName($employee, $disease, $deptlist, $employ, $dises, $depar
 <!-- /.modal -->
 
 <!-- Page specific script -->
+<!-- <script src="https://cdn.datatables.net/plug-ins/1.12.1/dataRender/ellipsis.js"></script>
+<script>
+    $('#follupdata').DataTable( {
+    paging: true,
+    lengthChange: false,
+    searching: false,
+    ordering: true,
+    info: true,
+    autoWidth: false,
+    responsive: true,
+    columnDefs: [ {
+    targets: [1,4],
+    render: $.fn.dataTable.render.ellipsis( 10 )
+    } ]
+} );
+</script> -->
+<!-- <script>
+$(document).ready( function () {
+  var table = $('#follupdata').DataTable({
+        paging: true,
+        lengthChange: false,
+        searching: false,
+        ordering: true,
+        info: true,
+        autoWidth: false,
+        responsive: true
+        // columnDefs:[{targets:[1,4],className:"truncate"}],
+        // createdRow: function(row){
+        // var td = $(row).find(".truncate");
+        // td.attr("title", td.html());
+        // }
+    });
+});
+</script> -->
+
+<!-- Page specific script -->
 <script src="<?= base_url('assets/templates') ?>/plugins/pdfmake/pdfmake.min.js"></script>
 <script src="<?= base_url('assets/templates') ?>/plugins/pdfmake/vfs_fonts.js"></script>
 

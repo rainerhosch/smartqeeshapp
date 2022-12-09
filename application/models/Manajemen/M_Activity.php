@@ -11,18 +11,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
  */
 class M_activity extends CI_Model
 {
-     var $table = 'mActivity'; //nama tabel dari database	
+	var $table = 'mActivity'; //nama tabel dari database	
 	var $column_order = array(null); //field yang ada di table user
 	var $column_search = array('mActivity.txtNamaActivity', 'mDepartemen.txtNamaDepartement', 'mSection.txtNamaSection'); //field yang diizin untuk pencarian 
 	var $order = array('dtmInsertedDate' => 'desc'); // default order 
 
 	private function _get_datatables_query()
 	{
-		$this->db->select("mActivity.intIdActivity, txtNamaActivity, mActivity.bitActive, txtNamaDepartement, txtNamaSection");          		
+		$this->db->select("mActivity.intIdActivity, txtNamaActivity, mActivity.bitActive, txtNamaDepartement, txtNamaSection");
 		$this->db->from($this->table);
 		$this->db->join("mDepartemen", "mActivity.intIdDepartement = mDepartemen.intIdDepartement");
-          $this->db->join("mSection", "mDepartemen.intIdSection = mSection.intIdSection");
-				
+		$this->db->join("mSection", "mDepartemen.intIdSection = mSection.intIdSection");
+
 		$i = 0;
 
 		foreach ($this->column_search as $item) // looping awal
@@ -67,7 +67,7 @@ class M_activity extends CI_Model
 			$row["intIdActivity"] 			= $field->intIdActivity;
 			$row["txtNamaSection"] 			= $field->txtNamaSection;
 			$row["txtNamaActivity"] 			= $field->txtNamaActivity;
-			$row["txtNamaDepartement"] 		= $field->txtNamaDepartement;			
+			$row["txtNamaDepartement"] 		= $field->txtNamaDepartement;
 			$data[] 						= $row;
 		}
 
@@ -91,48 +91,47 @@ class M_activity extends CI_Model
 	{
 		$this->db->from($this->table);
 		$this->db->join("mDepartemen", "mActivity.intIdDepartement = mDepartemen.intIdDepartement");
-          $this->db->join("mSection", "mDepartemen.intIdSection = mSection.intIdSection");	
+		$this->db->join("mSection", "mDepartemen.intIdSection = mSection.intIdSection");
 		return $this->db->count_all_results();
 	}
-     //CONTROL
-     public function validateDepartmentActivity($id_department, $nama_activity)
-     {
-          $this->db->where("intIdDepartement", $id_department);
-          $this->db->where("txtNamaActivity", $nama_activity);
-          return $this->db->get($this->table)->row_array();
-     }
+	//CONTROL
+	public function validateDepartmentActivity($id_department, $nama_activity)
+	{
+		$this->db->where("intIdDepartement", $id_department);
+		$this->db->where("txtNamaActivity", $nama_activity);
+		return $this->db->get($this->table)->row_array();
+	}
 
-     public function getsActivityActive()
-     {
-          return $this->db->get_where($this->table, ["bitActive" => true])->result();
-     }
+	public function getsActivityActive()
+	{
+		return $this->db->get_where($this->table, ["bitActive" => true])->result();
+	}
 
-     public function insertData($data)
-     {
-          $this->db->insert($this->table, $data);
-          return $this->db->insert_id();
-     }
+	public function insertData($data)
+	{
+		$this->db->insert($this->table, $data);
+		return $this->db->insert_id();
+	}
 
-     public function getActivity($id)
-     {
+	public function getActivity($id)
+	{
 		$this->db->join("mDepartemen", "mActivity.intIdDepartement = mDepartemen.intIdDepartement");
-          $this->db->join("mSection", "mDepartemen.intIdSection = mSection.intIdSection");
-          return $this->db->get_where($this->table, ["intIdActivity" => $id])->row_array();
-     }
+		$this->db->join("mSection", "mDepartemen.intIdSection = mSection.intIdSection");
+		return $this->db->get_where($this->table, ["intIdActivity" => $id])->row_array();
+	}
 
-     public function updateData($data, $id)
-     {
-          $this->db->update($this->table, $data, ["intIdActivity" => $id]);
-     }
+	public function updateData($data, $id)
+	{
+		$this->db->update($this->table, $data, ["intIdActivity" => $id]);
+	}
 
-     public function getActivityBySection($id)
-     {
-          return $this->db->get_where($this->table, ['intIdSection' => $id, "bitActive" => 1])->result_array();
-     }
+	public function getActivityBySection($id)
+	{
+		return $this->db->get_where($this->table, ['intIdSection' => $id, "bitActive" => 1])->result_array();
+	}
 
 	public function getActivityByDepartemen($id)
-     {
-          return $this->db->get_where($this->table, ['intIdDepartement' => $id, "bitActive" => 1])->result_array();
-		
-     }
+	{
+		return $this->db->get_where($this->table, ['intIdDepartement' => $id, "bitActive" => 1])->result_array();
+	}
 }

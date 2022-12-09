@@ -64,12 +64,14 @@ class M_activity_risk_register extends CI_Model
 		$data = array();
 		$no = $_POST['start'];
 		foreach ($list as $field) {
+			$data_has_input = $this->db->get_where('trTahapanProsesRisk', ["intIdActivityRisk" => $field->intIdActivityRisk])->num_rows();
 			$no++;
 			$row = array();
 			$row["no"] = $no;
 			$row["txtNamaActivity"] 	= $field->txtNamaActivity;
 			$row["intIdActivityRisk"] 	= $field->intIdActivityRisk;
 			$row["intIdActivity"] 		= $field->intIdActivity;
+			$row["isInput"]				= $data_has_input;
 			$data[] = $row;
 		}
 
@@ -156,7 +158,11 @@ class M_activity_risk_register extends CI_Model
 	{
 		$this->db->insert($this->table, $data);
 		$this->db->order_by('intIdActivityRisk', 'desc');
-		return $this->db->get_where($this->table, $data);
-		
+		return $this->db->get_where($this->table, $data);		
+	}
+
+	public function cek_activity_risk($where)
+	{
+		return $this->db->get_where('trTahapanProsesRisk', $where);
 	}
 }

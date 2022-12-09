@@ -103,6 +103,9 @@ function clear_input() {
 	$("#txtRiskLevel").val("");	
 	$("#intIdRiskAssessmentMatrix").val("");
 	$("#detail_risk_level>tbody").html("");
+	$("#list_treatment_current>tbody").html("");
+	$("#list_treatment_current>tbody").html("");
+	$("#list_treatment_future>tbody").html("");
 }
 
 function disableFieldForm() {

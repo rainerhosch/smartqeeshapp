@@ -45,5 +45,11 @@ class M_jenjang_pendidikan extends CI_Model{
         $this->db->from($this->table);
         return $this->db->get();
     }
-
+	public function checkJenjangPendidikan($id,$table,$column)
+	{
+		$this->db->select('*');
+		$this->db->from($table);
+		$this->db->where($column, $id);
+		return $this->db->get();
+	}
 }

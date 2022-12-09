@@ -91,7 +91,7 @@
 
                                     <div class="card-body col-lg-6" style="background-color: aliceblue; border-style: solid; border-width: thin;" width="100%">
                                         <h5 class="text-center"><b>NUMBER OF ACTION TAKEN</b></h5>
-                                        <div class="row mt-3" id="chart-wrapper">
+                                        <div class="row mt-2" id="chart-wrapper">
                                             <canvas class="p-1" id="pieChart" width="auto" height="auto">
                                             </canvas>
                                         </div>

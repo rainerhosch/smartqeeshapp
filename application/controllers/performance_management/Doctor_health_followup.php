@@ -78,7 +78,7 @@ class Doctor_health_followup extends CI_Controller
             $data['unfit_followup'] = $this->db->get()->result();
         }
         
-        $data['title'] = 'Smart Qeesh App - Doctor Health Followup';
+        $data['title'] = 'Smart Qeesh App';
         $data['page'] = 'Home';
         $data['subpage'] = 'Blank Page';
         // $data['user_divisi'] = 'CT-HSE';
@@ -115,13 +115,13 @@ class Doctor_health_followup extends CI_Controller
         {
             $array_penyakit[$i] = $penyakit['txtNamaDisease'];
             
-            $array_total[$i] = $this->db->get_where('trMcu', ['identified_disease' => $penyakit['intidDisease'], 'health_status' => 'Unfit'])->num_rows();            
+            $array_total[$i] = $this->db->get_where('trMcu', ['identified_disease' => $penyakit['intidDisease']])->num_rows();            
         }
         foreach ($data['actionperf'] as $i=>$action)
         {
             $array_action[$i] = $action['txtNamaDepartement'];
             
-            $array_actiontotal[$i] = $this->db->get_where('trMcu', ['intIdEmployee' => $action['intIdEmployee'], 'health_status' => 'Unfit', 'doctor_note !='=> NULL])->num_rows();
+            $array_actiontotal[$i] = $this->db->get_where('trMcu', ['intIdEmployee' => $action['intIdEmployee']])->num_rows();
         }
         $data['penyakit'] = json_encode($array_penyakit);
         $data['total'] = json_encode($array_total);
@@ -134,7 +134,7 @@ class Doctor_health_followup extends CI_Controller
 
         // var_dump($mcu);
         //$data['mcu']=$this->m_mcu->tampil_data()->result();
-        $data['title'] = 'Smart Qeesh App - Doctor Control Performance';
+        $data['title'] = 'Smart Qeesh App';
         $data['page'] = 'Home';
         $data['subpage'] = 'Blank Page';
         // $data['user_divisi'] = 'CT-HSE';

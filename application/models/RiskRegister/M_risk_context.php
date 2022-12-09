@@ -64,11 +64,13 @@ class M_risk_context extends CI_Model
 		$data = array();
 		$no = $_POST['start'];
 		foreach ($list as $field) {
+			$isInput = $this->db->get_where('trRiskIdentification', ["intIdTrRiskContext" => $field->intIdTrRiskContext])->num_rows();			
 			$no++;
 			$row 						= array();
 			$row["no"] 					= $no;
 			$row["txtNamaContext"] 		= $field->txtNamaContext;
 			$row["intIdTrRiskContext"] 	= $field->intIdTrRiskContext;
+			$row["isInput"] 			= $isInput;
 			$data[] 					= $row;
 		}
 

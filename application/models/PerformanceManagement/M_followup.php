@@ -7,7 +7,7 @@
         {
             $this->db->select('*');
             $this->db->from('trMcu m');
-            $this->db->where('m.health_status', 'Unfit');
+            $this->db->where('m.health_status', 'unfit');
             $this->db->join('mEmployee e', 'm.intIdEmployee = e.intIdEmployee');
             $this->db->join('mDepartemen d', 'e.intIdDepartment = d.intIdDepartement');
             $this->db->join('mDisease f', 'm.identified_disease = f.intidDisease');
@@ -76,7 +76,6 @@
             return $this->db->get()->result_array();
         }
 
-
         public function get_actionperf()
         {
             $this->db->select ('*, COUNT(*) as total');
@@ -91,8 +90,5 @@
     
             return $this->db->get()->result_array();
         }
-        
 
     }
-
-?>

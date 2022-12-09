@@ -31,6 +31,7 @@ class TahapanProses extends CI_Controller
 		$dateNow = date("Y-m-d");
 		$data = [
 			"intIdActivityRisk" 		=> $this->input->post('intIdActivityRisk'),
+			"intIdActivity" 			=> $this->input->post('intIdActivity'),
 			"txtTahapanProses" 			=> strtoupper($this->input->post('txtTahapanProses')),
 			"txtInsertedBy" 			=> $this->session->userdata('user_id'),
 			"dtmInsertedDate" 			=> $dateNow,
@@ -60,6 +61,21 @@ class TahapanProses extends CI_Controller
 						'status' => true,
 						'msg' => '',
 						'data' => $data
+					];
+		echo json_encode($response);
+	}
+
+	public function cekTahapanHasInput()
+	{
+		$where = [
+			"intIdTahapanProses" 	=> $this->input->get('intIdTahapanProses'),			
+			"intIdActivityRisk"		=> $this->input->get('intIdActivityRisk'),			
+		];
+		$response = [
+						'code' => 200,
+						'status' => '',
+						'msg' => 'Berhasil disimpan.',
+						'data' => $this->tahapan_proses->cek_tahapan_risk($where)
 					];
 		echo json_encode($response);
 	}
