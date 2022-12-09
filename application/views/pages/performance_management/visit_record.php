@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 <?php
 
 function getNumberToName($employee, $disease, $deptlist, $employ, $dises, $depart)
@@ -29,7 +27,6 @@ function getNumberToName($employee, $disease, $deptlist, $employ, $dises, $depar
 }
 ?>
 
->>>>>>> bca37a622ebfd82a2afa783f54460924ea57b1b8
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper" style="z-index: -999 !important;">
 
@@ -58,7 +55,6 @@ function getNumberToName($employee, $disease, $deptlist, $employ, $dises, $depar
             <!--TAB-->
             <ul class="nav nav-tabs bg-secondary " id="custom-content-above-tab" role="tablist" style="margin-bottom: -1px;">
                 <li class="nav-item">
-<<<<<<< HEAD
                     <a class="nav-link bg-secondary active-tab btn" id="custom-content-above-home-tab" href="<?=base_url('performance_management/Internal_clinic')?>">EMPLOYEE VISIT CLINIC</a>
                 </li>
                 <li class="nav-item">
@@ -66,67 +62,34 @@ function getNumberToName($employee, $disease, $deptlist, $employ, $dises, $depar
                 </li>
                 <li class="nav-item">
                     <a class="nav-link bg-secondary active-tab btn " id="custom-content-above-home-tab" href="<?=base_url('performance_management/Internal_clinic/visit_perf')?>">CLINIC VISIT PERFORMANCE</a>
-=======
-                    <a class="nav-link bg-secondary active-tab btn" id="custom-content-above-home-tab" href="<?= base_url('performance_management/Internal_clinic') ?>">EMPLOYEE VISIT CLINIC</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link bg-secondary active-tab btn active" id="custom-content-above-home-tab" href="<?= base_url('performance_management/Internal_clinic/visit_record') ?>">CLINIC VISIT RECORD</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link bg-secondary active-tab btn " id="custom-content-above-home-tab" href="<?= base_url('performance_management/Internal_clinic/visit_perf') ?>">CLINIC VISIT PERFORMANCE</a>
->>>>>>> bca37a622ebfd82a2afa783f54460924ea57b1b8
                 </li>
             </ul>
             <!--/.TAB-->
             <!--TAB CONTENT-->
             <div class="tab-content">
-<<<<<<< HEAD
-                
-                <!--CLINIC VISIT RECORD-->
-                <div>
-                    <div class="card-body" style="background-color: #77a0e6;">
-                        <form action="<?=base_url('performance_management/Medical_checkup/search')?>" method="post">
-=======
 
                 <!--CLINIC VISIT RECORD-->
                 <div>
                     <div class="card-body" style="background-color: #77a0e6;">
                         <form action="<?= base_url('performance_management/Internal_clinic/visit_record') ?>" method="post">
->>>>>>> bca37a622ebfd82a2afa783f54460924ea57b1b8
 
                             <div class="form-grup row mb-2 col-12">
                                 <label for="input" class="col-form-label col-2" style="text-align:right">FILTER AS DATE :</label>
                                 <div class="col-sm-4">
-<<<<<<< HEAD
-                                    <input class="form-control
-                                    " type="date" id="filterdate" name="filterdate">
-=======
                                     <input class="form-control" type="date" id="filterdate" name="filterdate">
->>>>>>> bca37a622ebfd82a2afa783f54460924ea57b1b8
                                 </div>
                                 <label for="input" class="col-form-label col-2" style="text-align:right">FILTER AS DEPT :</label>
                                 <div class="col-sm-4">
                                     <select class="form-control js-example-basic-single" id="dept" name="dept" placeholder="">
                                         <option value="" selected disabled>Select</option>
-<<<<<<< HEAD
-                                        <?php foreach($deptlist as $dept):?>
-                                        <option value="<?php echo $dept['intIdDepartement'] ?>"><?php echo $dept['txtNamaDepartement'] ?></option>
-=======
                                         <?php foreach ($deptlist as $dept) : ?>
                                             <option value="<?php echo $dept['intIdDepartement'] ?>"><?php echo $dept['txtNamaDepartement'] ?></option>
->>>>>>> bca37a622ebfd82a2afa783f54460924ea57b1b8
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
                             </div>
 
                             <div class="form-grup row mb-2 col-12">
-<<<<<<< HEAD
-                                <label for="input" class="col-form-label col-2" style="text-align:right">FILTER AS NIK :</label>
-                                <div class="col-sm-4">
-                                        <input type="INPUT NIK" name="keyword_nik" class="form-control"
-                                        placeholder="Search">
-=======
                                 <!-- <label for="input" class="col-form-label col-2" style="text-align:right">FILTER AS NIK :</label>
                                 <div class="col-sm-4">
                                         <input type="INPUT NIK" name="keyword_nik" class="form-control"
@@ -140,18 +103,13 @@ function getNumberToName($employee, $disease, $deptlist, $employ, $dises, $depar
                                             <option value="<?php echo $em['intIdEmployee'] ?>"><?php echo $em['txtNikEmployee'] ?></option>
                                         <?php endforeach; ?>
                                     </select>
->>>>>>> bca37a622ebfd82a2afa783f54460924ea57b1b8
                                 </div>
 
                                 <label for="input" class="col-form-label col-2" style="text-align:right">FILTER AS COMPLAINT :</label>
                                 <div class="col-sm-4">
                                     <select class="form-control" id="filterdisease" name="filterdisease">
                                         <option value="" selected disabled>Select</option>
-<<<<<<< HEAD
-                                        <?php foreach($disease as $dis):?>
-=======
                                         <?php foreach ($disease as $dis) : ?>
->>>>>>> bca37a622ebfd82a2afa783f54460924ea57b1b8
                                             <option value="<?php echo $dis['intidDisease'] ?>"><?php echo $dis['txtNamaDisease'] ?></option>
                                         <?php endforeach; ?>
                                     </select>
@@ -160,14 +118,6 @@ function getNumberToName($employee, $disease, $deptlist, $employ, $dises, $depar
 
                             <div class="form-grup row mb-4 col-12">
                                 <div class="col-6">
-<<<<<<< HEAD
-                                    
-                                </div>
-                                <div class="col-6">
-                                    <button class="btn btn-warning col-sm-4 float-right">SEARCH</button>
-                                </div>
-                            </div>
-=======
 
                                 </div>
                                 <div class="col-6">
@@ -190,7 +140,6 @@ function getNumberToName($employee, $disease, $deptlist, $employ, $dises, $depar
                                     </div>
                                 </div>
                             <?php endif; ?>
->>>>>>> bca37a622ebfd82a2afa783f54460924ea57b1b8
                         </form>
 
                         <div class="card" style="background-color: white;">
@@ -214,25 +163,6 @@ function getNumberToName($employee, $disease, $deptlist, $employ, $dises, $depar
                                         $no = 1;
                                         foreach ($listintclinic as $licl) :
                                         ?>
-<<<<<<< HEAD
-                                            <tr>
-                                                <th class="text-center" style="width: 2%;"><?= $no++ ?></th>
-                                                <th class="text-center"><?= $licl->txtNameEmployee ?></th>
-                                                <td class="text-center"><?= $licl->txtNamaDepartement ?></td>
-                                                <td class="text-center"><?= $licl->age ?></td>
-                                                <td class="text-center"><?= $licl->txtAlamat1 ?> <?= $licl->txtAlamat2 ?></td>
-                                                <td class="text-center"><?= $licl->txtNamaDisease ?></td>
-                                                <td class="text-center"><?= $licl->action ?></td>
-                                                <td class="text-center"><?= $licl->namaObat ?></td>
-                                                <td class="text-center">
-                                                    <div class="btn-group">
-                                                    <a class="btn btn-xs btn-danger btnDelete mx-1" data-id="<?= $licl->internalclinic_id?>"><i class="fas fa-trash-alt"></i></a>
-                                                    <a class="btn btn-xs btn-warning btnEdit mx-1" href="<?= base_url('performance_management/internal_clinic/edit/'.$licl->internalclinic_id)?>"><i class="fas fa-pen"></i></a>
-                                                    <a href="#" target="_blank()" class="btn btn-xs btn-success mx-1"><i class="fa fa-download"></i></a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-=======
                                             <?php if ($struk == NULL) : ?>
                                                 <tr>
                                                     <th class="text-center" style="width: 2%;"><?= $no++ ?></th>
@@ -294,7 +224,6 @@ function getNumberToName($employee, $disease, $deptlist, $employ, $dises, $depar
                                                     </tr>
                                                 <?php endif; ?>
                                             <?php endif; ?>
->>>>>>> bca37a622ebfd82a2afa783f54460924ea57b1b8
                                         <?php endforeach; ?>
                                     </tbody>
                                 </table>
@@ -311,29 +240,11 @@ function getNumberToName($employee, $disease, $deptlist, $employ, $dises, $depar
             <!--/.TAB CONTENT-->
         </div>
     </section>
-<<<<<<< HEAD
-        <!-- /.content -->
-=======
     <!-- /.content -->
->>>>>>> bca37a622ebfd82a2afa783f54460924ea57b1b8
 </div>
 <!-- /.content-wrapper -->
 
 <!-- Page specific script -->
-<<<<<<< HEAD
-<script>
-$(function () {
-$('#visitdata').DataTable({
-    "paging": true,
-    "lengthChange": false,
-    "searching": false,
-    "ordering": true,
-    "info": true,
-    "autoWidth": false,
-    "responsive": true
-});
-});
-=======
 <script src="<?= base_url('assets/templates') ?>/plugins/pdfmake/pdfmake.min.js"></script>
 <script src="<?= base_url('assets/templates') ?>/plugins/pdfmake/vfs_fonts.js"></script>
 
@@ -426,5 +337,4 @@ $('#visitdata').DataTable({
         }
 
     })
->>>>>>> bca37a622ebfd82a2afa783f54460924ea57b1b8
 </script>
