@@ -14,8 +14,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	<link rel="stylesheet" href="<?= base_url('assets/templates') ?>/plugins/fontawesome-free/css/all.min.css">
 	<link rel="stylesheet" href="<?= base_url('assets/templates') ?>/css/adminlte.min.css">
 	<link rel="stylesheet" href="<?= base_url('assets/templates') ?>/css/templates.css">
+
+	<!-- Select2 -->
+	<link rel="stylesheet" href="<?= base_url('assets/templates') ?>/plugins/select2/css/select2.min.css">
+	<link rel="stylesheet" href="<?= base_url('assets/templates') ?>/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+	<!-- Datatables -->
+	<link rel="stylesheet" href="<?= base_url('assets/templates') ?>/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+	<link rel="stylesheet" href="<?= base_url('assets/templates') ?>/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+	<link rel="stylesheet" href="<?= base_url('assets/templates') ?>/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+
 	<link rel="stylesheet" href="<?= base_url('assets/templates') ?>/libs/jquery-ui/themes/base/jquery-ui.min.css">
-	<style>
+
+<style>
 		/* HIDDEN ARROW IN INPUT NUMBER */
 		/* Chrome, Safari, Edge, Opera */
 		input::-webkit-outer-spin-button,
