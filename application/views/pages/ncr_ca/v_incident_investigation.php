@@ -92,12 +92,18 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-12 bg-warning py-2">
-                    <h1 style="color: white;"><?= $menu_header ?></h1>
+                    <h1 style="color: white;">
+                        <?= $menu_header ?>
+                    </h1>
                 </div>
                 <div class="col-sm-12 py-2 mt-2" style="background-color: rgb(66, 66, 66);">
                     <ol class="breadcrumb  float-sm-left">
-                        <li class="breadcrumb-item"><a href="#"><?= $page ?></a></li>
-                        <li class="breadcrumb-item text-white"><?= $subpage ?></li>
+                        <li class="breadcrumb-item"><a href="#">
+                                <?= $page ?>
+                            </a></li>
+                        <li class="breadcrumb-item text-white">
+                            <?= $subpage ?>
+                        </li>
                     </ol>
                 </div>
             </div>
@@ -122,38 +128,53 @@
         <div class="card">
             <ul class="nav nav-tabs" id="custom-content-above-tab" role="tablist" style="margin-bottom: -1px;">
                 <li class="nav-item">
-                    <a class="nav-link btn" id="custom-content-above-home-tab" data-toggle="pill" href="#form_investigation" role="tab" aria-controls="custom-content-above-home" aria-selected="true">INVESTIGATION FORM</a>
+                    <a class="nav-link btn" id="custom-content-above-home-tab" data-toggle="pill"
+                        href="#form_investigation" role="tab" aria-controls="custom-content-above-home"
+                        aria-selected="true">INVESTIGATION FORM</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" id="custom-content-above-home-tab" data-toggle="pill" href="#tabel-data-activity" role="tab" aria-controls="custom-content-above-home" aria-selected="true">INCIDENT RECORD</a>
+                    <a class="nav-link active" id="custom-content-above-home-tab" data-toggle="pill"
+                        href="#tabel-data-activity" role="tab" aria-controls="custom-content-above-home"
+                        aria-selected="true">INCIDENT RECORD</a>
                 </li>
             </ul>
             <div class="tab-content" id="custom-content-above-tabContent">
-                <div class="tab-pane  fade " id="form_investigation" role="tabpanel" aria-labelledby="custom-content-above-home-tab">
+                <div class="tab-pane  fade " id="form_investigation" role="tabpanel"
+                    aria-labelledby="custom-content-above-home-tab">
                     <!-- form -->
-                    <form class="form-horizontal" method="post" action="<?= base_url() ?>ncr_ca/Incident_Investigation/save_data" id="incidentForm" enctype="multipart/form-data">
+                    <form class="form-horizontal" method="post"
+                        action="<?= base_url() ?>ncr_ca/Incident_Investigation/save_data" id="incidentForm"
+                        enctype="multipart/form-data">
                         <!--card body-->
                         <div class="card-body" style="background-color: #a5c0d3;">
                             <div class="row">
-                                <label for="inputIncidentDate" class="col-sm-2 col-form-label" style="text-align:right">INCIDENT DATE:</i> </label>
+                                <label for="inputIncidentDate" class="col-sm-2 col-form-label"
+                                    style="text-align:right">INCIDENT DATE:</i> </label>
                                 <div class="col-sm-4">
-                                    <input type="date" class="form-control form-control-sm" id="inputIncidentDate" name="inputIncidentDate" required>
+                                    <input type="date" class="form-control form-control-sm" id="inputIncidentDate"
+                                        name="inputIncidentDate" required>
                                 </div>
 
-                                <label for="inputIncidentArea" class="col-sm-2 col-form-label" style="text-align:right">INCIDENT AREA :</i> </label>
+                                <label for="inputIncidentArea" class="col-sm-2 col-form-label"
+                                    style="text-align:right">INCIDENT AREA :</i> </label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control form-control-sm" id="inputIncidentArea" name="inputIncidentArea" placeholder="Insert area of incident" required>
+                                    <input type="text" class="form-control form-control-sm" id="inputIncidentArea"
+                                        name="inputIncidentArea" placeholder="Insert area of incident" required>
                                 </div>
                             </div>
                             <div class="row">
-                                <label for="inputIncidentTime" class=" col-sm-2 col-form-label" style="text-align:right">INCIDENT TIME :</i> </label>
+                                <label for="inputIncidentTime" class=" col-sm-2 col-form-label"
+                                    style="text-align:right">INCIDENT TIME :</i> </label>
                                 <div class="col-sm-4">
-                                    <input type="time" class="form-control form-control-sm" id="inputIncidentTime" name="inputIncidentTime" required>
+                                    <input type="time" class="form-control form-control-sm" id="inputIncidentTime"
+                                        name="inputIncidentTime" required>
                                 </div>
 
-                                <label for="inputIncidentPlant" class="col-sm-2 col-form-label" style="text-align:right">INCIDENT PLANT :</i> </label>
+                                <label for="inputIncidentPlant" class="col-sm-2 col-form-label"
+                                    style="text-align:right">INCIDENT PLANT :</i> </label>
                                 <div class="col-sm-4">
-                                    <select class="form-control form-control-sm" id="inputIncidentPlant" name="inputIncidentPlant" required>
+                                    <select class="form-control form-control-sm" id="inputIncidentPlant"
+                                        name="inputIncidentPlant" required>
                                     </select>
                                     <!-- <input type="text" class="form-control form-control-sm" id="inputIncidentPlant" name="inputIncidentPlant" placeholder="TEXT"> -->
                                 </div>
@@ -162,39 +183,55 @@
                             <div class="separator">Victim Information</div>
                             <div class="row mb-3">
                                 <div class="col-sm-6">
-                                    <label for="inputVictimFunction" class="col-form-label" style="text-align:right">FUNCTION:</i> </label>
-                                    <select class="form-control form-control-sm" id="inputVictimFunction" name="inputVictimFunction" placeholder="TEXT" required disabled>
+                                    <label for="inputVictimFunction" class="col-form-label"
+                                        style="text-align:right">FUNCTION:</i> </label>
+                                    <select class="form-control form-control-sm" id="inputVictimFunction"
+                                        name="inputVictimFunction" placeholder="TEXT" required disabled>
                                     </select>
                                 </div>
                                 <div class="col-sm-6">
-                                    <label for="inputVictimDepartment" class="col-form-label" style="text-align:right">DEPARTEMENT :</i> </label>
-                                    <select class="form-control form-control-sm" id="inputVictimDepartment" name="inputVictimDepartment" placeholder="TEXT" required disabled>
+                                    <label for="inputVictimDepartment" class="col-form-label"
+                                        style="text-align:right">DEPARTEMENT :</i> </label>
+                                    <select class="form-control form-control-sm" id="inputVictimDepartment"
+                                        name="inputVictimDepartment" placeholder="TEXT" required disabled>
                                     </select>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <label for="inputVictimName" class="col-form-label" style="text-align:right">NAME :</i> </label>
-                                    <input type="hidden" class="form-control form-control-sm" id="inputVictimId" name="inputVictimId">
-                                    <input type="text" class="form-control form-control-sm" id="inputVictimName" name="inputVictimName" placeholder="Search Name" required disabled>
+                                    <label for="inputVictimName" class="col-form-label" style="text-align:right">NAME
+                                        :</i> </label>
+                                    <input type="hidden" class="form-control form-control-sm" id="inputVictimId"
+                                        name="inputVictimId">
+                                    <input type="text" class="form-control form-control-sm" id="inputVictimName"
+                                        name="inputVictimName" placeholder="Search Name" required disabled>
                                 </div>
                                 <div class="col-sm-4">
-                                    <label for="inputEmplodeeNumber" class="col-form-label" style="text-align:right">EMPLOYEE NUMBER :</i> </label>
-                                    <input type="text" class="form-control form-control-sm" id="inputEmplodeeNumber" name="inputEmplodeeNumber" placeholder="Employee number" required>
+                                    <label for="inputEmplodeeNumber" class="col-form-label"
+                                        style="text-align:right">EMPLOYEE NUMBER :</i> </label>
+                                    <input type="text" class="form-control form-control-sm" id="inputEmplodeeNumber"
+                                        name="inputEmplodeeNumber" placeholder="Employee number" required>
                                 </div>
                                 <div class="col-sm-2">
-                                    <label for="inputVictimAge" class="col-form-label" style="text-align:right">AGE :</i> </label>
-                                    <input type="text" class="form-control form-control-sm" id="inputVictimAge" name="inputVictimAge" placeholder="Age of victim" required>
+                                    <label for="inputVictimAge" class="col-form-label" style="text-align:right">AGE
+                                        :</i> </label>
+                                    <input type="text" class="form-control form-control-sm" id="inputVictimAge"
+                                        name="inputVictimAge" placeholder="Age of victim" required>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <label for="inputEmployeeLevel" class="col-form-label" style="text-align:right">EMPLOYEE LEVEL :</i> </label>
-                                    <input type="text" class="form-control form-control-sm" id="inputEmployeeLevel" name="inputEmployeeLevel" placeholder="Employee level" required>
+                                    <label for="inputEmployeeLevel" class="col-form-label"
+                                        style="text-align:right">EMPLOYEE LEVEL :</i> </label>
+                                    <input type="text" class="form-control form-control-sm" id="inputEmployeeLevel"
+                                        name="inputEmployeeLevel" placeholder="Employee level" required>
                                 </div>
                                 <div class="col-sm-6">
-                                    <label for="inputVictimServicePeriod" class="col-form-label" style="text-align:right">SERVICE PERIOD :</i> </label>
-                                    <input type="text" class="form-control form-control-sm" id="inputVictimServicePeriod" name="inputVictimServicePeriod" placeholder="Service period" required>
+                                    <label for="inputVictimServicePeriod" class="col-form-label"
+                                        style="text-align:right">SERVICE PERIOD :</i> </label>
+                                    <input type="text" class="form-control form-control-sm"
+                                        id="inputVictimServicePeriod" name="inputVictimServicePeriod"
+                                        placeholder="Service period" required>
                                 </div>
                             </div>
 
@@ -202,56 +239,80 @@
                             <div class="separator">Incident Information</div>
                             <div class="row">
                                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="padding:0px">
-                                    <div class="short-div"><label for="inputInjuriedBodyPart" class="col-form-label" style="text-align:right">INJURED BODY PART :</label></div>
+                                    <div class="short-div"><label for="inputInjuriedBodyPart" class="col-form-label"
+                                            style="text-align:right">INJURED BODY PART :</label></div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="padding:0px">
                                     <div class="short-div">
-                                        <select multiple class="form-control form-control-sm selectpicker" id="inputInjuriedBodyPart" name="inputInjuriedBodyPart[]" required>
+                                        <select multiple class="form-control form-control-sm selectpicker"
+                                            id="inputInjuriedBodyPart" name="inputInjuriedBodyPart[]" required>
                                         </select>
                                     </div>
                                 </div>
-                                <label for="inputConditionOfWound" class="col-sm-2 col-form-label" style="text-align:right">CONDITION OF THE WOUND </label>
-                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><textarea class="form-control" id="inputConditionOfWound" rows="1" name="inputConditionOfWound" placeholder="Describe the condition of the wound" required></textarea></div>
+                                <label for="inputConditionOfWound" class="col-sm-2 col-form-label"
+                                    style="text-align:right">CONDITION OF THE WOUND </label>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><textarea class="form-control"
+                                        id="inputConditionOfWound" rows="1" name="inputConditionOfWound"
+                                        placeholder="Describe the condition of the wound" required></textarea></div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="padding:0px">
-                                    <div class="short-div"><label for="inputIncidentLevel" class="col-form-label" style="text-align:right">INCIDENT LEVEL :</label></div>
-                                    <div class="short-div"><label for="inputSeverityLevel" class="col-form-label" style="text-align:right">SEVERTY LEVEL :</label></div>
-                                    <div class="short-div"><label for="inputReccurentProability" class="col-form-label" style="text-align:right">RECURRENCE PROABILITY :</label></div>
+                                    <div class="short-div"><label for="inputIncidentLevel" class="col-form-label"
+                                            style="text-align:right">INCIDENT LEVEL :</label></div>
+                                    <div class="short-div"><label for="inputSeverityLevel" class="col-form-label"
+                                            style="text-align:right">SEVERTY LEVEL :</label></div>
+                                    <div class="short-div"><label for="inputReccurentProability" class="col-form-label"
+                                            style="text-align:right">RECURRENCE PROABILITY :</label></div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="padding:0px">
-                                    <div class="short-div"><select class="form-control form-control-sm" id="inputIncidentLevel" name="inputIncidentLevel" required>
-                                            <option value="" disabled selected hidden style="font-size: inherit;">Nothing selected</option>
+                                    <div class="short-div"><select class="form-control form-control-sm"
+                                            id="inputIncidentLevel" name="inputIncidentLevel" required>
+                                            <option value="" disabled selected hidden style="font-size: inherit;">
+                                                Nothing selected</option>
                                             <option value='MINOR'>MINOR</option>
                                             <option value='MAYOR'>MAYOR</option>
                                         </select></div>
-                                    <div class="short-div"><select class="form-control form-control-sm" id="inputSeverityLevel" name="inputSeverityLevel" required>
-                                            <option value="" disabled selected hidden style="font-size: inherit;">Nothing selected</option>
+                                    <div class="short-div"><select class="form-control form-control-sm"
+                                            id="inputSeverityLevel" name="inputSeverityLevel" required>
+                                            <option value="" disabled selected hidden style="font-size: inherit;">
+                                                Nothing selected</option>
                                             <option value='LOW'>LOW</option>
                                             <option value='MEDIUM'>MEDIUM</option>
                                             <option value='HIGHT'>HIGHT</option>
                                         </select></div>
-                                    <div class="short-div"><select class="form-control form-control-sm" id="inputReccurentProability" name="inputReccurentProability" required>
-                                            <option value="" disabled selected hidden style="font-size: inherit;">Nothing selected</option>
+                                    <div class="short-div"><select class="form-control form-control-sm"
+                                            id="inputReccurentProability" name="inputReccurentProability" required>
+                                            <option value="" disabled selected hidden style="font-size: inherit;">
+                                                Nothing selected</option>
                                             <option value='POSSIBLE'>POSSIBLE</option>
                                             <option value='IMPOSSIBLE'>IMPOSSIBLE</option>
                                         </select></div>
                                 </div>
-                                <label for="inputIncidentDesc" class="col-sm-2 col-form-label" style="text-align:right">INCIDENT DESC :</label>
-                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><textarea class="form-control" id="inputIncidentDesc" rows="4" name="inputIncidentDesc" placeholder="Description Of Incident" required></textarea></div>
+                                <label for="inputIncidentDesc" class="col-sm-2 col-form-label"
+                                    style="text-align:right">INCIDENT DESC :</label>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><textarea class="form-control"
+                                        id="inputIncidentDesc" rows="4" name="inputIncidentDesc"
+                                        placeholder="Use (/) to separate, more than one input." required></textarea>
+                                </div>
                             </div>
 
                             <div class="form-group row">
                                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="padding:0px">
-                                    <div class="short-div"> <label for="inputDateBackToWork" class="col-form-label" style="text-align:right">DATE BACK TO WORK :</label></div>
+                                    <div class="short-div"> <label for="inputDateBackToWork" class="col-form-label"
+                                            style="text-align:right">DATE BACK TO WORK :</label></div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="padding:0px">
                                     <div class="short-div">
-                                        <input type="date" class="form-control form-control-sm" id="inputDateBackToWork" name="inputDateBackToWork">
+                                        <input type="date" class="form-control form-control-sm" id="inputDateBackToWork"
+                                            name="inputDateBackToWork">
                                     </div>
                                 </div>
-                                <label for="inputActionTaken" class="col-sm-2 col-form-label" style="text-align:right">ACTION TAKEN :</label>
-                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><textarea class="form-control" id="inputActionTaken" name="inputActionTaken" rows="1" required></textarea></div>
+                                <label for="inputActionTaken" class="col-sm-2 col-form-label"
+                                    style="text-align:right">ACTION TAKEN :</label>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><textarea class="form-control"
+                                        id="inputActionTaken" name="inputActionTaken" rows="1"
+                                        placeholder="Use (/) to separate, more than one input." required></textarea>
+                                </div>
                             </div>
 
 
@@ -263,19 +324,29 @@
                                         <div class="feature-box">
                                             <strong class=""> MANPOWER </strong>
                                         </div>
-                                        <div class="row" style="margin-right:-10% !important; margin-left:0px !important;">
+                                        <div class="row"
+                                            style="margin-right:-10% !important; margin-left:0px !important;">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
-                                                <line x1="100" y1="0" x2="300" y2="200" style="stroke:rgb(120,120,120);stroke-width:3.5" />
+                                                <line x1="100" y1="0" x2="300" y2="200"
+                                                    style="stroke:rgb(120,120,120);stroke-width:3.5" />
                                                 <foreignObject x="50" y="2" width="200" height="150">
 
                                                     <body xmlns="http://www.w3.org/1999/xhtml">
                                                         <div class="div_input_manpower">
                                                             <div class="row">
-                                                                <div class="col-sm-2"><a class="btn btn-sm btn-primary btn-circle btn_add_input" data-target="input_manpower" position="top"><i class="fa fa-plus"></i></a>
+                                                                <div class="col-sm-2"><a
+                                                                        class="btn btn-sm btn-primary btn-circle btn_add_input"
+                                                                        data-target="input_manpower" position="top"><i
+                                                                            class="fa fa-plus"></i></a>
                                                                 </div>
-                                                                <div class="col-sm-2"><a class="btn btn-sm btn-danger btn-circle btn_remove_input" data-target="input_manpower" position="top"><i class="fa fa-minus"></i></a>
+                                                                <div class="col-sm-2"><a
+                                                                        class="btn btn-sm btn-danger btn-circle btn_remove_input"
+                                                                        data-target="input_manpower" position="top"><i
+                                                                            class="fa fa-minus"></i></a>
                                                                 </div>
-                                                                <div class="col-sm-8"><input type="text" class="form-control form-control-sm input_manpower" name="input_manpower[]" /></div>
+                                                                <div class="col-sm-8"><input type="text"
+                                                                        class="form-control form-control-sm input_manpower"
+                                                                        name="input_manpower[]" /></div>
                                                             </div>
                                                         </div>
                                                     </body>
@@ -287,19 +358,29 @@
                                         <div class="feature-box">
                                             <strong class=""> METHODE </strong>
                                         </div>
-                                        <div class="row" style="margin-right:-10% !important; margin-left:0% !important;">
+                                        <div class="row"
+                                            style="margin-right:-10% !important; margin-left:0% !important;">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
-                                                <line x1="100" y1="0" x2="300" y2="200" style="stroke:rgb(120,120,120);stroke-width:3.5" />
+                                                <line x1="100" y1="0" x2="300" y2="200"
+                                                    style="stroke:rgb(120,120,120);stroke-width:3.5" />
                                                 <foreignObject x="50" y="2" width="200" height="150">
 
                                                     <body xmlns="http://www.w3.org/1999/xhtml">
                                                         <div class="div_input_methode">
                                                             <div class="row">
-                                                                <div class="col-sm-2"><a class="btn btn-sm btn-primary btn-circle btn_add_input" data-target="input_methode" position="top"><i class="fa fa-plus"></i></a>
+                                                                <div class="col-sm-2"><a
+                                                                        class="btn btn-sm btn-primary btn-circle btn_add_input"
+                                                                        data-target="input_methode" position="top"><i
+                                                                            class="fa fa-plus"></i></a>
                                                                 </div>
-                                                                <div class="col-sm-2"><a class="btn btn-sm btn-danger btn-circle btn_remove_input" data-target="input_methode" position="top"><i class="fa fa-minus"></i></a>
+                                                                <div class="col-sm-2"><a
+                                                                        class="btn btn-sm btn-danger btn-circle btn_remove_input"
+                                                                        data-target="input_methode" position="top"><i
+                                                                            class="fa fa-minus"></i></a>
                                                                 </div>
-                                                                <div class="col-sm-8"><input type="text" class="form-control form-control-sm input_methode" name="input_methode[]" /></div>
+                                                                <div class="col-sm-8"><input type="text"
+                                                                        class="form-control form-control-sm input_methode"
+                                                                        name="input_methode[]" /></div>
                                                             </div>
                                                         </div>
                                                     </body>
@@ -319,19 +400,30 @@
 
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <div class="row" style="margin-right: 10% !important; margin-left: 17% !important;">
+                                        <div class="row"
+                                            style="margin-right: 10% !important; margin-left: 17% !important;">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
-                                                <line x1="0 " y1="150 " x2="150 " y2="0 " style="stroke:rgb(120,120,120);stroke-width:3.5 " />
+                                                <line x1="0 " y1="150 " x2="150 " y2="0 "
+                                                    style="stroke:rgb(120,120,120);stroke-width:3.5 " />
                                                 <foreignObject x="50" y="2" width="200" height="150">
 
                                                     <body xmlns="http://www.w3.org/1999/xhtml">
                                                         <div class="div_input_material">
                                                             <div class="row">
-                                                                <div class="col-sm-2"><a class="btn btn-sm btn-primary btn-circle btn_add_input" data-target="input_material" position="bottom"><i class="fa fa-plus"></i></a>
+                                                                <div class="col-sm-2"><a
+                                                                        class="btn btn-sm btn-primary btn-circle btn_add_input"
+                                                                        data-target="input_material"
+                                                                        position="bottom"><i class="fa fa-plus"></i></a>
                                                                 </div>
-                                                                <div class="col-sm-2"><a class="btn btn-sm btn-danger btn-circle btn_remove_input" data-target="input_material" position="bottom"><i class="fa fa-minus"></i></a>
+                                                                <div class="col-sm-2"><a
+                                                                        class="btn btn-sm btn-danger btn-circle btn_remove_input"
+                                                                        data-target="input_material"
+                                                                        position="bottom"><i
+                                                                            class="fa fa-minus"></i></a>
                                                                 </div>
-                                                                <div class="col-sm-8"><input type="text" class="form-control form-control-sm input_material" name="input_material[]" /></div>
+                                                                <div class="col-sm-8"><input type="text"
+                                                                        class="form-control form-control-sm input_material"
+                                                                        name="input_material[]" /></div>
                                                             </div>
                                                         </div>
                                                     </body>
@@ -343,19 +435,29 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="row" style="margin-right: 10% !important; margin-left: 17% !important;">
+                                        <div class="row"
+                                            style="margin-right: 10% !important; margin-left: 17% !important;">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
-                                                <line x1="0 " y1="150 " x2="150 " y2="0 " style="stroke:rgb(120,120,120);stroke-width:3.5 " />
+                                                <line x1="0 " y1="150 " x2="150 " y2="0 "
+                                                    style="stroke:rgb(120,120,120);stroke-width:3.5 " />
                                                 <foreignObject x="50" y="2" width="200" height="150">
 
                                                     <body xmlns="http://www.w3.org/1999/xhtml">
                                                         <div class="div_input_machine">
                                                             <div class="row">
-                                                                <div class="col-sm-2"><a class="btn btn-sm btn-primary btn-circle btn_add_input" data-target="input_machine" position="bottom"><i class="fa fa-plus"></i></a>
+                                                                <div class="col-sm-2"><a
+                                                                        class="btn btn-sm btn-primary btn-circle btn_add_input"
+                                                                        data-target="input_machine" position="bottom"><i
+                                                                            class="fa fa-plus"></i></a>
                                                                 </div>
-                                                                <div class="col-sm-2"><a class="btn btn-sm btn-danger btn-circle btn_remove_input" data-target="input_machine" position="bottom"><i class="fa fa-minus"></i></a>
+                                                                <div class="col-sm-2"><a
+                                                                        class="btn btn-sm btn-danger btn-circle btn_remove_input"
+                                                                        data-target="input_machine" position="bottom"><i
+                                                                            class="fa fa-minus"></i></a>
                                                                 </div>
-                                                                <div class="col-sm-8"><input type="text" class="form-control form-control-sm input_machine" name="input_machine[]" /></div>
+                                                                <div class="col-sm-8"><input type="text"
+                                                                        class="form-control form-control-sm input_machine"
+                                                                        name="input_machine[]" /></div>
                                                             </div>
                                                         </div>
                                                     </body>
@@ -374,16 +476,24 @@
                             </div>
                             <div class="separator">PREVENTIVE AND CORECTIVE ACTION</div>
                             <div class="form-group row">
-                                <label for="inputPreventiveAction" class="col-sm-2 col-form-label" style="text-align:right">ACTION :</label>
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><textarea class="form-control" id="inputPreventiveAction" name="inputPreventiveAction" rows="2"></textarea></div>
+                                <label for="inputPreventiveAction" class="col-sm-2 col-form-label"
+                                    style="text-align:right">ACTION :</label>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><textarea class="form-control"
+                                        id="inputPreventiveAction" name="inputPreventiveAction" rows="2"></textarea>
+                                </div>
                                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0px">
-                                    <div class="short-div"><label for="inputPersonResponsibility" class="col-form-label" style="text-align:right">PERSON RESPONSIBILITY :</label></div>
-                                    <div class="short-div"><label for="inputTimeTarget" class="col-form-label" style="text-align:right">TIME TARGET :</label></div>
+                                    <div class="short-div"><label for="inputPersonResponsibility" class="col-form-label"
+                                            style="text-align:right">PERSON RESPONSIBILITY :</label></div>
+                                    <div class="short-div"><label for="inputTimeTarget" class="col-form-label"
+                                            style="text-align:right">TIME TARGET :</label></div>
                                 </div>
                                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0px">
                                     <div class="short-div">
-                                        <input type="text" class="form-control form-control-sm" id="inputPersonResponsibility" name="inputPersonResponsibility" placeholder="TEXT">
-                                        <input type="text" class="form-control form-control-sm" id="inputTimeTarget" name="inputTimeTarget" placeholder="TEXT">
+                                        <input type="text" class="form-control form-control-sm"
+                                            id="inputPersonResponsibility" name="inputPersonResponsibility"
+                                            placeholder="TEXT">
+                                        <input type="text" class="form-control form-control-sm" id="inputTimeTarget"
+                                            name="inputTimeTarget" placeholder="TEXT">
                                     </div>
                                 </div>
                             </div>
@@ -400,17 +510,23 @@
                             <div class="separator">INVESTIGATION TEAM</div>
                             <div class="div_mem_investig">
                                 <div class="form-group row">
-                                    <label for="inputLeadInvestigation" class="col-sm-2 col-form-label" style="text-align:right">LEAD INVESTIGATOR :</label>
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><input type="text" class="form-control form-control-sm" id="inputLeadInvestigation" name="inputLeadInvestigation" placeholder="TEXT"></div>
+                                    <label for="inputLeadInvestigation" class="col-sm-2 col-form-label"
+                                        style="text-align:right">LEAD INVESTIGATOR :</label>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><input type="text"
+                                            class="form-control form-control-sm" id="inputLeadInvestigation"
+                                            name="inputLeadInvestigation" placeholder="TEXT"></div>
                                     <div class="col-lg-2">
-                                        <a class="btn btn-sm btn-primary btnadd_mem_investig" data-target="mem_investig">Add Member</a>
-                                        <a class="btn btn-sm btn-danger btnremove_mem_investig" data-target="mem_investig"><i class="fa fa-minus"></i></a>
+                                        <a class="btn btn-sm btn-primary btnadd_mem_investig"
+                                            data-target="mem_investig">Add Member</a>
+                                        <a class="btn btn-sm btn-danger btnremove_mem_investig"
+                                            data-target="mem_investig"><i class="fa fa-minus"></i></a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-primary btn-sm float-right btnSaveIncident" style="margin-left: 20px;">Submit</button>
+                            <button type="submit" class="btn btn-primary btn-sm float-right btnSaveIncident"
+                                style="margin-left: 20px;">Submit</button>
                             <button type="reset" class="btn btn-warning float-right">Reset</button>
                         </div>
                     </form>
@@ -418,7 +534,8 @@
                 <!--/.INPUT DATA PERSONAL MCU-->
 
                 <!--PERSONAL MCU RECORD-->
-                <div class="tab-pane fade show active" id="tabel-data-activity" role="tabpanel" aria-labelledby="custom-content-above-profile-tab">
+                <div class="tab-pane fade show active" id="tabel-data-activity" role="tabpanel"
+                    aria-labelledby="custom-content-above-profile-tab">
                     <div class="card-body" style="background-color: #77a0e6;">
                         <!-- <div class="form-grup row mb-2 col-12">
                             <label for="input" class="col-form-label col-2" style="text-align:right">MCU PERIOD :</label>
@@ -481,10 +598,10 @@
 <script src="<?= base_url('assets/templates') ?>/js/fishbone/custom_form.js"></script>
 <script src="<?= base_url('assets/templates') ?>/plugins/bootstrap-select/js/bootstrap-select.min.js"></script>
 <script>
-    $(document).ready(function() {
-        setTimeout(function() {
+    $(document).ready(function () {
+        setTimeout(function () {
             $("#alert_msg").html("");
-            <?php $this->session->unset_userdata('message'); ?>
+            <?php $this->session->unset_userdata('message '); ?>
         }, 2000);
         $('select#multiple').selectpicker();
         $.ajax({
@@ -494,12 +611,12 @@
                 type: 1
             },
             dataType: 'json',
-            success: function(response) {
+            success: function (response) {
                 // console.log(response)
                 let html = ``;
                 let no = 1;
                 if (response.data.length > 0) {
-                    $.each(response.data, function(key, val) {
+                    $.each(response.data, function (key, val) {
                         html += `<tr>`;
                         html += `<td class="text-center">${no}</td>`;
                         html += `<td class="text-center">${val.dtm_date_incident}<br>${val.dtm_time_incident}</td>`;
@@ -532,12 +649,12 @@
                     html += `</tr>`;
                 }
                 $('#tbody_incident_record').html(html);
-                $('.btnDownloadsDoc').on('click', function() {
+                $('.btnDownloadsDoc').on('click', function () {
                     let id = $(this).data('id');
                     let url = `<?= base_url() ?>ncr_ca/Incident_Investigation/DownloadsToWord?id=` + id;
                     window.open(url).focus();
                 });
-                $('.btnDelete').on('click', function() {
+                $('.btnDelete').on('click', function () {
                     let id = $(this).data('id');
                     console.log('Delete-' + id)
                     Swal.fire({
@@ -554,7 +671,7 @@
                                     id: id,
                                 },
                                 dataType: "json",
-                                success: function(response) {
+                                success: function (response) {
                                     if (response.status === true) {
                                         Swal.fire({
                                             icon: response.icon,
@@ -562,7 +679,7 @@
                                             showConfirmButton: false,
                                             timer: 5000
                                         });
-                                        setTimeout(function() {
+                                        setTimeout(function () {
                                             location.reload();
                                         }, 1000);
                                     }
@@ -571,7 +688,7 @@
                         }
                     });
                 });
-                $('.btnEdit').on('click', function() {
+                $('.btnEdit').on('click', function () {
                     let id = $(this).data('id');
                     console.log('Edit-' + id)
                     // $.ajax({
@@ -602,18 +719,18 @@
             url: `<?= base_url() ?>manajemen/Plant/getData_v2`,
             type: "GET",
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 // console.log(response);
                 let html = ``;
                 html += `<option value="" disabled selected hidden style="font-size: inherit;">Nothing selected</option>`;
-                $.each(response.data, function(key, val) {
+                $.each(response.data, function (key, val) {
                     html += `<option value="${val.intIdPlant}">${val.txtNamaPlant}</option>`;
                 });
                 $('#inputIncidentPlant').html(html);
             }
         });
         // get data selectbox for departement
-        $('select[name="inputIncidentPlant"]').on('change', function() {
+        $('select[name="inputIncidentPlant"]').on('change', function () {
             let id_plant = $(this).val();
             $.ajax({
                 url: `<?= base_url() ?>manajemen/Section/getDataByIdPlant`,
@@ -622,10 +739,10 @@
                     id: id_plant
                 },
                 dataType: "json",
-                beforeSend: function() {
+                beforeSend: function () {
                     $('.preloader2').prop('hidden', false);
                 },
-                success: function(response) {
+                success: function (response) {
                     $('.preloader2').prop('hidden', true);
                     // console.log(response)
                     if (response.code === 200) {
@@ -638,7 +755,7 @@
                 }
             });
         });
-        $('select[name="inputVictimFunction"]').on('change', function() {
+        $('select[name="inputVictimFunction"]').on('change', function () {
             let id_section = $(this).val();
             $.ajax({
                 url: `<?= base_url() ?>manajemen/Department/getData_v2`,
@@ -647,16 +764,16 @@
                     id_section: id_section
                 },
                 dataType: "json",
-                beforeSend: function() {
+                beforeSend: function () {
                     $('.preloader2').prop('hidden', false);
                 },
-                success: function(response) {
+                success: function (response) {
                     $('.preloader2').prop('hidden', true);
                     // console.log(response)
                     if (response.code === 200) {
                         let html = ``;
                         html += `<option value="" disabled selected hidden style="font-size: inherit;">Nothing selected</option>`;
-                        $.each(response.data, function(key, val) {
+                        $.each(response.data, function (key, val) {
                             html += `<option value="${val.intIdDepartement}">${val.txtNamaDepartement}</option>`;
                         });
                         $('#inputVictimDepartment').prop('disabled', false);
@@ -666,14 +783,14 @@
             });
         });
 
-        $('select[name="inputVictimDepartment"]').on('change', function() {
+        $('select[name="inputVictimDepartment"]').on('change', function () {
             let id_dept = $(this).val();
             $('#inputVictimName').prop('disabled', false);
             // console.log(id_dept)
             // inputVictimName
             $('#inputVictimName').autocomplete({
                 maxShowItems: 5,
-                source: function(request, response) {
+                source: function (request, response) {
                     // Fetch data
                     $.ajax({
                         url: '<?= base_url(); ?>manajemen/Employee/getDataForAutoComplete',
@@ -685,17 +802,17 @@
                             id: id_dept,
                             search: request.term
                         },
-                        beforeSend: function() {
+                        beforeSend: function () {
                             $('.preloader2').prop('hidden', false);
                         },
-                        success: function(res) {
+                        success: function (res) {
                             $('.preloader2').prop('hidden', true);
                             // console.log(res)
                             response(res.data);
                         }
                     });
                 },
-                select: function(event, ui) {
+                select: function (event, ui) {
                     // console.log(ui)
                     // Set selection
                     $('#inputVictimAge').val(ui.item.umur); // save selected id to input
@@ -706,7 +823,7 @@
                     $('#inputVictimServicePeriod').val(ui.item.lama_bekerja); // save selected id to input
                     return false;
                 },
-                focus: function(event, ui) {
+                focus: function (event, ui) {
                     $('#inputVictimAge').val(ui.item.umur); // save selected id to input
                     $('#inputVictimId').val(ui.item.intIdEmployee); // save selected id to input
                     $('#inputVictimName').val(ui.item.txtNameEmployee); // save selected id to input
@@ -722,10 +839,10 @@
             type: 'post',
             dataType: "json",
             serverSide: true,
-            success: function(response) {
+            success: function (response) {
                 let html = ``;
                 html += `<option value="" disabled hidden style="font-size: inherit;">Nothing selected</option>`;
-                $.each(response.data, function(key, item) {
+                $.each(response.data, function (key, item) {
                     html += `<option value="${item.intIdBodyPart}">${item.txtNameBodyPart}</option>`;
                 });
                 $('select#inputInjuriedBodyPart').append(html);
@@ -739,16 +856,16 @@
             url: `Incident_Investigation/get_data_dominos_effect`,
             type: "POST",
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 let html = ``;
                 // console.log(response);
-                $.each(response.data, function(key, val) {
+                $.each(response.data, function (key, val) {
                     html += `<div class="col-md-3">
                                 <div class="feature-box-heading">
                                     <strong>${val.ds_type}</strong>
                                 </div>
                                 <div class="form-check" id="ckRadio${val.ds_id}">`;
-                    $.each(val.ds_child, function(i, value) {
+                    $.each(val.ds_child, function (i, value) {
                         html += `<input class="form-check-input" type="checkbox" value="${value.child_name}" id="defaultCheck1" name="input${val.ds_label}[]">
                                     <label class="form-check-label" for="ckRadio${val.ds_id}">
                                         <strong>${value.child_name}</strong>

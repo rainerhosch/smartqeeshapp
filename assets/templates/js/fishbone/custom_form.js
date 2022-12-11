@@ -10,6 +10,30 @@ $(document).ready(function () {
 		}
 	);
 
+	$(".btnadd_img_doc").on("click", function () {
+		let elementId = $(this).attr("data-target");
+		let add_row = $(".div_" + elementId);
+		var elementCount = $(".img_doc_row").length + 1;
+		// console.log(add_row);
+		$(`<div class="form-group row img_doc_row" id="inputImg_${elementCount}">
+		<label class="col-sm-2 col-form-label" style="text-align:right">SELECT PHOTO:</label>
+		<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding:0px">
+			<div class="short-div-start">
+				<input type="file" name="accident_photo[]" />
+			</div>
+		</div>
+		</div>`).appendTo(add_row);
+	});
+	$(".btnremove_img_doc").on("click", function () {
+		var elementCount = $(".img_doc_row").length;
+		let elementId = $("#inputImg_" + elementCount);
+		console.log(elementId);
+		if (elementCount >= 1) {
+			elementId.remove();
+		} else {
+			alert("No more row to remove");
+		}
+	});
 	$(".btnadd_mem_investig").on("click", function () {
 		let elementId = $(this).attr("data-target");
 		let add_row = $(".div_" + elementId);
@@ -21,14 +45,11 @@ $(document).ready(function () {
 			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><input type="text" class="form-control form-control-sm" id="inputMemberInvestigation" name="inputMemberInvestigation[]" placeholder="TEXT"></div>
 		</div>`
 		).appendTo(add_row);
-
-		// var elementCount = $(".member_inv_row").length;
-		// console.log(elementCount);
 	});
 	$(".btnremove_mem_investig").on("click", function () {
 		var elementCount = $(".member_inv_row").length;
 		let elementId = $("#inputMem_" + elementCount);
-		console.log(elementId);
+		// console.log(elementId);
 		if (elementCount >= 1) {
 			elementId.remove();
 		} else {

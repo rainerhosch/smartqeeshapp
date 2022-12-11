@@ -187,6 +187,7 @@ class Fire_Investigation extends CI_Controller
             'dtm_update_date' => $updated_date,
             'dtm_update_time' => $updated_time,
             // 'updated_time' => $data['updated_time,
+
         ];
 
         // echo '<pre>';
@@ -222,7 +223,7 @@ class Fire_Investigation extends CI_Controller
         $fire_table = [
             0 => [
                 'label_1' => 'E-RCA Nomor',
-                'data_1' => 'E-RCA-' . $datareq['int_id_Fireinvestigation'],
+                'data_1' => 'E-RCA/FIRE/' . $datareq['int_id_Fireinvestigation'],
                 'label_2' => 'Area',
                 'data_2' => $datareq['txt_incident_area'],
             ],
@@ -235,9 +236,23 @@ class Fire_Investigation extends CI_Controller
             2 => [
                 'label_1' => 'Plant',
                 'data_1' => $datareq['plant_name'],
-                'label_2' => 'Level',
-                'data_2' => $datareq['txt_ii_fire_level'],
+                'label_2' => '',
+                'data_2' => '',
             ],
+        ];
+        $fire_table_2 = [
+            0 => [
+                'label_1' => 'Fire Level',
+                'data_1' => $datareq['txt_ii_fire_level'],
+                'label_2' => 'Severity Level',
+                'data_2' => $datareq['txt_ii_severity_level'],
+            ],
+            1 => [
+                'label_1' => 'Recurrence Proability',
+                'data_1' => $datareq['txt_ii_reccurent_proability'],
+                'label_2' => 'Facility Used',
+                'data_2' => $datareq['txt_ii_fire_facility_used'],
+            ]
         ];
         $datareq['row_fishbone'] = 0;
         $datareq['data_fishbone'] = [];
@@ -329,9 +344,9 @@ class Fire_Investigation extends CI_Controller
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
         $phpWord->setDefaultParagraphStyle(
             array(
-                'alignment'  => \PhpOffice\PhpWord\SimpleType\Jc::BOTH,
+                'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::BOTH,
                 'spaceAfter' => \PhpOffice\PhpWord\Shared\Converter::pointToTwip(1.5),
-                'spacing'    => 1.15,
+                'spacing' => 1.15,
             )
         );
         $fontStyle = new \PhpOffice\PhpWord\Style\Font();
@@ -342,7 +357,7 @@ class Fire_Investigation extends CI_Controller
             'marginTop' => 600,
             'marginBottom' => 350,
             'marginRight' => 600,
-            'marginLeft' =>  600,
+            'marginLeft' => 600,
         );
         $section = $phpWord->addSection($sectionStyle);
         // define bold style
@@ -382,7 +397,7 @@ class Fire_Investigation extends CI_Controller
         $footerText = 'THIS INFORMATION IS CONFIDENTIAL AND PROPRIETARY TO APF AND SHALL NOT BE REPRODUCED OR OTHERWISE DISCLOSED TO ANYONE OTHER THAN APF EMPLOYES WITHOUT WRITTEN PERMISSION FROM APF.';
         $footer->addText($footerText, ['size' => 7, 'name' => 'Calibri'], ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::BOTH]);
 
-        // Content Table Victim
+        // Content Table Fire 1 
         $section->addTextBreak();
         $tableS = $section->addTable($styleTable);
         foreach ($fire_table as $i => $val) {
@@ -404,11 +419,88 @@ class Fire_Investigation extends CI_Controller
             $textrun->addText($val['label_2'], ['name' => 'Cambria', 'size' => 11], ['lineSpacing' => 150]);
             $cell = $tableS->addCell(500, ['valign' => 'center']);
             $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
-            $textrun->addText(':', ['name' => 'Cambria', 'size' => 11], ['lineSpacing' => 150]);
+            if ($val['label_2'] != '') {
+                $textrun->addText(':', ['name' => 'Cambria', 'size' => 11], ['lineSpacing' => 150]);
+            } else {
+                $textrun->addText('', ['name' => 'Cambria', 'size' => 11], ['lineSpacing' => 150]);
+            }
             $cell = $tableS->addCell(5500, ['valign' => 'center']);
             $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
             $textrun->addText($val['data_2'], ['color' => '808080', 'name' => 'Cambria', 'size' => 11], ['lineSpacing' => 150]);
         }
+        // Content Table Fire 2
+        $section->addTextBreak();
+        $tableS = $section->addTable($styleTable);
+        foreach ($fire_table_2 as $i => $val2) {
+            $tableS->addRow();
+            $cell = $tableS->addCell(3000);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+            $textrun->addText($val2['label_1'], ['name' => 'Cambria', 'size' => 11], ['lineSpacing' => 150]);
+            $cell = $tableS->addCell(500, ['valign' => 'center']);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+            $textrun->addText(':', ['name' => 'Cambria', 'size' => 11], ['lineSpacing' => 150]);
+            $cell = $tableS->addCell(5500, ['valign' => 'center']);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+            $textrun->addText($val2['data_1'], ['color' => '808080', 'name' => 'Cambria', 'size' => 11], ['lineSpacing' => 150]);
+            $cell = $tableS->addCell(500, ['valign' => 'center']);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+            $textrun->addText(' ', ['name' => 'Cambria', 'size' => 11], ['lineSpacing' => 150]);
+            $cell = $tableS->addCell(5000);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+            $textrun->addText($val2['label_2'], ['name' => 'Cambria', 'size' => 11], ['lineSpacing' => 150]);
+            $cell = $tableS->addCell(500, ['valign' => 'center']);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+            $textrun->addText(':', ['name' => 'Cambria', 'size' => 11], ['lineSpacing' => 150]);
+            $cell = $tableS->addCell(5500, ['valign' => 'center']);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+            $textrun->addText($val2['data_2'], ['color' => '808080', 'name' => 'Cambria', 'size' => 11], ['lineSpacing' => 150]);
+        }
+
+        // Content Env Cause Desc
+        $section->addTextBreak();
+        $tableS = $section->addTable(['borderSize' => 3, 'borderColor' => '000']);
+        $tableS->addRow();
+        $cell = $tableS->addCell(18000);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText('Fire Accident Description :', ['name' => 'Cambria', 'size' => 11]);
+        $textrun->addTextBreak();
+        $textrun->addText('Description Of Accident', ['name' => 'Cambria', 'italic' => true, 'size' => 11, 'color' => '000']);
+        $textrun->addTextBreak();
+        $textrun->addTextBreak();
+        $incident_desc = explode('/', $datareq['txt_ii_incident_desc']);
+        foreach ($incident_desc as $i => $val) {
+            $textrun->addText('• ' . $val, ['name' => 'Cambria', 'size' => 11, 'color' => '000']);
+            $textrun->addTextBreak(1);
+        }
+
+        // new rows
+        $tableS->addRow();
+        $cell = $tableS->addCell(18000);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText('Action Taken :', ['name' => 'Cambria', 'size' => 11]);
+        $textrun->addTextBreak();
+        $textrun->addTextBreak();
+        $action_taken = explode('/', $datareq['txt_ii_action_taken']);
+        foreach ($action_taken as $i => $val) {
+            $textrun->addText('• ' . $val, ['name' => 'Cambria', 'size' => 11, 'color' => '000']);
+            $textrun->addTextBreak(1);
+        }
+        $textrun->addTextBreak();
+        // new rows
+        $tableS->addRow();
+        $cell = $tableS->addCell(18000);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText('Corrective and Preventive Action :', ['name' => 'Cambria', 'size' => 11]);
+        $textrun->addTextBreak();
+        $textrun->addTextBreak();
+        $pca_preventive_action = explode('/', $datareq['txt_pca_preventive_action']);
+        foreach ($pca_preventive_action as $i => $val) {
+            $textrun->addText('• ' . $val, ['name' => 'Cambria', 'size' => 11, 'color' => '000']);
+            $textrun->addTextBreak(1);
+        }
+        $textrun->addTextBreak();
+
+
 
         // // Judul
         // $section->addTextBreak();
@@ -721,6 +813,11 @@ class Fire_Investigation extends CI_Controller
         $tableS->addCell(200, $cellVCentered);
         $cell = $tableS->addCell(17600, ['borderSize' => 3]);
         $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $path_accident_photos = $dir_image . 'accident/fire/' . $datareq['int_id_Fireinvestigation'];
+        $incident_img = explode(',', $datareq['txt_incident_image']);
+        foreach ($incident_img as $i => $val) {
+            $textrun->addImage($path_accident_photos . '/' . $val, array('width' => 100, 'height' => 200, 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::BOTH));
+        }
         $tableS->addCell(200, $cellVCentered);
         // line break tr
         $tableS->addRow();
@@ -783,7 +880,7 @@ class Fire_Investigation extends CI_Controller
 
         // Saving the document as OOXML file...
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
-        $filename = 'E-RCA-' . $datareq['int_id_Fireinvestigation'] . '_Fire_Investigation';
+        $filename = 'E-RCA-' . $datareq['int_id_Fireinvestigation'] . ' (FIRE ACCIDENT INVESTIGATION)';
 
         header('Content-Type: application/msword');
         header('Content-Disposition: attachment;filename="' . $filename . '.docx"');
