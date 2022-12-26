@@ -87,13 +87,25 @@ class Agama extends CI_Controller{
             $id = $this->input->post('id');
             if($id)
             {
-                $this->agama->destroy($id);
-                $data = [
-                    'code' => 200,
-                    'status' => true,
-                    'msg' => 'Agama berhasil dihapus',
-                    'data' => NULL
-                ];
+				// cek apakah agama sudah dipake oleh table lain
+				$already = $this->agama->checkAgama($id,'memployee','intIdAgama')->num_rows();
+				if($already > 0)
+				{
+					$data = [
+						'code' => 400,
+						'status' => false,
+						'msg' => 'Agama tidak boleh dihapus',
+						'data' => NULL
+					];
+				}else{
+					$this->agama->destroy($id);
+					$data = [
+						'code' => 200,
+						'status' => true,
+						'msg' => 'Agama berhasil dihapus',
+						'data' => NULL
+					];
+				}
             }else{
                 // jika id tidak ada
                 $data = [

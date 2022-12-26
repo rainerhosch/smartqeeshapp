@@ -134,12 +134,18 @@ class M_risk_identification extends CI_Model
 
 	public function getsDataByFilterRisk($filterData)
 	{
-		$this->db->select("txtSourceRiskIden, txtRiskAnalysis, txtRiskType, txtRiskCategory, txtRiskCondition, txtLastRiskLevel");
-		$this->db->join("mRiskAssessmentMatrix", "mRiskAssessmentMatrix.txtRiskMatrix = trRiskIdentification.txtLastRiskLevel");
+		$this->db->select("mTahapanProses.txtNamaTahapan, trRiskContext.txtNamaContext, mActivity.txtNamaActivity, trRiskIdentification.txtSourceRiskIden, trRiskIdentification.txtRiskAnalysis, trRiskIdentification.txtRiskType, trRiskIdentification.txtRiskCategory, trRiskIdentification.txtRiskCondition, trRiskIdentification.txtLastRiskLevel ");
 		$this->db->from($this->table);
-		$this->db->where("txtTingkatResiko", $filterData);
-		$this->db->group_by("intIdRiskSourceIdentification");
-
+		$this->db->join("mRiskAssessmentMatrix", "mRiskAssessmentMatrix.intIdRiskAssessmentMatrix = trRiskIdentification.intIdRiskAssessmentMatrix");
+		$this->db->join("trRiskContext", "trRiskIdentification.intIdTrRiskContext = trRiskContext.intIdTrRiskContext");
+		$this->db->join("trTahapanProsesRisk", "trRiskContext.intIdTahapanProsesRisk = trTahapanProsesRisk.intIdTahapanProsesRisk");
+		$this->db->join("mTahapanProses", "trTahapanProsesRisk.intIdTahapanProses = mTahapanProses.intIdTahapanProses");
+		$this->db->join("trActivityRiskRegister", "trTahapanProsesRisk.intIdActivityRisk = trActivityRiskRegister.intIdActivityRisk");
+		$this->db->join("mActivity", "trActivityRiskRegister.intIdActivity = mActivity.intIdActivity	");
+		$this->db->where("mRiskAssessmentMatrix.txtTingkatResiko", $filterData);
+		$this->db->order_by("trActivityRiskRegister.intIdActivityRisk", "DESC");
+		// $this->db->get();
+		// var_dump($this->db->last_query());exit;
 		return $this->db->get()->result_array();
 	}
 

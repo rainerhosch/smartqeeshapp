@@ -163,6 +163,7 @@
 			},
 			dataType: "json",
 			success: function(response) {
+				console.log(response.data);
 				let html_usr = ``;
 				let icon = ``;
 				let color = ``;
@@ -172,10 +173,10 @@
 						no = i + 1;
 						html_usr += `<tr>`;
 						html_usr += `<td class="text-center">${no}</td>`;
-						html_usr += `<td class="text-center">${user.nama}</td>`;
-						html_usr += `<td class="text-center">${user.divisi}</td>`;
-						html_usr += `<td class="text-center">${user.jabatan}</td>`;
-						html_usr += `<td class="text-center">${user.email}</td>`;
+						html_usr += `<td class="text-center">${user.txtNameEmployee}</td>`;
+						html_usr += `<td class="text-center">${user.divisi ?? '-'}</td>`;
+						html_usr += `<td class="text-center">${user.txtNamaJabatan}</td>`;
+						html_usr += `<td class="text-center">${user.txtNomorWa}</td>`;
 						html_usr += `<td class="text-center">`;
 						html_usr += `<label class="switch switch-primary">`;
 						if (user.is_active === '1') {

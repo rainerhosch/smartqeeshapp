@@ -66,4 +66,12 @@ class M_negara extends CI_Model{
         return $this->db->get();
     }
 
+	public function checkNegara($id,$table,$column)
+	{
+		$this->db->select('*');
+		$this->db->from($table);
+		$this->db->where($column, $id);
+		return $this->db->get();
+	}
+
 }

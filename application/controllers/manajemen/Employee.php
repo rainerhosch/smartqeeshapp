@@ -25,6 +25,9 @@ class Employee extends CI_Controller
 
 	public function index()
 	{
+
+		$this->load->helper('my');
+		kirimNotifikasiTeks('081919956872','Hello');
 		$data['title'] = 'Smart Qeesh App';
 		$data['page'] = 'Manajemen';
 		$data['subpage'] = 'Employee';
@@ -68,12 +71,12 @@ class Employee extends CI_Controller
 	public function getEmployeeById()
 	{
 		if ($this->input->is_ajax_request()) {
-			$id = $this->input->post('id');
+			$id = 258;
 			$data = [
 				'code' => 200,
 				'status' => true,
 				'msg' => 'Success',
-				'data' => $this->employee->find($id)->row()
+				'data' => $this->employee->find(array('intIdEmployee' => $id))->row()
 			];
 		}
 		echo json_encode($data);
@@ -378,6 +381,64 @@ class Employee extends CI_Controller
 		} else {
 			$message_403 = "You don't have access to the url you where trying to reach.";
 			show_error($message_403, 403);
+		}
+	}
+
+	public function create_user()
+	{
+		if($this->input->is_ajax_request())
+		{
+			$intIdEmployee = $this->input->post('intIdEmployee');
+			$username = $this->input->post('username');
+			$password = $this->input->post('password');
+			$is_active = $this->input->post('is_active');
+
+			// cek password apakah lebih dari 6 karakter
+			if(strlen($password) < 6)
+			{
+				$data = [
+					'code' => 400,
+					'status' => true,
+					'msg' => '',
+					'data' => NULL,
+				];
+
+				echo json_encode($data);
+			}
+			// cek password apakah default atau tidak
+			if($username === $password)
+			{
+				$isDefaultPassword = 1;
+			}else{
+				$isDefaultPassword = 0;
+			}
+			$data = [
+				'employee_id' => $intIdEmployee,
+				'username' => $username,
+				'password' => md5($password),
+				'is_active' => $is_active,
+				'role_id' => 3,
+				'date_created' => time(),
+				'isDefaultPassword' => $isDefaultPassword
+			];
+			$usr = $this->user->insert_data('user',$data);
+			if($usr)
+			{
+				$data = [
+					'code' => 200,
+					'status' => true,
+					'msg' => 'User has been created!',
+					'data' => NULL,
+				];
+			}else{
+				$data = [
+					'code' => 400,
+					'status' => false,
+					'msg' => 'User failed to created!',
+					'data' => NULL,
+				];
+			}
+			echo json_encode($data);
 		}
 	}
 }

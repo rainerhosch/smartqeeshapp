@@ -463,6 +463,7 @@ class Dokumen extends CI_Controller
 
 			$writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
 			$writer->save('php://output');
+			exit;
 			redirect(base_url('risk_register/dokumen'));
 		} else {
 			redirect(base_url('risk_register/dokumen'));

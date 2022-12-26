@@ -89,13 +89,25 @@ class Jabatan extends CI_Controller{
             $id = $this->input->post('id');
             if($id)
             {
-                $this->jabatan->destroy($id);
-                $data = [
-                    'code' => 200,
-                    'status' => true,
-                    'msg' => 'Jabatan berhasil dihapus',
-                    'data' => NULL
-                ];
+				// cek apakah agama sudah dipake oleh table lain
+				$already = $this->jabatan->checkJabatan($id,'memployee','intIdJabatan')->num_rows();
+				if($already > 0)
+				{
+					$data = [
+						'code' => 400,
+						'status' => false,
+						'msg' => 'Jabatan tidak boleh dihapus',
+						'data' => NULL
+					];
+				}else{
+					$this->jabatan->destroy($id);
+					$data = [
+						'code' => 200,
+						'status' => true,
+						'msg' => 'Jabatan berhasil dihapus',
+						'data' => NULL
+					];
+				}
             }else{
                 // jika id tidak ada
                 $data = [
