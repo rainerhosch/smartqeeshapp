@@ -91,7 +91,7 @@ $route['manajemen_master/sub_activity'] = 'manajemen/TahapanProses';
 $route['manajemen_master/risk_consequence'] = 'manajemen/RiskConsequence';
 
 
-$route['ncr_ca/corrective_action'] = 'ncr_ca/ca_incident';
+$route['ncr_ca/corrective_action'] = 'ncr_ca/CA_Incident';
 
 $route['manajemen_menu/sub_menu/(:any)'] = 'manajemen/sub_menu/$1';
 $route['manajemen_menu/menu/(:any)'] = 'manajemen/menu/$1';
