@@ -51,8 +51,6 @@
         <div class="card" style="background-color: #83A2B4;">
           <div class="card-body">
             <div class="row">
-
-              <!-- STATUS -->
               <div class="col-lg-4 my-auto">
                 <div class="card text-center w-75 h-auto mx-auto">
                   <div class="card-header text-lg" style="background-color: #5B9BD5;">
@@ -63,20 +61,12 @@
                   </div>
                 </div>
               </div>
-              <!-- /.STATUS -->
-
-              <!-- CHART -->
               <div class="col-lg-4">
                 <canvas class="p-1 mr-1" id="ncr-chart" width="auto" height="auto">
                 </canvas>
               </div>
-              <!-- /.CHART -->
-
-              <!-- LABEL -->
               <div class="col-lg-4 my-auto label_desc">
               </div>
-              <!-- /.LABEL -->
-
             </div>
           </div>
         </div>
