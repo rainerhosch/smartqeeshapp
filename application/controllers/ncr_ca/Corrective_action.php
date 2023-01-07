@@ -17,18 +17,8 @@ class Corrective_action extends CI_Controller
         login_check();
         $this->load->model('M_user', 'user');
     }
-    // public function index()
-    // {
-    //     $data['title'] = 'Smart Qeesh App';
-    //     $data['menu_header'] = 'NON-CONFORMITY & CORRECTIVE ACTION';
-    //     $data['page'] = 'NCR & CA';
-    //     $data['subpage'] = 'Corrective Action';
-    //     $data['content'] = 'pages/ncr_ca/ca_incident';
-    //     $this->load->view('template', $data);
-    // }
 
-
-    public function incident_investigation()
+    public function index()
     {
         $data['title'] = 'Smart Qeesh App';
         $data['menu_header'] = 'NON-CONFORMITY & CORRECTIVE ACTION';
@@ -36,6 +26,21 @@ class Corrective_action extends CI_Controller
         $data['subpage'] = 'Corrective Action';
         $data['content'] = 'pages/ncr_ca/ca_incident';
         $this->load->view('template', $data);
+    }
+
+    public function incident_investigation()
+    {
+        if ($this->input->is_ajax_request()) {
+
+        } else {
+            $response = [
+                'code' => 500,
+                'status' => 'error',
+                'data' => null,
+                'message' => 'Invalid Request Method.',
+            ];
+        }
+        echo json_encode($response);
     }
     public function fire_investigation()
     {
