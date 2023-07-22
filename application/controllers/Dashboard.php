@@ -22,7 +22,7 @@ class Dashboard extends CI_Controller
     public function index()
     {
 		$isDefaultPassword = $this->session->userdata();
-		
+
         $data['title'] = 'Smart Qeesh App';
         $data['page'] = 'Home';
         $data['subpage'] = 'Blank Page';

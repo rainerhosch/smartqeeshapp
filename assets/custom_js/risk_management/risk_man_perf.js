@@ -16,6 +16,23 @@ $(document).ready(function(){
      initializeFunction();
 });
 
+function addData(chart, label, data) {
+    chart.data.labels.push(label);
+    chart.data.datasets.forEach((dataset) => {
+     	dataset.data.push(data);
+    });
+    chart.update();
+}
+
+function removeData(chart) {
+	debugger
+    chart.data.labels = [];
+    chart.data.datasets.forEach((dataset) => {
+	dataset.data = [];
+    });
+    chart.update();
+}
+
 //COMMUNICATION
 function initializeFunction(){
      $.ajax({
@@ -23,9 +40,9 @@ function initializeFunction(){
           url: `${url}risk_management/Risk_manj_performance/getsTotalJenisRisk`,
           dataType: "json",
           success: function(response){
-               if(response != null){
+               if(response.listDataRisk != null){
                     let total = 0;
-                    $.each(response, function(i, val){
+                    $.each(response.listDataRisk, function(i, val){
                          if(val.jenis == "LOW"){
                               $("#intLowRisk").text(val.total);
                          } else if(val.jenis == "MEDIUM"){
@@ -40,8 +57,34 @@ function initializeFunction(){
                     });
 
                     $("#intTotalRisk").text(total);
+
+				if (response.listDataProgram != null) {
+					let not_complete = response.listDataProgram.not_complete
+					let in_progress = response.listDataProgram.in_progress
+					let completed = response.listDataProgram.completed
+					$("#total_program_management").html(not_complete + in_progress + completed);
+
+					let labels = [
+						'PROGRAM NOT STARTED',
+						'PROGRAM IN PROGRESS',
+						'PROGRAM COMPLETE',
+					]
+
+					let dataProgram = [not_complete, in_progress, completed]
+
+					removeData(chart_program)
+
+					for (let i = 0; i < labels.length; i++) {
+						addData(chart_program, labels[i], dataProgram[i])
+					}
+
+
+
+				}
+
+
                }
-          }, 
+          },
           error: function(e){
                console.log(e);
           }
@@ -66,7 +109,7 @@ function getsDataTableRisk(){
                     let html = ``;
                     if(response.length > 0){
                          $.each(response, function(i, val){
-                              html += `<tr>`;     
+                              html += `<tr>`;
                               html += `<td>${val.txtNamaActivity}</td>`;
                               html += `<td>${val.txtNamaTahapan}</td>`;
                               html += `<td>${val.txtNamaContext}</td>`;
@@ -75,20 +118,21 @@ function getsDataTableRisk(){
                               html += `<td class="text-center">${val.txtRiskType}</td>`;
                               html += `<td class="text-center">${val.txtRiskCategory}</td>`;
                               html += `<td class="text-center">${val.txtRiskCondition}</td>`;
-                              html += `<td class="text-center">${val.txtLastRiskLevel}</td>`;     
+                              html += `<td class="text-center">${val.txtLastRiskLevel}</td>`;
+                              html += `<td class="text-center"><a href="${url}risk_register/Activity/showDetail?intIdDokRegister=${val.intIdDokRiskRegister}&intIdActivityRisk=${val.intIdActivityRisk}&intIdTahapanProsesRisk=${val.intIdTahapanProsesRisk}&intIdTrRiskContext=${val.intIdTrRiskContext}&intIdRiskSourceIdentification=${val.intIdRiskSourceIdentification}" target="_blank" class="btn btn-info"><i class="fa fa-eye"></i></a></td>`;
                               html += `</tr>`;
                          });
                     } else{
                          html += `<tr>`;
 
                          html += `<td colspan="6" class="text-center">Tidak ada data</td>`;
-     
+
                          html += `</tr>`;
                     }
                     $("#tbodyRisk").append(html);
                }
                clsGlobal.hidePreloader();
-          }, 
+          },
           error: function(e){
                console.log(e);
                clsGlobal.hidePreloader();
@@ -100,7 +144,7 @@ function getsDataTableRisk(){
 $(".btnUpRisk").click(function(){
      filter = $(this).data('filter');
      if(filter){
-          $("#titleTabelRisk").html("Tabel " + filter + " Risk");
+          $("#titleTabelRisk").html("TABEL " + filter + " RISK");
           getsDataTableRisk();
      }else{
           $.errorMessage("Terjadi kesalahan", "Data filter tidak ditemukan, harap muat ulang halaman");

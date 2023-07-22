@@ -24,18 +24,42 @@ class Activity extends CI_Controller
 
     public function index()
     {
-		$id 						= $this->input->get('id');
-        $data['title'] 				= 'Smart Qeesh App';
-        $data['page'] 				= 'Risk Register';
-        $data['subpage'] 			= 'Blank Page';
-        $data['content'] 			= 'pages/risk_management/risk_register/activity';
-		$data["intIdDokRegister"] 	= $id;		
-		$data["user"]				= $this->user->getDataUserDept($this->session->userdata('user_id'));							
-		$data["dok"]				= $this->dokumen->getByID($id)->row();		
-		$data["createBy"]			= $this->user->getDataUserDept($data["dok"]->intInsertedBy);
-		// var_dump($data);exit;		
+		$id 								= $this->input->get('id');
+        $data['title'] 						= 'Smart Qeesh App';
+        $data['page'] 						= 'Risk Register';
+        $data['subpage'] 					= 'Blank Page';
+        $data['content'] 					= 'pages/risk_management/risk_register/activity';
+		$data["intIdDokRegister"] 			= $id;
+		$data["page"] 						= "home";
+		$data["intIdActivityRisk"] 			= 0;
+		$data["intIdTahapanProsesRisk"] 	= 0;
+		$data["intIdTrRiskContext"] 		= 0;
+		$data["user"]						= $this->user->getDataUserDept($this->session->userdata('user_id'));
+		$data["dok"]						= $this->dokumen->getByID($id)->row();
+		$data["createBy"]					= $this->user->getDataUserDept($data["dok"]->intInsertedBy);
+		// var_dump($data);exit;
         $this->load->view('template', $data);
     }
+
+	public function showDetail ()
+	{
+		$id 										= $this->input->get('intIdDokRegister');
+        $data['title'] 								= 'Smart Qeesh App';
+        $data['page'] 								= 'Risk Register';
+        $data['subpage'] 							= 'Blank Page';
+        $data['content'] 							= 'pages/risk_management/risk_register/activity';
+		$data["intIdDokRegister"] 					= $id;
+		$data["intIdActivityRisk"] 					= $this->input->get('intIdActivityRisk');
+		$data["intIdTahapanProsesRisk"] 			= $this->input->get('intIdTahapanProsesRisk');
+		$data["intIdTrRiskContext"] 				= $this->input->get('intIdTrRiskContext');
+		$data["intIdRiskSourceIdentification"] 		= $this->input->get('intIdRiskSourceIdentification');
+		$data["page"] 								= "detail";
+		$data["user"]								= $this->user->getDataUserDept($this->session->userdata('user_id'));
+		$data["dok"]								= $this->dokumen->getByID($id)->row();
+		$data["createBy"]							= $this->user->getDataUserDept($data["dok"]->intInsertedBy);
+		// var_dump($data);exit;
+        $this->load->view('template', $data);
+	}
 
 	public function getDataTable()
 	{
@@ -52,7 +76,7 @@ class Activity extends CI_Controller
 			"dtmInsertedDate" 			=> $dateNow
 		];
 		$id_departemen = $this->session->userdata('id_departemen');
-		
+
 		$status = $this->activity->simpan($data, $id_departemen);
 		$response = [
 						'code' => 200,
@@ -85,7 +109,7 @@ class Activity extends CI_Controller
 	public function cekActivityHasInput()
 	{
 		$where = [
-			"intIdActivityRisk" => $this->input->get('intIdActivityRisk'),			
+			"intIdActivityRisk" => $this->input->get('intIdActivityRisk'),
 		];
 		$response = [
 						'code' => 200,

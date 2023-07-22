@@ -47,7 +47,7 @@ class RiskIdentification extends CI_Controller
 
 	public function simpan()
 	{
-		$datetime 		= date('Y-m-d H:i:s');		
+		$datetime 		= date('Y-m-d H:i:s');
 		$data = [
 			"intIdTrRiskContext" 				=> $this->input->post("intIdTrRiskContext"),
 			"txtSourceRiskIden" 				=> $this->input->post("txtSourceRiskIden"),
@@ -189,7 +189,7 @@ class RiskIdentification extends CI_Controller
 			$file_iden 					= $this->upload->data();
 			$nama_file_iden 			= $file_iden['file_name'];
 			$data["txtFileEvidance"] 	= $nama_file_iden;
-			$data_insert_risk_future = $this->risk_treatment_future->simpan($data)->row();			
+			$data_insert_risk_future = $this->risk_treatment_future->simpan($data)->row();
 			if (!empty($risk_consideration) && $data_insert_risk_future != null) {
 				$data_consideration = [
 					'data_insert_risk_future' => $data_insert_risk_future,
@@ -222,7 +222,7 @@ class RiskIdentification extends CI_Controller
 	public function getTreatmentFuture()
 	{
 		$where = [
-			'intIdTrRiskTreatmentFuture' => $this->input->get('id')			
+			'intIdTrRiskTreatmentFuture' => $this->input->get('id')
 		];
 		$data["risk_future"] 		= $this->risk_treatment_future->getData ($where)->row();
 		$data["risk_consideration"] = $this->risk_consideration->getData ($where)->result();

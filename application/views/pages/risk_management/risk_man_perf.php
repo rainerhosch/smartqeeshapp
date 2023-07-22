@@ -94,7 +94,7 @@
                 <table class="table table-bordered">
                   <tbody align="center">
                     <tr>
-                      <td bgcolor="#DAE3F3" style="font-size: 80px;"><strong>18</strong></td>
+                      <td bgcolor="#DAE3F3" style="font-size: 80px;"><strong id="total_program_management"></strong></td>
                     </tr>
                     <tr>
                       <td bgcolor="#5B9BD5">TOTAL PROGRAM MANAGEMENT</td>
@@ -271,6 +271,7 @@
                 <th class="text-center">RISK CATEGORY</th>
                 <th class="text-center">RISK CONDITION</th>
                 <th class="text-center">LAST STATUS</th>
+                <th class="text-center">OPTIONS</th>
               </tr>
             </thead>
 
@@ -292,10 +293,10 @@
 </div>
 <!-- /.content-wrapper -->
 <script src="<?= base_url('assets/templates') ?>/plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="<?= base_url("assets/custom_js/risk_management/risk_man_perf.js"); ?>"></script>
+
 
 <script>
-  $(function() {
+
     //-------------
     //- DONUT CHART -
     //-------------
@@ -308,7 +309,7 @@
           'PROGRAM COMPLETE',
       ],
       datasets: [{
-        data: [31, 15, 54],
+        data: [1, 1, 1],
         backgroundColor: ['#FFC000', '#f39c12', '#70AD47'],
       }]
     }
@@ -323,7 +324,7 @@
 
     //Create pie or douhnut chart
     // You can switch between pie and douhnut using the method below.
-    new Chart(donutChartCanvas, {
+    var chart_program = new Chart(donutChartCanvas, {
       type: 'doughnut',
       data: donutData,
       options: donutOptions
@@ -358,5 +359,7 @@
       data: donutData,
       options: donutOptions
     })
-  })
+
+
 </script>
+<script src="<?= base_url("assets/custom_js/risk_management/risk_man_perf.js"); ?>"></script>
