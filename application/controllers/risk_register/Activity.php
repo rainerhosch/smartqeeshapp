@@ -24,19 +24,20 @@ class Activity extends CI_Controller
 
     public function index()
     {
-		$id 								= $this->input->get('id');
-        $data['title'] 						= 'Smart Qeesh App';
-        $data['page'] 						= 'Risk Register';
-        $data['subpage'] 					= 'Blank Page';
-        $data['content'] 					= 'pages/risk_management/risk_register/activity';
-		$data["intIdDokRegister"] 			= $id;
-		$data["page"] 						= "home";
-		$data["intIdActivityRisk"] 			= 0;
-		$data["intIdTahapanProsesRisk"] 	= 0;
-		$data["intIdTrRiskContext"] 		= 0;
-		$data["user"]						= $this->user->getDataUserDept($this->session->userdata('user_id'));
-		$data["dok"]						= $this->dokumen->getByID($id)->row();
-		$data["createBy"]					= $this->user->getDataUserDept($data["dok"]->intInsertedBy);
+		$id 										= $this->input->get('id');
+        $data['title'] 								= 'Smart Qeesh App';
+        $data['page'] 								= 'Risk Register';
+        $data['subpage'] 							= 'Blank Page';
+        $data['content'] 							= 'pages/risk_management/risk_register/activity';
+		$data["intIdDokRegister"] 					= $id;
+		$data["page"] 								= "home";
+		$data["intIdActivityRisk"] 					= 0;
+		$data["intIdTahapanProsesRisk"] 			= 0;
+		$data["intIdTrRiskContext"] 				= 0;
+		$data["intIdRiskSourceIdentification"] 		= 0;
+		$data["user"]								= $this->user->getDataUserDept($this->session->userdata('user_id'));
+		$data["dok"]								= $this->dokumen->getByID($id)->row();
+		$data["createBy"]							= $this->user->getDataUserDept($data["dok"]->intInsertedBy);
 		// var_dump($data);exit;
         $this->load->view('template', $data);
     }

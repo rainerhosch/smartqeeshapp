@@ -129,7 +129,7 @@ class Dokumen extends CI_Controller
 		$styleTahapanArray = [
 			'font' => [
 			],
-			'alignment' => [				
+			'alignment' => [
 				'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
 				'wrapText' => true
 			],
@@ -144,8 +144,8 @@ class Dokumen extends CI_Controller
 		//inisiasi sheet spread sheet
 		$spreadsheet = new Spreadsheet();
 		$sheet = $spreadsheet->getActiveSheet();
-		
-		//Set Width		
+
+		//Set Width
 		$sheet->getColumnDimensionByColumn(1)->setWidth(2.8);
 		$sheet->getColumnDimensionByColumn(2)->setWidth(24.7);
 		$sheet->getColumnDimensionByColumn(3)->setWidth(23.7);
@@ -180,28 +180,28 @@ class Dokumen extends CI_Controller
 
 			//Data tanggal dokumen dibuat
 			$row_date = $row;
-			$sheet->setCellValue("A$row_date", 'Tanggal');			
-			$sheet->setCellValue("C$row_date", ": " . date("d F Y", strtotime($data_dok->dtmInsertedBy)));			
+			$sheet->setCellValue("A$row_date", 'Tanggal');
+			$sheet->setCellValue("C$row_date", ": " . date("d F Y", strtotime($data_dok->dtmInsertedBy)));
 			$sheet->mergeCells("A$row_date:B$row_date");
 			$row++;
 
 			//data departemen
 			$row_dept = $row;
-			$sheet->setCellValue("A$row_dept", 'Departemen');			
-			$sheet->setCellValue("C$row_dept", ": " . $data_dok->txtNamaDepartement);			
+			$sheet->setCellValue("A$row_dept", 'Departemen');
+			$sheet->setCellValue("C$row_dept", ": " . $data_dok->txtNamaDepartement);
 			$sheet->mergeCells("A$row_dept:B$row_dept");
 			$row++;
 
 			//data function
 			$row_func = $row;
-			$sheet->setCellValue("A$row_func", 'Function');			
+			$sheet->setCellValue("A$row_func", 'Function');
 			$sheet->setCellValue("C$row_func", ": " . $data_dok->txtNamaSection);
 			$sheet->mergeCells("A$row_func:B$row_func");
 
 			//loncat 2 bari untuk membuat header table
 			$row += 2;
 			$row_head_table = $row;
-			$sheet->setCellValue("A$row_head_table", '');			
+			$sheet->setCellValue("A$row_head_table", '');
 			$sheet->setCellValue("B$row_head_table", "ACTIVITY / PRODUCT / SERVICES \n (BASED ON PROCESS)");
 			$sheet->setCellValue("C$row_head_table", "RISK CONTEXT\n(INTERNAL / EXTERNAL)\n(Konteks Risiko di Organisasi)");
 			$sheet->setCellValue("D$row_head_table", "RISK SOURCE IDENTIFICATION\n(Identifikasi Sumber Risiko)");
@@ -229,11 +229,11 @@ class Dokumen extends CI_Controller
 
 			//create header row yang ke dua
 			$row++;
-			$row_head_table = $row;			
+			$row_head_table = $row;
 			$sheet->setCellValue("H$row_head_table", "CONSEQUENCES\n(Konsekuensi)");
-			$sheet->setCellValue("I$row_head_table", "LIKELIHOOD\n(Keseringan)");			
+			$sheet->setCellValue("I$row_head_table", "LIKELIHOOD\n(Keseringan)");
 			$sheet->setCellValue("M$row_head_table", "CURRENT\n(Sekarang)");
-			$sheet->setCellValue("N$row_head_table", "FUTURE\n(Mendatang)");			
+			$sheet->setCellValue("N$row_head_table", "FUTURE\n(Mendatang)");
 			$sheet->setCellValue("P$row_head_table", "CONSEQUENCES\n(Konsekuensi)");
 			$sheet->setCellValue("Q$row_head_table", "LIKELIHOOD\n(Keseringan)");
 			$sheet->getStyle("A$row_head_table:R$row_head_table")->applyFromArray($styleHeaderArray);
@@ -266,7 +266,7 @@ class Dokumen extends CI_Controller
 			$count_row_identification = 0;
 			$count_row_eval = 0;
 			$sum_evaluation = 0;
-			
+
 			if (!empty($data_activity)) {
 				foreach ($data_activity as $item) {
 					//sum evaluation berguna untuk menyimpan jumlah seluruh baris child tahapan dan evaluation
@@ -275,12 +275,12 @@ class Dokumen extends CI_Controller
 					//create cell activity
 					$sheet->setCellValue("A$row", $no++);
 					$sheet->setCellValue("B$row", $item->txtNamaActivity);
-					$sheet->getStyle("A$row:R$row")->applyFromArray($styleRegulerArray);	
-					$sheet->mergeCells("B$row:R$row");				
-					$row++;					
-					
-					$data_tahapan = $this->report->getTahapan(["trTahapanProsesRisk.intIdActivityRisk" => $item->intIdActivityRisk])->result();					
-					$row_tahapan = $row;					
+					$sheet->getStyle("A$row:R$row")->applyFromArray($styleRegulerArray);
+					$sheet->mergeCells("B$row:R$row");
+					$row++;
+
+					$data_tahapan = $this->report->getTahapan(["trTahapanProsesRisk.intIdActivityRisk" => $item->intIdActivityRisk])->result();
+					$row_tahapan = $row;
 					if (!empty($data_tahapan)) {
 						$count_all_activity = 0;
 						$row_pertama_tahapan = $row + 1;
@@ -291,14 +291,14 @@ class Dokumen extends CI_Controller
 							// var_dump($item_tahapan, $item);
 							$sum_ctx = 0;
 							$sheet->setCellValue("B$row_tahapan", $item_tahapan->txtNamaTahapan);
-							
+
 							$data_context = $this->report->getContext(["intIdTahapanProsesRisk" => $item_tahapan->intIdTahapanProsesRisk])->result();
 							if (!empty($data_context)) {
 
 								$row_pertama_context = $row_pertama_tahapan;
 								$count_row_context = 0;
 								$row_context = $row_tahapan;
-								
+
 
 								foreach ($data_context as $item_context) {
 									$sum_eval_context = 0;
@@ -316,7 +316,7 @@ class Dokumen extends CI_Controller
 									$row_pertama_identification = $row_context;
 									$count_row_identification = 0;
 									$row_identification = $row_context;
-									
+
 									if (!empty($data_identification)) {
 										foreach ($data_identification as $item_iden) {
 											$sheet->setCellValue("D$row_identification", $item_iden->txtSourceRiskIden);
@@ -363,10 +363,10 @@ class Dokumen extends CI_Controller
 
 											$risk_evaluation = $this->report->getRiskEvaluation([
 												"trRiskEvaluation.intIdRiskSourceIdentification" => $item_iden->intIdRiskSourceIdentification
-											])->result();											
+											])->result();
 											if (!empty($risk_evaluation)) {
 												$row_evaluation = $row_identification;
-												$count_row_eval = 0;												
+												$count_row_eval = 0;
 												foreach ($risk_evaluation as $item_evaluation) {
 													// var_dump($row_evaluation);
 													$sheet->setCellValue("P$row_evaluation", $item_evaluation->intConsequenceEvaluation);
@@ -383,7 +383,7 @@ class Dokumen extends CI_Controller
 										if ($count_row_eval > 0) {
 											$row_after = $row_identification + ($count_row_eval - 1);
 											// var_dump($row_after, $row_identification);exit;
-											
+
 											$sheet->mergeCells("D$row_identification:D$row_after");
 											$sheet->mergeCells("E$row_identification:E$row_after");
 											$sheet->mergeCells("F$row_identification:F$row_after");
@@ -396,26 +396,26 @@ class Dokumen extends CI_Controller
 											$sheet->mergeCells("M$row_identification:M$row_after");
 											$sheet->mergeCells("N$row_identification:N$row_after");
 											$sheet->mergeCells("O$row_identification:O$row_after");
-											
+
 											$sheet->getStyle("A$row_identification:R$row_after")->applyFromArray($styleRegulerArray);
-											
+
 											$row_identification += $count_row_eval;
 											$sum_evaluation += $count_row_eval;
 											$sum_eval_context += ($count_row_eval);
-											
+
 										} else {
 											$sheet->getStyle("A$row_identification:R$row_identification")->applyFromArray($styleRegulerArray);
 											$row_identification += $count_row_identification;
 											$sum_eval_context += 1;
 										}
 									}
-									$sum_ctx += $sum_eval_context;									
+									$sum_ctx += $sum_eval_context;
 									$sum_eval_context = $row_context + ($sum_eval_context - 1);
 									// var_dump($row_context, $sum_eval_context);
 									$sheet->mergeCells("C$row_context:C$sum_eval_context");
 									$row_context++;
 									$count_row_context++;
-									
+
 									// $row_pertama_context++;
 								}
 							} else {
@@ -438,11 +438,11 @@ class Dokumen extends CI_Controller
 					])->result();
 					$jumlah_row_act = count($jumlah_row_act);
 					// var_dump($row, $jumlah_row_act);
-					$row += $jumlah_row_act == 0 ? 1:$jumlah_row_act + $sum_evaluation - 2;
+					$row += ($jumlah_row_act == 0 ? 1:$jumlah_row_act + $sum_evaluation - 2);
 					// var_dump($row);
 					//row harus ditambah oleh row pling terbesar
 				}
-				
+
 			} else {
 				$row++;
 			}
