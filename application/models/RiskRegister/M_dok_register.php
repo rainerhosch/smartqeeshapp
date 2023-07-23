@@ -13,17 +13,17 @@ class M_dok_register extends CI_Model
 {
 	var $table = 'trDokRiskRegister'; //nama tabel dari database
 	var $column_order = array(null); //field yang ada di table user
-	var $column_search = array('txtDocNumber'); //field yang diizin untuk pencarian 
-	var $order = array('dtmInsertedBy' => 'desc'); // default order 
+	var $column_search = array('txtDocNumber'); //field yang diizin untuk pencarian
+	var $order = array('dtmInsertedBy' => 'desc'); // default order
 
 	private function _get_datatables_query($id_departemen)
 	{
-		$this->db->select('trDokRiskRegister.txtDocNumber, trDokRiskRegister.txtStatus, mEmployee.txtNameEmployee as nama, trDokRiskRegister.dtmInsertedBy, trDokRiskRegister.intIdDokRiskRegister');		
+		$this->db->select('trDokRiskRegister.txtDocNumber, trDokRiskRegister.txtStatus, mEmployee.txtNameEmployee as nama, trDokRiskRegister.dtmInsertedBy, trDokRiskRegister.intIdDokRiskRegister');
 		$this->db->from($this->table);
 		$this->db->join('user', 'trDokRiskRegister.intInsertedBy=user.user_id');
 		$this->db->join('mEmployee', 'user.employee_id=mEmployee.intIdEmployee');
 		$this->db->where(["intIdDepartement" => $id_departemen]);
-		
+
 
 		$i = 0;
 
@@ -54,7 +54,7 @@ class M_dok_register extends CI_Model
 		// }
 	}
 
-	
+
 	function get_datatables($id_departemen)
 	{
 		$this->_get_datatables_query($id_departemen);
@@ -103,17 +103,33 @@ class M_dok_register extends CI_Model
 	}
 
 	public function simpan ($data)
-	{
-		$this->db->insert($this->table, $data);	
+	{	$data_exist = $this->db->where(['txtDocNumber' => $data["txtDocNumber"]])->count_all_results();
+		if ($data_exist > 0) {
+			return [
+				'code' => 400,
+				'status' => false,
+				'msg' => 'Nomor Dokumen Sudah Ada.',
+				'data' => "-"
+			];
+		} else {
+			$this->db->insert($this->table, $data);
+			return [
+				'code' => 200,
+				'status' => true,
+				'msg' => 'Data berhasil disimpan.',
+				'data' => "-"
+			];
+		}
+
 	}
 
-	public function getByID ($id) {		
+	public function getByID ($id) {
 		$this->db->select('trDokRiskRegister.txtDocNumber, trDokRiskRegister.txtStatus, trDokRiskRegister.intInspectedBy, trDokRiskRegister.intValidateBy, mSection.txtNamaSection, mPlant.txtNamaPlant, mDepartemen.txtNamaDepartement, trDokRiskRegister.intIdDokRiskRegister, trDokRiskRegister.dtmInsertedBy, trDokRiskRegister.dtmInspectedDate, trDokRiskRegister.dtmValidatedDate, trDokRiskRegister.intInsertedBy');
 		$this->db->from($this->table);
 		$this->db->join('mDepartemen', $this->table.'.intIdDepartement = mDepartemen.intIdDepartement');
-		$this->db->join('mSection', 'mDepartemen.intIdSection = mSection.intIdSection');				
+		$this->db->join('mSection', 'mDepartemen.intIdSection = mSection.intIdSection');
 		$this->db->join('mPlant', 'mSection.intIdPlant = mPlant.intIdPlant');
 		$this->db->where('trDokRiskRegister.intIdDokRiskRegister', $id);
-		return $this->db->get();								
+		return $this->db->get();
 	}
 }

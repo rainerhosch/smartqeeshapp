@@ -52,13 +52,7 @@ class Dokumen extends CI_Controller
 			"txtStatus"			=> "ON PROGRESS",
 			"dtmInsertedBy" 	=> $dateNow
 		];
-		$this->dokumen->simpan($data);
-		$response = [
-			'code' => 200,
-			'status' => true,
-			'msg' => 'Berhasil disimpan.',
-			'data' => "-"
-		];
+		$response = $this->dokumen->simpan($data);
 		echo json_encode($response);
 	}
 
@@ -449,7 +443,7 @@ class Dokumen extends CI_Controller
 			// exit;
 			$writer = new Xlsx($spreadsheet);
 			header('Content-Type: application/vnd.ms-excel; charset=utf-8' );
-			header('Content-Disposition: attachment;filename="Report Excel'.time().'.xlsx"');
+			header('Content-Disposition: attachment;filename="Report Excel'. $data_dok["txtDocNumber"] .time().'.xlsx"');
 			// header('Cache-Control: max-age=0');
 			// If you're serving to IE 9, then the following may be needed
 			// header('Cache-Control: max-age=1');
