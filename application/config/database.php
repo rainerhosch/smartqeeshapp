@@ -6,13 +6,17 @@ $query_builder = TRUE;
 
 $db['live'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => 'root',
-	'database' => 'u1121502_smart_qeesh_testing',
+	'hostname' => '45.130.230.220',
+	'username' => 'u1121502_smarqeesh_dev',
+	'password' => 'smarqeesh',
+	// DATABASE PRODUCTION
+	'database' => 'u1121502_smart_qeesh',
+	// DATABASE TESTING
+	// 'database' => 'u1121502_smart_qeesh_testing',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
+	// 'db_debug' => (ENVIRONMENT !== 'production'),
 	'db_debug' => (ENVIRONMENT !== 'development'),
 	'cache_on' => FALSE,
 	'cachedir' => '',
