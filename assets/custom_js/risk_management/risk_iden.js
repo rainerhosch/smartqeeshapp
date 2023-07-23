@@ -80,7 +80,7 @@ function p_InitiateDataListIden() {
 					}
 				},
 				className: 'text-center'
-			},			
+			},
 			{
 				render: function (data, type, full, meta) {
 					return `<a class="btn btn-primary" data-id="${full.intIdRiskSourceIdentification}" data-nama="${full.txtSourceRiskIden}" id="tombol_detail_risk_iden"><i class="fa fa-eye"></i></a>`
@@ -100,7 +100,7 @@ function clear_input() {
 	$("#txtRiskType").val("");
 	$("#txtRiskOwner").val("");
 	$("#bitStatusKepentingan").val("");
-	$("#txtRiskLevel").val("");	
+	$("#txtRiskLevel").val("");
 	$("#intIdRiskAssessmentMatrix").val("");
 	$("#detail_risk_level>tbody").html("");
 	$("#list_treatment_current>tbody").html("");
@@ -126,8 +126,8 @@ function enableFieldForm() {
 	$("#txtRiskAnalysis").removeAttr('disabled')
 	$("#txtRiskType").removeAttr('disabled')
 	$("#txtRiskCategory").removeAttr('disabled')
-	$("#txtRiskCondition").removeAttr('disabled')	
-	$("#intConsequence").removeAttr('disabled')	
+	$("#txtRiskCondition").removeAttr('disabled')
+	$("#intConsequence").removeAttr('disabled')
 	$("#intLikelihood").removeAttr('disabled')
 	$("#simpan_form_risk").removeAttr('disabled')
 }
@@ -178,7 +178,7 @@ async function iniate_form_risk() {
 				option_risk_consequence += `<option value="${item.intTingkatKlasifikasi}">${item.txtNamaTingkatKlasifikasi}</option>`
 			});
 
-			$("#intConsequence, #intConsequence_revaluation").html(option_risk_consequence);			
+			$("#intConsequence, #intConsequence_revaluation").html(option_risk_consequence);
 		}
 	});
 }
@@ -189,12 +189,12 @@ $("#tombol_add_risk_iden").on("click", function (e) {
 	clsGlobal.showPreloader()
 
 	enableFieldForm()
-	
-	showFormRisk()	
+
+	showFormRisk()
 
 	//Iniate data form
 	iniate_form_risk()
-	clear_input()	
+	clear_input()
 	clsGlobal.hidePreloader()
 });
 
@@ -208,6 +208,7 @@ function showFormRisk() {
 	$("#form_risk_iden").css({
 		'display': 'inline'
 	});
+	renderBreadcumb("risk_form")
 	window.scrollTo(0, 0);
 }
 

@@ -16,11 +16,8 @@
 					<h1 style="color: white;">RISK MANAGEMENT</h1>
 				</div>
 				<div class="col-sm-12 py-2 mt-2" style="background-color: rgb(66, 66, 66);">
-					<ol class="breadcrumb  float-sm-left">
-						<li class="breadcrumb-item"><a href="#">RISK MANAGEMENT</a></li>
-						<li class="breadcrumb-item text-white">INPUT RISK REGISTER</li>
-						<li class="breadcrumb-item text-white">DOKUMEN</li>
-						<li class="breadcrumb-item text-white">ACTIVITY</li>
+					<ol class="breadcrumb  float-sm-left" id="breadcumb_page">
+
 					</ol>
 				</div>
 			</div>

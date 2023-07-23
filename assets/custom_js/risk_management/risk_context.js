@@ -37,7 +37,7 @@ function p_InitiateDataListContext() {
 								return `<a class="btn btn-success" data-id="${full.intIdTrRiskContext}" data-nama="${full.txtNamaContext}" id="tombol_detail_context"><i class="fa fa-eye"></i></a>`
 							} else {
 								return `<a class="btn btn-primary" data-id="${full.intIdTrRiskContext}" data-nama="${full.txtNamaContext}" id="tombol_detail_context"><i class="fa fa-eye"></i></a>`
-							}							
+							}
 						},
 						className: 'text-center'
 					},
@@ -65,7 +65,7 @@ $("#tombol_simpan_add_context").on('click', function (e) {
 			let otable = $('#dtListContext').dataTable();
 			otable.fnDraw(false);
 			$("#button_close_context").click();
-			clsGlobal.hidePreloader()			
+			clsGlobal.hidePreloader()
 		},
 		error: () =>{
 			clsGlobal.hidePreloader()
@@ -81,7 +81,7 @@ $(document).on('click', "#tombol_detail_context", function (e) {
 	clsGlobal.showPreloader()
 	let id = $(this).data('id');
 	$("#txtNamaContextShow").html($(this).data('nama'));
-	$("#intIdTrRiskContext").val(id);	
+	$("#intIdTrRiskContext").val(id);
 	showIden()
 	let oTableIden = $('#dtListRiskIden').dataTable();
 	oTableIden.fnDraw(false);
@@ -103,10 +103,11 @@ function showIden() {
 	$("#form_risk_iden").css({'display': 'none'});
 	$("#data_risk_iden").css({'display': 'inline'});
 	window.scrollTo(0, 0);
+	renderBreadcumb("risk_iden")
 	clsGlobal.hidePreloader()
 }
 
-async function showIdenAsync() {	
+async function showIdenAsync() {
 	let oTableIden = $('#dtListRiskIden').dataTable();
 	await oTableIden.fnDraw(false);
 	$("#show_activity_current, #show_tahapan_current, #show_context_current").css({'display': 'inline'});
@@ -115,6 +116,7 @@ async function showIdenAsync() {
 	$("#data_context").css({'display': 'none'});
 	$("#form_risk_iden").css({'display': 'none'});
 	$("#data_risk_iden").css({'display': 'inline'});
+	renderBreadcumb("risk_iden")
 	window.scrollTo(0, 0);
 }
 

@@ -136,6 +136,7 @@ $("#close_context").on("click", function () {
 
 //back to context
 function showContext(x = 0) {
+	renderBreadcumb("risk_context")
 	if (x == 0) {
 		clsGlobal.showPreloader()
 		let otableContext = $('#dtListContext').dataTable();

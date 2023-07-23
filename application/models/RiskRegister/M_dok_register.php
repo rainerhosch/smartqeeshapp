@@ -103,7 +103,9 @@ class M_dok_register extends CI_Model
 	}
 
 	public function simpan ($data)
-	{	$data_exist = $this->db->where(['txtDocNumber' => $data["txtDocNumber"]])->count_all_results();
+	{
+		$this->db->from($this->table);
+		$data_exist = $this->db->where(['txtDocNumber' => $data["txtDocNumber"]])->count_all_results();
 		if ($data_exist > 0) {
 			return [
 				'code' => 400,
