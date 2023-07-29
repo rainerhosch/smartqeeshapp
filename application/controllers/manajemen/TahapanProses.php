@@ -56,14 +56,14 @@ class TahapanProses extends CI_Controller
 		$data["section"]	= $this->departement->getDataByIdDepartement($data["activity"]["intIdDepartement"]); //row_Array
 		// $option_activity 	= $this->activity->getActivityBySection($data["activity"]["intIdSection"]);
 		// $res 				= '<option value="">Pilih Activity</option>';
-		
+
 		// foreach ($option_activity as $item) {
 		// 	if ($item["intIdActivity"] == $data["tahapan"]->intIdActivty) {
 		// 			$res .= '<option value="'.$item["intIdActivity"].'" selected>'.$item["txtNamaActivity"].'</option>';
 		// 	} else {
 		// 		$res .= '<option value="'.$item["intIdActivity"].'" selected>'.$item["txtNamaActivity"].'</option>';
 		// 	}
-			
+
 		// }
 		// $data["option_activity"] = $res;
 		if ($data != null) {
@@ -80,8 +80,8 @@ class TahapanProses extends CI_Controller
 				'msg' 		=> 'Data Tidak Ditemukan !',
 				'data' 		=> null
 			]);
-		} 
-		
+		}
+
 	}
 
 	public function simpan()
@@ -93,28 +93,28 @@ class TahapanProses extends CI_Controller
 			"bitActive" 			=> $this->input->post('bitActive'),
 			"intInsertedBy" 		=> $this->session->userdata('user_id'),
 			"dtmInsertedDate" 		=> $dateNow
-		];		
+		];
 		$this->tahapan_proses->simpan($data);
 		$response = [
 						'code' 		=> 200,
 						'status' 	=> true,
 						'msg' 		=> 'Berhasil disimpan.',
 						'data' 		=> "-"
-					];					
+					];
 		echo json_encode($response);
 	}
 
 	public function update ()
 	{
 		$dateNow 	= date("Y-m-d");
-		$intIdPlant = $this->input->post('intIdTahapanProses');		 
+		$intIdPlant = $this->input->post('intIdTahapanProses');
 		$data = [
 			"intIdActivty" 			=> $this->input->post('intIdActivity'),
 			"txtNamaTahapan" 		=> strtoupper($this->input->post('txtNamaTahapan')),
-			"bitActive" 			=> $this->input->post('bitActive'),			
+			"bitActive" 			=> $this->input->post('bitActive'),
 			"intUpdateBy" 			=> $this->session->userdata('user_id'),
 			"dtmUpdatedDate" 		=> $dateNow
-		];		
+		];
 		$this->tahapan_proses->update($data, $intIdPlant);
 		$response = [
 						'code' 		=> 200,

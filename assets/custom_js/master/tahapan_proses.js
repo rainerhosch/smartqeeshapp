@@ -16,7 +16,7 @@ function p_InitiateDataList() {
 			"url": `${url}manajemen/TahapanProses/getDataTable`,
 			"method": "POST",
 			"data": function (d) {
-				// d.__RequestVerificationToken = $('#frmIndex input[name=__RequestVerificationToken]').val()                
+				d.intIdActivity = $('#intIdActivity_filter').val()
 			}
 		},
 		columns: [{
@@ -129,6 +129,49 @@ $("#intIdDepartement").on("change", function () {
 	} else {
 		$("#intIdActivity").html(`<option value="">Pilih Activity</option>`);
 	}
+});
+
+$("#intIdSection_filter").on("change", function () {
+	let id = $(this).val();
+	if (id != "") {
+		$.ajax({
+			type: "get",
+			url: `${url}manajemen/Organization/getDepartementListByIdSection`,
+			data: {
+				intIdSection: id
+			},
+			dataType: "json",
+			success: function (response) {
+				$("#intIdDepartement_filter").html(response);
+			}
+		});
+	} else {
+		$("#intIdDepartement_filter").html(`<option value="">Pilih Departement</option>`);
+	}
+});
+
+$("#intIdDepartement_filter").on("change", function () {
+	let id = $(this).val();
+	if (id != "") {
+		$.ajax({
+			type: "get",
+			url: `${url}manajemen/Organization/getActivityListByIdDepartement`,
+			data: {
+				intIdDepartement: id
+			},
+			dataType: "json",
+			success: function (response) {
+				$("#intIdActivity_filter").html(response);
+			}
+		});
+	} else {
+		$("#intIdActivity_filter").html(`<option value="">Pilih Activity</option>`);
+	}
+});
+
+$("#intIdActivity_filter").on('change', function () {
+	let oTable = $('#dtList').dataTable();
+	oTable.fnDraw(false);
 });
 
 $(document).on('click', '#tombol_edit', function (e) {

@@ -177,6 +177,9 @@ class Dokumen extends CI_Controller
 			$sheet->setCellValue("A$row_date", 'Tanggal');
 			$sheet->setCellValue("C$row_date", ": " . date("d F Y", strtotime($data_dok->dtmInsertedBy)));
 			$sheet->mergeCells("A$row_date:B$row_date");
+
+			$sheet->setCellValue("Q$row_date", 'No. Dok');
+			$sheet->setCellValue("R$row_date", ": " . $data_dok["txtDocNumber"]);
 			$row++;
 
 			//data departemen
