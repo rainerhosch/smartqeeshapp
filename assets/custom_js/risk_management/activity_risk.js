@@ -1,55 +1,7 @@
 $(document).ready(function () {
 	p_InitiateDataList();
 	let page = $("#page").val("home");
-	renderBreadcumb()
 });
-
-function renderBreadcumb (page = "") {
-	let htmlString = ``
-	if (page == "") {
-		htmlString = `<li class="breadcrumb-item"><a href="#">RISK MANAGEMENT</a></li>
-						<li class="breadcrumb-item text-white">INPUT RISK REGISTER</li>
-						<li class="breadcrumb-item text-white">DOKUMEN</li>
-						<li class="breadcrumb-item text-white">ACTIVITY</li>`;
-	} else if (page == "tahapan_proses") {
-		htmlString = `<li class="breadcrumb-item"><a href="#">RISK MANAGEMENT</a></li>
-						<li class="breadcrumb-item text-white">INPUT RISK REGISTER</li>
-						<li class="breadcrumb-item text-white">DOKUMEN</li>
-						<li class="breadcrumb-item text-white">ACTIVITY</li>
-						<li class="breadcrumb-item text-white">TAHAPAN PROSES</li>`;
-	} else if (page == "risk_context") {
-		htmlString = `<li class="breadcrumb-item"><a href="#">RISK MANAGEMENT</a></li>
-						<li class="breadcrumb-item text-white">INPUT RISK REGISTER</li>
-						<li class="breadcrumb-item text-white">DOKUMEN</li>
-						<li class="breadcrumb-item text-white">ACTIVITY</li>
-						<li class="breadcrumb-item text-white">TAHAPAN PROSES</li>
-						<li class="breadcrumb-item text-white">RISK CONTEXT</li>`;
-	} else if (page == "risk_iden") {
-		htmlString = `<li class="breadcrumb-item"><a href="#">RISK MANAGEMENT</a></li>
-						<li class="breadcrumb-item text-white">INPUT RISK REGISTER</li>
-						<li class="breadcrumb-item text-white">DOKUMEN</li>
-						<li class="breadcrumb-item text-white">ACTIVITY</li>
-						<li class="breadcrumb-item text-white">TAHAPAN PROSES</li>
-						<li class="breadcrumb-item text-white">RISK CONTEXT</li>
-						<li class="breadcrumb-item text-white">RISK IDENTIFICTAION</li>`;
-	} else if (page == "risk_form") {
-		htmlString = `<li class="breadcrumb-item"><a href="#">RISK MANAGEMENT</a></li>
-						<li class="breadcrumb-item text-white">INPUT RISK REGISTER</li>
-						<li class="breadcrumb-item text-white">DOKUMEN</li>
-						<li class="breadcrumb-item text-white">ACTIVITY</li>
-						<li class="breadcrumb-item text-white">TAHAPAN PROSES</li>
-						<li class="breadcrumb-item text-white">RISK CONTEXT</li>
-						<li class="breadcrumb-item text-white">RISK IDENTIFICTAION</li>
-						<li class="breadcrumb-item text-white">FORM RISK IDENTIFICTAION</li>`;
-	} else {
-		htmlString = `<li class="breadcrumb-item"><a href="#">RISK MANAGEMENT</a></li>
-						<li class="breadcrumb-item text-white">INPUT RISK REGISTER</li>
-						<li class="breadcrumb-item text-white">DOKUMEN</li>
-						<li class="breadcrumb-item text-white">ACTIVITY</li>`;
-	}
-
-	$("#breadcumb_page").html(htmlString);
-}
 
 function cekActivityHasInput(intIdActivityRisk)
 {
@@ -195,6 +147,7 @@ function showActivity() {
 	window.scrollTo(0, 0);
 	let otableTah = $('#dtList').dataTable();
 	otableTah.fnDraw(false);
+	renderBreadcumb()
 	clsGlobal.hidePreloader()
 }
 

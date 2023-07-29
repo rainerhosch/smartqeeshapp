@@ -195,3 +195,4 @@
 <script src="<?= base_url('assets/custom_js') ?>/risk_management/risk_iden.js"></script>
 <script src="<?= base_url('assets/custom_js') ?>/risk_management/risk_form.js"></script>
 <script src="<?= base_url('assets/custom_js') ?>/risk_management/risk_detail.js"></script>
+<script src="<?= base_url('assets/custom_js') ?>/risk_management/navigasi_risk_register.js"></script>
