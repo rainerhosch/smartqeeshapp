@@ -1,25 +1,93 @@
 var clsGlobal = new clsGlobalClass();
 
 $(document).ready(function(){
-     p_InitiateData();
+     p_InitiateDatav2();
+	getsSection()
 });
 
-function p_InitiateData(){
+function p_InitiateDatav2(){
      $.ajax({
-          url: `${url}manajemen/department/initiateData`,
+          url: `${url}manajemen/activity/initiateData`,
           type: "GET",
           dataType: "json",
           success: function(response){
                $("#txtHiddenObject").val(JSON.stringify(response));
                p_DataToUI(response);
 
-               getsSection();
+               getsPlant();
           },
           error: function(e){
                console.log(e);
           }
      });
+
+	var oTableDokumen = $('#dtList').DataTable({
+		"bPaginate": true,
+		"bSort": false,
+		"iDisplayLength": 10,
+		"lengthMenu": [20, 40, 80, 100, 120],
+		"pageLength": 20,
+		"processing": true,
+		"serverSide": true,
+		searching: true,
+		"ajax": {
+			"url": `${url}manajemen/department/getDataTable`,
+			"method": "POST",
+			"data": function (d) {
+				d.intIdSection = $('#intIdSection_filter').val()
+			}
+		},
+		columns: [{
+				"data": "txtNamaSection",
+				"name": "txtNamaSection",
+				className: 'text-center'
+			},
+			{
+				"data": "txtNamaDepartement",
+				"name": "txtNamaDepartement",
+				className: 'text-center'
+			},
+			{
+				"data": "txtSingkatan",
+				"name": "txtSingkatan",
+				className: 'text-center'
+			},
+			{
+				"name": "option",
+				render: function (data, type, full, meta) {
+					return `${full.bitActive == 1 ? '<i class="fas fa-check text-success"></i>':'<i class="fas fa-times text-danger"></i>'}`
+				},
+				className: 'text-center'
+			},
+			{
+				"name": "option",
+				render: function (data, type, full, meta) {
+					return `<button class="btn btn-primary btnEditDepartment" id="tombol_edit" data-id="${full.intIdDepartement}"><i class="fa fa-edit"></i></button>`
+				},
+				className: 'text-center'
+			},
+		]
+	});
+	$("#dtList_filter").parent().addClass("d-flex justify-content-end");
+	$("#dtList_paginate").parent().addClass("d-flex justify-content-end");
 }
+
+// function p_InitiateData(){
+//      $.ajax({
+//           url: `${url}manajemen/department/initiateData`,
+//           type: "GET",
+//           dataType: "json",
+//           success: function(response){
+//                $("#txtHiddenObject").val(JSON.stringify(response));
+//                p_DataToUI(response);
+
+//                getsSection();
+//           },
+//           error: function(e){
+//                console.log(e);
+//           }
+//      });
+// }
 
 //COMMUNICATION
 function getsSection(){
@@ -34,7 +102,8 @@ function getsSection(){
                     html += `<option value="${val.intIdSection}">${val.txtNamaSection}</option>`;
                });
 
-               $("#intIdSection").append(html);
+               $("#intIdSection").html(html);
+               $("#intIdSection_filter").html(html);
           },
           error: function(e){
                console.log(e);
@@ -63,7 +132,7 @@ function getData(){
 }
 
 function saveData(){
-     p_UIToData(); 
+     p_UIToData();
      let data = {
           "data": $("#txtHiddenObject").val()
      }
@@ -76,6 +145,7 @@ function saveData(){
                $("#modalDepartment").modal("hide");
                if(response.status == true){
                     $.successMessage("Berhasil", response.msg);
+				window.location.reload()
                }else{
                     $.errorMessage("Gagal", response.msg);
                }
@@ -100,7 +170,7 @@ function p_UIToData(){
 
      jsonData.intIdDepartement     = $("#intIdDepartement").val();
      jsonData.intIdSection         = $("#intIdSection").val();
-     jsonData.txtNamaDepartement   = $("#txtNamaDepartement").val(); 
+     jsonData.txtNamaDepartement   = $("#txtNamaDepartement").val();
      jsonData.txtSingkatan         = $("#txtSingkatan").val();
      jsonData.bitActive            = $("#bitActive").prop("checked");
 
@@ -120,9 +190,14 @@ $("#formModalDepartment").submit(function(e){
      saveData();
 });
 
-$(".btnEditDepartment").click(function(){
+$(document).on('click', '.btnEditDepartment', function(){
      let id = $(this).data('id');
      $("#intIdDepartement").val(id);
      $("#modalTitle").text("Modal Edit Department");
      getData();
+});
+
+$("#intIdSection_filter").on('change', function () {
+	let oTable = $('#dtList').dataTable();
+	oTable.fnDraw(false);
 });

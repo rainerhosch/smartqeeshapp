@@ -29,6 +29,11 @@ class Department extends CI_Controller
           $this->load->view('template', $data);
      }
 
+	public function getDataTable()
+	{
+		echo json_encode($this->department->get_datatables());
+	}
+
      public function initiateData()
      {
           try {

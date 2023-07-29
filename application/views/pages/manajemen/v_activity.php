@@ -98,7 +98,7 @@
 									<div class="table-responsive">
 										<table class="table table-bordered" id="dtList">
 											<thead>
-												<tr>													
+												<tr>
 													<th class="text-center">FUNCTION</th>
 													<th class="text-center">NAMA DEPARTEMENT</th>
 													<th class="text-center">NAMA ACTIVITY</th>
