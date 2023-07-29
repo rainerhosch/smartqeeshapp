@@ -23,10 +23,6 @@
                     <div class="card bg-white">
                         <div class="card-header">
                             <h3 class="card-title">Data <?= $subpage; ?></h3>
-                            <div class="card-tools">
-                                <button type="button" class="btn btn-sm btn-primary" id="btnAddDepartment">Add
-                                    Department</button>
-                            </div>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -39,7 +35,7 @@
                                             <div class="row mb-2">
                                                 <div class="col-xs-12 col-md-4">
                                                     <div class="form-group">
-                                                        <label for="intIdSection_filter">Filter Section</label>
+                                                        <label for="intIdSection_filter">Filter Function</label>
                                                         <select name="" id="intIdSection_filter"
                                                             class="form-control"></select>
                                                     </div>
@@ -52,6 +48,11 @@
                                     <div class="card bg-white">
                                         <div class="card-header">
                                             <h4 class="card-title">List Data</h4>
+                                            <div class="card-tools">
+                                                <button type="button" class="btn btn-sm btn-primary"
+                                                    id="btnAddDepartment">Add
+                                                    Department</button>
+                                            </div>
                                         </div>
                                         <div class="card-body">
                                             <table class="table table-sm" id="dtList">
@@ -70,8 +71,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
                         </div>
                         <!-- <div class="card-footer clearfix">
                                    <ul class="pagination pagination-sm m-0 float-right">
@@ -107,7 +106,7 @@
                         <input type="text" class="form-control" name="intIdDepartement" id="intIdDepartement" readonly>
                     </div>
                     <div class="form-group">
-                        <label for="intIdPlant">Section<small class="text-danger">* (Wajib di isi)</small></label>
+                        <label for="intIdPlant">Function<small class="text-danger">* (Wajib di isi)</small></label>
                         <select class="form-control" id="intIdSection" name="intIdSection"></select>
                     </div>
                     <div class="form-group">

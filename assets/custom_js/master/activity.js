@@ -13,7 +13,7 @@ function p_InitiateData(){
                $("#txtHiddenObject").val(JSON.stringify(response));
                p_DataToUI(response);
 
-               getsPlant();
+            //    getsPlant();
           },
           error: function(e){
                console.log(e);
@@ -33,7 +33,7 @@ function p_InitiateData(){
 			"url": `${url}manajemen/Activity/getDataTable`,
 			"method": "POST",
 			"data": function (d) {
-				// d.__RequestVerificationToken = $('#frmIndex input[name=__RequestVerificationToken]').val()                
+				d.intIdDepartement = $('#intIdDepartement_filter').val()
 			}
 		},
 		columns: [{
@@ -50,7 +50,7 @@ function p_InitiateData(){
 				"data": "txtNamaActivity",
 				"name": "txtNamaActivity",
 				className: 'text-center'
-			},						
+			},
 			{
 				"name": "option",
 				render: function (data, type, full, meta) {
@@ -99,7 +99,7 @@ function getData(){
 }
 
 function saveData(){
-     p_UIToData(); 
+     p_UIToData();
      let data = {
           "data": $("#txtHiddenObject").val()
      }
@@ -135,7 +135,7 @@ function p_UIToData(){
 
      jsonData.intIdActivity        = $("#intIdActivity").val();
      jsonData.txtNamaActivity      = $("#txtNamaActivity").val();
-     jsonData.intIdDepartement     = $("#intIdDepartement").val();   
+     jsonData.intIdDepartement     = $("#intIdDepartement").val();
      jsonData.bitActive            = $("#bitActive").prop("checked");
 
      $("#txtHiddenObject").val(JSON.stringify(jsonData));
@@ -167,4 +167,26 @@ $("#intIdSection").on('change', function (e) {
 			alert('Error fetch data !')
 		}
 	});
+});
+
+$("#intIdSection_filter").on('change', function (e) {
+	e.preventDefault()
+	$.ajax({
+		type: "get",
+		url: `${url}/manajemen/Organization/getDepartementListByIdSection`,
+		data: {intIdSection: $(this).val()},
+		dataType: "json",
+		success: function (response) {
+			$("#intIdDepartement_filter").html(response);
+		},
+		error: () => {
+			alert('Error fetch data !')
+		}
+	});
+});
+
+$("#intIdDepartement_filter").on('change', function (e) {
+	e.preventDefault()
+	let oTable = $('#dtList').dataTable();
+	oTable.fnDraw(false);
 });

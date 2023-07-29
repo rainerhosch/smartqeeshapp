@@ -11,10 +11,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
  */
 class M_activity extends CI_Model
 {
-	var $table = 'mActivity'; //nama tabel dari database	
+	var $table = 'mActivity'; //nama tabel dari database
 	var $column_order = array(null); //field yang ada di table user
-	var $column_search = array('mActivity.txtNamaActivity', 'mDepartemen.txtNamaDepartement', 'mSection.txtNamaSection'); //field yang diizin untuk pencarian 
-	var $order = array('dtmInsertedDate' => 'desc'); // default order 
+	var $column_search = array('mActivity.txtNamaActivity', 'mDepartemen.txtNamaDepartement', 'mSection.txtNamaSection'); //field yang diizin untuk pencarian
+	var $order = array('dtmInsertedDate' => 'desc'); // default order
 
 	private function _get_datatables_query()
 	{
@@ -22,6 +22,9 @@ class M_activity extends CI_Model
 		$this->db->from($this->table);
 		$this->db->join("mDepartemen", "mActivity.intIdDepartement = mDepartemen.intIdDepartement");
 		$this->db->join("mSection", "mDepartemen.intIdSection = mSection.intIdSection");
+		if ($_POST['intIdDepartement'] != "") {
+			$this->db->where('mDepartemen.intIdDepartement', $_POST['intIdDepartement']);
+		}
 
 		$i = 0;
 
