@@ -13,16 +13,16 @@ class M_activity_risk_register extends CI_Model
 {
 	var $table = 'trActivityRiskRegister'; //nama tabel dari database
 	var $column_order = array(null); //field yang ada di table user
-	var $column_search = array('mActivity.txtNamaActivity'); //field yang diizin untuk pencarian 
-	var $order = array('dtmInsertedBy' => 'desc'); // default order 
+	var $column_search = array('mActivity.txtNamaActivity'); //field yang diizin untuk pencarian
+	var $order = array('dtmInsertedBy' => 'desc'); // default order
 
 	private function _get_datatables_query()
 	{
-		$this->db->select('trActivityRiskRegister.intIdActivityRisk, mActivity.txtNamaActivity, mActivity.intIdActivity');		
+		$this->db->select('trActivityRiskRegister.intIdActivityRisk, mActivity.txtNamaActivity, mActivity.intIdActivity, txtStatusImplementation');
 		$this->db->from($this->table);
 		$this->db->join('mActivity', 'trActivityRiskRegister.intIdActivity=mActivity.intIdActivity', 'right');
 		$this->db->where('mActivity.intIdDepartement', $this->session->userdata('id_departemen'));
-		
+
 		// $this->db->order_by('trActivityRiskRegister.intIdActivityRisk', 'desc');
 
 		$i = 0;
@@ -68,10 +68,11 @@ class M_activity_risk_register extends CI_Model
 			$no++;
 			$row = array();
 			$row["no"] = $no;
-			$row["txtNamaActivity"] 	= $field->txtNamaActivity;
-			$row["intIdActivityRisk"] 	= $field->intIdActivityRisk;
-			$row["intIdActivity"] 		= $field->intIdActivity;
-			$row["isInput"]				= $data_has_input;
+			$row["txtNamaActivity"] 				= $field->txtNamaActivity;
+			$row["intIdActivityRisk"] 				= $field->intIdActivityRisk;
+			$row["intIdActivity"] 					= $field->intIdActivity;
+			$row["txtStatusImplementation"] 		= $field->txtStatusImplementation;
+			$row["isInput"]							= $data_has_input;
 			$data[] = $row;
 		}
 
@@ -109,7 +110,7 @@ class M_activity_risk_register extends CI_Model
 				"intIdActivity" 			=> $activityData->intIdActivity,
 				"intIdDokRiskRegister" 		=> $data['intIdDokRiskRegister'],
 				"intInsertedBy" 			=> $data['intInsertedBy'],
-				"dtmInsertedDate"			=> $data['dtmInsertedDate'] 
+				"dtmInsertedDate"			=> $data['dtmInsertedDate']
 			];
 		} else {
 			$dataInsertNewActivity = [
@@ -127,7 +128,7 @@ class M_activity_risk_register extends CI_Model
 				"intIdActivity" 			=> $dataActivityNew->intIdActivity,
 				"intIdDokRiskRegister" 		=> $data['intIdDokRiskRegister'],
 				"intInsertedBy" 			=> $data['intInsertedBy'],
-				"dtmInsertedDate"			=> $data['dtmInsertedDate'] 
+				"dtmInsertedDate"			=> $data['dtmInsertedDate']
 			];
 		}
 		$activityExist = $this->db->get_where($this->table, [
@@ -140,29 +141,34 @@ class M_activity_risk_register extends CI_Model
 		} else {
 			return false;
 		}
-		
-		
+
+
 	}
 
-	public function getByID ($id) {		
+	public function getByID ($id) {
 		$this->db->select('trDokRiskRegister.txtDocNumber, trDokRiskRegister.txtStatus, trDokRiskRegister.intInspectedBy, trDokRiskRegister.intValidateBy, mSection.txtNamaSection, mPlant.txtNamaPlant, mDepartemen.txtNamaDepartement, trDokRiskRegister.intIdDokRiskRegister, trDokRiskRegister.dtmInsertedBy, trDokRiskRegister.dtmInspectedDate, trDokRiskRegister.dtmValidatedDate, trDokRiskRegister.intInsertedBy');
 		$this->db->from($this->table);
-		$this->db->join('mSection', 'trDokRiskRegister.intIdSection = mSection.intIdSection');		
+		$this->db->join('mSection', 'trDokRiskRegister.intIdSection = mSection.intIdSection');
 		$this->db->join('mDepartemen', 'mSection.intIdDepartemen = mDepartemen.intIdDepartement');
 		$this->db->join('mPlant', 'mDepartemen.intIdPlant = mPlant.intIdPlant');
 		$this->db->where('trDokRiskRegister.intIdDokRiskRegister', $id);
-		return $this->db->get()->row();								
+		return $this->db->get()->row();
 	}
 
 	public function simpan_activity_exist($data)
 	{
 		$this->db->insert($this->table, $data);
 		$this->db->order_by('intIdActivityRisk', 'desc');
-		return $this->db->get_where($this->table, $data);		
+		return $this->db->get_where($this->table, $data);
 	}
 
 	public function cek_activity_risk($where)
 	{
 		return $this->db->get_where('trTahapanProsesRisk', $where);
+	}
+
+	public function updateStatusImplementation($data, $id)
+	{
+		$this->db->update($this->table, $data, ["intIdActivityRisk" => $id]);
 	}
 }

@@ -17,6 +17,7 @@ class Risk_manj_performance extends CI_Controller
         login_check();
         $this->load->model('M_user', 'user');
         $this->load->model("RiskRegister/M_risk_identification", "risk_identification");
+        $this->load->model("RiskRegister/M_risk_peformance", "risk_peformance");
         $this->load->model("Manajemen/M_risk_assessment_matrix", "risk_matrix");
     }
 
@@ -34,6 +35,8 @@ class Risk_manj_performance extends CI_Controller
     {
         if ($this->input->is_ajax_request()) {
             $jenisRisk = $this->risk_matrix->getJenisTingkatResiko();
+			$id_departement = $this->session->userdata('id_departemen');
+
             $listData = [];
 
             foreach ($jenisRisk as $jenis) {
@@ -62,7 +65,53 @@ class Risk_manj_performance extends CI_Controller
         }
     }
 
+	public function getsTotalJenisRiskDepartemen()
+    {
+        if ($this->input->is_ajax_request()) {
+            $jenisRisk = $this->risk_matrix->getJenisTingkatResiko();
+			$id_departement = $this->session->userdata('id_departemen');
+
+            $listData = [];
+
+            foreach ($jenisRisk as $jenis) {
+                $total = $this->risk_identification->countJenisRiskDepartemen($jenis["txtTingkatResiko"], $id_departement);
+
+                $totalRisk = [
+                    "jenis" => $jenis["txtTingkatResiko"],
+                    "total" => $total
+                ];
+
+                array_push($listData, $totalRisk);
+            }
+			$listDataProgram = [
+				"not_complete" => $this->risk_identification->countProgramDepartemen("Not Completed", $id_departement),
+				"in_progress" 	=> $this->risk_identification->countProgramDepartemen("In Progress", $id_departement),
+				"completed" 	=> $this->risk_identification->countProgramDepartemen("Completed", $id_departement),
+			];
+
+            echo json_encode([
+				"listDataRisk" => $listData,
+				"listDataProgram" => $listDataProgram
+			]);
+        } else {
+            echo json_encode("Invalid Request");
+        }
+    }
+
     public function getsDataTableRisk()
+    {
+        // if ($this->input->is_ajax_request()) {
+        //     $filterData = $this->input->post("filter");
+        //     $data = $this->risk_identification->getsDataByFilterRisk($filterData);
+
+        //     echo json_encode($data);
+        // } else {
+        //     echo json_encode("Invalid Request");
+        // }
+		echo json_encode($this->risk_peformance->get_datatables(""));
+    }
+
+	public function getsDataTableRiskDepartemen()
     {
         if ($this->input->is_ajax_request()) {
             $filterData = $this->input->post("filter");

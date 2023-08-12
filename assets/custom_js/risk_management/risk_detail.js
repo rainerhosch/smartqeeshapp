@@ -1,12 +1,10 @@
 let page = $("#page").val();
-debugger
 if (page == "detail") {
 	showdetail()
 }
 
 async function showdetail () {
 	clsGlobal.showPreloader()
-	debugger
 	let intIdRiskSourceIdentification = $("#intIdRiskSourceIdentification").val();
 
 	clear_input()

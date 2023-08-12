@@ -48,10 +48,17 @@ function  p_InitiateDataList() {
 				"name": "txtNamaActivity",
 				className: 'text-center'
 			},
+			// {
+			// 	render: function (data, type, full, meta) {
+			// 		return full.txtStatusImplementation == null ? "-":full.txtStatusImplementation;
+			// 	},
+			// 	className: 'text-center'
+			// },
 			{
 				render: function (data, type, full, meta) {
 					if (full.isInput > 0) {
 						return `<a class="btn btn-success" data-id="${full.intIdActivityRisk}" data-nama="${full.txtNamaActivity}" data-id_activity = ${full.intIdActivity} id="tombol_detail_activity"><i class="fa fa-eye"></i></a>`
+						// return `<a class="btn btn-success" data-id="${full.intIdActivityRisk}" data-nama="${full.txtNamaActivity}" data-id_activity = ${full.intIdActivity} id="tombol_detail_activity"><i class="fa fa-eye"></i></a> <a class="btn btn-info"  data-toggle="modal" data-target="#modal-ubah_status_implement" data-id="${full.intIdActivityRisk}" data-nama="${full.txtNamaActivity}" data-id_activity = ${full.intIdActivity} data-implement="${full.txtStatusImplementation}"  id="tombol_ubah_status_activity"><i class="fa fa-edit"></i> Edit Status Implementasi</a>`
 					} else {
 						return `<a class="btn btn-primary" data-id="${full.intIdActivityRisk}" data-nama="${full.txtNamaActivity}" data-id_activity = ${full.intIdActivity} id="tombol_detail_activity"><i class="fa fa-eye"></i></a>`
 					}
@@ -97,6 +104,40 @@ $("#tombol_simpan_add_activity").on('click', function (e) {
 			} else {
 				alert('Tidak dapat menyimpan data ! Periksa Kembali Nama Activity')
 			}
+			clsGlobal.hidePreloader()
+		},
+		error: () => {
+			clsGlobal.hidePreloader()
+		}
+	});
+});
+
+$(document).on('click', '#tombol_ubah_status_activity', function (e) {
+	e.preventDefault()
+	let id = $(this).data('id');
+	let status = $(this).data('implement');
+	debugger
+	$("#intIdActivityRisk_form_ubah").val(id);
+	$("#txtStatusImplementation_activity").val(status);
+});
+
+$("#tombol_simpan_status_implementation").on('click', function () {
+	let data = {
+		intIdActivityRisk: $("#intIdActivityRisk_form_ubah").val(),
+		txtStatusImplementation: $("#txtStatusImplementation_activity").val()
+	}
+	clsGlobal.showPreloader()
+	$.ajax({
+		type: "post",
+		url: `${url}risk_register/Activity/changeStatusImplement`,
+		data: data,
+		dataType: "json",
+		success: function (response) {
+			$("#button_close_ubah_status_implemen").click();
+			$("#intIdActivityRisk_form_ubah").val("");
+			$("#txtStatusImplementation_activity").val("");
+			let otableTah = $('#dtList').dataTable();
+			otableTah.fnDraw(false);
 			clsGlobal.hidePreloader()
 		},
 		error: () => {
@@ -164,3 +205,4 @@ function showDetailActivity() {
 	renderBreadcumb("tahapan_proses")
 	clsGlobal.hidePreloader()
 }
+

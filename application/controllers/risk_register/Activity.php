@@ -94,6 +94,7 @@ class Activity extends CI_Controller
 		$data = [
 			"intIdActivity" 			=> $this->input->post('intIdActivity'),
 			"intIdDokRiskRegister" 		=> $this->input->post('intIdDokRiskRegister'),
+			"txtStatusImplementation" 	=> "In Progress",
 			"intInsertedBy" 			=> $this->session->userdata('user_id'),
 			"dtmInsertedDate" 			=> $dateNow
 		];
@@ -117,6 +118,22 @@ class Activity extends CI_Controller
 						'status' => '',
 						'msg' => 'Berhasil disimpan.',
 						'data' => $this->activity->cek_activity_risk($where)->num_rows()
+					];
+		echo json_encode($response);
+	}
+
+	public function changeStatusImplement()
+	{
+		$data = [
+			"intIdActivityRisk" => $this->input->post('intIdActivityRisk'),
+			"txtStatusImplementation" => $this->input->post('txtStatusImplementation'),
+		];
+		$this->activity->updateStatusImplementation($data, $data["intIdActivityRisk"]);
+		$response = [
+						'code' => 200,
+						'status' => '',
+						'msg' => 'Berhasil disimpan.',
+						'data' => []
 					];
 		echo json_encode($response);
 	}

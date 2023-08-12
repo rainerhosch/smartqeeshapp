@@ -121,7 +121,7 @@ class M_risk_identification extends CI_Model
 
 	//RISK MANJ PERFORMANCE
 
-	public function countJenisRisk($jenisRisk)
+	public function countJenisRisk ($jenisRisk)
 	{
 		$this->db->select("*");
 		$this->db->join("mRiskAssessmentMatrix", "mRiskAssessmentMatrix.txtRiskMatrix = trRiskIdentification.txtLastRiskLevel");
@@ -132,13 +132,57 @@ class M_risk_identification extends CI_Model
 		return $this->db->get()->num_rows();
 	}
 
-	public function countProgram($status_implementasi)
+	public function countJenisRiskDepartemen ($jenisRisk, $id_departemen = "")
+	{
+		$this->db->select("*");
+		$this->db->join("mRiskAssessmentMatrix", "mRiskAssessmentMatrix.txtRiskMatrix = trRiskIdentification.txtLastRiskLevel");
+		$this->db->from($this->table);
+		$this->db->join("trRiskContext", "trRiskIdentification.intIdTrRiskContext = trRiskContext.intIdTrRiskContext");
+		$this->db->join("trTahapanProsesRisk", "trRiskContext.intIdTahapanProsesRisk = trTahapanProsesRisk.intIdTahapanProsesRisk");
+		$this->db->join("trActivityRiskRegister", "trTahapanProsesRisk.intIdActivityRisk = trActivityRiskRegister.intIdActivityRisk");
+		$this->db->join("mActivity", "trActivityRiskRegister.intIdActivity = mActivity.intIdActivity");
+		$this->db->where([
+			"txtTingkatResiko" => $jenisRisk,
+			"mActivity.intIdDepartement" => $id_departemen
+		]);
+		$this->db->group_by("intIdRiskSourceIdentification");
+
+		return $this->db->get()->num_rows();
+	}
+
+	public function countProgram ($status_implementasi)
 	{
 		$this->db->select("*");
 		$this->db->join("trRiskTreatmentFuture", "trRiskIdentification.intIdRiskSourceIdentification = trRiskTreatmentFuture.intIdRiskSourceIdentification");
 		$this->db->from($this->table);
 		$this->db->where("txtStatusImplementation", $status_implementasi);
 
+		// $this->db->select("*");
+		// $this->db->from('trActivityRiskRegister');
+		// $this->db->where("txtStatusImplementation", $status_implementasi);
+
+		return $this->db->get()->num_rows();
+	}
+
+	public function countProgramDepartemen ($status_implementasi, $id_departemen)
+	{
+		$this->db->select("*");
+		$this->db->from($this->table);
+		$this->db->join("trRiskTreatmentFuture", "trRiskIdentification.intIdRiskSourceIdentification = trRiskTreatmentFuture.intIdRiskSourceIdentification");
+		$this->db->join("trRiskContext", "trRiskIdentification.intIdTrRiskContext = trRiskContext.intIdTrRiskContext");
+		$this->db->join("trTahapanProsesRisk", "trRiskContext.intIdTahapanProsesRisk = trTahapanProsesRisk.intIdTahapanProsesRisk");
+		$this->db->join("trActivityRiskRegister", "trTahapanProsesRisk.intIdActivityRisk = trActivityRiskRegister.intIdActivityRisk");
+		$this->db->join("mActivity", "trActivityRiskRegister.intIdActivity = mActivity.intIdActivity");
+		$this->db->where([
+			"trRiskTreatmentFuture.txtStatusImplementation" => $status_implementasi,
+			"mActivity.intIdDepartement" => $id_departemen
+		]);
+		// print_r($this->db->last_query());
+		// exit;
+
+		// $this->db->select("*");
+		// $this->db->from('trActivityRiskRegister');
+		// $this->db->where("txtStatusImplementation", $status_implementasi);
 		return $this->db->get()->num_rows();
 	}
 
