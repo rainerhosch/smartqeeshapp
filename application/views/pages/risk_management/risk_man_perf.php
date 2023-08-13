@@ -14,7 +14,8 @@
     font-size: 10px;
 }
 </style>
-
+<link rel="stylesheet"
+    href="<?= base_url('assets/templates') ?>/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -100,26 +101,77 @@
                 <div class="card" style="background-color: #83A2B4;">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-lg-4" style="margin-top: 36px;">
-                                <table class="table table-bordered">
+                            <div class="col-lg-6" style="margin-top: 36px;">
+                                <!-- <table class="table table-bordered">
                                     <tbody align="center">
                                         <tr>
                                             <td bgcolor="#DAE3F3" style="font-size: 80px;"><strong
-                                                    id="total_program_management"></strong></td>
+                                                    id="total_program_management_departemen">18</strong>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td bgcolor="#5B9BD5">TOTAL PROGRAM MANAGEMENT</td>
                                         </tr>
                                     </tbody>
+                                </table> -->
+                                <table class="table table-bordered">
+                                    <tbody>
+                                        <tr>
+                                            <td bgcolor="#FFC000"><strong>PROGRAM NOT STARTED</strong></td>
+                                            <td align="center" bgcolor="#E2F0D9" width="20%">
+                                                <strong id="">70</strong>
+                                                <!-- | <i class="fa fa-eye"></i> -->
+                                            </td>
+                                            <td align="right" width="5%" bgcolor="#E2F0D9">
+                                                <a data-toggle="tooltip" data-placement="top" title="Detail"
+                                                    href="<?= base_url(); ?>/dashboard/apf_performance/low_risk"
+                                                    style="color: black;"><i class="fas fa-eye"></i></a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#ED7D31">PROGRAM IN PROGRESS</td>
+                                            <td align="center" bgcolor="#DEEBF7">
+                                                <strong id="">70</strong>
+                                            </td>
+                                            <td align="right" width="5%" bgcolor="#DEEBF7">
+                                                <a data-toggle="tooltip" data-placement="top" title="Detail"
+                                                    href="<?= base_url(); ?>/dashboard/apf_performance/medium_risk"
+                                                    style="color: black;"><i class="fas fa-eye"></i></a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#70AD47">PROGRAM COMPLETE</td>
+                                            <td align="center" bgcolor="#FFF2CC">
+                                                <strong id="">70</strong>
+                                            </td>
+                                            <td align="right" width="5%" bgcolor="#FFF2CC">
+                                                <a data-toggle="tooltip" data-placement="top" title="Detail"
+                                                    href="<?= base_url(); ?>/dashboard/apf_performance/hard_risk"
+                                                    style="color: black;"><i class="fas fa-eye"></i></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <br />
+                                <table class="table table-bordered">
+                                    <tbody>
+                                        <tr>
+                                            <td bgcolor="#7F7F7F"><strong>TOTAL PROGRAM</strong></td>
+                                            <td align="center" style="padding-left: 0px;" bgcolor="#BFBFBF"
+                                                width="25.5%">
+                                                <strong id="">100</strong>
+                                            </td>
+                                        </tr>
+                                    </tbody>
                                 </table>
                             </div>
-                            <div class="col-lg-4 my-auto">
+                            <div class="col-lg-6 my-auto">
                                 <canvas id="TPMChart"
                                     style="min-height: 150px; height: 170px; max-height: 200px; max-width: 100%; display: block; width: 187px;"
                                     width="187" height="130" class="chartjs-render-monitor">
                                 </canvas>
                             </div>
-                            <div class="col-lg-4 my-auto">
+                            <!-- <div class="col-lg-4 my-auto">
                                 <table cellpadding="5">
                                     <tbody>
                                         <tr>
@@ -139,7 +191,7 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -233,8 +285,8 @@
                 <div class="card" style="background-color: #83A2B4;">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-lg-4" style="margin-top: 36px;">
-                                <table class="table table-bordered">
+                            <div class="col-lg-6" style="margin-top: 36px;">
+                                <!-- <table class="table table-bordered">
                                     <tbody align="center">
                                         <tr>
                                             <td bgcolor="#DAE3F3" style="font-size: 80px;"><strong
@@ -245,15 +297,65 @@
                                             <td bgcolor="#5B9BD5">TOTAL PROGRAM MANAGEMENT</td>
                                         </tr>
                                     </tbody>
+                                </table> -->
+                                <table class="table table-bordered">
+                                    <tbody>
+                                        <tr>
+                                            <td bgcolor="#1EAF9C"><strong>PROGRAM NOT STARTED</strong></td>
+                                            <td align="center" bgcolor="#E2F0D9" width="20%">
+                                                <strong id="">70</strong>
+                                                <!-- | <i class="fa fa-eye"></i> -->
+                                            </td>
+                                            <td align="right" width="5%" bgcolor="#E2F0D9">
+                                                <a data-toggle="tooltip" data-placement="top" title="Detail"
+                                                    href="<?= base_url(); ?>/dashboard/apf_performance/low_risk"
+                                                    style="color: black;"><i class="fas fa-eye"></i></a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#5B9BD5">PROGRAM IN PROGRESS</td>
+                                            <td align="center" bgcolor="#DEEBF7">
+                                                <strong id="">70</strong>
+                                            </td>
+                                            <td align="right" width="5%" bgcolor="#DEEBF7">
+                                                <a data-toggle="tooltip" data-placement="top" title="Detail"
+                                                    href="<?= base_url(); ?>/dashboard/apf_performance/medium_risk"
+                                                    style="color: black;"><i class="fas fa-eye"></i></a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#FFD966">PROGRAM COMPLETE</td>
+                                            <td align="center" bgcolor="#FFF2CC">
+                                                <strong id="">70</strong>
+                                            </td>
+                                            <td align="right" width="5%" bgcolor="#FFF2CC">
+                                                <a data-toggle="tooltip" data-placement="top" title="Detail"
+                                                    href="<?= base_url(); ?>/dashboard/apf_performance/hard_risk"
+                                                    style="color: black;"><i class="fas fa-eye"></i></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <br />
+                                <table class="table table-bordered">
+                                    <tbody>
+                                        <tr>
+                                            <td bgcolor="#7F7F7F"><strong>TOTAL PROGRAM</strong></td>
+                                            <td align="center" style="padding-left: 0px;" bgcolor="#BFBFBF"
+                                                width="25.5%">
+                                                <strong id="">100</strong>
+                                            </td>
+                                        </tr>
+                                    </tbody>
                                 </table>
                             </div>
-                            <div class="col-lg-4 my-auto">
+                            <div class="col-lg-6 my-auto">
                                 <canvas id="TPMChart2"
                                     style="min-height: 150px; height: 170px; max-height: 200px; max-width: 100%; display: block; width: 187px;"
                                     width="187" height="130" class="chartjs-render-monitor">
                                 </canvas>
                             </div>
-                            <div class="col-lg-4 my-auto">
+                            <!-- <div class="col-lg-4 my-auto">
                                 <table cellpadding="5">
                                     <tbody>
                                         <tr>
@@ -273,7 +375,7 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -283,7 +385,7 @@
     <!-- /.content 2-->
 
     <div class="modal fade" id="modalTabelRisk">
-        <div class="modal-dialog modal-xl" style="width: 90%;">
+        <div class="modal-dialog modal-lg" style="width: 90%">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title" id="titleTabelRisk"></h4>
@@ -292,7 +394,7 @@
                     </button>
                 </div>
                 <div class="modal-body table-responsive">
-                    <table class="table table-bordered table-hover" id="tabelRisk">
+                    <table class="table table-bordered table-hover" id="tabelRisk" style="width:100%;">
                         <thead>
                             <tr>
                                 <th class="text-center">ACTIVITY</th>
@@ -307,10 +409,6 @@
                                 <th class="text-center">OPTIONS</th>
                             </tr>
                         </thead>
-
-                        <tbody id="tbodyRisk">
-
-                        </tbody>
                     </table>
                 </div>
                 <div class="modal-footer justify-content-between">
@@ -322,9 +420,13 @@
         <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
-
+    <style>
+    .modal-lg {
+        max-width: 90% !important;
+    }
+    </style>
     <div class="modal fade" id="modalTabelRiskDepartemen">
-        <div class="modal-dialog modal-xl" style="width: 90%;">
+        <div class="modal-dialog modal-xl" style="width: 100%;">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title" id="titleTabelRiskDepartemen"></h4>
@@ -348,10 +450,6 @@
                                 <th class="text-center">OPTIONS</th>
                             </tr>
                         </thead>
-
-                        <tbody id="tbodyRisk">
-
-                        </tbody>
                     </table>
                 </div>
                 <div class="modal-footer justify-content-between">
@@ -366,7 +464,7 @@
 
 </div>
 <!-- /.content-wrapper -->
-<script src="<?= base_url('assets/templates') ?>/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="<?= base_url('assets/templates') ?>/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
 
 
 <script>
@@ -390,7 +488,7 @@ var donutOptions = {
     maintainAspectRatio: false,
     responsive: true,
     legend: {
-        display: false,
+        display: true,
         position: 'right'
     },
 }

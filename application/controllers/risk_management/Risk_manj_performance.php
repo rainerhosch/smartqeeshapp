@@ -113,14 +113,7 @@ class Risk_manj_performance extends CI_Controller
 
 	public function getsDataTableRiskDepartemen()
     {
-        if ($this->input->is_ajax_request()) {
-            $filterData = $this->input->post("filter");
-            $data = $this->risk_identification->getsDataByFilterRisk($filterData);
-
-            echo json_encode($data);
-        } else {
-            echo json_encode("Invalid Request");
-        }
+        echo json_encode($this->risk_peformance->get_datatables($this->session->userdata('id_departemen')));
     }
 
     /* public function getsDataTableRisk()

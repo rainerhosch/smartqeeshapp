@@ -77,9 +77,10 @@ class M_risk_peformance extends CI_Model
 			$no++;
 			$row 									= array();
 			$row["txtNamaActivity"] 				= $field->txtNamaActivity;
+			$row["txtSourceRiskIden"] 				= $field->txtSourceRiskIden;
 			$row["txtNamaTahapan"] 					= $field->txtNamaTahapan;
-			$row["txtSourceRiskIden"] 				= $field->txtRiskAnalysis;
-			$row["txtRiskAnalysis"] 				= $field->txtRiskLevel;
+			$row["txtNamaContext"] 					= $field->txtNamaContext;
+			$row["txtRiskAnalysis"] 				= $field->txtRiskAnalysis;
 			$row["txtRiskType"] 					= $field->txtRiskType;
 			$row["txtRiskCategory"] 				= $field->txtRiskCategory;
 			$row["txtRiskCondition"] 				= $field->txtRiskCondition;
