@@ -1,11 +1,12 @@
 <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="<?= base_url('assets/templates') ?>/plugins/summernote/summernote-bs4.min.css">
+<input type="hidden" name="page" id="page" value="<?= $page ?>">
 <input type="hidden" name="intIdDokRiskRegister" id="intIdDokRiskRegister" value="<?= $intIdDokRegister ?>">
-<input type="hidden" name="intIdActivityRisk" id="intIdActivityRisk">
+<input type="hidden" name="intIdActivityRisk" id="intIdActivityRisk" value="<?= $intIdActivityRisk ?>">
 <input type="hidden" name="intIdActivity" id="intIdActivity">
-<input type="hidden" name="intIdTahapanProsesRisk" id="intIdTahapanProsesRisk">
-<input type="hidden" name="intIdTrRiskContext" id="intIdTrRiskContext">
-<input type="hidden" name="intIdRiskSourceIdentification" id="intIdRiskSourceIdentification">
+<input type="hidden" name="intIdTahapanProsesRisk" id="intIdTahapanProsesRisk" value="<?= $intIdTahapanProsesRisk ?>">
+<input type="hidden" name="intIdTrRiskContext" id="intIdTrRiskContext" value="<?= $intIdTrRiskContext ?>">
+<input type="hidden" name="intIdRiskSourceIdentification" id="intIdRiskSourceIdentification" value="<?= $intIdRiskSourceIdentification ?>">
 <input type="hidden" name="intIdTrRiskTreatmentFuture" id="intIdTrRiskTreatmentFuture">
 <div class="content-wrapper" style="z-index: -999 !important;">
 	<section class="content-header">
@@ -136,7 +137,7 @@
 			<div class="col-lg-12" id="data_act">
 				<div class="card card-primary">
 					<div class="card-header">
-						<h3 class="card-title">Data Activity</h3>						
+						<h3 class="card-title">Data Activity</h3>
 					</div>
 					<div class="card-body">
 						<div class="row">
@@ -183,16 +184,17 @@
 <script src="<?= base_url('assets/templates') ?>/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
 <script src="<?= base_url('assets/templates') ?>/plugins/summernote/summernote-bs4.min.js"></script>
 <script>
-	var url = `<?= base_url() ?>`;	
+	var url = `<?= base_url() ?>`;
 	$("#show_activity_current, #show_tahapan_current, #show_context_current, #show_iden_current").css({
 		'display': 'none'
 	});
 	$("#data_tahapan, #data_context, #data_risk_iden, #form_risk_iden").css({
 		'display': 'none'
-	});	
+	});
 </script>
 <script src="<?= base_url('assets/custom_js') ?>/risk_management/activity_risk.js"></script>
 <script src="<?= base_url('assets/custom_js') ?>/risk_management/tahapan_proses.js"></script>
 <script src="<?= base_url('assets/custom_js') ?>/risk_management/risk_context.js"></script>
 <script src="<?= base_url('assets/custom_js') ?>/risk_management/risk_iden.js"></script>
 <script src="<?= base_url('assets/custom_js') ?>/risk_management/risk_form.js"></script>
+<script src="<?= base_url('assets/custom_js') ?>/risk_management/risk_detail.js"></script>

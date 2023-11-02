@@ -13,8 +13,8 @@ class M_risk_identification extends CI_Model
 {
 	var $table = 'trRiskIdentification'; //nama tabel dari database
 	var $column_order = array(null); //field yang ada di table user
-	var $column_search = array('trRiskIdentification.txtSourceRiskIden'); //field yang diizin untuk pencarian 
-	var $order = array('dtmInsertedBy' => 'desc'); // default order 
+	var $column_search = array('trRiskIdentification.txtSourceRiskIden'); //field yang diizin untuk pencarian
+	var $order = array('dtmInsertedBy' => 'desc'); // default order
 
 	private function _get_datatables_query($intIdTrRiskContext)
 	{
@@ -63,7 +63,7 @@ class M_risk_identification extends CI_Model
 		$list = $query->result();
 		$data = array();
 		$no = $_POST['start'];
-		foreach ($list as $field) {						
+		foreach ($list as $field) {
 			$no++;
 			$row 									= array();
 			$row["no"] 								= $no;
@@ -132,16 +132,27 @@ class M_risk_identification extends CI_Model
 		return $this->db->get()->num_rows();
 	}
 
+	public function countProgram($status_implementasi)
+	{
+		$this->db->select("*");
+		$this->db->join("trRiskTreatmentFuture", "trRiskIdentification.intIdRiskSourceIdentification = trRiskTreatmentFuture.intIdRiskSourceIdentification");
+		$this->db->from($this->table);
+		$this->db->where("txtStatusImplementation", $status_implementasi);
+
+		return $this->db->get()->num_rows();
+	}
+
 	public function getsDataByFilterRisk($filterData)
 	{
-		$this->db->select("mTahapanProses.txtNamaTahapan, trRiskContext.txtNamaContext, mActivity.txtNamaActivity, trRiskIdentification.txtSourceRiskIden, trRiskIdentification.txtRiskAnalysis, trRiskIdentification.txtRiskType, trRiskIdentification.txtRiskCategory, trRiskIdentification.txtRiskCondition, trRiskIdentification.txtLastRiskLevel ");
+		$this->db->select("mTahapanProses.txtNamaTahapan, trRiskContext.txtNamaContext, mActivity.txtNamaActivity, trRiskIdentification.txtSourceRiskIden, trRiskIdentification.txtRiskAnalysis, trRiskIdentification.txtRiskType, trRiskIdentification.txtRiskCategory, trRiskIdentification.txtRiskCondition, trRiskIdentification.txtLastRiskLevel, trRiskContext.intIdTrRiskContext, trTahapanProsesRisk.intIdTahapanProsesRisk, trActivityRiskRegister.intIdActivityRisk, trDokRiskRegister.intIdDokRiskRegister, trRiskIdentification.intIdRiskSourceIdentification");
 		$this->db->from($this->table);
 		$this->db->join("mRiskAssessmentMatrix", "mRiskAssessmentMatrix.intIdRiskAssessmentMatrix = trRiskIdentification.intIdRiskAssessmentMatrix");
 		$this->db->join("trRiskContext", "trRiskIdentification.intIdTrRiskContext = trRiskContext.intIdTrRiskContext");
 		$this->db->join("trTahapanProsesRisk", "trRiskContext.intIdTahapanProsesRisk = trTahapanProsesRisk.intIdTahapanProsesRisk");
 		$this->db->join("mTahapanProses", "trTahapanProsesRisk.intIdTahapanProses = mTahapanProses.intIdTahapanProses");
 		$this->db->join("trActivityRiskRegister", "trTahapanProsesRisk.intIdActivityRisk = trActivityRiskRegister.intIdActivityRisk");
-		$this->db->join("mActivity", "trActivityRiskRegister.intIdActivity = mActivity.intIdActivity	");
+		$this->db->join("mActivity", "trActivityRiskRegister.intIdActivity = mActivity.intIdActivity");
+		$this->db->join("trDokRiskRegister", "trActivityRiskRegister.intIdDokRiskRegister = trDokRiskRegister.intIdDokRiskRegister");
 		$this->db->where("mRiskAssessmentMatrix.txtTingkatResiko", $filterData);
 		$this->db->order_by("trActivityRiskRegister.intIdActivityRisk", "DESC");
 		// $this->db->get();

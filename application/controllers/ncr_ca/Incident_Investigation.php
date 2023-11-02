@@ -43,6 +43,38 @@ class Incident_Investigation extends CI_Controller
         $this->load->view('template', $data);
     }
 
+    public function delete_data()
+    {
+        if ($this->input->is_ajax_request()) {
+            $data_post = $this->input->post();
+            $where = [
+                'int_id_investigation' => $data_post['id']
+            ];
+            $delete = $this->investigation->delete_data($where);
+            if (!$delete) {
+                $data = [
+                    'status' => false,
+                    'code' => 500,
+                    'icon' => 'error',
+                    'message' => 'Koneksi Server Error!',
+                    'data' => null
+                ];
+            } else {
+                // $this->generate_bagan_json_file();
+                $data = [
+                    'status' => true,
+                    'code' => 200,
+                    'icon' => 'success',
+                    'message' => 'Data berhasil dihapus.',
+                    'data' => $delete
+                ];
+            }
+            echo json_encode($data);
+        } else {
+            show_404();
+        }
+    }
+
     public function get_data_dominos_effect()
     {
         if ($this->input->is_ajax_request()) {
@@ -190,7 +222,89 @@ class Incident_Investigation extends CI_Controller
                 'data_2' => $datareq['txt_vi_victim_service_period'] . ' Month / ' . $datareq['int_vi_victim_age'] . ' YO',
             ],
         ];
+        $datareq['row_fishbone'] = 0;
+        $datareq['data_fishbone'] = [];
+        $datareq['manpower'] = explode(',', $datareq['txt_rca_manpower']);
+        $jml_data[] = count($datareq['manpower']);
+        $datareq['methode'] = explode(',', $datareq['txt_rca_methode']);
+        $jml_data[] = count($datareq['methode']);
+        $datareq['machine'] = explode(',', $datareq['txt_rca_machine']);
+        $jml_data[] = count($datareq['machine']);
+        $datareq['material'] = explode(',', $datareq['txt_rca_material']);
+        $jml_data[] = count($datareq['material']);
+        foreach ($jml_data as $i => $val) {
+            if ($datareq['row_fishbone'] < $val) {
+                $datareq['row_fishbone'] = $val;
+            }
+        }
+        for ($j = 0; $j < $datareq['row_fishbone']; $j++) {
+            $manpower = '';
+            $methode = '';
+            $machine = '';
+            $material = '';
+            if (isset($datareq['manpower'][$j])) {
+                $manpower = $datareq['manpower'][$j];
+            }
+            if (isset($datareq['methode'][$j])) {
+                $methode = $datareq['methode'][$j];
+            }
+            if (isset($datareq['machine'][$j])) {
+                $machine = $datareq['machine'][$j];
+            }
+            if (isset($datareq['material'][$j])) {
+                $material = $datareq['material'][$j];
+            }
+            $datareq['data_fishbone'][$j] = [
+                'manpower' => $manpower,
+                'methode' => $methode,
+                'machine' => $machine,
+                'material' => $material,
+            ];
+        }
+
+        // data dominos effect
+        $datareq['row_dominos_effect'] = 0;
+        $datareq['data_dominos_effect'] = [];
+        $datareq['basic_cause'] = explode(',', $datareq['txt_de_basic_cause']);
+        $jml_data_de[] = count($datareq['basic_cause']);
+        $datareq['indirect_cause'] = explode(',', $datareq['txt_de_indirect_cause']);
+        $jml_data_de[] = count($datareq['indirect_cause']);
+        $datareq['direct_cause'] = explode(',', $datareq['txt_de_direct_cause']);
+        $jml_data_de[] = count($datareq['direct_cause']);
+        $datareq['de_loses'] = explode(',', $datareq['txt_de_loses']);
+        $jml_data_de[] = count($datareq['de_loses']);
+        foreach ($jml_data_de as $i => $val) {
+            if ($datareq['row_dominos_effect'] < $val) {
+                $datareq['row_dominos_effect'] = $val;
+            }
+        }
+        for ($j = 0; $j < $datareq['row_dominos_effect']; $j++) {
+            $basic_cause = '';
+            $indirect_cause = '';
+            $direct_cause = '';
+            $de_loses = '';
+            if (isset($datareq['basic_cause'][$j])) {
+                $basic_cause = $datareq['basic_cause'][$j];
+            }
+            if (isset($datareq['indirect_cause'][$j])) {
+                $indirect_cause = $datareq['indirect_cause'][$j];
+            }
+            if (isset($datareq['direct_cause'][$j])) {
+                $direct_cause = $datareq['direct_cause'][$j];
+            }
+            if (isset($datareq['de_loses'][$j])) {
+                $de_loses = $datareq['de_loses'][$j];
+            }
+            $datareq['data_dominos_effect'][$j] = [
+                'basic_cause' => $basic_cause,
+                'indirect_cause' => $indirect_cause,
+                'direct_cause' => $direct_cause,
+                'de_loses' => $de_loses,
+            ];
+        }
+
         // echo '<pre>';
+        // // var_dump($datareq);
         // echo json_encode($datareq);
         // echo '</pre>';
         // die;
@@ -198,9 +312,9 @@ class Incident_Investigation extends CI_Controller
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
         $phpWord->setDefaultParagraphStyle(
             array(
-                'alignment'  => \PhpOffice\PhpWord\SimpleType\Jc::BOTH,
+                'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::BOTH,
                 'spaceAfter' => \PhpOffice\PhpWord\Shared\Converter::pointToTwip(1.5),
-                'spacing'    => 1.15,
+                'spacing' => 1.15,
             )
         );
         $fontStyle = new \PhpOffice\PhpWord\Style\Font();
@@ -211,7 +325,7 @@ class Incident_Investigation extends CI_Controller
             'marginTop' => 600,
             'marginBottom' => 350,
             'marginRight' => 600,
-            'marginLeft' =>  600,
+            'marginLeft' => 600,
         );
         $section = $phpWord->addSection($sectionStyle);
         // define bold style
@@ -222,16 +336,19 @@ class Incident_Investigation extends CI_Controller
 
         // Add page header
         $header = $section->addHeader();
-        $styleTable = array('borderSize' => 3, 'borderColor' => '000');
+        $styleTableHeader = array('borderSize' => 5, 'borderColor' => '000');
+        $styleTable = array('borderTopSize' => 3, 'borderBottomSize' => 3, 'borderLeftSize' => 3, 'borderRightSize' => 3, 'borderColor' => '000');
+        // $styleTable = array('borderSize' => 3, 'borderColor' => '000');
 
-        $fancyTableStyle = array('borderSize' => 6, 'borderColor' => '999999');
-        $cellRowSpan = array('vMerge' => 'restart', 'valign' => 'center');
-        $cellRowContinue = array('vMerge' => 'continue');
-        $cellColSpan = array('gridSpan' => 3);
+        $fancyTableStyle = array('borderTopSize' => 3, 'borderBottomSize' => 3, 'borderLeftSize' => 3, 'borderRightSize' => 3, 'borderColor' => '999999');
+        // $fancyTableStyle = array('borderSize' => 6, 'borderColor' => '999999');
+        $cellRowSpan = array('borderSize' => 3, 'vMerge' => 'restart', 'valign' => 'center');
+        $cellRowContinue = array('borderSize' => 3, 'vMerge' => 'continue');
+        $cellColSpan = array('borderSize' => 3, 'gridSpan' => 3);
         $cellHCentered = array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER);
         $cellVCentered = array('valign' => 'center');
 
-        $table = $header->addTable($styleTable);
+        $table = $header->addTable($styleTableHeader);
         $table->addRow();
         $table->addCell(2000, ['valign' => 'center'])->addImage($dir_image . 'apf-header.png', array('width' => 120, 'height' => 65, 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::BOTH));
         $cell = $table->addCell(8000, ['valign' => 'center']);
@@ -257,10 +374,10 @@ class Incident_Investigation extends CI_Controller
         $textrun->addText('Nomor', ['size' => 11], ['lineSpacing' => 50]);
         $textrun->addTextBreak();
         $textrun->addText('Number', ['italic' => true, 'size' => 11, 'color' => 'A6A6A6']);
-        $cell = $tableS->addCell(500);
+        $cell = $tableS->addCell(500, ['valign' => 'center']);
         $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
         $textrun->addText(':', ['size' => 11]);
-        $cell = $tableS->addCell(16000);
+        $cell = $tableS->addCell(16000, ['valign' => 'center']);
         $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
         $textrun->addText('10/HSE/ACC/XI/2021', ['size' => 11]);
 
@@ -274,13 +391,13 @@ class Incident_Investigation extends CI_Controller
             $textrun->addText($val['label_1'], ['size' => 11]);
             $textrun->addTextBreak();
             $textrun->addText($val['eng_label_1'], ['italic' => true, 'size' => 11, 'color' => 'A6A6A6']);
-            $cell = $tableS->addCell(500);
+            $cell = $tableS->addCell(500, ['valign' => 'center']);
             $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
             $textrun->addText(':', ['size' => 11]);
             $cell = $tableS->addCell(5500, ['valign' => 'center']);
             $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
             $textrun->addText($val['data_1'], ['bold' => true, 'size' => 11]);
-            $cell = $tableS->addCell(500);
+            $cell = $tableS->addCell(500, ['valign' => 'center']);
             $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
             $textrun->addText(' ', ['size' => 11]);
             $cell = $tableS->addCell(5000);
@@ -288,7 +405,7 @@ class Incident_Investigation extends CI_Controller
             $textrun->addText($val['label_2'], ['size' => 11]);
             $textrun->addTextBreak();
             $textrun->addText($val['eng_label_2'], ['italic' => true, 'size' => 11, 'color' => 'A6A6A6']);
-            $cell = $tableS->addCell(500);
+            $cell = $tableS->addCell(500, ['valign' => 'center']);
             $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
             $textrun->addText(':', ['size' => 11]);
             $cell = $tableS->addCell(5500, ['valign' => 'center']);
@@ -304,15 +421,22 @@ class Incident_Investigation extends CI_Controller
         $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
         $textrun->addText('URAIAN KEJADIAN', ['bold' => true, 'size' => 11]);
         $textrun->addTextBreak();
-        $textrun->addText('Description Of Incident', ['italic' => true, 'size' => 11, 'color' => 'A6A6A6']);
+        $textrun->addText('Description Of Incident', ['italic' => true, 'size' => 11, 'color' => '000']);
 
         // Content Table Desc
         $section->addTextBreak();
-        $tableS = $section->addTable(['borderSize' => 3, 'borderColor' => '000']);
+        // $tableS = $section->addTable(['borderSize' => 3, 'borderColor' => '000']);
+        $tableS = $section->addTable(['borderTopSize' => 3, 'borderBottomSize' => 3, 'borderLeftSize' => 3, 'borderRightSize' => 3, 'borderColor' => '000']);
         $tableS->addRow();
         $cell = $tableS->addCell(11000, $cellColSpan);
         $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
-        $textrun->addText($datareq['txt_ii_incident_desc'], ['size' => 10]);
+        // $textrun->addText($datareq['txt_ii_incident_desc'], ['size' => 10]);
+        $ii_incident_desc = explode('/', $datareq['txt_ii_incident_desc']);
+        foreach ($ii_incident_desc as $i => $val) {
+            $textrun->addText('• ' . $val, ['size' => 10]);
+            $textrun->addTextBreak(1);
+        }
+
         $cell = $tableS->addCell(7000);
         $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
         $textrun->addText('Lingkari bagian tubuh yang terluka', ['bold' => true, 'size' => 11]);
@@ -330,7 +454,7 @@ class Incident_Investigation extends CI_Controller
         $textrun->addTextBreak();
         $textrun->addText('Accident Level', ['italic' => true, 'size' => 10, 'color' => 'A6A6A6']);
         $tableS->addCell(500, $cellVCentered)->addText(':', null, $cellHCentered);
-        $tableS->addCell(3000, $cellVCentered)->addText($datareq['txt_ii_incident_level'], ['size' => 10, 'color' => 'FF0000'], $cellHCentered);
+        $tableS->addCell(3000, $cellVCentered)->addText($datareq['txt_ii_incident_level'], ['bold' => true, 'size' => 10, 'color' => 'FF0000'], $cellHCentered);
         $cell = $tableS->addCell(7000, $cellRowSpan);
         $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
         $textrun->addText('Jelaskan kondisi luka : ', ['bold' => true, 'size' => 11]);
@@ -338,7 +462,7 @@ class Incident_Investigation extends CI_Controller
         $textrun->addText('Describe the condition of the wound', ['italic' => true, 'size' => 10]);
         $textrun->addTextBreak();
         $textrun->addTextBreak();
-        $textrun->addText('A torn wound on the forefinger of his right hand, got 17 stitches', ['italic' => true, 'size' => 10]);
+        $textrun->addText($datareq['txt_ii_condition_of_wound'], ['italic' => true, 'size' => 10]);
 
         $tableS->addRow();
         $cell = $tableS->addCell(5000, $cellVCentered);
@@ -347,7 +471,7 @@ class Incident_Investigation extends CI_Controller
         $textrun->addTextBreak();
         $textrun->addText('Severity Level', ['italic' => true, 'size' => 10, 'color' => 'A6A6A6']);
         $tableS->addCell(500, $cellVCentered)->addText(':', null, $cellHCentered);
-        $tableS->addCell(3000, $cellVCentered)->addText($datareq['txt_ii_severity_level'], ['size' => 10, 'color' => 'FF0000'], $cellHCentered);
+        $tableS->addCell(3000, $cellVCentered)->addText($datareq['txt_ii_severity_level'], ['bold' => true, 'size' => 10, 'color' => 'FF0000'], $cellHCentered);
         $tableS->addCell(null, $cellRowContinue);
         $tableS->addRow();
         $cell = $tableS->addCell(5000, $cellVCentered);
@@ -356,7 +480,7 @@ class Incident_Investigation extends CI_Controller
         $textrun->addTextBreak();
         $textrun->addText('Recurrence Proability', ['italic' => true, 'size' => 10, 'color' => 'A6A6A6']);
         $tableS->addCell(500, $cellVCentered)->addText(':', null, $cellHCentered);
-        $tableS->addCell(3000, $cellVCentered)->addText($datareq['txt_ii_reccurent_proability'], ['size' => 10, 'color' => 'FF0000'], $cellHCentered);
+        $tableS->addCell(3000, $cellVCentered)->addText($datareq['txt_ii_reccurent_proability'], ['bold' => true, 'size' => 10, 'color' => 'FF0000'], $cellHCentered);
         $tableS->addCell(null, $cellRowContinue);
         // Judul
         $section->addTextBreak();
@@ -375,17 +499,302 @@ class Incident_Investigation extends CI_Controller
 
         // Create a second page
         $section->addPageBreak();
-
-        // Write some text
+        // Page 2
         $section->addTextBreak();
-        $section->addText('Some text...');
+        $tableS = $section->addTable($styleTable);
+        $tableS->addRow();
+        $cell = $tableS->addCell(18000);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText('Analisa Akar Penyebab :', ['bold' => true, 'size' => 11], ['lineSpacing' => 50]);
+        $textrun->addTextBreak();
+        $textrun->addText('Root Couse Analysis ', ['size' => 11, 'color' => '000']);
 
-        // Create a third page
+        $cellColSpan2 = array('borderSize' => 3, 'gridSpan' => 6);
+        $section->addTextBreak();
+        $tableS = $section->addTable($styleTable);
+        $tableS->addRow();
+        $cell = $tableS->addCell(18000, $cellColSpan2);
+        $textrun = $cell->addTextRun(['bgColor' => '#DBE5F1', 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText('FISH BOND METHODE', ['bold' => true, 'size' => 11], ['lineSpacing' => 50]);
+        // line break tr
+        $section->addTextBreak();
+        $tableS->addRow();
+        $cell = $tableS->addCell(18000, ['gridSpan' => 6]);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('', ['bold' => true, 'size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
+        // end
+        $tableS->addRow();
+        $tableS->addCell(1000, $cellVCentered);
+        $cell = $tableS->addCell(4000, $styleTableHeader);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('MANPOWER', ['bold' => true, 'size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
+        $cell = $tableS->addCell(4000, $styleTableHeader);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('METHODE', ['bold' => true, 'size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
+        $cell = $tableS->addCell(4000, $styleTableHeader);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('MATERIAL', ['bold' => true, 'size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
+        $cell = $tableS->addCell(4000, $styleTableHeader);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('MACHINE', ['bold' => true, 'size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
+        $tableS->addCell(1000, $cellVCentered);
+        for ($i = 0; $i < $datareq['row_fishbone']; $i++) {
+            $tableS->addRow();
+            $tableS->addCell(1000, $cellVCentered);
+            $cell = $tableS->addCell(4000, $styleTableHeader);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+            $textrun->addText($datareq['data_fishbone'][$i]['manpower'], ['size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
+            $cell = $tableS->addCell(4000, $styleTableHeader);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+            $textrun->addText($datareq['data_fishbone'][$i]['methode'], ['size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
+            $cell = $tableS->addCell(4000, $styleTableHeader);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+            $textrun->addText($datareq['data_fishbone'][$i]['material'], ['size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
+            $cell = $tableS->addCell(4000, $styleTableHeader);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+            $textrun->addText($datareq['data_fishbone'][$i]['machine'], ['size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
+            $tableS->addCell(1000, $cellVCentered);
+        }
+        // line break table tr
+        $tableS->addRow();
+        $cell = $tableS->addCell(18000, ['gridSpan' => 6]);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('', ['bold' => true, 'size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
+        // end
+
+        $cellColSpan2 = array('borderSize' => 3, 'gridSpan' => 8);
+        $tableS = $section->addTable($styleTable);
+        $tableS->addRow();
+        $cell = $tableS->addCell(18000, $cellColSpan2);
+        $textrun = $cell->addTextRun(['bgColor' => '#DBE5F1', 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText('Efek Domino dalam Kecelakaan :', ['bold' => true, 'size' => 11], ['lineSpacing' => 50]);
+        $textrun->addTextBreak();
+        $textrun->addText('Dominos Effect in Accident', ['italic' => true, 'size' => 11]);
+
+        // line break tr
+        $section->addTextBreak();
+        $tableS->addRow();
+        $cell = $tableS->addCell(18000, ['gridSpan' => 8]);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('', ['bold' => true, 'size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
+        // end
+        $tableS->addRow();
+        $cell = $tableS->addCell(4500, ['borderSize' => 3, 'gridSpan' => 2]);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('Penyebab Dasar', ['name' => 'calibri', 'bold' => true, 'size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
+        $textrun->addTextBreak();
+        $textrun->addText('Basic Cause', ['name' => 'calibri', 'size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
+        $cell = $tableS->addCell(4500, ['borderSize' => 3, 'gridSpan' => 2]);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('Penyebab Tidak Langsung', ['name' => 'calibri', 'bold' => true, 'size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
+        $textrun->addTextBreak();
+        $textrun->addText('In Direct Cause', ['name' => 'calibri', 'size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
+        $cell = $tableS->addCell(4500, ['borderSize' => 3, 'gridSpan' => 2]);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('Penyebab Langsung', ['name' => 'calibri', 'bold' => true, 'size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
+        $textrun->addTextBreak();
+        $textrun->addText('Direct Cause', ['name' => 'calibri', 'size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
+        $cell = $tableS->addCell(4500, ['borderSize' => 3, 'gridSpan' => 2]);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('Kerugian/Kecelakaan', ['name' => 'calibri', 'bold' => true, 'size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
+        $textrun->addTextBreak();
+        $textrun->addText('Loses', ['name' => 'calibri', 'size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
+        for ($i = 0; $i < $datareq['row_dominos_effect']; $i++) {
+            $tableS->addRow();
+            $cell = $tableS->addCell(500, $styleTableHeader);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+            if ($datareq['data_dominos_effect'][$i]['basic_cause'] != '') {
+                $textrun->addText('', ['name' => 'Wingdings 2', 'size' => 10, 'color' => '000'], ['lineSpacing' => 50]);
+            }
+            $cell = $tableS->addCell(4000, $styleTableHeader);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+            $textrun->addText($datareq['data_dominos_effect'][$i]['basic_cause'], ['name' => 'calibri', 'size' => 10, 'color' => '000'], ['lineSpacing' => 50]);
+            $cell = $tableS->addCell(500, $styleTableHeader);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+            if ($datareq['data_dominos_effect'][$i]['indirect_cause'] != '') {
+                $textrun->addText('', ['name' => 'Wingdings 2', 'size' => 10, 'color' => '000'], ['lineSpacing' => 50]);
+            }
+            $cell = $tableS->addCell(4000, $styleTableHeader);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+            $textrun->addText($datareq['data_dominos_effect'][$i]['indirect_cause'], ['name' => 'calibri', 'size' => 10, 'color' => '000'], ['lineSpacing' => 50]);
+            $cell = $tableS->addCell(500, $styleTableHeader);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+            if ($datareq['data_dominos_effect'][$i]['direct_cause'] != '') {
+                $textrun->addText('', ['name' => 'Wingdings 2', 'size' => 10, 'color' => '000'], ['lineSpacing' => 50]);
+            }
+            $cell = $tableS->addCell(4000, $styleTableHeader);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+            $textrun->addText($datareq['data_dominos_effect'][$i]['direct_cause'], ['name' => 'calibri', 'size' => 10, 'color' => '000'], ['lineSpacing' => 50]);
+            $cell = $tableS->addCell(500, $styleTableHeader);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+            if ($datareq['data_dominos_effect'][$i]['de_loses'] != '') {
+                $textrun->addText('', ['name' => 'Wingdings 2', 'size' => 10, 'color' => '000'], ['lineSpacing' => 50]);
+            }
+            $cell = $tableS->addCell(4000, $styleTableHeader);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+            $textrun->addText($datareq['data_dominos_effect'][$i]['de_loses'], ['name' => 'calibri', 'size' => 10, 'color' => '000'], ['lineSpacing' => 50]);
+        }
+        // line break tr
+        $section->addTextBreak();
+        $tableS->addRow();
+        $cell = $tableS->addCell(18000, ['gridSpan' => 8]);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('', ['bold' => true, 'size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
+        // end
+
+
+        // Page 3
         $section->addPageBreak();
-
-        // Write some text
         $section->addTextBreak();
-        $section->addText('Some text...');
+        $cellColSpan2 = array('gridSpan' => 6);
+        $tableS = $section->addTable($styleTable);
+        $tableS->addRow();
+        $cell = $tableS->addCell(18000, $cellColSpan2);
+        $textrun = $cell->addTextRun(['bgColor' => '#DBE5F1', 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('', ['bold' => true, 'size' => 11, 'color' => '000'], ['lineSpacing' => 20]);
+
+        // line break tr
+        $tableS->addRow();
+        $tableS->addCell(200, $cellVCentered);
+        $cell = $tableS->addCell(17600, ['borderSize' => 3, 'gridSpan' => 4]);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText('Tindakan Perbaikan dan Pencegahan', ['size' => 10], ['lineSpacing' => 50]);
+        $textrun->addTextBreak();
+        $textrun->addText('Corrective and Preventive Action', ['italic' => true, 'size' => 10, 'color' => '000']);
+        $tableS->addCell(200, $cellVCentered);
+        // end
+        $tableS->addRow();
+        $tableS->addCell(200, $cellVCentered);
+        $cell = $tableS->addCell(4400, $styleTableHeader);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('Tindakan', ['name' => 'calibri', 'bold' => true, 'size' => 9, 'color' => '000'], ['lineSpacing' => 50]);
+        $textrun->addTextBreak();
+        $textrun->addText('Action', ['name' => 'calibri', 'size' => 9, 'color' => '000'], ['lineSpacing' => 50]);
+        $cell = $tableS->addCell(4400, $styleTableHeader);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('Tanggung Jawab', ['name' => 'calibri', 'bold' => true, 'size' => 9, 'color' => '000'], ['lineSpacing' => 50]);
+        $textrun->addTextBreak();
+        $textrun->addText('Person in Charge', ['name' => 'calibri', 'size' => 9, 'color' => '000'], ['lineSpacing' => 50]);
+        $cell = $tableS->addCell(4400, $styleTableHeader);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('Batas Waktu Penyelesaian', ['name' => 'calibri', 'bold' => true, 'size' => 9, 'color' => '000'], ['lineSpacing' => 50]);
+        $textrun->addTextBreak();
+        $textrun->addText('Due Date Completion', ['name' => 'calibri', 'size' => 9, 'color' => '000'], ['lineSpacing' => 50]);
+        $cell = $tableS->addCell(4400, $styleTableHeader);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('Catatan', ['name' => 'calibri', 'bold' => true, 'size' => 9, 'color' => '000'], ['lineSpacing' => 50]);
+        $textrun->addTextBreak();
+        $textrun->addText('Notes', ['name' => 'calibri', 'size' => 9, 'color' => '000'], ['lineSpacing' => 50]);
+        $tableS->addCell(200, $cellVCentered);
+        for ($i = 0; $i < 4; $i++) {
+            $tableS->addRow();
+            $tableS->addCell(200, $cellVCentered);
+            $cell = $tableS->addCell(4400, $styleTableHeader);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+            $textrun->addText('', ['name' => 'arial', 'size' => 9, 'color' => 'FF0000'], ['lineSpacing' => 50]);
+            $cell = $tableS->addCell(4400, $styleTableHeader);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+            $textrun->addText('', ['name' => 'arial', 'size' => 9, 'color' => 'FF0000'], ['lineSpacing' => 50]);
+            $cell = $tableS->addCell(4400, $styleTableHeader);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+            $textrun->addText('', ['name' => 'arial', 'size' => 9, 'color' => 'FF0000'], ['lineSpacing' => 50]);
+            $cell = $tableS->addCell(4400, $styleTableHeader);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+            $textrun->addText('', ['name' => 'arial', 'size' => 9, 'color' => 'FF0000'], ['lineSpacing' => 50]);
+            $tableS->addCell(200, $cellVCentered);
+        }
+        $tableS->addRow();
+        $cell = $tableS->addCell(18000, ['gridSpan' => 6]);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('', ['bold' => true, 'size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
+        // end table corrective
+
+        // table Documentation
+        $section->addTextBreak();
+        $cellColSpan2 = array('gridSpan' => 3);
+        $tableS = $section->addTable($styleTable);
+        $tableS->addRow();
+        $cell = $tableS->addCell(18000, $cellColSpan2);
+        $textrun = $cell->addTextRun(['bgColor' => '#DBE5F1', 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('', ['bold' => true, 'size' => 11, 'color' => '000'], ['lineSpacing' => 20]);
+        $tableS->addRow();
+        $tableS->addCell(200, $cellVCentered);
+        $cell = $tableS->addCell(17600, ['borderSize' => 3]);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText('Dokumentasi', ['name' => 'calibri', 'bold' => true, 'size' => 10], ['lineSpacing' => 50]);
+        $textrun->addTextBreak();
+        $textrun->addText('Documentation', ['name' => 'calibri', 'italic' => true, 'size' => 10, 'color' => '000']);
+        $tableS->addCell(200, $cellVCentered);
+
+        $tableS->addRow(5000);
+        $tableS->addCell(200, $cellVCentered);
+        $cell = $tableS->addCell(17600, ['borderSize' => 3]);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $path_accident_photos = $dir_image . 'accident/employee/' . $datareq['int_vi_employee_id'];
+        $incident_img = explode(',', $datareq['txt_incident_image']);
+        foreach ($incident_img as $i => $val) {
+            $textrun->addImage($path_accident_photos . '/' . $val, array('width' => 100, 'height' => 200, 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::BOTH));
+        }
+        $tableS->addCell(200, $cellVCentered);
+
+        // line break tr
+        $tableS->addRow();
+        $cell = $tableS->addCell(18000, ['gridSpan' => 3]);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('', ['bold' => true, 'size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
+        // end
+
+        // Table bootom
+        $section->addTextBreak();
+        $cellColSpan2 = array('gridSpan' => 6);
+        $tableS = $section->addTable($styleTable);
+        $tableS->addRow();
+        $cell = $tableS->addCell(18000, $cellColSpan2);
+        $textrun = $cell->addTextRun(['bgColor' => '#DBE5F1', 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('', ['bold' => true, 'size' => 11, 'color' => '000'], ['lineSpacing' => 20]);
+
+        $tableS->addRow();
+        $tableS->addCell(200, $cellVCentered);
+        $cell = $tableS->addCell(4400, $styleTableHeader);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText('Reporter', ['name' => 'calibri', 'bold' => true, 'size' => 10, 'color' => '000'], ['lineSpacing' => 50]);
+        $cell = $tableS->addCell(4400, $styleTableHeader);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText('Head Dept ', ['name' => 'calibri', 'bold' => true, 'size' => 10, 'color' => '000'], ['lineSpacing' => 50]);
+        $cell = $tableS->addCell(4400, $styleTableHeader);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText('Head of Function', ['name' => 'calibri', 'bold' => true, 'size' => 10, 'color' => '000'], ['lineSpacing' => 50]);
+        $cell = $tableS->addCell(4400, $styleTableHeader);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText('HSE Head Dept', ['name' => 'calibri', 'bold' => true, 'size' => 10, 'color' => '000'], ['lineSpacing' => 50]);
+        $tableS->addCell(200, $cellVCentered);
+        $section->addTextBreak();
+
+        $tableS->addRow(2000);
+        $tableS->addCell(200, $cellVCentered);
+        $cell = $tableS->addCell(4400, $styleTableHeader);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText('', ['name' => 'calibri', 'bold' => true, 'size' => 10, 'color' => '000'], ['lineSpacing' => 50]);
+        $cell = $tableS->addCell(4400, $styleTableHeader);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText('', ['name' => 'calibri', 'bold' => true, 'size' => 10, 'color' => '000'], ['lineSpacing' => 50]);
+        $cell = $tableS->addCell(4400, $styleTableHeader);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText('', ['name' => 'calibri', 'bold' => true, 'size' => 10, 'color' => '000'], ['lineSpacing' => 50]);
+        $cell = $tableS->addCell(4400, $styleTableHeader);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $textrun->addText('', ['name' => 'calibri', 'bold' => true, 'size' => 10, 'color' => '000'], ['lineSpacing' => 50]);
+        $tableS->addCell(200, $cellVCentered);
+        $section->addTextBreak();
+
+        $tableS->addRow();
+        $cell = $tableS->addCell(18000, ['gridSpan' => 6]);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('', ['bold' => true, 'size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
+        // end
+
+
+
 
         // Saving the document as OOXML file...
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
@@ -591,190 +1000,190 @@ class Incident_Investigation extends CI_Controller
         }
     }
 
-    // public function generateBodyPart()
-    // {
-    //     $dataBodyPart = [
-    //         'Forehead',
-    //         'Eye',
-    //         'Nose',
-    //         'Mouth',
-    //         'Lip',
-    //         'Chin',
-    //         'Head',
-    //         'Ear',
-    //         'Neck',
-    //         'Shoulder',
-    //         'Chest',
-    //         'Nipple',
-    //         'Arm',
-    //         'Armpit',
-    //         'Elbow',
-    //         'Navel',
-    //         'Wrist',
-    //         'Buttocks',
-    //         'Forearm',
-    //         'Hand',
-    //         'Thumb',
-    //         'Finger',
-    //         'Hip',
-    //         'Groin',
-    //         'Leg',
-    //         'Thigh',
-    //         'Knee',
-    //         'Calf',
-    //         'Foot',
-    //         'Ankle',
-    //         'Instep',
-    //         'Heal',
-    //         'Toenail'
-    //     ];
-    //     foreach ($dataBodyPart as $i => $val) {
-    //         $this->db->insert('mBodyPart', ['txtNameBodyPart' => $val]);
-    //     }
-    // }
+// public function generateBodyPart()
+// {
+//     $dataBodyPart = [
+//         'Forehead',
+//         'Eye',
+//         'Nose',
+//         'Mouth',
+//         'Lip',
+//         'Chin',
+//         'Head',
+//         'Ear',
+//         'Neck',
+//         'Shoulder',
+//         'Chest',
+//         'Nipple',
+//         'Arm',
+//         'Armpit',
+//         'Elbow',
+//         'Navel',
+//         'Wrist',
+//         'Buttocks',
+//         'Forearm',
+//         'Hand',
+//         'Thumb',
+//         'Finger',
+//         'Hip',
+//         'Groin',
+//         'Leg',
+//         'Thigh',
+//         'Knee',
+//         'Calf',
+//         'Foot',
+//         'Ankle',
+//         'Instep',
+//         'Heal',
+//         'Toenail'
+//     ];
+//     foreach ($dataBodyPart as $i => $val) {
+//         $this->db->insert('mBodyPart', ['txtNameBodyPart' => $val]);
+//     }
+// }
 
 
 
-    // public function createTable()
-    // {
-    //     // $this->load->db();
-    //     $this->load->dbforge();
-    //     // switch over to Library DB
-    //     $this->db->query('use Library');
+// public function createTable()
+// {
+//     // $this->load->db();
+//     $this->load->dbforge();
+//     // switch over to Library DB
+//     $this->db->query('use Library');
 
-    //     $data_insert = [
-    //         'int_id_investigation' => [
-    //             'type' => 'INT',
-    //             'constraint' => 50,
-    //             'auto_increment' => TRUE
-    //         ],
-    //         'txt_inv_type' => [
-    //             'type' => 'TEXT',
-    //         ],
-    //         'dtm_date_incident date default current_timestamp',
-    //         'dtm_time_incident time default current_timestamp',
-    //         'txt_incident_area' => [
-    //             'type' => 'TEXT',
-    //         ],
-    //         'txt_incident_plant' => [
-    //             'type' => 'TEXT',
-    //         ],
-    //         // ===================== victim information ======================
-    //         'txt_vi_employee_number' => [
-    //             'type' => 'TEXT',
-    //         ],
-    //         'txt_vi_victim_name' => [
-    //             'type' => 'TEXT',
-    //         ],
-    //         // 'vi_victim_position' => $victim_position,
-    //         'txt_vi_victim_department' => [
-    //             'type' => 'TEXT',
-    //         ],
-    //         'int_vi_victim_age' => [
-    //             'type' => 'INT',
-    //             'constraint' => 11,
-    //         ],
-    //         'txt_vi_employee_level' => [
-    //             'type' => 'TEXT',
-    //         ],
-    //         'txt_vi_victim_service_period' => [
-    //             'type' => 'TEXT',
-    //         ],
-    //         // =================== incident information ======================
-    //         'txt_ii_incident_desc' => [
-    //             'type' => 'TEXT',
-    //         ],
-    //         'txt_ii_injuried_body_part' => [
-    //             'type' => 'TEXT',
-    //         ],
-    //         'txt_ii_condition_of_wound' => [
-    //             'type' => 'TEXT'
-    //         ],
-    //         'txt_ii_incident_level' => [
-    //             'type' => 'TEXT'
-    //         ],
-    //         'txt_ii_severity_level' => [
-    //             'type' => 'TEXT'
-    //         ],
-    //         'txt_ii_reccurent_proability' => [
-    //             'type' => 'TEXT'
-    //         ],
-    //         'txt_ii_action_taken' => [
-    //             'type' => 'TEXT',
-    //         ],
-    //         'dtm_ii_date_back_to_work date',
-    //         // ============ route couse analysis ==============================
-    //         'txt_rca_manpower' => [
-    //             'type' => 'TEXT',
-    //         ],
-    //         'txt_rca_methode' => [
-    //             'type' => 'TEXT',
-    //         ],
-    //         'txt_rca_machine' => [
-    //             'type' => 'TEXT',
-    //         ],
-    //         'txt_rca_material' => [
-    //             'type' => 'TEXT',
-    //         ],
-    //         // =============== Dominos Effect Accident ========================
-    //         'txt_de_basic_cause' => [
-    //             'type' => 'TEXT',
-    //         ],
-    //         'txt_de_indirect_cause' => [
-    //             'type' => 'TEXT',
-    //         ],
-    //         'txt_de_direct_cause' => [
-    //             'type' => 'TEXT',
-    //         ],
-    //         'txt_de_loses' => [
-    //             'type' => 'TEXT',
-    //         ],
-    //         // ============== Preventive And Corrective Action ================
-    //         'txt_pca_preventive_action' => [
-    //             'type' => 'TEXT',
-    //         ],
-    //         'txt_pca_person_responsibility' => [
-    //             'type' => 'TEXT',
-    //         ],
-    //         'txt_pca_time_target' => [
-    //             'type' => 'TEXT',
-    //         ],
-    //         // =================== Incident Photo =============================
-    //         'txt_incident_image' => [
-    //             'type' => 'TEXT'
-    //         ],
-    //         // ================== Investigation Team ==========================
-    //         'txt_investigation_lead' => [
-    //             'type' => 'TEXT'
-    //         ],
-    //         'txt_investigation_member' => [
-    //             'type' => 'TEXT'
-    //         ],
-    //         // =================== Created By ================================
-    //         'int_create_by' => [
-    //             'type' => 'INT',
-    //             'constraint' => 11,
-    //             'unique' => TRUE
-    //         ],
-    //         'dtm_create_date date default current_timestamp',
-    //         'dtm_create_time time default current_timestamp',
-    //         // =================== Updated By ================================
-    //         'int_update_by' => [
-    //             'type' => 'INT',
-    //             'constraint' => 11,
-    //             'unique' => TRUE
-    //         ],
-    //         'dtm_update_date date default current_timestamp',
-    //         'dtm_update_time time default current_timestamp'
+//     $data_insert = [
+//         'int_id_investigation' => [
+//             'type' => 'INT',
+//             'constraint' => 50,
+//             'auto_increment' => TRUE
+//         ],
+//         'txt_inv_type' => [
+//             'type' => 'TEXT',
+//         ],
+//         'dtm_date_incident date default current_timestamp',
+//         'dtm_time_incident time default current_timestamp',
+//         'txt_incident_area' => [
+//             'type' => 'TEXT',
+//         ],
+//         'txt_incident_plant' => [
+//             'type' => 'TEXT',
+//         ],
+//         // ===================== victim information ======================
+//         'txt_vi_employee_number' => [
+//             'type' => 'TEXT',
+//         ],
+//         'txt_vi_victim_name' => [
+//             'type' => 'TEXT',
+//         ],
+//         // 'vi_victim_position' => $victim_position,
+//         'txt_vi_victim_department' => [
+//             'type' => 'TEXT',
+//         ],
+//         'int_vi_victim_age' => [
+//             'type' => 'INT',
+//             'constraint' => 11,
+//         ],
+//         'txt_vi_employee_level' => [
+//             'type' => 'TEXT',
+//         ],
+//         'txt_vi_victim_service_period' => [
+//             'type' => 'TEXT',
+//         ],
+//         // =================== incident information ======================
+//         'txt_ii_incident_desc' => [
+//             'type' => 'TEXT',
+//         ],
+//         'txt_ii_injuried_body_part' => [
+//             'type' => 'TEXT',
+//         ],
+//         'txt_ii_condition_of_wound' => [
+//             'type' => 'TEXT'
+//         ],
+//         'txt_ii_incident_level' => [
+//             'type' => 'TEXT'
+//         ],
+//         'txt_ii_severity_level' => [
+//             'type' => 'TEXT'
+//         ],
+//         'txt_ii_reccurent_proability' => [
+//             'type' => 'TEXT'
+//         ],
+//         'txt_ii_action_taken' => [
+//             'type' => 'TEXT',
+//         ],
+//         'dtm_ii_date_back_to_work date',
+//         // ============ route couse analysis ==============================
+//         'txt_rca_manpower' => [
+//             'type' => 'TEXT',
+//         ],
+//         'txt_rca_methode' => [
+//             'type' => 'TEXT',
+//         ],
+//         'txt_rca_machine' => [
+//             'type' => 'TEXT',
+//         ],
+//         'txt_rca_material' => [
+//             'type' => 'TEXT',
+//         ],
+//         // =============== Dominos Effect Accident ========================
+//         'txt_de_basic_cause' => [
+//             'type' => 'TEXT',
+//         ],
+//         'txt_de_indirect_cause' => [
+//             'type' => 'TEXT',
+//         ],
+//         'txt_de_direct_cause' => [
+//             'type' => 'TEXT',
+//         ],
+//         'txt_de_loses' => [
+//             'type' => 'TEXT',
+//         ],
+//         // ============== Preventive And Corrective Action ================
+//         'txt_pca_preventive_action' => [
+//             'type' => 'TEXT',
+//         ],
+//         'txt_pca_person_responsibility' => [
+//             'type' => 'TEXT',
+//         ],
+//         'txt_pca_time_target' => [
+//             'type' => 'TEXT',
+//         ],
+//         // =================== Incident Photo =============================
+//         'txt_incident_image' => [
+//             'type' => 'TEXT'
+//         ],
+//         // ================== Investigation Team ==========================
+//         'txt_investigation_lead' => [
+//             'type' => 'TEXT'
+//         ],
+//         'txt_investigation_member' => [
+//             'type' => 'TEXT'
+//         ],
+//         // =================== Created By ================================
+//         'int_create_by' => [
+//             'type' => 'INT',
+//             'constraint' => 11,
+//             'unique' => TRUE
+//         ],
+//         'dtm_create_date date default current_timestamp',
+//         'dtm_create_time time default current_timestamp',
+//         // =================== Updated By ================================
+//         'int_update_by' => [
+//             'type' => 'INT',
+//             'constraint' => 11,
+//             'unique' => TRUE
+//         ],
+//         'dtm_update_date date default current_timestamp',
+//         'dtm_update_time time default current_timestamp'
 
-    //     ];
+//     ];
 
-    //     $this->dbforge->add_field($data_insert);
+//     $this->dbforge->add_field($data_insert);
 
-    //     // define primary key
-    //     $this->dbforge->add_key('int_id_investigation', TRUE);
+//     // define primary key
+//     $this->dbforge->add_key('int_id_investigation', TRUE);
 
-    //     // create table
-    //     $this->dbforge->create_table('trInvestigation');
-    // }
+//     // create table
+//     $this->dbforge->create_table('trInvestigation');
+// }
 }

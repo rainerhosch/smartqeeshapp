@@ -1,5 +1,6 @@
 $(document).ready(function () {
 	p_InitiateDataList();
+	let page = $("#page").val("home");
 });
 
 function cekActivityHasInput(intIdActivityRisk)
@@ -9,7 +10,7 @@ function cekActivityHasInput(intIdActivityRisk)
 		type: "get",
 		url: `${url}risk_register/Activity/cekActivityHasInput`,
 		data: {intIdActivityRisk: intIdActivityRisk},
-		dataType: "json",		
+		dataType: "json",
 		success: function (response) {
 			status = response.data
 		},
@@ -34,7 +35,7 @@ function  p_InitiateDataList() {
 			"url": `${url}risk_register/Activity/getDataTable`,
 			"method": "POST",
 			"data": function (d) {
-				// d.__RequestVerificationToken = $('#frmIndex input[name=__RequestVerificationToken]').val()                
+				// d.__RequestVerificationToken = $('#frmIndex input[name=__RequestVerificationToken]').val()
 			}
 		},
 		columns: [{
@@ -46,14 +47,14 @@ function  p_InitiateDataList() {
 				"data": "txtNamaActivity",
 				"name": "txtNamaActivity",
 				className: 'text-center'
-			},			
-			{				
-				render: function (data, type, full, meta) {					
+			},
+			{
+				render: function (data, type, full, meta) {
 					if (full.isInput > 0) {
 						return `<a class="btn btn-success" data-id="${full.intIdActivityRisk}" data-nama="${full.txtNamaActivity}" data-id_activity = ${full.intIdActivity} id="tombol_detail_activity"><i class="fa fa-eye"></i></a>`
 					} else {
 						return `<a class="btn btn-primary" data-id="${full.intIdActivityRisk}" data-nama="${full.txtNamaActivity}" data-id_activity = ${full.intIdActivity} id="tombol_detail_activity"><i class="fa fa-eye"></i></a>`
-					}					
+					}
                 },
 				className: 'text-center'
 			},
@@ -68,7 +69,7 @@ function  p_InitiateDataList() {
 // 	$("#txtActivityAdd").val("");
 // 	$.ajax({
 // 		type: "get",
-// 		url: `${url}manajemen/Activity/getActivityByDepartemen`,		
+// 		url: `${url}manajemen/Activity/getActivityByDepartemen`,
 // 		dataType: "json",
 // 		success: function (response) {
 // 			$(".actList").html(response.data);
@@ -101,7 +102,7 @@ $("#tombol_simpan_add_activity").on('click', function (e) {
 		error: () => {
 			clsGlobal.hidePreloader()
 		}
-	});	
+	});
 });
 /*============================== NAVIGASI ==============================*/
 $(document).on('click', "#tombol_detail_activity", function (e) {
@@ -131,7 +132,7 @@ $(document).on('click', "#tombol_detail_activity", function (e) {
 	}
 	$("#intIdActivity").val(id_activity);
 	$("#txtNamaActivityShow").val($(this).data('nama'));
-	showDetailActivity()		
+	showDetailActivity()
 });
 
 $("#close_tahapan").on("click", function () {
@@ -145,7 +146,7 @@ function showActivity() {
 	$("#data_act").css({'display': 'inline'});
 	window.scrollTo(0, 0);
 	let otableTah = $('#dtList').dataTable();
-	otableTah.fnDraw(false);	
+	otableTah.fnDraw(false);
 	clsGlobal.hidePreloader()
 }
 
@@ -157,7 +158,7 @@ function showDetailActivity() {
 	$("#show_activity_current").css({'display': 'inline'});
 	$("#data_tahapan").css({'display': 'inline'});
 	$("#data_act, #data_context").css({'display': 'none'});
-	$("#show_context_current, #show_tahapan_current").css({'display': 'none'});	
+	$("#show_context_current, #show_tahapan_current").css({'display': 'none'});
 	window.scrollTo(0, 0);
 	clsGlobal.hidePreloader()
 }

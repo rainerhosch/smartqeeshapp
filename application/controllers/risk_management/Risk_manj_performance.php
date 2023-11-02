@@ -47,7 +47,16 @@ class Risk_manj_performance extends CI_Controller
                 array_push($listData, $totalRisk);
             }
 
-            echo json_encode($listData);
+			$listDataProgram = [
+				"not_complete" => $this->risk_identification->countProgram("Not Completed"),
+				"in_progress" 	=> $this->risk_identification->countProgram("In Progress"),
+				"completed" 	=> $this->risk_identification->countProgram("Completed"),
+			];
+
+            echo json_encode([
+				"listDataRisk" => $listData,
+				"listDataProgram" => $listDataProgram
+			]);
         } else {
             echo json_encode("Invalid Request");
         }
