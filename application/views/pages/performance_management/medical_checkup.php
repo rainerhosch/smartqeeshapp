@@ -1,3 +1,9 @@
+<style type="text/css">
+    .select2 {
+    width:100%!important;
+    }
+</style>
+
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper" style="z-index: -999 !important;">
 
@@ -32,9 +38,6 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link bg-secondary active-tab btn " id="custom-content-above-home-tab" href="<?=base_url('performance_management/Medical_checkup/mcu_perf')?>">MCU PERFORMANCE</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link bg-secondary active-tab btn" id="custom-content-above-home-tab" href="<?=base_url('performance_management/Medical_checkup/unfit_followup')?>">UNFIT FOLLOWUP</a>
                 </li>
             </ul>
             <!--/.TAB-->
@@ -88,7 +91,13 @@
                             </div>
 
                             <br>
-
+                            
+                            <div class="form-group row">
+                                <label for="input" class="col-sm-2 col-form-label" style="text-align:right">DATE OF MCU :</label>
+                                <div class="col-sm-2">
+                                    <input type="date" name="mcu_date" class="form-control" id="datemcu"    onchange="yearperiod()" required>
+                                </div>
+                            </div>
                             <div class="form-group row">
                                 <label for="input" class="col-sm-2 col-form-label" style="text-align:right">MCU PERIOD :</label>
                                 <div class="col-sm-2">
@@ -116,10 +125,6 @@
                                     </select>
                                 </div>
 
-                                <label for="input" class="col-sm-2 col-form-label" style="text-align:right">DATE OF MCU :</label>
-                                <div class="col-sm-2">
-                                    <input type="date" name="mcu_date" class="form-control" id="datemcu" onchange="yearperiod()" required>
-                                </div>
                             </div>
 
                             <br>
@@ -134,6 +139,12 @@
                                         <option value="Fit for Work">Fit for Work</option>
                                     </select>
                                 </div>
+
+                                <label for="input" class="col-sm-2 col-form-label" style="text-align:right">HEIGHT :</label>
+                                <div class="col-sm-1">
+                                    <input type="number" class="form-control" id="height" name="height"  value="" onkeyup="validateInput(this)" required>
+                                </div>
+                                <div class="col-sm-1 my-auto">cm</div>
                             </div>
                             <div class="form-group row">
                                 <label for="input" class="col-sm-2 col-form-label" style="text-align:right">IDENTIFIED DISEASE :</label>
@@ -144,10 +155,56 @@
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
-                                <div class="col-sm-2">
+
+                                <div class="col-sm-1">
                                     <a class="btn btn-md btn-warning btnAdd" title="Add Disease" data-toggle="modal"><i class="fa fa-plus"></i></a> 
                                 </div> 
+
+                                <label for="input" class="col-sm-1 col-form-label" style="text-align:right">WEIGHT :</label>
+                                <div class="col-sm-1">
+                                    <input type="number" class="form-control" id="weight" name="weight"  value="" onkeyup="validateInput(this)" required>
+                                </div>
+                                <div class="col-sm-2 my-auto">kg</div>
+
+                                <label for="input" class="col-sm-1 col-form-label" style="text-align:right">BMI :</label>
+                                <div class="col-sm-1">
+                                    <input type="number" class="form-control" id="bmi" name="bmi"  required readonly>
+                                </div>
+                                <div class="col-sm-1 my-auto">kg/m<sup>2</sup></div>
                             </div>
+
+                            <br>
+
+                            <div class="form-group row">
+                                <label for="input" class="col-sm-2 col-form-label" style="text-align:right">CHOLESTEROL :</label>
+                                <div class="col-sm-1">
+                                    <input type="text" class="form-control" id="cholesterol" name="cholesterol" required>
+                                </div>
+                                <div class="col-sm-1 my-auto">mg/dL</div>
+
+                                <label for="input" class="col-sm-2 col-form-label" style="text-align:right">GOUT:</label>
+                                <div class="col-sm-1">
+                                    <input type="text" class="form-control" id="gout" name="gout"  required>
+                                </div>
+                                <div class="col-sm-1 my-auto">mg/dL</div>
+                            </div>
+                            
+                            <div class="form-group row">
+                                <label for="input" class="col-sm-2 col-form-label" style="text-align:right">BLOOD SUGAR :</label>
+                                <div class="col-sm-1">
+                                    <input type="text" class="form-control" id="bloodsugar" name="bloodsugar"  required>
+                                </div>
+                                <div class="col-sm-1 my-auto">mg/dL</div>
+
+                                <label for="input" class="col-sm-2 col-form-label" style="text-align:right">BLOOD PRESSURE :</label>
+                                <div class="col-sm-1">
+                                    <input type="text" class="form-control" id="bloodpressure" name="bloodpressure"  required>
+                                </div>
+                                <div class="col-sm-1 my-auto">mmHg</div>
+                            </div>
+
+                            <br>
+
                             <div class="form-group row">
                                 <label for="input" class="col-sm-2 col-form-label" style="text-align:right">TREATMENT:</label>
                                 <div class="col-sm-2">
@@ -387,4 +444,45 @@ $(document).ready(function () {
 $(function () {
   bsCustomFileInput.init();
 });
+</script>
+
+<script>
+    // var height = $('#height').val();
+    // var weight = $('#weight').val();
+    // var regex = /^\d+$/;
+    // if (!regex.test(height)) {
+    //     alert("Input harus berupa angka positif");
+    //     return false;
+    // }
+    // if (!isNaN(height) || !isNaN(height)) {
+    //     return false;
+    // }else{
+
+    // }
+    function validateInput(inputAngka) {
+        var input = inputAngka.value;
+        var idinput = inputAngka.getAttribute( 'id' );
+        
+        if(input == "" || input == null){
+            input = 0;
+        }
+
+        if(idinput == "weight"){
+            var input2 = $('#height').val();
+            input2 = Number(input2) / 100;
+            if(input2 == "" || input2 == null){
+                input2 = 0;
+            }
+            var bmi = Number(input) / (input2 * input2);
+        }else{
+            input = Number(input) / 100;
+            var input2 = $('#weight').val();
+            if(input2 == "" || input2 == null){
+                input2 = 0;
+            }
+            
+            var bmi = Number(input2) / (input * input);
+        }
+        $('#bmi').val(bmi.toFixed(2));
+    }
 </script>

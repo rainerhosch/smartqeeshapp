@@ -174,4 +174,49 @@ class M_internal_clinic extends CI_Model
         $this->db->where('internalclinic_id', $id);
         $this->db->delete($this->table);
     }
+
+    public function get_mcuperiod()
+        {
+        $this->db->select('mcu_period');
+        $this->db->from('trMcu');
+        $this->db->group_by('mcu_period');
+        return $this->db->get()->result();
+        }
+
+        public function totaldept($wheres)
+        {
+            $this->db->select('d.txtNamaDepartement, COUNT(m.id) as total');
+            $this->db->from('trinternalclinic m');
+            $this->db->join('mEmployee e', 'm.intIdEmployee = e.intIdEmployee');
+            $this->db->join('mDepartemen d', 'e.intIdDepartment = d.intIdDepartement');
+            if($wheres['dept']!='')
+            {
+                $this->db->where('d.intIdDepartement', $wheres['dept']);
+            }
+            if($wheres['filterperiod']!='')
+            {
+                $this->db->where('m.mcu_period', $wheres['filterperiod']);
+            }
+            $this->db->group_by('d.txtNamaDepartement');
+
+            return $this->db->get()->result_array();
+        }
+
+        public function totalpenyakit($wheres)
+        {
+            $this->db->select('m.*');
+            $this->db->from('trinternalclinic m');
+            $this->db->join('mEmployee e', 'm.intIdEmployee = e.intIdEmployee');
+            $this->db->join('mDepartemen d', 'e.intIdDepartment = d.intIdDepartement');
+            if($wheres['dept']!='')
+            {
+                $this->db->where('d.intIdDepartement', $wheres['dept']);
+            }
+            if($wheres['filterperiod']!='')
+            {
+                $this->db->where('m.mcu_period', $wheres['filterperiod']);
+            }
+
+            return $this->db->get()->result_array();
+    }
 }

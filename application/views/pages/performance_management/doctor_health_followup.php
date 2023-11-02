@@ -274,7 +274,7 @@ function getNumberToName($employee, $disease, $deptlist, $employ, $dises, $depar
 
 <!-- Modal -->
 <?php $no = 1; foreach($unfit_followup as $lm) : $no++;?>
-<div class="modal fade" id="modaledit<?php echo $lm->id ?>">
+<div class="modal fade" id="modaledit<?php echo $lm->id ?>" data-backdrop="static">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
@@ -284,7 +284,15 @@ function getNumberToName($employee, $disease, $deptlist, $employ, $dises, $depar
                 </button>
             </div>
             <div class="modal-body">
-                <br>
+                <h5><b>MCU RESULT:</b></h5>
+                <div class="col-sm-12 row">
+                    <div class="col-sm-2">
+                        <p><b>MCU DATE:<b> <?php echo $lm->mcu_date ?></td>
+                    </div>
+                    <div class="col-sm-12">
+                        <p><b>HOSPITAL:<b> <?php echo $lm->HospitalName ?></td>
+                    </div>
+                </div>
                 <table>
                     <thead class="align-middle">
                         <tr class="table-primary table-bordered align-middle" style="text-align: center;">
@@ -307,7 +315,89 @@ function getNumberToName($employee, $disease, $deptlist, $employ, $dises, $depar
                         </tr>
                     </tbody>
                 </table>
-                <br>    
+                <br>
+                <h5><b>INPUT FOLLOWUP RESULT:</b></h5>    
+                <form class="form-horizontal" method="post" action="<?php echo base_url().'performance_management/doctor_health_followup/action_followup'; ?>">
+                    <div class="form-group">
+                    <div class="row ml-12">
+                            <div class="col-3">
+                                <label for="input" class="col-sm-12 col-form-label">DATE OF FOLLOWUP :</label>
+                                <div class="col-sm-9">
+                                    <input type="date" name="foll_date" class="form-control" id="datefoll" required="">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <label for="input" class="col-sm-4 col-form-label">HOSPITAL :</label>
+                                <div class="col-sm-12 row">
+                                    <div class="col-sm-5">
+                                        <select class="form-control js-example-basic-single" id="category" name="category" onchange="updateHospital()" required="">
+                                                <option value="internal" selected="">Internal</option>
+                                                <option value="external">External</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <select class="form-control js-example-basic-single" id="hospital" name="hospital" required="">
+                                            <option value="APF Internal Clinic" selected="">APF Internal Clinic</option>
+                                        </select>
+                                    </div>
+                                </div>                            
+                            </div>
+                            <div class="col-3">
+                                <label for="input" class="col-sm-12 col-form-label">HEALTH STATUS :</label>
+                                <div class="col-sm-9">
+                                    <select class="form-control" id="follstatus" name="follstatus" required="">
+                                    <option value="" selected="" disabled="">Select</option>
+                                        <option value="Fit with Note">Fit with Note</option>
+                                        <option value="Unfit">Unfit</option>
+                                        <option value="Fit for Work">Fit for Work</option>
+                                    </select>
+                                </div>                            
+                            </div>   
+                        </div>
+                        <br>
+                        <div class="row ml-12">
+                            <div class="col-sm-3">
+                                <label for="input" class="col-sm-8 col-form-label">CHOLESTEROL :</label>
+                                <div class="row col-sm-12 col-sm-12">
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" id="cholesterol" name="cholesterol" required="">
+                                    </div>
+                                    <div class="col-sm-6 my-auto">mg/dL</div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="input" class="col-sm-8 col-form-label">GOUT:</label>
+                                <div class="row col-sm-12">
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" id="gout" name="gout"  required>
+                                    </div>
+                                    <div class="col-sm-6 my-auto">mg/dL</div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="input" class="col-sm-8 col-form-label">BLOOD SUGAR :</label>
+                                <div class="row col-sm-12">
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" id="bloodsugar" name="bloodsugar"  required>
+                                    </div>
+                                    <div class="col-sm-6 my-auto">mg/dL</div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="input" class="col-sm-8 col-form-label">BLOOD PRESSURE :</label>
+                                <div class="row col-sm-12">
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" id="bloodpressure" name="bloodpressure"  required>
+                                    </div>
+                                    <div class="col-sm-6 my-auto">mmHg</div>    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br>
+
+                </form> 
                 <h5><b>DOCTOR NOTE:</b></h5>
                 <form class="form-horizontal" method="post" action="<?php echo base_url().'performance_management/doctor_health_followup/action_followup'; ?>">
                     <input type="hidden" name="id" class="form-control" value="<?php echo $lm->id ?>">
@@ -325,42 +415,6 @@ function getNumberToName($employee, $disease, $deptlist, $employ, $dises, $depar
 </div>
 <?php endforeach; ?>
 <!-- /.modal -->
-
-<!-- Page specific script -->
-<!-- <script src="https://cdn.datatables.net/plug-ins/1.12.1/dataRender/ellipsis.js"></script>
-<script>
-    $('#follupdata').DataTable( {
-    paging: true,
-    lengthChange: false,
-    searching: false,
-    ordering: true,
-    info: true,
-    autoWidth: false,
-    responsive: true,
-    columnDefs: [ {
-    targets: [1,4],
-    render: $.fn.dataTable.render.ellipsis( 10 )
-    } ]
-} );
-</script> -->
-<!-- <script>
-$(document).ready( function () {
-  var table = $('#follupdata').DataTable({
-        paging: true,
-        lengthChange: false,
-        searching: false,
-        ordering: true,
-        info: true,
-        autoWidth: false,
-        responsive: true
-        // columnDefs:[{targets:[1,4],className:"truncate"}],
-        // createdRow: function(row){
-        // var td = $(row).find(".truncate");
-        // td.attr("title", td.html());
-        // }
-    });
-});
-</script> -->
 
 <!-- Page specific script -->
 <script src="<?= base_url('assets/templates') ?>/plugins/pdfmake/pdfmake.min.js"></script>
@@ -398,6 +452,35 @@ $(document).ready( function () {
         showConfirmButton: false,
         timer: 1500
     })
+}
+</script>
+
+<script>
+function updateHospital() {
+    var category = document.getElementById("category");
+    var hospital = document.getElementById("hospital");
+    var selectedValue = category.value;
+    
+    // Clear previous options
+    hospital.innerHTML = "";
+    
+    // Add new options based on the selected value
+    if (selectedValue === "internal") {
+    var option1 = document.createElement("option");
+    option1.value = "APF Internal Clinic";
+    option1.text = "APF Internal Clinic";
+    hospital.appendChild(option1);
+    } else if (selectedValue === "external") {
+    var option3 = document.createElement("option");
+    option3.value = "x";
+    option3.text = "X";
+    hospital.appendChild(option3);
+    
+    var option4 = document.createElement("option");
+    option4.value = "y";
+    option4.text = "Y";
+    hospital.appendChild(option4);
+    }
 }
 </script>
 <!-- <script type="text/javascript">

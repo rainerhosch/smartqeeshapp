@@ -39,7 +39,7 @@ class Internal_clinic extends CI_Controller
         $this->load->view('template', $data);
     }
 
-    public function visit_record()
+    public function visit_record($date1 = null, $date2 = null)
     {
         $data['employee'] = $this->M_internal_clinic->get_employeenik();
         $data['deptlist'] = $this->M_internal_clinic->get_deptlist();
@@ -47,7 +47,7 @@ class Internal_clinic extends CI_Controller
 
         $buttonSRCH = $this->input->post('searchVal', true);
         if ($buttonSRCH != '1') {
-            $data['disease'] = $this->M_internal_clinic->get_disease();
+            // $data['disease'] = $this->M_internal_clinic->get_disease();
             $array_penyakit = array();
             foreach ($data['disease'] as $i => $penyakit) {
                 $array_penyakit[$penyakit['intidDisease']] = $penyakit['txtNamaDisease'];
@@ -57,14 +57,15 @@ class Internal_clinic extends CI_Controller
             $data['struk'] = NULL;
             $data['search'] = NULL;
         } else {
-            $idDate = $this->input->post('filterdate', true);
+            $idDate1 = $this->input->post('filterdate1', true);
+            $idDate2 = $this->input->post('filterdate2', true);
             $idDept = $this->input->post('dept', true);
             $idNik = $this->input->post('nik', true);
             $idDisease = $this->input->post('filterdisease', true);
 
-            $data['search'] = [$idDate, $idNik, $idDisease, $idDept];
+            $data['search'] = [$idDate1, $idDate2, $idNik, $idDisease, $idDept];
             $data['struk'] = $this->M_internal_clinic->getWhere_disease($idDisease);
-            $data['disease'] = $this->M_internal_clinic->get_disease();
+            // $data['disease'] = $this->M_internal_clinic->get_disease();
 
             $array_penyakit = array();
             foreach ($data['disease'] as $i => $penyakit) {
@@ -84,10 +85,10 @@ class Internal_clinic extends CI_Controller
             // if(!empty($idDisease)) {
             //     $this->db->where('m.idcomplaint', $idDisease);
             // }
-            if (!empty($idDate)) {
+            if (!empty($idDate1) && !empty($idDate2)) {
                 // $ymd = explode("-", $idPeriod);
                 // $RESULTEXPL = $ymd[0];
-                $this->db->where('m.date', $$idDate);
+                $this->db->where('m.date BETWEEN"'.$idDate1.'"and"'.$idDate2.'"');
             }
             if (!empty($idDept)) {
                 $this->db->where('e.intIdDepartment', $idDept);
@@ -97,7 +98,6 @@ class Internal_clinic extends CI_Controller
             }
             $data['listintclinic'] = $this->db->get()->result();
         }
-
         $data['title'] = 'Smart Qeesh App';
         $data['page'] = 'Home';
         $data['subpage'] = 'Blank Page';
@@ -108,33 +108,106 @@ class Internal_clinic extends CI_Controller
 
     public function visit_perf()
     {
+        // $wheres['dept'] = $this->input->get('dept')!='' ? $this->input->get('dept'):'';
+        // $wheres['filterperiod'] = $this->input->get('filterperiod')!='' ? $this->input->get('filterperiod'):'';
         $data['intclinic'] = $this->M_internal_clinic->get_visitperf();
-
+        // $data['totalpenyakit'] = $this->M_interal_clinic->totalpenyakit($wheres);
         $data['employee'] = $this->M_internal_clinic->get_employeenik();
+        $data['deptlist'] = $this->M_internal_clinic->get_deptlist();
+        $data['mcuperiod'] = $this->M_internal_clinic->get_mcuperiod();
         $data['detaildept'] = $this->M_internal_clinic->get_employeenik();
         $data['listintclinic'] = $this->M_internal_clinic->get_list_intclinic();
         $data['paramedic'] = $this->M_internal_clinic->get_paramedic();
+        // $data['totaldept'] = $this->M_interal_clinic->totaldept($wheres);
+        $data['disease'] = $this->M_internal_clinic->get_disease();
+        $buttonSRCH = $this->input->post('searchVal', true);
+        if($buttonSRCH != '1'){
+            $data['disease'] = $this->M_internal_clinic->get_disease();
+            $array_penyakit = array();
+            foreach ($data['disease'] as $i=>$penyakit){
+                $array_penyakit[$penyakit['intidDisease']] = $penyakit['txtNamaDisease'];
+            }
+            $data['listmcu'] = $this->M_internal_clinic->get_listmcu();
+            $data['penyakit'] = $array_penyakit;
+            $data['struk'] = NULL;
+            $data['search'] = NULL;
+        }else{
+            $idPeriod = $this->input->post('filterperiod', true);
+            $idDept = $this->input->post('dept', true);
 
-        $data['actionperf'] = $this->M_internal_clinic->get_actionperf();
+            $data['search'] = [$idPeriod, $idDept];
+        }
+        $array_penyakit = array();
+        $array_penyakit2 = array();
+        $array_penyakit3 = array();
+        $array_total = array();
         $array_action = array();
         $array_actiontotal = array();
-        foreach ($data['actionperf'] as $i => $action) {
-            $array_action[$i] = $action['txtNamaDepartement'];
+        $where = array();
+        if(count($data['totalpenyakit'])> 0){
 
-            $array_actiontotal[$i] = $this->db->get_where('trMcu', ['intIdEmployee' => $action['intIdEmployee']])->num_rows();
+            foreach ($data['totalpenyakit'] as $i=>$penyakit)
+            {
+            $identified_disease = explode(",",$penyakit['identified_disease']);
+            foreach ($identified_disease as $key => $value) {
+                $array_penyakit[][$value] =  $penyakit;
+            }
         }
+        
+        foreach ($array_penyakit as $key => $value) {
+            # code...
+            $ii = 0;
+            foreach ($value as $k => $v) {
+                $array_penyakit2[$k][] = 1;
+                $ii++;
+            }
+        }
+
+        foreach ($array_penyakit2 as $key => $value) {
+            $penyakit = $this->M_internal_clinic->getWhere_disease($key);
+            $array_penyakit3['array_penyakit'][] = $penyakit['txtNamaDisease'];
+            $array_penyakit3['array_total'][] = count($value);
+        }
+        }
+        // echo '<pre>';
+        // echo print_r($array_penyakit3);
+        // echo '</pre>';
+        // exit;
+        
+        foreach ($data['totaldept'] as $i=>$action)
+        {
+            $array_action[$i] = $action['txtNamaDepartement'];
+            
+            $array_actiontotal[$i] = $action['total'];
+        }
+        $penyakit = isset($array_penyakit3['array_penyakit']) ? $array_penyakit3['array_penyakit'] : array();
+        $total = isset($array_penyakit3['array_total']) ? $array_penyakit3['array_total'] : array();
+        $data['penyakit'] = json_encode($penyakit);
+        $data['total'] = json_encode($total);
         $data['action'] = json_encode($array_action);
         $data['actiontotal'] = json_encode($array_actiontotal);
+        
+        //OLD
+        // $data['actionperf'] = $this->M_internal_clinic->get_actionperf();
+        // $array_action = array();
+        // $array_actiontotal = array();
+        // foreach ($data['actionperf'] as $i => $action) {
+        //     $array_action[$i] = $action['txtNamaDepartement'];
 
-        $array_penyakit = array();
-        $array_total = array();
-        foreach ($data['intclinic'] as $i => $penyakit) {
-            $array_penyakit[$i] = $penyakit['txtNamaDisease'];
+        //     $array_actiontotal[$i] = $this->db->get_where('trMcu', ['intIdEmployee' => $action['intIdEmployee']])->num_rows();
+        // }
+        // $data['action'] = json_encode($array_action);
+        // $data['actiontotal'] = json_encode($array_actiontotal);
 
-            $array_total[$i] = $this->db->get_where('trinternalclinic', ['idcomplaint' => $penyakit['intidDisease']])->num_rows();
-        }
-        $data['penyakit'] = json_encode($array_penyakit);
-        $data['total'] = json_encode($array_total);
+        // $array_penyakit = array();
+        // $array_total = array();
+        // foreach ($data['intclinic'] as $i => $penyakit) {
+        //     $array_penyakit[$i] = $penyakit['txtNamaDisease'];
+
+        //     $array_total[$i] = $this->db->get_where('trinternalclinic', ['idcomplaint' => $penyakit['intidDisease']])->num_rows();
+        // }
+        // $data['penyakit'] = json_encode($array_penyakit);
+        // $data['total'] = json_encode($array_total);
 
         $data['title'] = 'Smart Qeesh App';
         $data['page'] = 'Home';

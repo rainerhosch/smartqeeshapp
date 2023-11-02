@@ -76,9 +76,6 @@ function getNumberToName($employee, $disease, $deptlist, $employ, $dises, $depar
                 <li class="nav-item">
                     <a class="nav-link bg-secondary active-tab btn btn-flat" id="custom-content-above-home-tab" href="<?=base_url('performance_management/Medical_checkup/mcu_perf')?>">MCU PERFORMANCE</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link bg-secondary active-tab btn btn-flat" id="custom-content-above-home-tab" href="<?=base_url('performance_management/Medical_checkup/unfit_followup')?>">UNFIT FOLLOWUP</a>
-                </li>
             </ul>
             <!--/.TAB-->
 
@@ -195,19 +192,19 @@ function getNumberToName($employee, $disease, $deptlist, $employ, $dises, $depar
                                             <th scope="col">ACTION</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody class="align-middle">
                                     <?php $alertX = 0;?>
                                     <?php $no = 1; foreach($listmcu as $lm) : ?>
                                         <?php if($struk == NULL):?>
                                             <?php $alertX = 1;?>
                                             <tr>
-                                                <th class="text-center" style="width: 2%;"><?php echo $no++ ?></th>
-                                                <th class="text-center"><?php echo $lm->txtNameEmployee ?></th>
-                                                <td class="text-center"><?php echo $lm->txtNamaDepartement ?></td>  
-                                                <td class="text-center"><?php echo $lm->age ?></td> 
-                                                <td class="text-center"><?php echo $lm->txtAlamat1 ?> <?php echo $lm->txtAlamat2 ?></td> 
-                                                <td class="text-center"><?php echo $lm->health_status ?></td>
-                                                <td class="text-center">
+                                                <th class="text-center align-middle" style="width: 2%;"><?php echo $no++ ?></th>
+                                                <th class="text-center align-middle"><?php echo $lm->txtNameEmployee ?></th>
+                                                <td class="text-center align-middle"><?php echo $lm->txtNamaDepartement ?></td>  
+                                                <td class="text-center align-middle"><?php echo $lm->age ?></td> 
+                                                <td class="text-center align-middle"><?php echo $lm->txtAlamat1 ?> <?php echo $lm->txtAlamat2 ?></td> 
+                                                <td class="text-center align-middle"><?php echo $lm->health_status ?></td>
+                                                <td class="text-center align-middle">
                                                         <?php 
                                                             
                                                             $data_array = explode(",",$lm->identified_disease);
@@ -220,11 +217,19 @@ function getNumberToName($employee, $disease, $deptlist, $employ, $dises, $depar
 
                                                         ?>
                                                 </td>
-                                                <td class="text-center">
+                                                <td class="text-center align-middle">
                                                     <div class="btn-group">
                                                     <a class="btn btn-xs btn-danger btnDelete mx-1" data-id="<?= $lm->id?>"><i class="fas fa-trash-alt"></i></a>
                                                     <a class="btn btn-xs btn-warning btnEdit mx-1" href="<?= base_url('performance_management/medical_checkup/edit/'.$lm->id)?>"><i class="fas fa-pen"></i></a>
-                                                    <a href="<?= base_url('upload_file/mcuReport/').$lm->mcu_report ?>" target="_blank()" class="btn btn-xs btn-success mx-1"><i class="fa fa-download"></i></a>
+                                                    <button class="btn dropdown-toggle btn-xs btn-success mx-1" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                        <i class="fa fa-download"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                                        <a class="dropdown-item" href="<?php echo base_url('performance_management/medical_checkup/detailpdf/').$lm->id?>">Detail Employee</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url('upload_file/mcuReport/').$lm->mcu_report?>">MCU Report</a>
+                                                        </div>
+                                                    <!-- <a href="<?= base_url('upload_file/mcuReport/').$lm->mcu_report ?>" target="_blank()" class="btn btn-xs btn-success mx-1"><i class="fa fa-download"></i></a> -->
+                                                    <!-- <a href="<?= base_url('performance_management/medical_checkup/detailpdf/').$lm->id ?>" target="_blank()" class="btn btn-xs btn-success mx-1"><i class="fa fa-download"></i></a> -->
                                                     </div>
                                                 </td>
                                             </tr>

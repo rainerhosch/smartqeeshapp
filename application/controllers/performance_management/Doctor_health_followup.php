@@ -9,6 +9,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
  *  Date Created          : 1/06/2022
  *  Quots of the code     : 'rapihkan lah code mu, seperti halnya kau menata kehidupan'
  */
+
 class Doctor_health_followup extends CI_Controller
 {
     public function __construct()
@@ -26,6 +27,7 @@ class Doctor_health_followup extends CI_Controller
         $data['employee'] = $this->M_followup->get_employeenik();
         $data['deptlist'] = $this->M_followup->get_deptlist();
         $data['mcuperiod'] = $this->M_followup->get_mcuperiod();
+        $data['hospital'] = $this->M_followup->get_hospital();
         
 
         $buttonSRCH = $this->input->post('searchVal', true);
@@ -103,32 +105,84 @@ class Doctor_health_followup extends CI_Controller
 
     public function followup_perf()
     {
+        $wheres['dept'] = $this->input->get('dept')!='' ? $this->input->get('dept'):'';
+        $wheres['filterperiod'] = $this->input->get('filterperiod')!='' ? $this->input->get('filterperiod'):'';
         $data['follupperf'] = $this->M_followup->get_follupperf();
+        $data['totalpenyakit'] = $this->M_followup->totalpenyakit($wheres);
+        $data['deptlist'] = $this->M_followup->get_deptlist();
+        $data['mcuperiod'] = $this->M_followup->get_mcuperiod();
         $data['actionperf'] = $this->M_followup->get_actionperf();
-        
+        $data['totaldept'] = $this->M_followup->totaldept($wheres);
+        // getWhere_disease
         $data['disease'] = $this->M_followup->get_disease();
+        $buttonSRCH = $this->input->post('searchVal', true);
+        if($buttonSRCH != '1'){
+            $data['disease'] = $this->M_mcu->get_disease();
+            $array_penyakit = array();
+            foreach ($data['disease'] as $i=>$penyakit){
+                $array_penyakit[$penyakit['intidDisease']] = $penyakit['txtNamaDisease'];
+            }
+            $data['listmcu'] = $this->M_mcu->get_listmcu();
+            $data['penyakit'] = $array_penyakit;
+            $data['struk'] = NULL;
+            $data['search'] = NULL;
+        }else{
+            $idPeriod = $this->input->post('filterperiod', true);
+            $idDept = $this->input->post('dept', true);
+
+            $data['search'] = [$idPeriod, $idDept];
+        }
         $array_penyakit = array();
+        $array_penyakit2 = array();
+        $array_penyakit3 = array();
         $array_total = array();
         $array_action = array();
         $array_actiontotal = array();
-        foreach ($data['follupperf'] as $i=>$penyakit)
-        {
-            $array_penyakit[$i] = $penyakit['txtNamaDisease'];
-            
-            $array_total[$i] = $this->db->get_where('trMcu', ['identified_disease' => $penyakit['intidDisease']])->num_rows();            
+        $where = array();
+        if(count($data['totalpenyakit'])> 0){
+
+            foreach ($data['totalpenyakit'] as $i=>$penyakit)
+            {
+            $identified_disease = explode(",",$penyakit['identified_disease']);
+            foreach ($identified_disease as $key => $value) {
+                $array_penyakit[][$value] =  $penyakit;
+            }
         }
-        foreach ($data['actionperf'] as $i=>$action)
+        
+        foreach ($array_penyakit as $key => $value) {
+            # code...
+            $ii = 0;
+            foreach ($value as $k => $v) {
+                $array_penyakit2[$k][] = 1;
+                $ii++;
+            }
+        }
+
+        foreach ($array_penyakit2 as $key => $value) {
+            $penyakit = $this->M_followup->getWhere_disease($key);
+            $array_penyakit3['array_penyakit'][] = $penyakit['txtNamaDisease'];
+            $array_penyakit3['array_total'][] = count($value);
+        }
+        }
+        // echo '<pre>';
+        // echo print_r($array_penyakit3);
+        // echo '</pre>';
+        // exit;
+        
+        foreach ($data['totaldept'] as $i=>$action)
         {
             $array_action[$i] = $action['txtNamaDepartement'];
             
-            $array_actiontotal[$i] = $this->db->get_where('trMcu', ['intIdEmployee' => $action['intIdEmployee']])->num_rows();
+            $array_actiontotal[$i] = $action['total'];
         }
-        $data['penyakit'] = json_encode($array_penyakit);
-        $data['total'] = json_encode($array_total);
+        $penyakit = isset($array_penyakit3['array_penyakit']) ? $array_penyakit3['array_penyakit'] : array();
+        $total = isset($array_penyakit3['array_total']) ? $array_penyakit3['array_total'] : array();
+        $data['penyakit'] = json_encode($penyakit);
+        $data['total'] = json_encode($total);
         $data['action'] = json_encode($array_action);
         $data['actiontotal'] = json_encode($array_actiontotal);
         // echo '<pre>';
-        // echo print_r($data['penyakit']);
+        // echo print_r($data['totaldept']);
         // echo '</pre>';
         // exit;
 

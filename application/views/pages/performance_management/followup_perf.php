@@ -1,17 +1,17 @@
 <!-- Style -->
 <style type="text/css">
 .label-box {
-  border: 1px solid white;
-  display: flex;
-  min-height: 30px;
-  min-width: 30px;
-  width: 100%;
-  text-align: center;
+    border: 1px solid white;
+    display: flex;
+    min-height: 30px;
+    min-width: 30px;
+    width: 100%;
+    text-align: center;
 
 }
 
 .label-text{
-  font-size: 0.8rem;
+    font-size: 0.8rem;
 }
 
 #chart-wrapper {
@@ -19,7 +19,7 @@
     position: relative;
     font-size: 300px;
     width: 100%;
-  }
+}
 </style>
 
 <!-- Content Wrapper. Contains page content -->
@@ -63,23 +63,52 @@
                 <!--MCU PERFORMANCE-->
                 <div>
                     <!-- form -->
-                    <form class="form-horizontal" method="post">
+                    <form class="form-horizontal" method="get">
                         <!--card body-->
                         <div class="card-body" style="background-color: #77a0e6;">
                             <div class="form-grup row mb-2 col-12">
                                 <label for="input" class="col-form-label col-2" style="text-align:right">MCU PERIOD :</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="input" name="input" placeholder="TEXT">
+                                    <select class="form-control" id="filterperiod" name="filterperiod" >
+                                        <option value="" selected disabled>Select</option>
+                                        <?php
+
+                                        use function PHPSTORM_META\type;
+
+                                        foreach($mcuperiod as $prd):?>
+                                            <option value="<?php echo $prd->mcu_period ?>" <?php echo isset($_GET['filterperiod']) && $_GET['filterperiod']==$prd->mcu_period ? 'selected':'';?>><?php echo $prd->mcu_period ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-grup row mb-2 col-12">
                                 <label for="input" class="col-form-label col-2" style="text-align:right">FILTER AS DEPARTEMENT :</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="input" name="input" placeholder="TEXT">
+                                    <select class="form-control js-example-basic-single" id="dept" name="dept" placeholder="">
+                                        <option value="" selected disabled>Select</option>
+                                        <?php foreach($deptlist as $dept):?>
+                                        <option value="<?php echo $dept['intIdDepartement'] ?>" <?php echo isset($_GET['dept']) && $_GET['dept']==$dept['intIdDepartement'] ? 'selected':'';?>><?php echo $dept['txtNamaDepartement'] ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
                                 </div>
                             </div>
+                            <div class="form-group row mb-2 col-12">
+                                <div class="col-6">
+                                    <button class="btn btn-warning col-sm-4 float-right" name="search" value="1">SEARCH</button>
+                                    <button type="reset" class="btn btn-secondary col-sm-3 float-right mr-2" name="resetVal" value="reset">CLEAR</button>
+                                </div>
+                            </div>
+                            <?php if($dept != NULL):?>
+                                <div class="form-grup row mb-2 col-12">
+                                    <div class="col-9">
+                                    </div>
+                                    <div class="col-3">
+                                        <a href="<?=base_url('performance_management/Medical_checkup/mcu_record')?>" class="btn btn-danger float-right">Reset to Default</a>
+                                    </div>
+                                </div>
+                            <?php endif;?>
                             <br>
-
+                            </form>
 
                             <div class="card col-lg-12" style="background-color: aliceblue;">
                                 <div class="row justify-content-md-center m-2">
