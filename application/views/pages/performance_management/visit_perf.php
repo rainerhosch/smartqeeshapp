@@ -51,7 +51,7 @@
                                         <option value="" selected disabled>Select</option>
                                         <?php
 
-                                        use function PHPSTORM_META\type;
+                                        // use function PHPSTORM_META\type;
 
                                         foreach($mcuperiod as $prd):?>
                                             <option value="<?php echo $prd->mcu_period ?>" <?php echo isset($_GET['filterperiod']) && $_GET['filterperiod']==$prd->mcu_period ? 'selected':'';?>><?php echo $prd->mcu_period ?></option>
