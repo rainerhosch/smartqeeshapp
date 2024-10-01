@@ -4,6 +4,8 @@
 <script src="<?= base_url('assets/templates') ?>/plugins/sweetalert2/sweetalert2.all.min.js"></script>
 <script src="<?= base_url('assets/templates') ?>/js/adminlte.js"></script>
 <script src="<?= base_url('assets/templates') ?>/plugins/select2/js/select2.full.min.js"></script>
+<script src="<?= base_url('assets/templates') ?>/libs/toastr/build/toastr.min.js"></script>
+<script src="<?= base_url('assets/templates') ?>/libs/dropzone/min/dropzone.min.js"></script>
 <script src="<?= base_url('assets/templates') ?>/js/myscript.js"></script>
 <!-- DataTables  & Plugins -->
 <script src="<?= base_url('assets/templates') ?>/plugins/datatables/jquery.dataTables.min.js"></script>

@@ -15,6 +15,10 @@ function login_check()
     $user_id = $ci->session->userdata('user_id');
     if ($user_id === null) {
         $ci->session->set_flashdata('message', '<div class="alert alert-warning" role="alert">Anda tidak mempunyai akses, silahkan login!</div>');
+        if ($ci->input->is_ajax_request()) {
+            header("HTTP/1.1 401 Unauthorized");
+            exit;
+        }
         redirect('auth');
     }
 }

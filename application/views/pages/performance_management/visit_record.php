@@ -26,7 +26,11 @@ function getNumberToName($employee, $disease, $deptlist, $employ, $dises, $depar
     return [$DimNik, $DimDises, $DimDept];
 }
 ?>
-
+<style type="text/css">
+    .select2 {
+    width:100%!important;
+    }
+</style>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper" style="z-index: -999 !important;">
 
@@ -73,11 +77,19 @@ function getNumberToName($employee, $disease, $deptlist, $employ, $dises, $depar
                     <div class="card-body" style="background-color: #77a0e6;">
                         <form action="<?= base_url('performance_management/Internal_clinic/visit_record') ?>" method="post">
 
-                            <div class="form-grup row mb-2 col-12">
-                                <label for="input" class="col-form-label col-2" style="text-align:right">FILTER AS DATE :</label>
-                                <div class="col-sm-4">
-                                    <input class="form-control" type="date" id="filterdate" name="filterdate">
+                            <div class="form-grup row mb-2 col-12 justify-content-end">
+                                <label for="input" class="col-form-label col-1" style="text-align:right">FROM:</label>
+                                
+                                <div class="col-md-auto">
+                                    <input class="form-control" type="date" id="filterdate1" name="filterdate1">
                                 </div>
+
+                                <label for="input" class="col-form-label col-md-auto px-auto" style="width:84px">TO:</label>
+
+                                <div class="col-md-auto">
+                                    <input class="form-control" type="date" id="filterdate2" name="filterdate2">
+                                </div>
+
                                 <label for="input" class="col-form-label col-2" style="text-align:right">FILTER AS DEPT :</label>
                                 <div class="col-sm-4">
                                     <select class="form-control js-example-basic-single" id="dept" name="dept" placeholder="">
@@ -90,11 +102,6 @@ function getNumberToName($employee, $disease, $deptlist, $employ, $dises, $depar
                             </div>
 
                             <div class="form-grup row mb-2 col-12">
-                                <!-- <label for="input" class="col-form-label col-2" style="text-align:right">FILTER AS NIK :</label>
-                                <div class="col-sm-4">
-                                        <input type="INPUT NIK" name="keyword_nik" class="form-control"
-                                        placeholder="Search">
-                                </div> -->
                                 <label for="input" class="col-form-label col-2" style="text-align:right">FILTER AS NIK :</label>
                                 <div class="col-sm-4">
                                     <select class="form-control js-example-basic-single" id="nik" name="nik" placeholder="INPUT NIK">
@@ -105,7 +112,7 @@ function getNumberToName($employee, $disease, $deptlist, $employ, $dises, $depar
                                     </select>
                                 </div>
 
-                                <label for="input" class="col-form-label col-2" style="text-align:right">FILTER AS COMPLAINT :</label>
+                                <label for="input" class="col-form-label col-2" style="text-align:right">FILTER AS DIAGNOSE :</label>
                                 <div class="col-sm-4">
                                     <select class="form-control" id="filterdisease" name="filterdisease">
                                         <option value="" selected disabled>Select</option>
@@ -127,12 +134,16 @@ function getNumberToName($employee, $disease, $deptlist, $employ, $dises, $depar
                             </div>
                             <?php if ($search != NULL) : ?>
                                 <?php
-                                $GET_FIND = getNumberToName($employee, $disease, $deptlist, $search[1], $search[2], $search[3]);
+                                $GET_FIND = getNumberToName($employee, $disease, $deptlist, $search[2], $search[3], $search[4]);
                                 ?>
                                 <div class="form-grup row mb-2 col-12">
                                     <div class="col-9">
                                         <div class="card ml-3" style="background-color: white;">
-                                            <h6 class="m-2"><b>Filtered by: &nbsp; Date: <span class="text-success">-</span> &nbsp;NIK: <span class="text-success"><?= $GET_FIND[0] ?></span> &nbsp;Dept: <span class="text-success"><?= $GET_FIND[2] ?></span> &nbsp;Complaint: <span class="text-success"><?= $GET_FIND[1] ?></span> </b></h6>
+                                            <h6 class="m-2"><b>Filtered by: &nbsp; Date: <span class="text-success"><?php if(!empty($search[0]) && !empty($search[1])){
+                                                echo $search[0] .' TO '.$search[1];
+                                            }else{
+                                                echo "-";
+                                            } ?></span> &nbsp;NIK: <span class="text-success"><?= $GET_FIND[0] ?></span> &nbsp;Dept: <span class="text-success"><?= $GET_FIND[2] ?></span> &nbsp;Diagnose: <span class="text-success"><?= $GET_FIND[1] ?></span> </b></h6>
                                         </div>
                                     </div>
                                     <div class="col-3">
@@ -152,25 +163,25 @@ function getNumberToName($employee, $disease, $deptlist, $employ, $dises, $depar
                                             <th scope="col">DEPARTEMENT</th>
                                             <th scope="col">AGE</th>
                                             <th scope="col">ADDRESS</th>
-                                            <th scope="col">COMPLAINT</th>
+                                            <th scope="col">DIAGNOSE</th>
                                             <th scope="col">TREATMENT</th>
                                             <th scope="col">MEDICINE</th>
                                             <th scope="col">ACTION</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody class="align-middle">
                                         <?php
                                         $no = 1;
                                         foreach ($listintclinic as $licl) :
                                         ?>
                                             <?php if ($struk == NULL) : ?>
                                                 <tr>
-                                                    <th class="text-center" style="width: 2%;"><?= $no++ ?></th>
-                                                    <th class="text-center"><?= $licl->txtNameEmployee ?></th>
-                                                    <td class="text-center"><?= $licl->txtNamaDepartement ?></td>
-                                                    <td class="text-center"><?= $licl->age ?></td>
-                                                    <td class="text-center"><?= $licl->txtAlamat1 ?> <?= $licl->txtAlamat2 ?></td>
-                                                    <td class="text-center"><?php
+                                                    <th class="text-center align-middle" style="width: 2%;"><?= $no++ ?></th>
+                                                    <th class="text-center align-middle"><?= $licl->txtNameEmployee ?></th>
+                                                    <td class="text-center align-middle"><?= $licl->txtNamaDepartement ?></td>
+                                                    <td class="text-center align-middle"><?= $licl->age ?></td>
+                                                    <td class="text-center align-middle"><?= $licl->txtAlamat1 ?> <?= $licl->txtAlamat2 ?></td>
+                                                    <td class="text-center align-middle"><?php
 
                                                                             $data_array = explode(",", $licl->idcomplaint);
                                                                             foreach ($data_array as $i => $value) {
@@ -181,9 +192,9 @@ function getNumberToName($employee, $disease, $deptlist, $employ, $dises, $depar
                                                                             }
 
                                                                             ?></td>
-                                                    <td class="text-center"><?= $licl->action ?></td>
-                                                    <td class="text-center"><?= $licl->namaObat ?></td>
-                                                    <td class="text-center">
+                                                    <td class="text-center align-middle"><?= $licl->action ?></td>
+                                                    <td class="text-center align-middle"><?= $licl->namaObat ?></td>
+                                                    <td class="text-center align-middle">
                                                         <div class="btn-group">
                                                             <a class="btn btn-xs btn-danger btnDelete mx-1" data-id="<?= $licl->internalclinic_id ?>"><i class="fas fa-trash-alt"></i></a>
                                                             <a class="btn btn-xs btn-warning btnEdit mx-1" href="<?= base_url('performance_management/internal_clinic/edit/' . $licl->internalclinic_id) ?>"><i class="fas fa-pen"></i></a>
@@ -265,7 +276,7 @@ function getNumberToName($employee, $disease, $deptlist, $employ, $dises, $depar
             "ordering": true,
             "info": true,
             "autoWidth": false,
-            "responsive": true
+            "responsive": true,
         });
     });
 </script>

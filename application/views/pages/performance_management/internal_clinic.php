@@ -109,7 +109,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label" style="text-align:right">COMPLAINT :</i> </label>
+                            <label class="col-sm-2 col-form-label" style="text-align:right">DIAGNOSE :</i> </label>
                             <div class="col-sm-2">
                                 <select class="form-control js-example-basic-single" id="complaint" multiple="multiple" name="complaint" data-placeholder="Select Disease" required>
                                     <?php foreach($disease as $dis):?>

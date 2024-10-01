@@ -18,6 +18,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	<!-- Select2 -->
 	<link rel="stylesheet" href="<?= base_url('assets/templates') ?>/plugins/select2/css/select2.min.css">
 	<link rel="stylesheet" href="<?= base_url('assets/templates') ?>/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+
+	<link rel="stylesheet" href="<?= base_url('assets/templates') ?>/libs/toastr/build/toastr.min.css">
+	<link rel="stylesheet" href="<?= base_url('assets/templates') ?>/libs/dropzone/min/dropzone.min.css">
+
 	<!-- Datatables -->
 	<link rel="stylesheet" href="<?= base_url('assets/templates') ?>/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
 	<link rel="stylesheet" href="<?= base_url('assets/templates') ?>/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
@@ -36,7 +40,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 		/* Firefox */
 		input[type=number] {
-			-moz-appearance: textfield;
+			--moz-appearance: textfield;
 		}
 
 		.ui-widget {
@@ -70,7 +74,31 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<?php $this->load->view('layouts/script'); ?>
 			<?php $this->load->view('layouts/navbar'); ?>
 			<?php $this->load->view('layouts/sidebar'); ?>
-			<?php $this->load->view($content); ?>
+			<?php isset($content) ? $this->load->view($content) : "" ?>
+			<?= isset($template['body']) ? $template['body'] : ""?>
+			<div class="modal fade" id="modalLarge" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+
+					</div>
+				</div>
+			</div>
+
+			<div class="modal fade" id="modalLarge2" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						
+					</div>
+				</div>
+			</div>
+
+			<div class="modal fade" id="modalLarge3" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						
+					</div>
+				</div>
+			</div>
 			<?php $this->load->view('layouts/footer'); ?>
 		</div>
 		<script>
@@ -82,6 +110,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				$(".alert_content").html("");
 			}, 2000);
 		</script>
+		<?= (isset($generalJs) ? '<script src="' . $generalJs . '"></script>' : '') . "\r\n\x20\x20\x20\x20" ?>
+		<?= (isset($js) ? '<script src="' . $js . '"></script>' : '') . "\r\n\x20\x20\x20\x20" ?>
 	</body>
 <?php else : ?>
 	<?php $this->load->view('layouts/script'); ?>

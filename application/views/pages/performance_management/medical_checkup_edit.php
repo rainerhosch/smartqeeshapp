@@ -1,3 +1,9 @@
+<style type="text/css">
+    .select2 {
+    width:100%!important;
+    }
+</style>
+
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper" style="z-index: -999 !important;">
 
@@ -83,7 +89,12 @@
                             </div>
 
                             <br>
-
+                            <div class="form-group row">
+                                <label for="input" class="col-sm-2 col-form-label" style="text-align:right">DATE OF MCU :</label>
+                                <div class="col-sm-2">
+                                    <input type="date" name="mcu_date" class="form-control" id="datemcu" onchange="yearperiod()" value="<?= $mcup->mcu_date?>"required>
+                                </div>
+                            </div>
                             <div class="form-group row">
                                 <label for="input" class="col-sm-2 col-form-label" style="text-align:right">MCU PERIOD :</label>
                                 <div class="col-sm-2">
@@ -116,11 +127,6 @@
                                     <?php endforeach; ?>
                                     </select>
                                 </div>
-
-                                <label for="input" class="col-sm-2 col-form-label" style="text-align:right">DATE OF MCU :</label>
-                                <div class="col-sm-2">
-                                    <input type="date" name="mcu_date" class="form-control" id="datemcu" onchange="yearperiod()" value="<?= $mcup->mcu_date?>"required>
-                                </div>
                             </div>
 
                             <br>
@@ -144,24 +150,75 @@
                                         <?php endif;?>
                                     </select>
                                 </div>
+
+                                <label for="input" class="col-sm-2 col-form-label" style="text-align:right">HEIGHT :</label>
+                                <div class="col-sm-1">
+                                    <input type="number" class="form-control" id="height" name="height"  value="<?= $mcup->height?>" onkeyup="validateInput(this)" required>
+                                </div>
+                                <div class="col-sm-1 my-auto">cm</div>
                             </div>
                             <div class="form-group row">
-                                <label for="input" class="col-sm-2 col-form-label" style="text-align:right">IDENTIFIED DISEASE :</label>
+                                <label for="identified_disease" class="col-sm-2 col-form-label" style="text-align:right">IDENTIFIED DISEASE :</label>
                                 <div class="col-sm-2">
                                     <select class="form-control js-example-basic-single" multiple="multiple"  id="identified_disease" name="identified_disease[]" style="width: 100%" required>
-                                        <?php foreach($disease as $dis):?>
-                                            <?php if($dis['intidDisease'] == $mcup->identified_disease):?>
-                                                <option value="<?php echo $dis['intidDisease'] ?>" selected><?php echo $dis['txtNamaDisease'] ?></option>
-                                            <?php else:?>
-                                                <option value="<?php echo $dis['intidDisease'] ?>"><?php echo $dis['txtNamaDisease'] ?></option>
-                                            <?php endif;?>
-                                        <?php endforeach; ?>
+                                    <?php foreach ($disease as $dis): ?>
+                                    <?php
+                                        $selected_diseases = explode(',', $mcup->identified_disease);
+                                        $isSelected = in_array($dis['intidDisease'], $selected_diseases);
+                                    ?>
+                                    <option value="<?php echo $dis['intidDisease'] ?>" <?php echo ($isSelected ? 'selected' : ''); ?>><?php echo $dis['txtNamaDisease'] ?></option>
+                                <?php endforeach; ?>
                                     </select>
                                 </div>
-                                <div class="col-sm-2">
+                                <div class="col-sm-1">
                                 <a class="btn btn-md btn-warning btnAdd" title="Add Disease" data-toggle="modal"><i class="fa fa-plus"></i></a> 
                                 </div> 
+
+                                <label for="input" class="col-sm-1 col-form-label" style="text-align:right">WEIGHT :</label>
+                                <div class="col-sm-1">
+                                    <input type="number" class="form-control" id="weight" name="weight"  value="<?= $mcup->weight?>" onkeyup="validateInput(this)" required>
+                                </div>
+                                <div class="col-sm-2 my-auto">kg</div>
+
+                                <label for="input" class="col-sm-1 col-form-label" style="text-align:right">BMI :</label>
+                                <div class="col-sm-1">
+                                    <input type="number" class="form-control" id="bmi" name="bmi" value="<?= $mcup->bmi?>"  required readonly>
+                                </div>
+                                <div class="col-sm-1 my-auto">kg/m<sup>2</sup></div>
                             </div>
+
+                            <br>
+
+                            <div class="form-group row">
+                                <label for="input" class="col-sm-2 col-form-label" style="text-align:right">CHOLESTEROL :</label>
+                                <div class="col-sm-1">
+                                    <input type="text" class="form-control" id="cholesterol" name="cholesterol" value="<?= $mcup->cholesterol?>" required>
+                                </div>
+                                <div class="col-sm-1 my-auto">mg/dL</div>
+
+                                <label for="input" class="col-sm-2 col-form-label" style="text-align:right">GOUT:</label>
+                                <div class="col-sm-1">
+                                    <input type="text" class="form-control" id="gout" name="gout" value="<?= $mcup->gout?>"  required>
+                                </div>
+                                <div class="col-sm-1 my-auto">mg/dL</div>
+                            </div>
+                            
+                            <div class="form-group row">
+                                <label for="input" class="col-sm-2 col-form-label" style="text-align:right">BLOOD SUGAR :</label>
+                                <div class="col-sm-1">
+                                    <input type="text" class="form-control" id="bloodsugar" name="bloodsugar" value="<?= $mcup->bloodsugar?>"  required>
+                                </div>
+                                <div class="col-sm-1 my-auto">mg/dL</div>
+
+                                <label for="input" class="col-sm-2 col-form-label" style="text-align:right">BLOOD PRESSURE :</label>
+                                <div class="col-sm-1">
+                                    <input type="text" class="form-control" id="bloodpressure" name="bloodpressure" value="<?= $mcup->bloodpressure?>"  required>
+                                </div>
+                                <div class="col-sm-1 my-auto">mmHg</div>
+                            </div>
+                            
+                            <br>
+
                             <div class="form-group row">
                                 <label for="input" class="col-sm-2 col-form-label" style="text-align:right">TREATMENT:</label>
                                 <div class="col-sm-2">
@@ -174,9 +231,9 @@
                             <div class="form-group row">
                                 <label for="input" class="col-sm-2 col-form-label" style="text-align:right">UPLOAD MCU REPORT :</label>
                                 <div class="custom-file col-sm-2">
-                                    <input type="hidden" name="uniqId" value="<?= rand() ?>">
+                                    <input type="text" name="uniqId" value="<?= rand() ?>">
                                     <input type="file" class="custom-file-input" id="customFile" name="uploadReport" accept="application/pdf">
-                                    <label class="custom-file-label" for="customFile">Choose file</label>
+                                    <label class="custom-file-label" for="customFile"><?= $mcup->mcu_report?></label>
                                 </div>
                             </div>
                             
