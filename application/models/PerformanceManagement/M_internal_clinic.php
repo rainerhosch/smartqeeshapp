@@ -78,18 +78,6 @@ class M_internal_clinic extends CI_Model
 
     public function get_data($code)
     {
-        // $query = $this->db->query(
-        //     "SELECT *
-        //     FROM trinternalclinic
-        //     WHERE internalclinic_id = '$code'"
-        // );
-        // return $query;
-
-        // $this->db->select('*');
-        // $this->db->from('trinternalclinic');
-        // $this->db->where('internalclinic_id', $code);
-        // return $this->db->get()->row_array();
-
         $query = $this->db->get_where('trinternalclinic', array('internalclinic_id' => $code))->row();
         return $query;
     }
@@ -176,47 +164,55 @@ class M_internal_clinic extends CI_Model
     }
 
     public function get_mcuperiod()
-        {
+    {
         $this->db->select('mcu_period');
         $this->db->from('trMcu');
         $this->db->group_by('mcu_period');
         return $this->db->get()->result();
-        }
-
-        public function totaldept($wheres)
-        {
-            $this->db->select('d.txtNamaDepartement, COUNT(m.id) as total');
-            $this->db->from('trinternalclinic m');
-            $this->db->join('mEmployee e', 'm.intIdEmployee = e.intIdEmployee');
-            $this->db->join('mDepartemen d', 'e.intIdDepartment = d.intIdDepartement');
-            if($wheres['dept']!='')
-            {
-                $this->db->where('d.intIdDepartement', $wheres['dept']);
-            }
-            if($wheres['filterperiod']!='')
-            {
-                $this->db->where('m.mcu_period', $wheres['filterperiod']);
-            }
-            $this->db->group_by('d.txtNamaDepartement');
-
-            return $this->db->get()->result_array();
-        }
-
-        public function totalpenyakit($wheres)
-        {
-            $this->db->select('m.*');
-            $this->db->from('trinternalclinic m');
-            $this->db->join('mEmployee e', 'm.intIdEmployee = e.intIdEmployee');
-            $this->db->join('mDepartemen d', 'e.intIdDepartment = d.intIdDepartement');
-            if($wheres['dept']!='')
-            {
-                $this->db->where('d.intIdDepartement', $wheres['dept']);
-            }
-            if($wheres['filterperiod']!='')
-            {
-                $this->db->where('m.mcu_period', $wheres['filterperiod']);
-            }
-
-            return $this->db->get()->result_array();
     }
+
+    public function totaldept($wheres)
+    {
+        $this->db->select('d.txtNamaDepartement, COUNT(m.id) as total');
+        $this->db->from('trinternalclinic m');
+        $this->db->join('mEmployee e', 'm.intIdEmployee = e.intIdEmployee');
+        $this->db->join('mDepartemen d', 'e.intIdDepartment = d.intIdDepartement');
+        if($wheres['dept']!='')
+        {
+            $this->db->where('d.intIdDepartement', $wheres['dept']);
+        }
+        if($wheres['filterperiod']!='')
+        {
+            $this->db->where('m.mcu_period', $wheres['filterperiod']);
+        }
+        $this->db->group_by('d.txtNamaDepartement');
+
+        return $this->db->get()->result_array();
+    }
+
+    public function totalpenyakit($wheres)
+    {
+        $this->db->select('m.*');
+        $this->db->from('trinternalclinic m');
+        $this->db->join('mEmployee e', 'm.intIdEmployee = e.intIdEmployee');
+        $this->db->join('mDepartemen d', 'e.intIdDepartment = d.intIdDepartement');
+        if($wheres['dept']!='')
+        {
+            $this->db->where('d.intIdDepartement', $wheres['dept']);
+        }
+        if($wheres['filterperiod']!='')
+        {
+            $this->db->where('m.mcu_period', $wheres['filterperiod']);
+        }
+
+        return $this->db->get()->result_array();
+    }
+
+    // public function get_listmcu()
+    // {
+    //     $this->db->select('*');
+    //     $this->db->from('trMcu');
+    //     $this->db->order_by('mcu_period', 'ASC');
+    //     return $this->db->get()->result();
+    // }
 }
