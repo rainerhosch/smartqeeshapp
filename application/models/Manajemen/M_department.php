@@ -11,7 +11,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
  */
 class M_department extends CI_Model
 {
-     var $table = 'mDepartemen'; //nama tabel dari database
+	var $table = 'mDepartemen'; //nama tabel dari database
 	var $column_order = array(null); //field yang ada di table user
 	var $column_search = array('mActivity.txtNamaActivity', 'mDepartemen.txtNamaDepartement', 'mSection.txtNamaSection'); //field yang diizin untuk pencarian
 	var $order = array('dtmInsertedDate' => 'desc'); // default order
@@ -20,7 +20,7 @@ class M_department extends CI_Model
 	{
 		$this->db->select("intIdDepartement, mDepartemen.intIdSection, mSection.txtNamaSection, txtNamaDepartement, mDepartemen.bitActive, mDepartemen.txtSingkatan");
 		$this->db->from($this->table);
-          $this->db->join("mSection", "mDepartemen.intIdSection = mSection.intIdSection");
+		$this->db->join("mSection", "mDepartemen.intIdSection = mSection.intIdSection");
 		if ($_POST['intIdSection'] != "") {
 			$this->db->where("mDepartemen.intIdSection", $_POST['intIdSection']);
 		}
@@ -66,13 +66,13 @@ class M_department extends CI_Model
 		foreach ($list as $field) {
 			$no++;
 			$row = array();
-			$row["intIdDepartement"] 		= $field->intIdDepartement;
-			$row["intIdSection"] 			= $field->intIdSection;
-			$row["txtNamaDepartement"] 		= $field->txtNamaDepartement;
-			$row["txtNamaSection"] 			= $field->txtNamaSection;
-			$row["txtSingkatan"] 			= $field->txtSingkatan;
-			$row["bitActive"] 				= $field->bitActive;
-			$data[] 						= $row;
+			$row["intIdDepartement"] = $field->intIdDepartement;
+			$row["intIdSection"] = $field->intIdSection;
+			$row["txtNamaDepartement"] = $field->txtNamaDepartement;
+			$row["txtNamaSection"] = $field->txtNamaSection;
+			$row["txtSingkatan"] = $field->txtSingkatan;
+			$row["bitActive"] = $field->bitActive;
+			$data[] = $row;
 		}
 
 		$output = array(
@@ -94,70 +94,70 @@ class M_department extends CI_Model
 	public function count_all()
 	{
 		$this->db->from($this->table);
-          $this->db->join("mSection", "mDepartemen.intIdSection = mSection.intIdSection");
+		$this->db->join("mSection", "mDepartemen.intIdSection = mSection.intIdSection");
 		return $this->db->count_all_results();
 	}
-     //CONTROL
-     public function validateSectionNamaDepartment($id_section, $nama_department)
-     {
-          $this->db->where("intIdSection", $id_section);
-          $this->db->where("txtNamaDepartement", $nama_department);
-          return $this->db->get($this->table)->row_array();
-     }
+	//CONTROL
+	public function validateSectionNamaDepartment($id_section, $nama_department)
+	{
+		$this->db->where("intIdSection", $id_section);
+		$this->db->where("txtNamaDepartement", $nama_department);
+		return $this->db->get($this->table)->row_array();
+	}
 
-     public function validateSectionKodeDepartment($id_section, $kode_department)
-     {
-          $this->db->where("intIdSection", $id_section);
-          $this->db->where("txtSingkatan", $kode_department);
-          return $this->db->get($this->table)->row_array();
-     }
+	public function validateSectionKodeDepartment($id_section, $kode_department)
+	{
+		$this->db->where("intIdSection", $id_section);
+		$this->db->where("txtSingkatan", $kode_department);
+		return $this->db->get($this->table)->row_array();
+	}
 
-     //ACTION
-     public function getsDepartmentSection()
-     {
-          $this->db->select("intIdDepartement, mDepartemen.intIdSection, mSection.txtNamaSection, txtNamaDepartement, mDepartemen.bitActive, mDepartemen.txtSingkatan");
-          $this->db->join("mSection", "mDepartemen.intIdSection = mSection.intIdSection");
-          return $this->db->get($this->table)->result_array();
-     }
+	//ACTION
+	public function getsDepartmentSection()
+	{
+		$this->db->select("intIdDepartement, mDepartemen.intIdSection, mSection.txtNamaSection, txtNamaDepartement, mDepartemen.bitActive, mDepartemen.txtSingkatan");
+		$this->db->join("mSection", "mDepartemen.intIdSection = mSection.intIdSection");
+		return $this->db->get($this->table)->result_array();
+	}
 
-     public function getsDepartmentActive()
-     {
-          return $this->db->get_where($this->table, ["bitActive" => true])->result();
-     }
+	public function getsDepartmentActive()
+	{
+		return $this->db->get_where($this->table, ["bitActive" => true])->result();
+	}
 
-     public function insertData($data)
-     {
-          $this->db->insert($this->table, $data);
-          return $this->db->insert_id();
-     }
+	public function insertData($data)
+	{
+		$this->db->insert($this->table, $data);
+		return $this->db->insert_id();
+	}
 
-     public function getDepartment($id)
-     {
-          return $this->db->get_where($this->table, ["intIdDepartement" => $id])->row_array();
-     }
+	public function getDepartment($id)
+	{
+		return $this->db->get_where($this->table, ["intIdDepartement" => $id])->row_array();
+	}
 
-     // code by rzoktan
-     public function getData_v2($where = null)
-     {
-          $this->db->select('*');
-          $this->db->from($this->table);
-          if ($where != null) {
-               $this->db->where($where);
-          }
-          return $this->db->get();
-     }
+	// code by rzoktan
+	public function getData_v2($where = null)
+	{
+		$this->db->select('*');
+		$this->db->from($this->table);
+		if ($where != null) {
+			$this->db->where($where);
+		}
+		return $this->db->get();
+	}
 
-     public function updateData($data, $id)
-     {
-          $this->db->update($this->table, $data, ["intIdDepartement" => $id]);
-     }
+	public function updateData($data, $id)
+	{
+		$this->db->update($this->table, $data, ["intIdDepartement" => $id]);
+	}
 
-     public function getDepartemenByIdPlant($id)
-     {
-          return $this->db->get_where($this->table, ["intIdPlant" => $id, "bitActive" => true])->result_array();
-     }
+	public function getDepartemenByIdPlant($id)
+	{
+		return $this->db->get_where($this->table, ["intIdPlant" => $id, "bitActive" => true])->result_array();
+	}
 
-	public function getDataByIdDepartement ($id)
+	public function getDataByIdDepartement($id)
 	{
 		return $this->db->get_where($this->table, ["intIdDepartement" => $id])->row();
 	}

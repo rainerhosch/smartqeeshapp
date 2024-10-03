@@ -257,36 +257,48 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="padding:0px">
-                                    <div class="short-div"><label for="inputIncidentLevel" class="col-form-label"
-                                            style="text-align:right">INCIDENT LEVEL :</label></div>
-                                    <div class="short-div"><label for="inputSeverityLevel" class="col-form-label"
-                                            style="text-align:right">SEVERTY LEVEL :</label></div>
-                                    <div class="short-div"><label for="inputReccurentProability" class="col-form-label"
-                                            style="text-align:right">RECURRENCE PROABILITY :</label></div>
+                                    <div class="short-div">
+                                        <label for="inputIncidentLevel" class="col-form-label"
+                                            style="text-align:right">INCIDENT LEVEL :</label>
+                                    </div>
+                                    <div class="short-div">
+                                        <label for="inputSeverityLevel" class="col-form-label"
+                                            style="text-align:right">SEVERTY LEVEL :</label>
+                                    </div>
+                                    <div class="short-div">
+                                        <label for="inputReccurentProability" class="col-form-label"
+                                            style="text-align:right">RECURRENCE PROABILITY :</label>
+                                    </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="padding:0px">
-                                    <div class="short-div"><select class="form-control form-control-sm"
-                                            id="inputIncidentLevel" name="inputIncidentLevel" required>
-                                            <option value="" disabled selected hidden style="font-size: inherit;">
+                                    <div class="short-div">
+                                        <select class="form-control form-control-sm" id="inputIncidentLevel"
+                                            name="inputIncidentLevel" required>
+                                            <!-- <option value="" disabled selected hidden style="font-size: inherit;">
                                                 Nothing selected</option>
                                             <option value='MINOR'>MINOR</option>
-                                            <option value='MAYOR'>MAYOR</option>
-                                        </select></div>
-                                    <div class="short-div"><select class="form-control form-control-sm"
-                                            id="inputSeverityLevel" name="inputSeverityLevel" required>
-                                            <option value="" disabled selected hidden style="font-size: inherit;">
+                                            <option value='MAYOR'>MAYOR</option> -->
+                                        </select>
+                                    </div>
+                                    <div class="short-div">
+                                        <select class="form-control form-control-sm" id="inputSeverityLevel"
+                                            name="inputSeverityLevel" required>
+                                            <!-- <option value="" disabled selected hidden style="font-size: inherit;">
                                                 Nothing selected</option>
                                             <option value='LOW'>LOW</option>
                                             <option value='MEDIUM'>MEDIUM</option>
-                                            <option value='HIGHT'>HIGHT</option>
-                                        </select></div>
-                                    <div class="short-div"><select class="form-control form-control-sm"
-                                            id="inputReccurentProability" name="inputReccurentProability" required>
-                                            <option value="" disabled selected hidden style="font-size: inherit;">
+                                            <option value='HIGHT'>HIGHT</option> -->
+                                        </select>
+                                    </div>
+                                    <div class="short-div">
+                                        <select class="form-control form-control-sm" id="inputReccurentProability"
+                                            name="inputReccurentProability" required>
+                                            <!-- <option value="" disabled selected hidden style="font-size: inherit;">
                                                 Nothing selected</option>
                                             <option value='POSSIBLE'>POSSIBLE</option>
-                                            <option value='IMPOSSIBLE'>IMPOSSIBLE</option>
-                                        </select></div>
+                                            <option value='IMPOSSIBLE'>IMPOSSIBLE</option> -->
+                                        </select>
+                                    </div>
                                 </div>
                                 <label for="inputIncidentDesc" class="col-sm-2 col-form-label"
                                     style="text-align:right">INCIDENT DESC :</label>
@@ -841,12 +853,63 @@
             serverSide: true,
             success: function (response) {
                 let html = ``;
-                html += `<option value="" disabled hidden style="font-size: inherit;">Nothing selected</option>`;
+                html += `<option value="" disabled selected hidden style="font-size: inherit;">Nothing selected</option>`;
                 $.each(response.data, function (key, item) {
                     html += `<option value="${item.intIdBodyPart}">${item.txtNameBodyPart}</option>`;
                 });
                 $('select#inputInjuriedBodyPart').append(html);
                 $("select#inputInjuriedBodyPart").selectpicker("refresh");
+            }
+        });
+
+        $.ajax({
+            url: '<?= base_url(); ?>manajemen/Masterdata/get_incident_level',
+            type: 'post',
+            dataType: "json",
+            serverSide: true,
+            success: function (response) {
+                // console.log(response)
+                let html_1 = ``;
+                html_1 += `<option value="" disabled selected hidden style="font-size: inherit;">Nothing selected</option>`;
+                $.each(response.data, function (key, item) {
+                    html_1 += `<option value="${item.id}">${item.level_name}</option>`;
+                });
+                $('select#inputIncidentLevel').append(html_1);
+                $("select#inputIncidentLevel").selectpicker("refresh");
+            }
+        });
+
+        $.ajax({
+            url: '<?= base_url(); ?>manajemen/Masterdata/get_severity_level',
+            type: 'post',
+            dataType: "json",
+            serverSide: true,
+            success: function (response) {
+                // console.log(response)
+                let html_2 = ``;
+                html_2 += `<option value="" disabled selected hidden style="font-size: inherit;">Nothing selected</option>`;
+                $.each(response.data, function (key, item) {
+                    html_2 += `<option value="${item.id}">${item.level_name}</option>`;
+                });
+                $('select#inputSeverityLevel').append(html_2);
+                $("select#inputSeverityLevel").selectpicker("refresh");
+            }
+        });
+
+        $.ajax({
+            url: '<?= base_url(); ?>manajemen/Masterdata/get_mreccurent_proability',
+            type: 'post',
+            dataType: "json",
+            serverSide: true,
+            success: function (response) {
+                // console.log(response)
+                let html_3 = ``;
+                html_3 += `<option value="" disabled selected hidden style="font-size: inherit;">Nothing selected</option>`;
+                $.each(response.data, function (key, item) {
+                    html_3 += `<option value="${item.id}">${item.recc_name}</option>`;
+                });
+                $('select#inputReccurentProability').append(html_3);
+                $("select#inputReccurentProability").selectpicker("refresh");
             }
         });
 

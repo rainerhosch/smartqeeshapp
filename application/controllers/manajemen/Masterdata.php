@@ -68,6 +68,86 @@ class Masterdata extends CI_Controller
         echo json_encode($response);
     }
 
+    public function get_incident_level()
+    {
+        if ($this->input->is_ajax_request()) {
+            $data_post = $this->input->post();
+            $where = null;
+            $search = null;
+            if (isset($data_post['search'])) {
+                $search = $data_post['search'];
+            }
+            $res = $this->masterdata->getData('*', 'mincident_level')->result_array();
+            $response = [
+                'code' => 200,
+                'status' => 'ok',
+                'data' => $res,
+                'message' => 'Success Request.',
+            ];
+        } else {
+            $response = [
+                'code' => 500,
+                'status' => 'error',
+                'data' => null,
+                'message' => 'Invalid Request Method.',
+            ];
+        }
+        echo json_encode($response);
+    }
+
+    public function get_severity_level()
+    {
+        if ($this->input->is_ajax_request()) {
+            $data_post = $this->input->post();
+            $where = null;
+            $search = null;
+            if (isset($data_post['search'])) {
+                $search = $data_post['search'];
+            }
+            $res = $this->masterdata->getData('*', 'mseverity_level')->result_array();
+            $response = [
+                'code' => 200,
+                'status' => 'ok',
+                'data' => $res,
+                'message' => 'Success Request.',
+            ];
+        } else {
+            $response = [
+                'code' => 500,
+                'status' => 'error',
+                'data' => null,
+                'message' => 'Invalid Request Method.',
+            ];
+        }
+        echo json_encode($response);
+    }
+    public function get_mreccurent_proability()
+    {
+        if ($this->input->is_ajax_request()) {
+            $data_post = $this->input->post();
+            $where = null;
+            $search = null;
+            if (isset($data_post['search'])) {
+                $search = $data_post['search'];
+            }
+            $res = $this->masterdata->getData('*', 'mreccurent_proability')->result_array();
+            $response = [
+                'code' => 200,
+                'status' => 'ok',
+                'data' => $res,
+                'message' => 'Success Request.',
+            ];
+        } else {
+            $response = [
+                'code' => 500,
+                'status' => 'error',
+                'data' => null,
+                'message' => 'Invalid Request Method.',
+            ];
+        }
+        echo json_encode($response);
+    }
+
     public function get_fire_facility()
     {
         if ($this->input->is_ajax_request()) {
