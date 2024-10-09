@@ -150,7 +150,14 @@
                                     <i class="fa fa-calendar"></i>&nbsp;
                                     <span></span> <i class="fa fa-caret-down"></i>
                                 </div>
+                                <div class="row mt-12">
+                                    <div class="col-lg-6 my-auto float-left">
+                                        123
+                                    </div>
+                                    <div class="col-lg-6 my-auto float-left">
 
+                                    </div>
+                                </div>
                             <?php } else if ($type_report == 'monthly') { ?>
                                 <div class="row g-3">
                                     <div class="col-auto">
@@ -167,6 +174,7 @@
                                             <option value="3">Maret</option>
                                         </select>
                                     </div>
+
                                 </div>
 
                             <?php } else if ($type_report == 'yearly') { ?>
@@ -178,8 +186,8 @@
                         </div>
                     </div>
                 </form>
-
-
+                </br>
+                </br>
                 <div class="hidden">
                     <!-- form -->
                     <form class="form-horizontal" method="get">
@@ -188,24 +196,21 @@
 
                             <div class="card col-lg-12" style="background-color: aliceblue;">
                                 <div class="row justify-content-md-center m-2">
-                                    <div class="card-body col-lg-12">
-                                        <figure class="highcharts-figure">
-                                            <div id="weekly_1"></div>
-                                            <p class="highcharts-description">
-                                            </p>
-                                        </figure>
+
+                                    <div class="card-body">
+                                        <div class="chart">
+                                            <canvas id="barChart" style="min-height: 400px; height: 400px; max-height: 400px; max-width: 100%;"></canvas>
+                                        </div>
                                     </div>
 
                                     <div class="card-body col-lg-6" style="background-color: aliceblue; border-style: solid; border-width: thin;">
-                                        <div class="row mt-3">
-                                            <figure class="highcharts-figure">
-                                                <div id="weekly_2"></div>
-                                                <p class="highcharts-description">
-                                                </p>
-                                            </figure>
-                                        </div>
+                                        <h5 class="text-center pb-4"><b>NUMBER OF DISEASE FOUND</b></h5>
+                                        <canvas class="p-1" id="bar-chart-horizontal" width="auto" height="auto">
+                                        </canvas>
                                     </div>
+
                                     <div class="card-body col-lg-6" style="background-color: aliceblue; border-style: solid; border-width: thin;" width="100%">
+                                        <!-- <h5 class="text-center pb-4"><b>STATUS OF HEALTH</b></h5> -->
                                         <div class="row mt-3">
                                             <figure class="highcharts-figure">
                                                 <div id="weekly_3"></div>
@@ -214,9 +219,6 @@
                                             </figure>
 
                                         </div>
-                                    </div>
-                                    <div class="card-body col-lg-12 text-center">
-                                        <div class="btn btn-info mr-2 col-2">Total Employee : 100</div>
                                     </div>
                                 </div>
                             </div>
@@ -246,109 +248,6 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <script type="text/javascript">
-    Highcharts.chart('weekly_1', {
-        chart: {
-            type: 'column'
-        },
-        title: {
-            text: '',
-            align: 'left'
-        },
-        subtitle: {
-
-        },
-        xAxis: {
-            categories: ['10 October'],
-            crosshair: true,
-            accessibility: {
-                description: 'Daily'
-            }
-        },
-        yAxis: {
-            min: 0,
-            title: {
-                text: 'Jumlah'
-            }
-        },
-        tooltip: {
-            valueSuffix: ''
-        },
-        plotOptions: {
-            column: {
-                pointPadding: 0.2,
-                borderWidth: 0
-            },
-            series: {
-                borderWidth: 0,
-                dataLabels: {
-                    enabled: true,
-                    format: '{point.y}'
-                }
-            }
-        },
-        series: [{
-                name: 'Batuk',
-                data: [2]
-            },
-            {
-                name: 'Flu',
-                data: [4]
-            },
-            {
-                name: 'Asma',
-                data: [1]
-            }
-        ]
-    });
-
-
-    Highcharts.chart('weekly_2', {
-        chart: {
-            type: 'bar'
-        },
-        title: {
-            text: 'NUMBER OF DISEASE FOUND',
-            align: 'center'
-        },
-        subtitle: {
-
-        },
-        xAxis: {
-            categories: ['BATUK', 'FLU', 'ASMA'],
-            crosshair: true,
-            accessibility: {
-                description: ''
-            }
-        },
-        yAxis: {
-            min: 0,
-            title: {
-                text: 'Jumlah'
-            }
-        },
-        tooltip: {
-            valueSuffix: ''
-        },
-        plotOptions: {
-            column: {
-                pointPadding: 0.2,
-                borderWidth: 0
-            },
-            series: {
-                borderWidth: 0,
-                dataLabels: {
-                    enabled: true,
-                    format: '{point.y}'
-                }
-            }
-        },
-        series: [{
-                name: 'DISEASE',
-                data: [30, 21, 20]
-            },
-
-        ]
-    });
     Highcharts.chart('weekly_3', {
         chart: {
             type: 'pie',
@@ -416,7 +315,7 @@
                 }, {
                     enabled: true,
                     distance: -15,
-                    format: '{point.percentage:.2f}%',
+                    format: '{point.percentage:.0f}%',
                     style: {
                         fontSize: '0.9em'
                     }
@@ -425,18 +324,18 @@
             }
         },
         series: [{
-            name: ' ',
+            name: 'Registrations',
             colorByPoint: true,
             innerSize: '70%',
             data: [{
                 name: 'FIT WITH NOTE ',
-                y: 37.50
+                y: 50
             }, {
                 name: 'UNFIT',
-                y: 45.83
+                y: 44
             }, {
                 name: 'FIT FOR WORK',
-                y: 16.67
+                y: 16
             }]
         }]
     });
@@ -479,10 +378,11 @@
                 'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
             }
         }, cb);
+
         cb(start, end);
+
     });
 </script>
-
 <!-- SCRIPT -->
 <script type="text/javascript">
     // //Doughnut Chart
