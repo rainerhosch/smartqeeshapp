@@ -215,7 +215,7 @@
                                 <div class="col-sm-2">
                                     <label for="inputVictimAge" class="col-form-label" style="text-align:right">AGE
                                         :</i> </label>
-                                    <input type="text" class="form-control form-control-sm" id="inputVictimAge"
+                                    <input type="number" class="form-control form-control-sm" id="inputVictimAge"
                                         name="inputVictimAge" placeholder="Age of victim" required>
                                 </div>
                             </div>
@@ -356,9 +356,12 @@
                                                                         data-target="input_manpower" position="top"><i
                                                                             class="fa fa-minus"></i></a>
                                                                 </div>
-                                                                <div class="col-sm-8"><input type="text"
+                                                                <div class="col-sm-12">
+                                                                    <!-- <input type="text"
                                                                         class="form-control form-control-sm input_manpower"
-                                                                        name="input_manpower[]" /></div>
+                                                                        name="input_manpower[]" /> -->
+                                                                    <textarea class="form-control form-control-sm input_manpower" name="input_manpower[]" rows="1"></textarea>
+                                                                    </div>
                                                             </div>
                                                         </div>
                                                     </body>
@@ -390,9 +393,12 @@
                                                                         data-target="input_methode" position="top"><i
                                                                             class="fa fa-minus"></i></a>
                                                                 </div>
-                                                                <div class="col-sm-8"><input type="text"
+                                                                <div class="col-sm-12">
+                                                                    <!-- <input type="text"
                                                                         class="form-control form-control-sm input_methode"
-                                                                        name="input_methode[]" /></div>
+                                                                        name="input_methode[]" /> -->
+                                                                    <textarea class="form-control form-control-sm input_manpower" name="input_methode[]" rows="1"></textarea>
+                                                                    </div>
                                                             </div>
                                                         </div>
                                                     </body>
@@ -433,9 +439,12 @@
                                                                         position="bottom"><i
                                                                             class="fa fa-minus"></i></a>
                                                                 </div>
-                                                                <div class="col-sm-8"><input type="text"
+                                                                <div class="col-sm-12">
+                                                                    <!-- <input type="text"
                                                                         class="form-control form-control-sm input_material"
-                                                                        name="input_material[]" /></div>
+                                                                        name="input_material[]" /> -->
+                                                                    <textarea class="form-control form-control-sm input_manpower" name="input_material[]" rows="1"></textarea>
+                                                                    </div>
                                                             </div>
                                                         </div>
                                                     </body>
@@ -467,9 +476,12 @@
                                                                         data-target="input_machine" position="bottom"><i
                                                                             class="fa fa-minus"></i></a>
                                                                 </div>
-                                                                <div class="col-sm-8"><input type="text"
+                                                                <div class="col-sm-12">
+                                                                    <!-- <input type="text"
                                                                         class="form-control form-control-sm input_machine"
-                                                                        name="input_machine[]" /></div>
+                                                                        name="input_machine[]" /> -->
+                                                                    <textarea class="form-control form-control-sm input_manpower" name="input_machine[]" rows="1"></textarea>
+                                                                    </div>
                                                             </div>
                                                         </div>
                                                     </body>

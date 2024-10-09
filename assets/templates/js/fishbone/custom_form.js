@@ -71,7 +71,7 @@ $(document).ready(function () {
 			`<div class="row row_${elementId}" id="row_${elementId + elementCount}">
             <div class="col-sm-2"></div>
             <div class="col-sm-2"></div>
-            <div class="col-sm-8"><input type="text" class="form-control form-control-sm ${elementId}" name="${elementId}[]" /></div>
+            <div class="col-sm-12"><textarea class="form-control form-control-sm ${elementId}" name="${elementId}[]"></textarea></div>
         </div>`
 		).appendTo(add_row);
 		// console.log(add_row);
