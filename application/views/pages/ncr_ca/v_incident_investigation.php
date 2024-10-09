@@ -516,7 +516,7 @@
                                     <label for="inputPreventiveAction" class="col-sm-2 col-form-label"
                                         style="text-align:right">ACTION :</label>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><textarea class="form-control"
-                                            id="inputPreventiveAction" name="inputPreventiveAction" rows="2"></textarea>
+                                            id="inputPreventiveAction" name="inputPreventiveAction[]" rows="2"></textarea>
                                     </div>
                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0px">
                                         <div class="short-div"><label for="inputPersonResponsibility" class="col-form-label"
@@ -527,10 +527,10 @@
                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0px">
                                         <div class="short-div">
                                             <input type="text" class="form-control form-control-sm"
-                                                id="inputPersonResponsibility" name="inputPersonResponsibility"
+                                                id="inputPersonResponsibility" name="inputPersonResponsibility[]"
                                                 placeholder="TEXT">
                                             <input type="date" class="form-control form-control-sm" id="inputTimeTarget"
-                                                name="inputTimeTarget" placeholder="TEXT">
+                                                name="inputTimeTarget[]" placeholder="TEXT">
                                         </div>
                                     </div>
                                 </div>
