@@ -176,7 +176,6 @@
                                     <select class="form-control form-control-sm" id="inputIncidentPlant"
                                         name="inputIncidentPlant" required>
                                     </select>
-                                    <!-- <input type="text" class="form-control form-control-sm" id="inputIncidentPlant" name="inputIncidentPlant" placeholder="TEXT"> -->
                                 </div>
                             </div>
                             <!-- victim information -->

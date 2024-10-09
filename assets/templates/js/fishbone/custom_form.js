@@ -89,8 +89,8 @@ $(document).ready(function () {
 	$(".btnremove_preventive").on("click", function () {
 		var elementCount = $(".member_preventive").length;
 		let elementId = "input_prev_" + elementCount;
-		console.log(elementId);
-		console.log(elementCount);
+		// console.log(elementId);
+		// console.log(elementCount);
 		if (elementCount >= 1) {
 			$("#" + elementId).remove();
 		} else {
