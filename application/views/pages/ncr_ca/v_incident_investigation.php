@@ -360,8 +360,10 @@
                                                                     <!-- <input type="text"
                                                                         class="form-control form-control-sm input_manpower"
                                                                         name="input_manpower[]" /> -->
-                                                                    <textarea class="form-control form-control-sm input_manpower" name="input_manpower[]" rows="1"></textarea>
-                                                                    </div>
+                                                                    <textarea
+                                                                        class="form-control form-control-sm input_manpower"
+                                                                        name="input_manpower[]" rows="1"></textarea>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </body>
@@ -397,8 +399,10 @@
                                                                     <!-- <input type="text"
                                                                         class="form-control form-control-sm input_methode"
                                                                         name="input_methode[]" /> -->
-                                                                    <textarea class="form-control form-control-sm input_manpower" name="input_methode[]" rows="1"></textarea>
-                                                                    </div>
+                                                                    <textarea
+                                                                        class="form-control form-control-sm input_manpower"
+                                                                        name="input_methode[]" rows="1"></textarea>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </body>
@@ -443,8 +447,10 @@
                                                                     <!-- <input type="text"
                                                                         class="form-control form-control-sm input_material"
                                                                         name="input_material[]" /> -->
-                                                                    <textarea class="form-control form-control-sm input_manpower" name="input_material[]" rows="1"></textarea>
-                                                                    </div>
+                                                                    <textarea
+                                                                        class="form-control form-control-sm input_manpower"
+                                                                        name="input_material[]" rows="1"></textarea>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </body>
@@ -480,8 +486,10 @@
                                                                     <!-- <input type="text"
                                                                         class="form-control form-control-sm input_machine"
                                                                         name="input_machine[]" /> -->
-                                                                    <textarea class="form-control form-control-sm input_manpower" name="input_machine[]" rows="1"></textarea>
-                                                                    </div>
+                                                                    <textarea
+                                                                        class="form-control form-control-sm input_manpower"
+                                                                        name="input_machine[]" rows="1"></textarea>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </body>
@@ -499,34 +507,77 @@
                             <div class="form-group row row_dominos_effect">
                             </div>
                             <div class="separator">PREVENTIVE AND CORECTIVE ACTION</div>
-                            <div class="form-group row">
-                                <label for="inputPreventiveAction" class="col-sm-2 col-form-label"
-                                    style="text-align:right">ACTION :</label>
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><textarea class="form-control"
-                                        id="inputPreventiveAction" name="inputPreventiveAction" rows="2"></textarea>
-                                </div>
-                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0px">
-                                    <div class="short-div"><label for="inputPersonResponsibility" class="col-form-label"
-                                            style="text-align:right">PERSON RESPONSIBILITY :</label></div>
-                                    <div class="short-div"><label for="inputTimeTarget" class="col-form-label"
-                                            style="text-align:right">TIME TARGET :</label></div>
-                                </div>
-                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0px">
-                                    <div class="short-div">
-                                        <input type="text" class="form-control form-control-sm"
-                                            id="inputPersonResponsibility" name="inputPersonResponsibility"
-                                            placeholder="TEXT">
-                                        <input type="text" class="form-control form-control-sm" id="inputTimeTarget"
-                                            name="inputTimeTarget" placeholder="TEXT">
+                            <div class="row">
+                                <a class="btn btn-sm btn-primary btnadd_preventive" data-target="prev_n_corective">Add</a>
+                                <a class="btn btn-sm btn-danger btnremove_preventive" data-target="prev_n_corective"><i class="fa fa-minus"></i></a>
+                            </div>
+                            <div class="div_prev_n_corective">
+                                <div class="form-group row">
+                                    <label for="inputPreventiveAction" class="col-sm-2 col-form-label"
+                                        style="text-align:right">ACTION :</label>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><textarea class="form-control"
+                                            id="inputPreventiveAction" name="inputPreventiveAction" rows="2"></textarea>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0px">
+                                        <div class="short-div"><label for="inputPersonResponsibility" class="col-form-label"
+                                                style="text-align:right">PERSON RESPONSIBILITY :</label></div>
+                                        <div class="short-div"><label for="inputTimeTarget" class="col-form-label"
+                                                style="text-align:right">TIME TARGET :</label></div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0px">
+                                        <div class="short-div">
+                                            <input type="text" class="form-control form-control-sm"
+                                                id="inputPersonResponsibility" name="inputPersonResponsibility"
+                                                placeholder="TEXT">
+                                            <input type="date" class="form-control form-control-sm" id="inputTimeTarget"
+                                                name="inputTimeTarget" placeholder="TEXT">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="separator">UPLOAD PHOTO</div>
                             <div class="form-group row">
-                                <label class="col-sm-2 col-form-label" style="text-align:right">SELECT PHOTO :</label>
+                                <label class="col-sm-2 col-form-label" style="text-align:right; font-size:14px;">Working
+                                    Area - PHOTO:</label>
                                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0px">
                                     <div class="short-div">
-                                        <input type="file" name="inputIncidentImg" />
+                                        <input type="file" name="inputIncidentImg[]" multiple />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label" style="text-align:right; font-size:14px;">Body
+                                    Injury Part - PHOTO:</label>
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0px">
+                                    <div class="short-div">
+                                        <input type="file" name="inputIncidentImg[]" multiple />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label" style="text-align:right; font-size:14px;">Victim
+                                    Photo - PHOTO:</label>
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0px">
+                                    <div class="short-div">
+                                        <input type="file" name="inputIncidentImg[]" multiple />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label" style="text-align:right; font-size:14px;">Other
+                                    supporting 1 - PHOTO:</label>
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0px">
+                                    <div class="short-div">
+                                        <input type="file" name="inputIncidentImg[]" multiple />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label" style="text-align:right; font-size:14px;">Other
+                                    supporting 2 - PHOTO:</label>
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0px">
+                                    <div class="short-div">
+                                        <input type="file" name="inputIncidentImg[]" multiple />
                                     </div>
                                 </div>
                             </div>
