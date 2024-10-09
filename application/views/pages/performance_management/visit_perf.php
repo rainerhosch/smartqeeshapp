@@ -1,3 +1,55 @@
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/series-label.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+
+<style>
+    .highcharts-figure,
+    .highcharts-data-table table {
+        min-width: 100%;
+        max-width: 100%;
+        margin: 1em auto;
+    }
+
+    .highcharts-data-table table {
+        font-family: Verdana, sans-serif;
+        border-collapse: collapse;
+        border: 1px solid #ebebeb;
+        margin: 10px auto;
+        text-align: center;
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .highcharts-data-table caption {
+        padding: 1em 0;
+        font-size: 1.2em;
+        color: #555;
+    }
+
+    .highcharts-data-table th {
+        font-weight: 600;
+        padding: 0.5em;
+    }
+
+    .highcharts-data-table td,
+    .highcharts-data-table th,
+    .highcharts-data-table caption {
+        padding: 0.5em;
+    }
+
+    .highcharts-data-table thead tr,
+    .highcharts-data-table tr:nth-child(even) {
+        background: #f8f8f8;
+    }
+
+    .highcharts-data-table tr:hover {
+        background: #f1f7ff;
+    }
+</style>
+
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper" style="z-index: -999 !important;">
 
@@ -40,65 +92,98 @@
 
                 <!--CLINIC VISIT PERFOMANCE-->
 
+                <?php
+                $t_btn_w = 'secondary';
+                $t_btn_m = 'secondary';
+                $t_btn_y = 'secondary';
+                $type_report = isset($_GET['report']) ? $_GET['report'] : 'weekly';
+                if ($type_report == 'weekly') {
+                    $t_btn_w = 'warning';
+                } else if ($type_report == 'monthly') {
+                    $t_btn_m = 'warning';
+                } else if ($type_report == 'yearly') {
+                    $t_btn_y = 'warning';
+                }
+                ?>
                 <!-- form -->
-                <form class="form-horizontal" method="post">
+                <form class="form-horizontal" method="get">
                     <!--card body-->
                     <div class="card-body" style="background-color: #77a0e6;">
-                        <div class="form-grup row mb-2 col-12">
-                            <label for="input" class="col-form-label col-2" style="text-align:right">MCU PERIOD :</label>
-                            <div class="col-sm-4">
-                            <select class="form-control" id="filterperiod" name="filterperiod" >
-                                        <option value="" selected disabled>Select</option>
-                                        <?php
-
-                                        // use function PHPSTORM_META\type;
-
-                                        foreach($mcuperiod as $prd):?>
-                                            <option value="<?php echo $prd->mcu_period ?>" <?php echo isset($_GET['filterperiod']) && $_GET['filterperiod']==$prd->mcu_period ? 'selected':'';?>><?php echo $prd->mcu_period ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                            </div>
-                        </div>
-                        <div class="form-grup row mb-2 col-12">
-                            <label for="input" class="col-form-label col-2" style="text-align:right">FILTER AS DEPARTEMENT :</label>
-                            <div class="col-sm-4">
-                            <select class="form-control js-example-basic-single" id="dept" name="dept" placeholder="">
-                                        <option value="" selected disabled>Select</option>
-                                        <?php foreach($deptlist as $dept):?>
-                                        <option value="<?php echo $dept['intIdDepartement'] ?>" <?php echo isset($_GET['dept']) && $_GET['dept']==$dept['intIdDepartement'] ? 'selected':'';?>><?php echo $dept['txtNamaDepartement'] ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                            </div>
-                        </div>
                         <div class="form-group row mb-2 col-12">
-                                <div class="col-6">
-                                    <button class="btn btn-warning col-sm-4 float-right" name="search" value="1">SEARCH</button>
-                                    <button type="reset" class="btn btn-secondary col-sm-3 float-right mr-2" name="resetVal" value="reset">CLEAR</button>
-                                </div>
+                            <div class="col-12">
+                                <button class="btn btn-<?= $t_btn_w; ?> col-sm-2 mr-2" name="report" value="weekly">Daily/Weekly</button>
+                                <button class="btn btn-<?= $t_btn_m; ?> col-sm-2 mr-2" name="report" value="monthly">Monthly</button>
+                                <button class="btn btn-<?= $t_btn_y; ?> col-sm-2 mr-2" name="report" value="yearly">Yearly</button>
                             </div>
+                        </div>
                         <br>
-
 
                         <div class="card col-12" style="background-color: #83A2B4;">
                             <div class="row">
+                                <?php
+                                if ($type_report == 'weekly') { ?>
+                                    <div id="weeklyreportrange" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+                                        <i class="fa fa-calendar"></i>&nbsp;
+                                        <span></span> <i class="fa fa-caret-down"></i>
+                                    </div>
+                                    <figure class="highcharts-figure">
+                                        <div id="weekly_nov"></div>
+                                    </figure>
+                                    <button class="btn btn-info mr-3 col-3 btn-lg">COST TOTAL : RP. 40.000</button>
+                                    <figure class="highcharts-figure">
+                                        <div id="weekly"></div>
+                                    </figure>
+                                    <figure class="highcharts-figure">
+                                        <div id="weekly_dept"></div>
+                                    </figure>
 
-                                <div class="card-body col-6" style="background-color: aliceblue;">
-                                    <canvas class="p-1" id="bar-chart-horizontal" width="auto" height="auto" style="border-style:solid;">
+                                <?php } else if ($type_report == 'monthly') { ?>
+                                    <div class="row g-3">
+                                        <div class="col-auto">
+                                            <select class="form-select form-control" aria-label="Default select example">
+                                                <option value="1">2024</option>
+                                                <option value="2">2023</option>
+                                                <option value="3">2022</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-auto">
+                                            <select class="form-select form-control" aria-label="Default select example">
+                                                <option value="1">Januari</option>
+                                                <option value="2">Februari</option>
+                                                <option value="3">Maret</option>
+                                            </select>
+                                        </div>
 
-                                    </canvas>
-                                </div>
+                                    </div>
+                                    <figure class="highcharts-figure">
+                                        <div id="monthly_nov"></div>
+                                    </figure>
+                                    <button class="btn btn-info mr-3 col-3 btn-lg">COST TOTAL : RP. 500.000</button>
+                                    <figure class="highcharts-figure">
+                                        <div id="monthly"></div>
+                                    </figure>
 
-                                <div class="card-body col-6" style="background-color: aliceblue;">
-                                    <canvas class="p-1" id="doughnut-chart" width="auto" height="auto" style="border-style:solid;">
+                                    <figure class="highcharts-figure">
+                                        <div id="monthly_dept"></div>
+                                    </figure>
+                                <?php } else if ($type_report == 'yearly') { ?>
 
-                                    </canvas>
-                                </div>
+                                    <figure class="highcharts-figure">
+                                        <div id="yearly_nov"></div>
+                                    </figure>
+                                    <button class="btn btn-info mr-3 col-3 btn-lg">COST TOTAL : RP. 5.000.000</button>
+                                    <figure class="highcharts-figure">
+                                        <div id="yearly"></div>
+                                    </figure>
+                                    <figure class="highcharts-figure">
+                                        <div id="yearly_dept"></div>
+                                    </figure>
+                                <?php } ?>
+
 
                             </div>
                         </div>
-
-
-                        <button class="btn btn-danger mr-2 col-2">DOWNLOAD TO PDF</button>
+                        <!-- <button class="btn btn-danger mr-2 col-2">DOWNLOAD TO PDF</button> -->
 
                     </div>
                     <!-- /.card-body -->
@@ -118,72 +203,534 @@
 <!-- Page specific script -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script> -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
-<!-- SCRIPT -->
 <script type="text/javascript">
-    //-------------
-    //- DONUT CHART -
-    //-------------
-    // Get context with jQuery - using jQuery's .get() method.
-    var pieChartCanvas = $('#doughnut-chart').get(0).getContext('2d')
-    var pieData = {
-        labels: <?= $action ?>,
-        datasets: [{
-            data: <?= $actiontotal ?>,
-            backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
-        }]
-    }
-    var pieOptions = {
-        maintainAspectRatio: true,
-        responsive: true,
-        legend: {
-            position: 'right',
-            display: true
-        },
-        title: {
-            display: true,
-            text: 'DEPARTMENT'
-        }
-    }
-    //Create pie or douhnut chart
-    // You can switch between pie and douhnut using the method below.
-    new Chart(pieChartCanvas, {
-        type: 'doughnut',
-        data: pieData,
-        options: pieOptions
-    })
+    $(document).ready(function() {
+        <?php if ($type_report == 'weekly') { ?>
+            Highcharts.chart('weekly_dept', {
+                chart: {
+                    type: 'bar'
+                },
+                title: {
+                    text: 'Number of Visits | Departement',
+                    align: 'center'
+                },
+                subtitle: {
 
-
-    //Horizontal Chart
-    new Chart(document.getElementById("bar-chart-horizontal"), {
-        type: 'horizontalBar',
-        data: {
-            labels: <?= $penyakit ?>,
-            datasets: [{
-                label: "Identified",
-                backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
-                data: <?= $total ?>
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: true,
-            legend: {
-                display: false
-            },
-            title: {
-                display: true,
-                text: 'NUMBER OF DISEASE'
-            },
-            scales: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
+                },
+                xAxis: {
+                    categories: ['SS. HSE', 'OPRNS. PPC', 'IT GENERAL ADMIN'],
+                    crosshair: true,
+                    accessibility: {
+                        description: 'Month'
+                    }
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Jumlah'
+                    }
+                },
+                tooltip: {
+                    valueSuffix: ''
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    },
+                    series: {
+                        borderWidth: 0,
+                        dataLabels: {
+                            enabled: true,
+                            format: '{point.y}'
                         }
-                    }]
-                }
-            }
+                    }
+                },
+                series: [{
+                        name: 'Visit',
+                        data: [23, 19, 16]
+                    },
+
+                ]
+            });
+
+            Highcharts.chart('weekly_nov', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Number of Visits',
+                    align: 'center'
+                },
+                subtitle: {
+
+                },
+                xAxis: {
+                    categories: ['01 October', '02 October', '03 October', '04 October', '05 October', '06 October'],
+                    crosshair: true,
+                    accessibility: {
+                        description: 'Month'
+                    }
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Employes'
+                    }
+                },
+                tooltip: {
+                    valueSuffix: ''
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    },
+                    series: {
+                        borderWidth: 0,
+                        dataLabels: {
+                            enabled: true,
+                            format: '{point.y}'
+                        }
+                    }
+                },
+                series: [{
+                        name: 'Visit',
+                        data: [18, 19, 22, 24, 26, 25]
+                    },
+
+                ]
+            });
+
+            Highcharts.chart('weekly', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Trends in the number of diseases'
+                },
+                subtitle: {
+                    // text: 'Source: ' +
+                    //     '<a href="https://en.wikipedia.org/wiki/List_of_cities_by_average_temperature" ' +
+                    //     'target="_blank">Wikipedia.com</a>'
+                },
+                xAxis: {
+                    categories: [
+                        '01 October', '02 October', '03 October', '04 October', '05 October', '06 October'
+                    ],
+                    accessibility: {
+                        description: 'Months of the year'
+                    }
+                },
+                yAxis: {
+                    title: {
+                        text: 'Jumlah'
+                    },
+                    labels: {
+                        format: '{value}'
+                    }
+                },
+                tooltip: {
+                    crosshairs: true,
+                    shared: true
+                },
+                legend: {
+                    enabled: true
+                },
+                plotOptions: {
+                    series: {
+                        borderWidth: 0,
+                        dataLabels: {
+                            enabled: true,
+                            format: '{point.y}'
+                        }
+                    }
+                },
+                series: [{
+                    name: 'Flu',
+                    marker: {
+                        symbol: 'square'
+                    },
+                    data: [5, 5, 8, 13, 18, 21]
+
+                }, {
+                    name: 'Batuk',
+                    marker: {
+                        symbol: 'diamond'
+                    },
+                    data: [13, 14, 14, 11, 8, 4]
+                }]
+            });
+        <?php } else if ($type_report == 'monthly') { ?>
+
+            Highcharts.chart('monthly_dept', {
+                chart: {
+                    type: 'bar'
+                },
+                title: {
+                    text: 'Number of Visits | Departement',
+                    align: 'center'
+                },
+                subtitle: {
+
+                },
+                xAxis: {
+                    categories: ['SS. HSE', 'OPRNS. PPC', 'IT GENERAL ADMIN'],
+                    crosshair: true,
+                    accessibility: {
+                        description: 'Month'
+                    }
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Jumlah'
+                    }
+                },
+                tooltip: {
+                    valueSuffix: ''
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    },
+                    series: {
+                        borderWidth: 0,
+                        dataLabels: {
+                            enabled: true,
+                            format: '{point.y}'
+                        }
+                    }
+                },
+                series: [{
+                        name: 'Visit',
+                        data: [30, 21, 20]
+                    },
+
+                ]
+            });
+            Highcharts.chart('monthly_nov', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Number of Visits',
+                    align: 'center'
+                },
+                subtitle: {
+
+                },
+                xAxis: {
+                    categories: ['Januari'],
+                    crosshair: true,
+                    accessibility: {
+                        description: 'Month'
+                    }
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Employes'
+                    }
+                },
+                tooltip: {
+                    valueSuffix: ''
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    },
+                    series: {
+                        borderWidth: 0,
+                        dataLabels: {
+                            enabled: true,
+                            format: '{point.y}'
+                        }
+                    }
+                },
+                series: [{
+                        name: 'Visit',
+                        data: [47]
+                    },
+
+                ]
+            });
+
+            Highcharts.chart('monthly', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Trends in the number of diseases'
+                },
+                subtitle: {},
+                xAxis: {
+                    categories: [
+                        'Jan'
+                    ],
+                    accessibility: {
+                        description: 'Months of the year'
+                    }
+                },
+                yAxis: {
+                    title: {
+                        text: 'Jumlah'
+                    },
+                    labels: {
+                        format: '{value}'
+                    }
+                },
+                tooltip: {
+                    crosshairs: true,
+                    shared: true
+                },
+                legend: {
+                    enabled: true
+                },
+                plotOptions: {
+                    series: {
+                        borderWidth: 0,
+                        dataLabels: {
+                            enabled: true,
+                            format: '{point.y}'
+                        }
+                    }
+                },
+
+                series: [{
+                    name: 'Flu',
+                    marker: {
+                        symbol: 'square'
+                    },
+                    data: [35]
+
+                }, {
+                    name: 'Batuk',
+                    marker: {
+                        symbol: 'diamond'
+                    },
+                    data: [12]
+                }]
+            });
+        <?php } else if ($type_report == 'yearly') { ?>
+            Highcharts.chart('yearly_dept', {
+                chart: {
+                    type: 'bar'
+                },
+                title: {
+                    text: 'Number of Visits | Departement',
+                    align: 'center'
+                },
+                subtitle: {
+
+                },
+                xAxis: {
+                    categories: ['SS. HSE', 'OPRNS. PPC', 'IT GENERAL ADMIN'],
+                    crosshair: true,
+                    accessibility: {
+                        description: 'Month'
+                    }
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Jumlah'
+                    }
+                },
+                tooltip: {
+                    valueSuffix: ''
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    },
+                    series: {
+                        borderWidth: 0,
+                        dataLabels: {
+                            enabled: true,
+                            format: '{point.y}'
+                        }
+                    }
+                },
+                series: [{
+                        name: 'Visit',
+                        data: [90, 81, 42]
+                    },
+
+                ]
+            });
+            Highcharts.chart('yearly_nov', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Number of Visits',
+                    align: 'center'
+                },
+                subtitle: {
+
+                },
+                xAxis: {
+                    categories: ['2022', '2023', '2024'],
+                    crosshair: true,
+                    accessibility: {
+                        description: 'Year'
+                    }
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Employes'
+                    }
+                },
+                tooltip: {
+                    valueSuffix: ''
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    },
+                    series: {
+                        borderWidth: 0,
+                        dataLabels: {
+                            enabled: true,
+                            format: '{point.y}'
+                        }
+                    }
+                },
+                series: [{
+                        name: 'Visit',
+                        data: [99, 98, 107]
+                    },
+
+                ]
+            });
+            Highcharts.chart('yearly', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Trends in the number of diseases'
+                },
+                subtitle: {
+
+                },
+                xAxis: {
+                    categories: [
+                        '2022', '2023', '2024'
+                    ],
+                    accessibility: {
+                        description: ' '
+                    }
+                },
+                yAxis: {
+                    title: {
+                        text: 'Jumlah'
+                    },
+                    labels: {
+                        format: '{value}'
+                    }
+                },
+                tooltip: {
+                    crosshairs: true,
+                    shared: true
+                },
+                legend: {
+                    enabled: true
+                },
+                plotOptions: {
+                    series: {
+                        borderWidth: 0,
+                        dataLabels: {
+                            enabled: true,
+                            format: '{point.y}'
+                        }
+                    },
+                    spline: {
+                        marker: {
+                            radius: 4,
+                            lineColor: '#666666',
+                            lineWidth: 1
+                        }
+                    }
+                },
+
+                series: [{
+                        name: 'Flu',
+                        marker: {
+                            symbol: 'square'
+                        },
+                        data: [5, 5, 8]
+
+                    }, {
+                        name: 'Batuk',
+                        marker: {
+                            symbol: 'diamond'
+                        },
+                        data: [1, 3, 5]
+                    },
+                    {
+                        name: 'Asma',
+                        marker: {
+                            symbol: 'diamond'
+                        },
+                        data: [1, 8, 6]
+                    }
+                ]
+            });
+        <?php } ?>
+
+    });
+
+    $(function() {
+
+        // var start = moment().subtract(29, 'days');
+        var start = moment();
+        var end = moment();
+
+        function cb(start, end) {
+            $('#weeklyreportrange span').html(start.format('D, MMMM YYYY') + ' - ' + end.format('D, MMMM YYYY'));
+            // console.log(start.format('YYYY-MM-DD'));
+            // console.log(end.format('YYYY-MM-DD'));
+            <?php
+            $start = isset($_GET['start']) ? $_GET['start'] : '';
+            $end = isset($_GET['end']) ? $_GET['end'] : '';
+            ?>
+            // let typeas = `<?= $type_report; ?>`;
+            // let start1 = `<?= $start; ?>`;
+            // let end1 = `<?= $end; ?>`;
+            // let url1 = '?report=' + typeas + '&start=' + start.format('YYYY-MM-DD') + '&end=' + end.format('YYYY-MM-DD');
+            // let url2 = '?report=' + typeas + '&start=' + start1 + '&end=' + end1;
+            // console.log(url1);
+            // // console.log($(location).attr("href"));
+            // if (url1 == url2) {} else {
+            //     window.location.replace(url1);
+            // }
         }
+
+        $('#weeklyreportrange').daterangepicker({
+            startDate: start,
+            endDate: end,
+            ranges: {
+                'Today': [moment(), moment()],
+                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            }
+        }, cb);
+
+        cb(start, end);
+
     });
 </script>
