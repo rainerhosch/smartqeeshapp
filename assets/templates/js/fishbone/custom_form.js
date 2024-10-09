@@ -56,6 +56,47 @@ $(document).ready(function () {
 			alert("No more row to remove");
 		}
 	});
+	$(".btnadd_preventive").on("click", function () {
+		let elementId = $(this).attr("data-target");
+		let add_row = $(".div_" + elementId);
+		var elementCount = $(".member_preventive").length + 1;
+		console.log(add_row);
+		$(
+			`<div class="row member_preventive" id="input_prev_${elementCount}">
+                                    <label for="inputPreventiveAction_${elementCount}" class="col-sm-2 col-form-label"
+                                        style="text-align:right">ACTION :</label>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><textarea class="form-control"
+                                            id="inputPreventiveAction_${elementCount}" name="inputPreventiveAction[]" rows="2"></textarea>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0px">
+                                        <div class="short-div"><label for="inputPersonResponsibility_${elementCount}" class="col-form-label"
+                                                style="text-align:right">PERSON RESPONSIBILITY :</label></div>
+                                        <div class="short-div"><label for="inputTimeTarget_${elementCount}" class="col-form-label"
+                                                style="text-align:right">TIME TARGET :</label></div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0px">
+                                        <div class="short-div">
+                                            <input type="text" class="form-control form-control-sm"
+                                                id="inputPersonResponsibility_${elementCount}" name="inputPersonResponsibility[]"
+                                                placeholder="TEXT">
+                                            <input type="date" class="form-control form-control-sm" id="inputTimeTarget_${elementCount}"
+                                                name="inputTimeTarget[]" placeholder="TEXT">
+                                        </div>
+                                    </div>
+                                </div>`
+		).appendTo(add_row);
+	});
+	$(".btnremove_preventive").on("click", function () {
+		var elementCount = $(".member_preventive").length;
+		let elementId = "input_prev_" + elementCount;
+		// console.log(elementId);
+		// console.log(elementCount);
+		if (elementCount >= 1) {
+			$("#" + elementId).remove();
+		} else {
+			alert("No more row to remove");
+		}
+	});
 
 	$(".multiple-checkboxes").multiselect({
 		includeSelectAllOption: true,
@@ -71,7 +112,7 @@ $(document).ready(function () {
 			`<div class="row row_${elementId}" id="row_${elementId + elementCount}">
             <div class="col-sm-2"></div>
             <div class="col-sm-2"></div>
-            <div class="col-sm-8"><input type="text" class="form-control form-control-sm ${elementId}" name="${elementId}[]" /></div>
+            <div class="col-sm-12"><textarea class="form-control form-control-sm ${elementId}" name="${elementId}[]"></textarea></div>
         </div>`
 		).appendTo(add_row);
 		// console.log(add_row);
