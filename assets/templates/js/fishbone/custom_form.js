@@ -62,7 +62,7 @@ $(document).ready(function () {
 		var elementCount = $(".member_preventive").length + 1;
 		console.log(add_row);
 		$(
-			`<div class="row member_preventive id="input_prev_${elementCount}">
+			`<div class="row member_preventive" id="input_prev_${elementCount}">
                                     <label for="inputPreventiveAction_${elementCount}" class="col-sm-2 col-form-label"
                                         style="text-align:right">ACTION :</label>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><textarea class="form-control"
