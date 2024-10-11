@@ -18,6 +18,7 @@ class M_investigation extends CI_Model
         if ($where != null) {
             $this->db->where($where);
         }
+        $this->db->order_by('int_id_investigation', 'DESC');
         return $this->db->get();
     }
     // insert data

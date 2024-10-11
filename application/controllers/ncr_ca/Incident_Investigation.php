@@ -26,9 +26,13 @@ class Incident_Investigation extends CI_Controller
     {
         parent::__construct();
         login_check();
+
+        date_default_timezone_set('Asia/Jakarta');
         $this->load->model('M_investigation', 'investigation');
         $this->load->model('Manajemen/M_employee', 'employee');
         $this->load->model("Manajemen/M_department", "department");
+        $this->load->library('FormatDate');
+
     }
 
 
@@ -182,6 +186,8 @@ class Incident_Investigation extends CI_Controller
     public function DownloadsToWord()
     {
         $data_param = $this->input->get();
+        $FormatDate = new FormatDate;
+
         $where = [
             'int_id_investigation' => $data_param['id']
         ];
@@ -192,7 +198,7 @@ class Incident_Investigation extends CI_Controller
             0 => [
                 'label_1' => 'Tanggal',
                 'eng_label_1' => 'Date',
-                'data_1' => $datareq['dtm_date_incident'],
+                'data_1' => $FormatDate->konversi_en($datareq['dtm_date_incident']),
                 'label_2' => 'Nama Korban',
                 'eng_label_2' => 'Name of Victim',
                 'data_2' => $datareq['txt_vi_victim_name'],
@@ -303,11 +309,6 @@ class Incident_Investigation extends CI_Controller
             ];
         }
 
-        // echo '<pre>';
-        // // var_dump($datareq);
-        // echo json_encode($datareq);
-        // echo '</pre>';
-        // die;
         // Creating the new document...
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
         $phpWord->setDefaultParagraphStyle(
@@ -493,7 +494,16 @@ class Incident_Investigation extends CI_Controller
         $textrun->addText('Observation/Immediate Action Taken', ['italic' => true, 'size' => 11, 'color' => 'A6A6A6']);
         $textrun->addTextBreak();
         $textrun->addTextBreak();
-        $textrun->addText('Mr. ' . $datareq['txt_vi_victim_name'] . ' headed to the pratama clinic PT. Asia Pacific Fibers, the wound was cleaned and taken to the hospital', ['size' => 11]);
+        // echo '<pre>';
+        // var_dump($datareq);
+        // echo '</pre>';
+        // die;
+        $ii_action_taken = explode('/', $datareq['txt_ii_action_taken']);
+        foreach ($ii_action_taken as $i => $val) {
+            // $textrun->addText('• ' . $val, ['size' => 10]);
+            $textrun->addText('• ' . $val, ['size' => 11]);
+            $textrun->addTextBreak(1);
+        }
 
 
 
@@ -686,21 +696,28 @@ class Incident_Investigation extends CI_Controller
         $textrun->addTextBreak();
         $textrun->addText('Notes', ['name' => 'calibri', 'size' => 9, 'color' => '000'], ['lineSpacing' => 50]);
         $tableS->addCell(200, $cellVCentered);
-        for ($i = 0; $i < 4; $i++) {
+
+        $prev_actions = explode('/', $datareq['txt_pca_preventive_action']);
+        $tanggung_jawab = explode(',', $datareq['txt_pca_person_responsibility']);
+        $waktu_penyelesaian = explode(',', $datareq['txt_pca_time_target']);
+
+        // var_dump($prev_actions);die;
+
+        for ($i = 0; $i < count($prev_actions); $i++) {
             $tableS->addRow();
             $tableS->addCell(200, $cellVCentered);
             $cell = $tableS->addCell(4400, $styleTableHeader);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::LEFT]);
+            $textrun->addText($prev_actions[$i], ['name' => 'arial', 'size' => 9, 'color' => '000'], ['lineSpacing' => 50]);
+            $cell = $tableS->addCell(4400, array_merge($styleTableHeader, ['valign' => 'center']));
             $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
-            $textrun->addText('', ['name' => 'arial', 'size' => 9, 'color' => 'FF0000'], ['lineSpacing' => 50]);
-            $cell = $tableS->addCell(4400, $styleTableHeader);
+            $textrun->addText($tanggung_jawab[$i], ['name' => 'arial', 'size' => 9, 'color' => '000'], ['lineSpacing' => 50]);
+            $cell = $tableS->addCell(4400, array_merge($styleTableHeader, ['valign' => 'center']));
             $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
-            $textrun->addText('', ['name' => 'arial', 'size' => 9, 'color' => 'FF0000'], ['lineSpacing' => 50]);
-            $cell = $tableS->addCell(4400, $styleTableHeader);
+            $textrun->addText($FormatDate->konversi_en($waktu_penyelesaian[$i]), ['name' => 'arial', 'size' => 9, 'color' => '000'], ['lineSpacing' => 50]);
+            $cell = $tableS->addCell(4400, array_merge($styleTableHeader, ['valign' => 'center']));
             $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
-            $textrun->addText('', ['name' => 'arial', 'size' => 9, 'color' => 'FF0000'], ['lineSpacing' => 50]);
-            $cell = $tableS->addCell(4400, $styleTableHeader);
-            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
-            $textrun->addText('', ['name' => 'arial', 'size' => 9, 'color' => 'FF0000'], ['lineSpacing' => 50]);
+            $textrun->addText('On Progress', ['name' => 'arial', 'size' => 9, 'color' => '00FF00'], ['lineSpacing' => 50]);
             $tableS->addCell(200, $cellVCentered);
         }
         $tableS->addRow();
@@ -800,7 +817,8 @@ class Incident_Investigation extends CI_Controller
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
         $filename = 'E-RCA-' . $datareq['int_id_investigation'] . '_' . $datareq['txt_vi_victim_name'];
 
-        header('Content-Type: application/msword');
+        // header('Content-Type: application/msword');
+        header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
         header('Content-Disposition: attachment;filename="' . $filename . '.docx"');
         header('Cache-Control: max-age=0');
 
@@ -874,6 +892,7 @@ class Incident_Investigation extends CI_Controller
     public function save_data()
     {
         $post = $this->input->post();
+        // echo json_encode($post);
         $investigation_type = '1'; // 1 = Incident Investigation
         // $data['created_by'] = $this->session->userdata('user_id');
         $created_by = '1';
@@ -922,6 +941,74 @@ class Incident_Investigation extends CI_Controller
         // $corrective_action = $post['inputCorrectiveAction'];
         // =================== Incident Photo =============================
         $incident_img = 'default.jpg';
+        // echo '<pre>';
+        // var_dump($_FILES['inputIncidentImg']);
+        // echo '</pre>';
+        // die;
+        $incident_imgs = [];
+        // config folder
+        $dir_berkas = FCPATH . 'assets/images/accident/employee/' . $victim_id;
+        // CREATE DIRECTORY -> JIKA DIREKTORI TIDAK ADA
+        if (!is_dir($dir_berkas)) {
+            mkdir($dir_berkas, 0777, true);
+        }
+        $filesCount = count($_FILES['inputIncidentImg']['name']);
+        for ($i = 0; $i < $filesCount; $i++) {
+            if (!empty($_FILES['inputIncidentImg']['name'][$i])) {
+                $_FILES['file']['name'] = 'incident_image_' . $i . '.' . pathinfo($_FILES['inputIncidentImg']['name'][$i], PATHINFO_EXTENSION);
+                $_FILES['file']['type'] = $_FILES['inputIncidentImg']['type'][$i];
+                $_FILES['file']['tmp_name'] = $_FILES['inputIncidentImg']['tmp_name'][$i];
+                $_FILES['file']['error'] = $_FILES['inputIncidentImg']['error'][$i];
+                $_FILES['file']['size'] = $_FILES['inputIncidentImg']['size'][$i];
+
+                // Image temp source and size 
+                $imageTemp = $_FILES['inputIncidentImg']['tmp_name'][$i];
+                $imageSize = $this->convert_filesize($_FILES['inputIncidentImg']['size'][$i]);
+
+                $config['upload_path'] = $dir_berkas . '/';
+                $config['allowed_types'] = 'jpg|jpeg|png|gif';
+                $config['file_name'] = $_FILES['file']['name'];
+                $config['image_library'] = 'gd2';
+                $config['source_image'] = $_FILES['file']['tmp_name'];
+                $config['create_thumb'] = FALSE;
+                $config['maintain_ratio'] = TRUE;
+                $config['quality'] = '30%';
+                // $config['new_image'] = base_url() . 'assets/images/accident/employee/' . $victim_id . '/' . $_FILES['file']['name'];
+
+                // $this->load->library('image_lib', $config);
+                // $this->image_lib->resize();
+
+                $this->load->library('upload', $config);
+                $this->upload->initialize($config);
+
+
+
+                // Compress size and upload image 
+                $compressedImage = $this->compressImage($imageTemp, $config['source_image'], 30);
+                if ($compressedImage) {
+                    $compressedImageSize = filesize($compressedImage);
+                    $compressedImageSize = $this->convert_filesize($compressedImageSize);
+                }
+
+                if ($compressedImage) {
+                    $compressedImageName = 'compressed_' . $_FILES['file']['name'];
+                    $compressedImagePath = $dir_berkas . '/' . $compressedImageName;
+                    if (move_uploaded_file($compressedImage, $compressedImagePath)) {
+                        $incident_imgs[] = $compressedImageName;
+                    } else {
+                        $incident_imgs[] = 'default.jpg';
+                    }
+                } else {
+                    $incident_imgs[] = 'default.jpg';
+                }
+            }
+        }
+
+        // echo '<pre>';
+        // // echo implode(',', $incident_imgs);
+        // var_dump($post);
+        // echo '</pre>';
+        // die;
         // $incident_img = $post['inputIncidentImg'];
         // ================== Investigation Team ==========================
         $lead_investigation = $post['inputLeadInvestigation'];
@@ -965,11 +1052,11 @@ class Incident_Investigation extends CI_Controller
             'txt_de_direct_cause' => $direct_cause,
             'txt_de_loses' => $loses,
             // ============== Preventive And Corrective Action ================
-            'txt_pca_preventive_action' => $preventive_action,
-            'txt_pca_person_responsibility' => $person_responsibility,
-            'txt_pca_time_target' => $time_target,
+            'txt_pca_preventive_action' => implode('/', $preventive_action),
+            'txt_pca_person_responsibility' => implode(',', $person_responsibility),
+            'txt_pca_time_target' => implode(',', $time_target),
             // =================== Incident Photo =============================
-            'txt_incident_image' => $incident_img,
+            'txt_incident_image' => implode(',', $incident_imgs),
             // ================== Investigation Team ==========================
             'txt_investigation_lead' => $lead_investigation,
             'txt_investigation_member' => $member_investigation,
@@ -1000,7 +1087,42 @@ class Incident_Investigation extends CI_Controller
         }
     }
 
-// public function generateBodyPart()
+    private function convert_filesize($bytes, $decimals = 2)
+    {
+        $size = array('B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
+        $factor = floor((strlen($bytes) - 1) / 3);
+        return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$size[$factor];
+    }
+
+    private function compressImage($source, $destination, $quality)
+    {
+        // Get image info 
+        $imgInfo = getimagesize($source);
+        $mime = $imgInfo['mime'];
+
+        // Create a new image from file 
+        switch ($mime) {
+            case 'image/jpeg':
+                $image = imagecreatefromjpeg($source);
+                break;
+            case 'image/png':
+                $image = imagecreatefrompng($source);
+                break;
+            case 'image/gif':
+                $image = imagecreatefromgif($source);
+                break;
+            default:
+                $image = imagecreatefromjpeg($source);
+        }
+
+        // Save image 
+        imagejpeg($image, $destination, $quality);
+
+        // Return compressed image 
+        return $destination;
+    }
+
+    // public function generateBodyPart()
 // {
 //     $dataBodyPart = [
 //         'Forehead',
@@ -1044,14 +1166,14 @@ class Incident_Investigation extends CI_Controller
 
 
 
-// public function createTable()
+    // public function createTable()
 // {
 //     // $this->load->db();
 //     $this->load->dbforge();
 //     // switch over to Library DB
 //     $this->db->query('use Library');
 
-//     $data_insert = [
+    //     $data_insert = [
 //         'int_id_investigation' => [
 //             'type' => 'INT',
 //             'constraint' => 50,
@@ -1176,14 +1298,14 @@ class Incident_Investigation extends CI_Controller
 //         'dtm_update_date date default current_timestamp',
 //         'dtm_update_time time default current_timestamp'
 
-//     ];
+    //     ];
 
-//     $this->dbforge->add_field($data_insert);
+    //     $this->dbforge->add_field($data_insert);
 
-//     // define primary key
+    //     // define primary key
 //     $this->dbforge->add_key('int_id_investigation', TRUE);
 
-//     // create table
+    //     // create table
 //     $this->dbforge->create_table('trInvestigation');
 // }
 }

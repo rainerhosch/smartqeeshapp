@@ -892,11 +892,19 @@
                     });
                 },
                 select: function (event, ui) {
-                    // console.log(ui)
+                    console.log(ui)
+                    let pernaunce = '';
                     // Set selection
                     $('#inputVictimAge').val(ui.item.umur); // save selected id to input
                     $('#inputVictimId').val(ui.item.intIdEmployee); // save selected id to input
-                    $('#inputVictimName').val(ui.item.txtNameEmployee); // save selected id to input
+
+                    if (ui.item.intKpw === "1") {
+                        pernaunce = 'Mr. '
+                    } else {
+                        pernaunce = 'Mrs. '
+                    }
+
+                    $('#inputVictimName').val(pernaunce + ui.item.txtNameEmployee); // save selected id to input
                     $('#inputEmplodeeNumber').val(ui.item.txtNikEmployee); // save selected id to input
                     $('#inputEmployeeLevel').val(ui.item.jabatan.txtNamaJabatan); // save selected id to input
                     $('#inputVictimServicePeriod').val(ui.item.lama_bekerja); // save selected id to input
