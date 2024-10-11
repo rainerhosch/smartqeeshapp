@@ -507,26 +507,31 @@
                             </div>
                             <div class="separator">PREVENTIVE AND CORECTIVE ACTION</div>
                             <div class="row">
-                                <a class="btn btn-sm btn-primary btnadd_preventive" data-target="prev_n_corective">Add</a>
-                                <a class="btn btn-sm btn-danger btnremove_preventive" data-target="prev_n_corective"><i class="fa fa-minus"></i></a>
+                                <a class="btn btn-sm btn-primary btnadd_preventive"
+                                    data-target="prev_n_corective">Add</a>
+                                <a class="btn btn-sm btn-danger btnremove_preventive" data-target="prev_n_corective"><i
+                                        class="fa fa-minus"></i></a>
                             </div>
                             <div class="div_prev_n_corective">
                                 <div class="form-group row">
                                     <label for="inputPreventiveAction" class="col-sm-2 col-form-label"
                                         style="text-align:right">ACTION :</label>
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><textarea class="form-control"
-                                            id="inputPreventiveAction" name="inputPreventiveAction[]" rows="2"></textarea>
+                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5"><textarea class="form-control"
+                                            id="inputPreventiveAction" name="inputPreventiveAction[]"
+                                            rows="2"></textarea>
                                     </div>
                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0px">
-                                        <div class="short-div"><label for="inputPersonResponsibility" class="col-form-label"
-                                                style="text-align:right">PERSON RESPONSIBILITY :</label></div>
+                                        <div class="short-div"><label for="inputPersonResponsibility"
+                                                class="col-form-label" style="text-align:right; font-size: 12px;">PERSON
+                                                RESPONSIBILITY :</label></div>
                                         <div class="short-div"><label for="inputTimeTarget" class="col-form-label"
-                                                style="text-align:right">TIME TARGET :</label></div>
+                                                style="text-align:right; font-size: 12px;">TIME TARGET :</label></div>
                                     </div>
-                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0px">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="padding:0px">
                                         <div class="short-div">
-                                            <input type="text" class="form-control form-control-sm"
-                                                id="inputPersonResponsibility" name="inputPersonResponsibility[]"
+                                            <input type="text"
+                                                class="form-control form-control-sm inputPersonResponsibility"
+                                                id="inputPersonResponsibility_0" name="inputPersonResponsibility[]"
                                                 placeholder="TEXT">
                                             <input type="date" class="form-control form-control-sm" id="inputTimeTarget"
                                                 name="inputTimeTarget[]" placeholder="TEXT">
@@ -1003,5 +1008,107 @@
                 $('.row_dominos_effect').html(html);
             }
         });
+
+        $(".btnremove_mem_investig").on("click", function () {
+            var elementCount = $(".member_inv_row").length;
+            let elementId = $("#inputMem_" + elementCount);
+            // console.log(elementId);
+            if (elementCount >= 1) {
+                elementId.remove();
+            } else {
+                alert("No more row to remove");
+            }
+        });
+        $(".btnadd_preventive").on("click", function () {
+            let elementId = $(this).attr("data-target");
+            let add_row = $(".div_" + elementId);
+            var elementCount = $(".member_preventive").length + 1;
+            // console.log(add_row);
+            $(
+                `<div class="row member_preventive" id="input_prev_${elementCount}">
+                                    <label for="inputPreventiveAction_${elementCount}" class="col-sm-2 col-form-label"
+                                        style="text-align:right">ACTION :</label>
+                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5"><textarea class="form-control"
+                                            id="inputPreventiveAction_${elementCount}" name="inputPreventiveAction[]" rows="2"></textarea>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0px">
+                                        <div class="short-div"><label for="inputPersonResponsibility_${elementCount}" class="col-form-label"
+                                                style="text-align:right; font-size:12px;">PERSON RESPONSIBILITY :</label></div>
+                                        <div class="short-div"><label for="inputTimeTarget_${elementCount}" class="col-form-label"
+                                                style="text-align:right; font-size:12px;">TIME TARGET :</label></div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="padding:0px">
+                                        <div class="short-div">
+                                            <input type="text" class="form-control form-control-sm inputPersonResponsibility"
+                                                id="inputPersonResponsibility_${elementCount}" name="inputPersonResponsibility[]"
+                                                placeholder="TEXT">
+                                            <input type="date" class="form-control form-control-sm" id="inputTimeTarget_${elementCount}"
+                                                name="inputTimeTarget[]" placeholder="TEXT">
+                                        </div>
+                                    </div>
+                                </div>`
+            ).appendTo(add_row);
+        });
+
+        $(".btnremove_preventive").on("click", function () {
+            var elementCount = $(".member_preventive").length;
+            let elementId = "input_prev_" + elementCount;
+            // console.log(elementId);
+            // console.log(elementCount);
+            if (elementCount >= 1) {
+                $("#" + elementId).remove();
+            } else {
+                alert("No more row to remove");
+            }
+        });
+
+
+
+        // var elementPrevCount = $(".member_preventive").length;
+        var elementPersonResponsibility = '';
+        $(document).on('focus', 'input[name="inputPersonResponsibility[]"]', function () {
+            $(this).autocomplete({
+                maxShowItems: 5,
+                source: function (request, response) {
+                    elementPersonResponsibility = this.element.attr('id');
+                    console.log(elementPersonResponsibility)
+                    // Fetch data
+                    $.ajax({
+                        url: '<?= base_url(); ?>manajemen/Employee/getDataForAutoComplete',
+                        type: 'post',
+                        dataType: "json",
+                        serverSide: true,
+                        data: {
+                            // filterby: 'Department',
+                            // id: id_dept,
+                            search: request.term
+                        },
+                        beforeSend: function () {
+                            $('.preloader2').prop('hidden', false);
+                        },
+                        success: function (res) {
+                            $('.preloader2').prop('hidden', true);
+                            console.log(res)
+                            response(res.data);
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    $(`#${elementPersonResponsibility}`).val(ui.item.intIdEmployee); // save selected id to input
+                    $(`#${elementPersonResponsibility}`).val(ui.item.txtNameEmployee + ' | ' + ui.item.jabatan.txtNamaJabatan + ' | ' + ui.item.departement.txtNamaDepartement); // save selected id to input
+                    // return false;
+                },
+                focus: function (event, ui) {
+                    $(`#${elementPersonResponsibility}`).val(ui.item.intIdEmployee); // save selected id to input
+                    $(`#${elementPersonResponsibility}`).val(ui.item.txtNameEmployee + ' | ' + ui.item.jabatan.txtNamaJabatan + ' | ' + ui.item.departement.txtNamaDepartement); // save selected id to input
+                    return false;
+                },
+            })
+        })
+
+
+
+
+
     });
 </script>

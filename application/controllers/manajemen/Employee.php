@@ -21,13 +21,14 @@ class Employee extends CI_Controller
 		$this->load->model('Manajemen/M_lokasi', 'lokasi');
 		$this->load->model('M_user', 'user');
 		$this->load->model('Manajemen/M_jabatan', 'jabatan');
+		$this->load->model('Manajemen/M_department', 'department');
 	}
 
 	public function index()
 	{
 
 		$this->load->helper('my');
-		kirimNotifikasiTeks('081919956872','Hello');
+		kirimNotifikasiTeks('081919956872', 'Hello');
 		$data['title'] = 'Smart Qeesh App';
 		$data['page'] = 'Manajemen';
 		$data['subpage'] = 'Employee';
@@ -185,7 +186,7 @@ class Employee extends CI_Controller
 			if ($this->input->post('intIdEmployee')) {
 				$id = $data['intIdEmployee'];
 				// proses update
-				$update =  $this->employee->update($id, $data);
+				$update = $this->employee->update($id, $data);
 				if (!$update) {
 					$response = [
 						'code' => 400,
@@ -218,7 +219,7 @@ class Employee extends CI_Controller
 
 
 
-				$idEmp =  $this->employee->create($data);
+				$idEmp = $this->employee->create($data);
 				$emp = $this->employee->find(array('intIdEmployee' => $idEmp))->row();
 				if (!$idEmp || !$emp) {
 					$response = [
@@ -302,7 +303,7 @@ class Employee extends CI_Controller
 	{
 		if ($this->input->is_ajax_request()) {
 			$keyword = $this->input->post('keyword');
-			$result  = $this->employee->search($keyword)->result();
+			$result = $this->employee->search($keyword)->result();
 			$data = [
 				'code' => 200,
 				'status' => true,
@@ -330,7 +331,7 @@ class Employee extends CI_Controller
 					$field_filter => $data_post['id']
 				];
 			}
-			$result  = $this->employee->getData($filter)->result_array();
+			$result = $this->employee->getData($filter)->result_array();
 			$data = [
 				'code' => 200,
 				'status' => true,
@@ -359,15 +360,16 @@ class Employee extends CI_Controller
 				];
 			}
 			if (isset($data_post['search'])) {
-				$search =  $data_post['search'];
+				$search = $data_post['search'];
 			}
-			$dataEmployee  = $this->employee->getData($filter, $search)->result_array();
+			$dataEmployee = $this->employee->getData($filter, $search)->result_array();
 			foreach ($dataEmployee as $key => $value) {
 
 				$dataEmployee[$key]['label'] = $value['txtNameEmployee'];
 				$dataEmployee[$key]['value'] = $value['txtNameEmployee'];
 				$dataEmployee[$key]['id'] = $value['intIdEmployee'];
 				$dataEmployee[$key]['jabatan'] = $this->jabatan->find(['intIdJabatan' => $value['intIdJabatan']])->row_array();
+				$dataEmployee[$key]['departement'] = $this->department->getDepartment($value['intIdDepartment']);
 				$dataEmployee[$key]['umur'] = date('Y') - substr($value['dtmTanggalLahir'], 0, 4);
 				$dataEmployee[$key]['lama_bekerja'] = date('Y') - substr($value['dtmTanggalMasuk'], 0, 4);
 			}
@@ -386,16 +388,14 @@ class Employee extends CI_Controller
 
 	public function create_user()
 	{
-		if($this->input->is_ajax_request())
-		{
+		if ($this->input->is_ajax_request()) {
 			$intIdEmployee = $this->input->post('intIdEmployee');
 			$username = $this->input->post('username');
 			$password = $this->input->post('password');
 			$is_active = $this->input->post('is_active');
 
 			// cek password apakah lebih dari 6 karakter
-			if(strlen($password) < 6)
-			{
+			if (strlen($password) < 6) {
 				$data = [
 					'code' => 400,
 					'status' => true,
@@ -406,10 +406,9 @@ class Employee extends CI_Controller
 				echo json_encode($data);
 			}
 			// cek password apakah default atau tidak
-			if($username === $password)
-			{
+			if ($username === $password) {
 				$isDefaultPassword = 1;
-			}else{
+			} else {
 				$isDefaultPassword = 0;
 			}
 			$data = [
@@ -421,16 +420,15 @@ class Employee extends CI_Controller
 				'date_created' => time(),
 				'isDefaultPassword' => $isDefaultPassword
 			];
-			$usr = $this->user->insert_data('user',$data);
-			if($usr)
-			{
+			$usr = $this->user->insert_data('user', $data);
+			if ($usr) {
 				$data = [
 					'code' => 200,
 					'status' => true,
 					'msg' => 'User has been created!',
 					'data' => NULL,
 				];
-			}else{
+			} else {
 				$data = [
 					'code' => 400,
 					'status' => false,
