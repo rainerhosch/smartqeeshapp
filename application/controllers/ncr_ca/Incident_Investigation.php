@@ -727,37 +727,90 @@ class Incident_Investigation extends CI_Controller
         $textrun->addText('', ['bold' => true, 'size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
         // end table corrective
 
-        // table Documentation
+
+        // line break tr
         $section->addTextBreak();
-        $cellColSpan2 = array('gridSpan' => 3);
+        $cellColSpan2 = array('gridSpan' => 7);
         $tableS = $section->addTable($styleTable);
+        // table Documentation
         $tableS->addRow();
         $cell = $tableS->addCell(18000, $cellColSpan2);
         $textrun = $cell->addTextRun(['bgColor' => '#DBE5F1', 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
         $textrun->addText('', ['bold' => true, 'size' => 11, 'color' => '000'], ['lineSpacing' => 20]);
+        // table Documentation Tittle
+        $section->addTextBreak();
         $tableS->addRow();
         $tableS->addCell(200, $cellVCentered);
-        $cell = $tableS->addCell(17600, ['borderSize' => 3]);
+        $cell = $tableS->addCell(17600, ['borderSize' => 3, 'gridSpan' => 5]);
         $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
-        $textrun->addText('Dokumentasi', ['name' => 'calibri', 'bold' => true, 'size' => 10], ['lineSpacing' => 50]);
+        $textrun->addText('Dokumentasi', ['size' => 10], ['lineSpacing' => 50]);
         $textrun->addTextBreak();
-        $textrun->addText('Documentation', ['name' => 'calibri', 'italic' => true, 'size' => 10, 'color' => '000']);
+        $textrun->addText('Documentation', ['italic' => true, 'size' => 10, 'color' => '000']);
         $tableS->addCell(200, $cellVCentered);
-
-        $tableS->addRow(5000);
+        $section->addTextBreak();
+        // Content
+        $tableS->addRow();
         $tableS->addCell(200, $cellVCentered);
-        $cell = $tableS->addCell(17600, ['borderSize' => 3]);
-        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]);
+        $cell = $tableS->addCell(4400, $styleTableHeader);
+        // Start Header Table
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('Area Kerja', ['name' => 'calibri', 'bold' => true, 'size' => 9, 'color' => '000'], ['lineSpacing' => 50]);
+        $textrun->addTextBreak();
+        $textrun->addText('Working Area Photos', ['name' => 'calibri', 'size' => 9, 'color' => '000'], ['lineSpacing' => 50]);
+        $cell = $tableS->addCell(4400, $styleTableHeader);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('Bagian Tubuh Yang Terluka', ['name' => 'calibri', 'bold' => true, 'size' => 9, 'color' => '000'], ['lineSpacing' => 50]);
+        $textrun->addTextBreak();
+        $textrun->addText('Body Injury Part Photos', ['name' => 'calibri', 'size' => 9, 'color' => '000'], ['lineSpacing' => 50]);
+        $cell = $tableS->addCell(4400, $styleTableHeader);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('Foto Korban', ['name' => 'calibri', 'bold' => true, 'size' => 9, 'color' => '000'], ['lineSpacing' => 50]);
+        $textrun->addTextBreak();
+        $textrun->addText('Victim Photos', ['name' => 'calibri', 'size' => 9, 'color' => '000'], ['lineSpacing' => 50]);
+        $cell = $tableS->addCell(4400, $styleTableHeader);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('Foto Tambahan 1', ['name' => 'calibri', 'bold' => true, 'size' => 9, 'color' => '000'], ['lineSpacing' => 50]);
+        $textrun->addTextBreak();
+        $textrun->addText('Other supporting 1 Photos', ['name' => 'calibri', 'size' => 9, 'color' => '000'], ['lineSpacing' => 50]);
+        $cell = $tableS->addCell(4400, $styleTableHeader);
+        $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $textrun->addText('Foto Tambahan 2', ['name' => 'calibri', 'bold' => true, 'size' => 9, 'color' => '000'], ['lineSpacing' => 50]);
+        $textrun->addTextBreak();
+        $textrun->addText('Other supporting 2 Photos', ['name' => 'calibri', 'size' => 9, 'color' => '000'], ['lineSpacing' => 50]);
+        // End Header Table
+        $tableS->addCell(200, $cellVCentered);
+        $section->addTextBreak();
+        // Table body
         $path_accident_photos = $dir_image . 'accident/employee/' . $datareq['int_vi_employee_id'];
         $incident_img = explode(',', $datareq['txt_incident_image']);
-        foreach ($incident_img as $i => $val) {
-            $textrun->addImage($path_accident_photos . '/' . $val, array('width' => 100, 'height' => 200, 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::BOTH));
+        $data_incident_image = [];
+        $desc_for_image = [
+            0 => 'Working Area Photos',
+            1 => 'Body Injury Part Photos',
+            2 => 'Victim Photos',
+            3 => 'Other supporting 1 Photos',
+            4 => 'Other supporting 2 Photos',
+        ];
+        foreach ($incident_img as $i => $ii) {
+            $data_incident_image[$i] = [
+                'pict' => $ii,
+                'desc' => $desc_for_image[$i]
+            ];
+        }
+
+        $tableS->addRow(2000);
+        $tableS->addCell(200, $cellVCentered);
+        foreach ($data_incident_image as $i => $val) {
+            $cell = $tableS->addCell(4400, $styleTableHeader);
+            $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+            $textrun->addImage($path_accident_photos . '/' . $val['pict'], array('width' => 100, 'height' => 130, 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::BOTH, 'padding' => 5));
         }
         $tableS->addCell(200, $cellVCentered);
+        $section->addTextBreak();
 
         // line break tr
         $tableS->addRow();
-        $cell = $tableS->addCell(18000, ['gridSpan' => 3]);
+        $cell = $tableS->addCell(18000, ['gridSpan' => 7]);
         $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
         $textrun->addText('', ['bold' => true, 'size' => 11, 'color' => '000'], ['lineSpacing' => 50]);
         // end
