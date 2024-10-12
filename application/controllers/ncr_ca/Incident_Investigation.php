@@ -352,7 +352,7 @@ class Incident_Investigation extends CI_Controller
 
         $table = $header->addTable($styleTableHeader);
         $table->addRow();
-        $table->addCell(2000, ['valign' => 'center'])->addImage($dir_image . 'apf-header.png', array('width' => 120, 'height' => 65, 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::BOTH));
+        $table->addCell(2000, ['valign' => 'center'])->addImage($dir_image . 'apf-header.png', array('width' => 100, 'height' => 65, 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::BOTH));
         $cell = $table->addCell(8000, ['valign' => 'center']);
         $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
         $textrun->addText('ANALISA AKAR PENYEBAB KECELAKAAN', $boldFontStyleName);
@@ -802,6 +802,7 @@ class Incident_Investigation extends CI_Controller
         $tableS->addCell(200, $cellVCentered);
         foreach ($data_incident_image as $i => $val) {
             $cell = $tableS->addCell(4400, $styleTableHeader);
+            // $cell = $tableS->addCell(4400, ['borderSize' => 0]); // Menghilangkan border
             $textrun = $cell->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
             $textrun->addImage($path_accident_photos . '/' . $val['pict'], array('width' => 100, 'height' => 130, 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::BOTH, 'padding' => 5));
         }
