@@ -183,6 +183,7 @@ class Incident_Investigation extends CI_Controller
         echo json_encode($response);
     }
 
+
     public function DownloadsToWord()
     {
         $data_param = $this->input->get();
